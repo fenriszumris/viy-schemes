@@ -7,18 +7,8 @@
 <link rel="stylesheet" href="style.css">
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:55, rankSpacing:70, padding:14}, theme:'default', themeVariables:{fontSize:'19px'}});
+mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:45, rankSpacing:55}, theme:'default', themeVariables:{fontSize:'16px'}});
 
-window.addEventListener('load', function(){
-  var tries = 0;
-  var t = setInterval(function(){
-    var done = false;
-    document.querySelectorAll('.mermaid').forEach(function(d){
-      if (d.scrollWidth > d.clientWidth + 10) { d.scrollLeft = (d.scrollWidth - d.clientWidth)/2; done = true; }
-    });
-    if (done || ++tries > 40) clearInterval(t);
-  }, 300);
-});
 </script>
 </head>
 <body>
@@ -94,7 +84,6 @@ classDef warn2 fill:#F3D6D6,stroke:#c97c7c,color:#1f2430
 classDef death fill:#222222,stroke:#000000,color:#ffffff
 classDef less fill:#DDEFD8,stroke:#7cb87c,color:#1f2430
 </div>
-<p class="muted">Диаграмму можно двигать вбок и приближать жестом. </p>
 <p class="muted">Лупа (start_osm: Логика +1, один раз) и воспоминания из дневника на диаграмме не показаны. Входы в разговор с Лессом и сам разговор — на странице <a href="less.html">«Разговор с Лессом»</a>. Диапазоны статов — на странице <a href="stats.html">«Статы»</a>.</p>
 </main>
 <footer>Схемы игры «Вий» · сцена «Старт» · выверено по коду 15.10.2026</footer>
