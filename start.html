@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="style.css">
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:45, rankSpacing:55}, theme:'default', themeVariables:{fontSize:'16px'}});
+mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:45, rankSpacing:55, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'16px'}});
 
 </script>
 </head>
@@ -45,7 +45,7 @@ HX["<b>BAD END «Подкормка…»</b>"]:::death
 L["<b>Разговор с Лессом</b><br/>через экран стрелок"]:::less
 G["«Пойти дальше.» → экран стрелок"]
 A -- "Да" --> T
-A -- "Я и так все понимаю" --> Q
+A -- "Я и так<br/>все понимаю" --> Q
 T --> Q
 Q -- "Нет!" --> N
 Q -- "Да. (1-й раз)" --> HW
