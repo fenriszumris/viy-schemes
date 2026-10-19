@@ -35,41 +35,38 @@ mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis',
 <h2>Полная схема: все хабы и все выборы</h2>
 <p class="muted">Схема широкая — листайте её вбок ползунком под схемой (или колесом мыши с Shift). Текст крупный, всё в натуральную величину.</p>
 <div class="mermaid fill">
-%%{init: {'flowchart': {'useMaxWidth': false, 'nodeSpacing': 14, 'rankSpacing': 30, 'diagramPadding': 8, 'curve': 'linear'}}}%%
+%%{init: {'flowchart': {'useMaxWidth': false, 'nodeSpacing': 16, 'rankSpacing': 34, 'diagramPadding': 8, 'curve': 'linear'}}}%%
 flowchart TB
 VHD["<b>Вход: первый разговор</b><br/>стрелки script3_road / script3_nazad"]:::less
-VH2["<b>Вход: сцена руки</b><br/>(script_1_less_hand)"]:::less
 H1["<b>Хаб 1. Гляделки</b> (start_cycle)"]:::scene
 RBX1["road_begin → экран strel"]:::less
 H2["<b>Хаб 2. «Его имя?»</b> (conv_2)"]:::scene
+VH2["<b>Вход: сцена руки</b><br/>(script_1_less_hand)"]:::less
+H3["<b>Хаб 3. «Кто я?»</b> (who_i_am)"]:::scene
 WN["wrong_name<br/><span style='color:#2E8B3E'>mood −2</span>"]
 NR2["not_remember2<br/><span style='color:#C62828'>blood +1</span>, <span style='color:#2E8B3E'>mood +1</span>"]
-X3A["<b>→ Хаб 3 «Кто я?»</b> (ниже)"]:::less
+X3A["<b>→ Хаб 3 «Кто я?»</b>"]:::less
 NQ["Ввод имени (name_quest)<br/>«ЛЕСС» не пройдёт"]
 H2A["<b>Хаб 2a. Верное имя → амулет</b> (name_right)"]:::scene
 SAM["samsp<br/><span style='color:#7B3FA0'>mad +2</span>"]
 D3["<b>BAD END «Шутка...»</b>"]:::death
-X9A["<b>→ Хаб 9 «Уход Лесса»</b> (ниже)"]:::less
-H3["<b>Хаб 3. «Кто я?»</b> (who_i_am)"]:::scene
+X9A["<b>→ Хаб 9 «Уход Лесса»</b>"]:::less
 STOP["stop: «П...Подожди!»"]
-X9B["<b>→ Хаб 9 «Уход Лесса»</b> (ниже)"]:::less
-X9C["<b>→ Хаб 9 «Уход Лесса»</b> (ниже)"]:::less
+X9B["<b>→ Хаб 9 «Уход Лесса»</b>"]:::less
+X9C["<b>→ Хаб 9 «Уход Лесса»</b>"]:::less
 H4["<b>Хаб 4. Имя Лесса</b> (less_name)"]:::scene
 RAZG["<b>Повторный разговор</b> (razg)<br/>вход в Хабы 4, 5, 7"]:::less
 H5["<b>Хаб 5. Друзья</b> (we_meet)"]:::scene
 H6["<b>Хаб 6. Имя героини</b> (i_dont_know_name)"]:::scene
 H7["<b>Хаб 7. Прощание</b> (less_end)"]:::scene
-AIR["Квест Айрата (less_airat_predl)"]
 GONE["script_3_less_gone<br/>прощание по mood и квесту"]:::less
+AIR["Квест Айрата (less_airat_predl)"]
 RB["road_begin → экран strel"]:::less
-H9["<b>Хаб 9. Уход Лесса</b> (script_3_less_go)"]:::scene
-USH["ushel<br/>(имя спрашивается заново)"]
-SLUC["sluc (script3_road, вне сцены)"]:::less
 VHD --> H1
-VH2 --> H2
-H1 -- "«Пялиться дальше» (цикл;<br/>на 4-й раз <span style='color:#2E8B3E'>mood +1</span>)" --> H1
 H1 -- "«НАДОЕЛО.»" --> H2
+H1 -- "«Пялиться дальше» (цикл;<br/>на 4-й раз <span style='color:#2E8B3E'>mood +1</span>)" --> H1
 H1 -- "«Бочком-бочком отсюда»<br/><span style='color:#2E8B3E'>mood −2</span>" --> RBX1
+VH2 --> H2
 H2 -- "«Я не вкусная!»<br/><span style='color:#2E8B3E'>mood +1</span>" --> H3
 H2 -- "«Подставить шею»<br/><span style='color:#7B3FA0'>mad +1</span>, <span style='color:#2E8B3E'>mood +1</span>, <span style='color:#C62828'>blood +1</span>" --> H3
 H2 -- "«Эээ... Кевин?»" --> WN
@@ -77,9 +74,9 @@ H2 -- "«Я-я не помню.»" --> NR2
 WN --> NR2
 NR2 --> X3A
 H2 -- "«Я знаю твое имя!»" --> NQ
-NQ -- "верное («Лесс», «Лес», …)" --> H2A
 NQ -- "неверное" --> WN
 NQ -- "пусто" --> NR2
+NQ -- "верное («Лесс», «Лес», …)" --> H2A
 H2A -- "«Безразлично улыбнуться»<br/><span style='color:#7B3FA0'>mad +2</span>" --> SAM
 SAM -- "«Ты же надо мной шутишь»" --> D3
 SAM -- "«Ээм... Нет?»" --> X9A
@@ -99,81 +96,79 @@ H7 -- "«Оставить в покое»" --> GONE
 H7 -- "«Остановить», <span style='color:#2E8B3E'>mood</span> &lt; 0" --> GONE
 H7 -- "«Остановить», <span style='color:#2E8B3E'>mood</span> ≥ 0, <span style='color:#7B3FA0'>mad</span> ≥ 1" --> GONE
 H7 -- "«Остановить», <span style='color:#2E8B3E'>mood</span> ≥ 0, <span style='color:#7B3FA0'>mad</span> &lt; 1" --> AIR
-AIR -- "«Х-хорошо.»<br/>(без «reward» <span style='color:#2E8B3E'>mood −1</span>)" --> GONE
 AIR -- "«А что мне за это будет?»<br/><span style='color:#2E8B3E'>mood +1</span>, <span style='color:#2E6FD0'>logic +1</span>, <span style='color:#7B3FA0'>mad −1</span>" --> AIR
+AIR -- "«Х-хорошо.»<br/>(без «reward» <span style='color:#2E8B3E'>mood −1</span>)" --> GONE
 AIR -- "«Еще чего!»<br/><span style='color:#2E8B3E'>mood −2</span>" --> GONE
 GONE --> RB
-subgraph AMUL["Ветка амулета"]
 AM["Меню амулета (amulmenu)"]
 WII["what_is_it<br/><span style='color:#2E6FD0'>logic +1</span>, <span style='color:#7B3FA0'>mad −1</span>, <span style='color:#2E8B3E'>mood +1</span>"]
 WEL["what_else<br/><span style='color:#2E6FD0'>logic +1</span>, <span style='color:#7B3FA0'>mad −1</span>"]
 AM2["Меню: взять или нет"]
 TAKE["take"]
-X3B["<b>→ Хаб 3 «Кто я?»</b> (ниже)"]:::less
+X3B["<b>→ Хаб 3 «Кто я?»</b>"]:::less
+H2A -- "«Это случайность! Угадала!»<br/><span style='color:#2E8B3E'>mood +5</span> (лупа: <span style='color:#2E6FD0'>logic +1</span>)" --> AM
+AM -- "«Взять амулет»" --> TAKE
 AM -- "«Ч-что это?»" --> WII
 AM -- "«Не брать»<br/><span style='color:#2E8B3E'>mood +1</span>" --> X3B
-AM -- "«Взять амулет»" --> TAKE
 AM -- "«Без лишних слов надеть»<br/><span style='color:#7B3FA0'>mad +1</span>, <span style='color:#2E8B3E'>mood −1</span>" --> X3B
-WII -- "«Это все что он делает?»" --> WEL
 WII -- "«Поняла... Спасибо»" --> AM2
+WII -- "«Это все что он делает?»" --> WEL
 WEL --> AM2
 AM2 -- "«Возьму»" --> TAKE
 AM2 -- "«Ну его.»<br/><span style='color:#2E8B3E'>mood +1</span>" --> X3B
 TAKE -- "«Надеть сразу»" --> X3B
 TAKE -- "«Убрать в карман»<br/><span style='color:#2E6FD0'>logic +1</span>, <span style='color:#7B3FA0'>mad −1</span>, <span style='color:#2E8B3E'>mood +1</span>" --> X3B
-end
-H2A -- "«Это случайность! Угадала!»<br/><span style='color:#2E8B3E'>mood +5</span> (лупа: <span style='color:#2E6FD0'>logic +1</span>)" --> AM
-subgraph STRANGE["«Лесс? Странное имя»"]
 SN["strange_name"]
 SN2["подменю реакции"]
 SN3["«Почему смерти?»"]
 SN4["подменю: шаг / горло"]
+H4 -- "«Лесс? Странное имя»" --> SN
+SN -- "«По-моему, отличное имя!»<br/><span style='color:#7B3FA0'>mad +1</span>" --> H5
 SN -- "«В смысле, лес?»<br/><span style='color:#2E6FD0'>logic +1</span>" --> SN2
 SN2 -- "«Раздраженно посмотреть»<br/><span style='color:#7B3FA0'>mad −1</span>, <span style='color:#2E8B3E'>mood +1</span> ⚠ знаки" --> SN3
 SN2 -- "«Каменное лицо»<br/><span style='color:#2E8B3E'>mood −1</span>, <span style='color:#2E6FD0'>logic +1</span>" --> SN3
-SN3 -- "«Разобрались, а почему смерти?»" --> SN4
-end
-H4 -- "«Лесс? Странное имя»" --> SN
-SN -- "«По-моему, отличное имя!»<br/><span style='color:#7B3FA0'>mad +1</span>" --> H5
 SN3 -- "«Не стоит уточнять...»<br/><span style='color:#2E6FD0'>logic +1</span>" --> H5
+SN3 -- "«Разобрались, а почему смерти?»" --> SN4
 SN4 -- "«Шаг назад»<br/><span style='color:#2E8B3E'>mood +2</span> (logic ≥ 2) или <span style='color:#2E8B3E'>+1</span>, <span style='color:#2E6FD0'>logic +1</span>" --> H5
-SN4 -- "«Пожать плечами<br/>и подставить горло»<br/><span style='color:#7B3FA0'>mad +1</span>, <span style='color:#2E8B3E'>mood +1</span>, <span style='color:#C62828'>blood +1</span>" --> H5
-subgraph HAND["Хаб 8. Хватание (less_hand, strenght)"]
-H8["<b>Хаб 8. Хватание</b><br/><span style='color:#2E8B3E'>mood −2</span>"]:::scene
+SN4 -- "«Пожать плечами и подставить горло»<br/><span style='color:#7B3FA0'>mad +1</span>, <span style='color:#2E8B3E'>mood +1</span>, <span style='color:#C62828'>blood +1</span>" --> H5
+H8["<b>Хаб 8. Хватание</b> (less_hand)<br/><span style='color:#2E8B3E'>mood −2</span>"]:::scene
+X9D["<b>→ Хаб 9 «Уход Лесса»</b>"]:::less
 STR["strenght<br/><span style='color:#C62828'>blood +1</span><br/>Кровь ≥ 3 → sm_blood"]
-M17["меню (conv:1117)"]
 D1["<b>BAD END «Тщетная борьба...»</b>"]:::death
+M17["меню (conv:1117)"]
+X9E["<b>→ Хаб 9 «Уход Лесса»</b>"]:::less
+H3 -- "«Схватить за плечо»" --> H8
+H8 -- "«Отпустить»<br/><span style='color:#7B3FA0'>mad −1</span>" --> X9D
 H8 -- "«Удержать силой»<br/><span style='color:#2E8B3E'>mood −1</span>" --> STR
 STR -- "«Отчаянно бороться»" --> D1
 STR -- "«Расслабиться»<br/><span style='color:#7B3FA0'>mad +1</span>, <span style='color:#2E6FD0'>logic −1</span>" --> M17
 STR -- "«Замереть»<br/><span style='color:#7B3FA0'>mad −1</span>, <span style='color:#2E6FD0'>logic +1</span> ⚠ баг conv:1105" --> M17
-end
-H3 -- "«Схватить за плечо»" --> H8
-H8 -- "«Отпустить»<br/><span style='color:#7B3FA0'>mad −1</span>" --> H9
-M17 -- "«А сами-то!»<br/><span style='color:#7B3FA0'>mad +1</span>, <span style='color:#2E8B3E'>mood +1</span>" --> H9
-M17 -- "«Промолчать»<br/><span style='color:#7B3FA0'>mad −1</span>" --> H9
-subgraph ROOTS["Корни (less_korn_menu)"]
-KORN["<b>Корни</b>"]:::scene
+M17 -- "«А сами-то!»<br/><span style='color:#7B3FA0'>mad +1</span>, <span style='color:#2E8B3E'>mood +1</span>" --> X9E
+M17 -- "«Промолчать»<br/><span style='color:#7B3FA0'>mad −1</span>" --> X9E
+H9["<b>Хаб 9. Уход Лесса</b> (script_3_less_go)<br/>сюда ведут все «→ Хаб 9»"]:::scene
+KORN["<b>Корни</b> (less_korn_menu)"]:::scene
+USH["ushel<br/>(имя спрашивается заново)"]
+RB2["road_begin → экран strel"]:::less
+SLUC["sluc (script3_road, вне сцены)"]:::less
 E1["<b>END? «Мирный сон...»</b>"]:::endd
 D2["<b>BAD END «Подкормка...»</b>"]:::death
-KORN -- "«Не шевелиться»<br/><span style='color:#7B3FA0'>mad +1</span> (цикл)" --> KORN
-KORN -- "«Пытаться вырваться»<br/><span style='color:#2E6FD0'>logic +1</span>, <span style='color:#2E8B3E'>mood −1</span> (цикл)" --> KORN
-KORN -- "«Поспать»<br/><span style='color:#7B3FA0'>mad +1</span>, <span style='color:#2E8B3E'>mood +2</span>" --> E1
-KORN -- "«Бороться до конца»" --> D2
-end
+H3 -.-> H9
 H9 -- "«Ударить дерево»<br/><span style='color:#2E6FD0'>logic −1</span>, <span style='color:#7B3FA0'>mad +1</span>, <span style='color:#2E8B3E'>mood −2</span>" --> KORN
 H9 -- "«Опасно...» / «Что произошло?»<br/><span style='color:#2E6FD0'>logic +1</span>, <span style='color:#7B3FA0'>mad −1</span>" --> USH
 H9 -- "«Броситься за ним»" --> SLUC
 KORN -- "«Обмякнуть»<br/><span style='color:#7B3FA0'>mad −1</span>, <span style='color:#2E6FD0'>logic +1</span>, <span style='color:#2E8B3E'>mood +1</span>" --> USH
 KORN -- "«Извиниться» (знает имя)<br/><span style='color:#2E6FD0'>logic +1</span>, <span style='color:#2E8B3E'>mood +2</span>" --> USH
-USH --> RB
-subgraph MEMORY["Воспоминание (son → суд → head_ache)"]
-MEM["<b>Воспоминание</b><br/><span style='color:#C62828'>blood +1</span>"]:::scene
+KORN -- "«Не шевелиться»<br/><span style='color:#7B3FA0'>mad +1</span> (цикл)" --> KORN
+KORN -- "«Пытаться вырваться»<br/><span style='color:#2E6FD0'>logic +1</span>, <span style='color:#2E8B3E'>mood −1</span> (цикл)" --> KORN
+KORN -- "«Поспать»<br/><span style='color:#7B3FA0'>mad +1</span>, <span style='color:#2E8B3E'>mood +2</span>" --> E1
+KORN -- "«Бороться до конца»" --> D2
+USH --> RB2
+MEM["<b>Воспоминание</b> (son → суд → head_ache)<br/><span style='color:#C62828'>blood +1</span>"]:::scene
 DSON["<b>Смерть</b> (death_son)"]:::death
 RBX2["road_begin → экран strel"]:::less
+VHD -.-> MEM
 MEM -- "«Х-хватит...»<br/><span style='color:#2E6FD0'>logic +1</span>" --> RBX2
 MEM -- "«Идти до конца!»<br/><span style='color:#7B3FA0'>mad +1</span>" --> DSON
-end
 classDef scene fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430
 classDef death fill:#222222,stroke:#000000,color:#ffffff
 classDef less fill:#DDEFD8,stroke:#7cb87c,color:#1f2430
