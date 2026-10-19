@@ -7,10 +7,222 @@
 <meta http-equiv="Pragma" content="no-cache">
 <title>Разговор с Лессом — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css">
+<style>.widechart{overflow-x:auto}.widechart svg{max-width:none !important}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:24, rankSpacing:44, diagramPadding:16}, theme:'default', themeVariables:{fontSize:'17px'}});
 
+const HUBS=['H1','H2','H2A','H3','H4','H5','H6','H7','H8','H9','MEM'];
+const EXP=new Set();
+
+function hub(id,label,cls){
+  const arrow = EXP.has(id) ? '▾' : '▸';
+  return id + '["<b>' + label + '</b> ' + arrow + '"]:::' + cls + '\nclick ' + id + ' call th("' + id + '")';
+}
+
+function build(){
+  const L=[];
+  L.push('flowchart LR');
+  // hub boxes (always present)
+  L.push(hub('H1','Хаб 1. Гляделки<br/>start_cycle','h1'));
+  L.push(hub('H2','Хаб 2. «Его имя?»<br/>conv_2','h2'));
+  L.push(hub('H2A','Хаб 2a. Амулет<br/>name_right','h2a'));
+  L.push(hub('H3','Хаб 3. «Кто я?»<br/>who_i_am','h3'));
+  L.push(hub('H4','Хаб 4. Имя Лесса<br/>less_name','h4'));
+  L.push(hub('H5','Хаб 5. Друзья<br/>we_meet','h5'));
+  L.push(hub('H6','Хаб 6. Имя героини<br/>i_dont_know_name','h6'));
+  L.push(hub('H7','Хаб 7. Прощание<br/>less_end','h7'));
+  L.push(hub('H8','Хаб 8. Хватание<br/>less_hand','h8'));
+  L.push(hub('H9','Хаб 9. Уход Лесса<br/>script_3_less_go','h9'));
+  L.push(hub('MEM','Воспоминание<br/>son → суд<br/>blood +1','hm'));
+  // entries and terminals
+  L.push('VH["Вход: стрелки<br/>script3_road / script3_nazad"]:::ext');
+  L.push('RUKA["Сцена руки<br/>script_1_less_hand"]:::ext');
+  L.push('RZG["Дневник razg:<br/>входы в Хабы 4, 5, 7"]:::ext');
+  L.push('MEMV["Вход в воспоминание<br/>son → суд → head_ache"]:::ext');
+  L.push('RB["road_begin<br/>→ экран strel"]:::term');
+  L.push('GN["script_3_less_gone"]:::term');
+  L.push('SLC["sluc (script3_road)<br/>вне сцены"]:::ext');
+  L.push('D1["BAD END<br/>«Тщетная борьба...»"]:::die');
+  L.push('D1A["BAD END<br/>«Шутка...»"]:::die');
+  L.push('D2["BAD END<br/>«Подкормка...»"]:::die');
+  L.push('D3["Смерть<br/>death_son"]:::die');
+  L.push('E1["END?<br/>«Мирный сон...»"]:::fin');
+  L.push('VH --> H1');
+  L.push('RUKA --> H2');
+  L.push('RZG --> H4'); L.push('RZG --> H5'); L.push('RZG --> H7');
+  L.push('MEMV --> MEM');
+  L.push('GN --> RB');
+
+  // --- H1 ---
+  if(EXP.has('H1')){
+    L.push('H1 -.->|"цикл «Пялиться дальше»: на 4-й раз mood +1"| H1');
+    L.push('H1 --> C1A["«НАДОЕЛО.»"]:::h1 --> H2');
+    L.push('H1 --> C1B["«Бочком-бочком отсюда.»<br/>mood −2"]:::h1 --> RB');
+  } else {
+    L.push('H1 -->|"«НАДОЕЛО.»"| H2');
+    L.push('H1 -->|"«Бочком-бочком» mood −2"| RB');
+  }
+  // --- H2 ---
+  L.push('NQ{{"Ввод имени<br/>«ЛЕСС» не пройдёт"}}:::h2');
+  if(EXP.has('H2')){
+    L.push('H2 --> C2A["«Не надо меня есть! Я не вкусная!»<br/>mood +1"]:::h2 --> H3');
+    L.push('H2 --> C2B["«Подставить шею для укуса.»<br/>mad +1, mood +1, blood +1"]:::h2 --> H3');
+    L.push('H2 --> C2C["«Эээ... Кевин?»<br/>wrong_name mood −2 →<br/>not_remember2 blood +1, mood +1"]:::h2 --> H3');
+    L.push('H2 --> C2D["«Я-я не помню.»<br/>not_remember2 blood +1, mood +1"]:::h2 --> H3');
+    L.push('H2 --> C2E["«Я знаю твое имя!»"]:::h2 --> NQ');
+    L.push('NQ --> C2F["верное («Лесс», «Лес»…)"]:::h2 --> H2A');
+    L.push('NQ --> C2G["неверное → wrong_name mood −2 →<br/>not_remember2 blood +1, mood +1"]:::h2 --> H3');
+    L.push('NQ --> C2H["пусто → not_remember2<br/>blood +1, mood +1"]:::h2 --> H3');
+  } else {
+    L.push('H2 -->|"«не вкусная!» · «шея» · «Кевин?» · «не помню»"| H3');
+    L.push('H2 -->|"«Я знаю твое имя!»"| NQ');
+    L.push('NQ -->|верное| H2A');
+    L.push('NQ -->|"неверное / пусто"| H3');
+  }
+  // --- H2A ---
+  if(EXP.has('H2A')){
+    L.push('H2A --> CA1["«Безразлично улыбнуться.»<br/>mad +2"]:::h2a --> SAM{{"samsp"}}:::h2a');
+    L.push('SAM --> CA2["«А почему нет? Ты же надо мной шутишь.»"]:::h2a --> D1A');
+    L.push('SAM --> CA3["«Ээм... Нет?»"]:::h2a --> H9');
+    L.push('H2A --> CA4["«Это случайность! Я просто угадала!»<br/>mood +5 · лупа logic +1"]:::h2a --> AM{{"amulmenu"}}:::h2a');
+    L.push('AM --> CA5["«Н-нет. Не брать.»<br/>mood +1"]:::h2a --> H3');
+    L.push('AM --> CA6["«Без лишних слов надеть.»<br/>mad +1, mood −1"]:::h2a --> H3');
+    L.push('AM --> CA7["«Спасибо... Взять амулет.»"]:::h2a --> TK{{"take"}}:::h2a');
+    L.push('TK --> CA8["«Надеть сразу»"]:::h2a --> H3');
+    L.push('TK --> CA9["«Убрать в карман.»<br/>logic +1, mad −1, mood +1"]:::h2a --> H3');
+    L.push('AM --> CA10["«Ч-что это?»<br/>logic +1, mad −1, mood +1"]:::h2a --> WII{{"what_is_it<br/>«Это всё?» ещё logic +1, mad −1"}}:::h2a');
+    L.push('WII --> CA11["«Возьму»"]:::h2a --> TK');
+    L.push('WII --> CA12["«Ну его.»<br/>mood +1"]:::h2a --> H3');
+  } else {
+    L.push('H2A -->|"меню амулета / take / what_is_it"| H3');
+    L.push('H2A -->|"«безразлично» mad +2 → «а почему нет?»"| D1A');
+    L.push('H2A -->|"«Ээм... Нет?»"| H9');
+  }
+  // --- H3 ---
+  if(EXP.has('H3')){
+    L.push('H3 --> C3A["«П...Подожди!»<br/>mood ≥ 0"]:::h3 --> H4');
+    L.push('H3 --> C3B["«П...Подожди!»<br/>mood &lt; 0"]:::h3 --> H9');
+    L.push('H3 --> C3C["«Дать уйти.»"]:::h3 --> H9');
+    L.push('H3 --> C3D["«Схватить за плечо.»"]:::h3 --> H8');
+  } else {
+    L.push('H3 -->|"«Подожди!» mood ≥ 0"| H4');
+    L.push('H3 -->|"«Подожди!» mood &lt; 0 · «Дать уйти»"| H9');
+    L.push('H3 -->|"«Схватить за плечо»"| H8');
+  }
+  // --- H4 ---
+  if(EXP.has('H4')){
+    L.push('H4 --> C4A["«Видимо мы... Знакомы?»"]:::h4 --> H5');
+    L.push('H4 --> C4B["«Лесс? Странное имя»"]:::h4 --> SN1["«По-моему, отличное имя!»<br/>mad +1"]:::h4 --> H5');
+    L.push('C4B --> SN2["«В смысле, лес?»<br/>logic +1"]:::h4 --> SN3["«Раздраженно» mad −1, mood +1 ⚠ знаки<br/>«Каменное лицо» mood −1, logic +1"]:::h4');
+    L.push('SN3 --> SN4["«Не стоит уточнять...»<br/>logic +1"]:::h4 --> H5');
+    L.push('SN3 --> SN5["«Почему смерти?»"]:::h4 --> SN6["«Шаг назад»<br/>mood +2 (logic ≥ 2) или +1 · logic +1"]:::h4 --> H5');
+    L.push('SN5 --> SN7["«Пожать плечами и подставить горло»<br/>mad +1, mood +1, blood +1"]:::h4 --> H5');
+    L.push('H4 --> C4C["«Приятно познакомиться...»"]:::h4 --> H6');
+  } else {
+    L.push('H4 -->|"«мы знакомы?»"| H5');
+    L.push('H4 -->|"«странное имя» (цепочка)"| H5');
+    L.push('H4 -->|"«приятно познакомиться»"| H6');
+  }
+  // --- H5 ---
+  if(EXP.has('H5')){
+    L.push('H5 --> C5A["«Как же так! Значит будут.»<br/>mood +1, mad −1"]:::h5 --> H6');
+    L.push('H5 --> C5B["«Что вообще такое друзья?»<br/>mad +1"]:::h5 --> H6');
+  } else {
+    L.push('H5 -->|"2 варианта"| H6');
+  }
+  // --- H6 ---
+  if(EXP.has('H6')){
+    L.push('H6 --> C6A["«Еще чего!» (имя «Вий»)<br/>mad +1"]:::h6 --> H7');
+    L.push('H6 --> C6B["ввод: пусто или «Вий»<br/>mad +1"]:::h6 --> H7');
+    L.push('H6 --> C6C["ввод: своё имя<br/>logic +1, mad −1, mood +1"]:::h6 --> H7');
+  } else {
+    L.push('H6 -->|"«Еще чего!» / ввод имени"| H7');
+  }
+  // --- H7 ---
+  if(EXP.has('H7')){
+    L.push('H7 -.->|"mood &gt; 0 перед меню: mood +1"| H7');
+    L.push('H7 --> C7A["«Оставить в покое.»"]:::h7 --> GN');
+    L.push('H7 --> C7B["«Остановить.» mood &lt; 0"]:::h7 --> GN');
+    L.push('H7 --> C7C["«Остановить.» mood ≥ 0, mad ≥ 1"]:::h7 --> GN');
+    L.push('H7 --> C7D["«Остановить.» mood ≥ 0, mad &lt; 1<br/>→ квест Айрата"]:::h7 --> AIR{{"less_airat_predl"}}:::h7');
+    L.push('AIR -.->|"цикл «А что мне будет?» mood+1, logic+1, mad−1"| AIR');
+    L.push('AIR --> C7E["«Х-хорошо.»<br/>(без reward: mood −1)"]:::h7 --> GN');
+    L.push('AIR --> C7F["«Еще чего!»<br/>mood −2"]:::h7 --> GN');
+  } else {
+    L.push('H7 -->|"«оставить» · «остановить»"| GN');
+    L.push('H7 -->|"квест Айрата"| GN');
+  }
+  // --- H8 ---
+  if(EXP.has('H8')){
+    L.push('H8 --> C8A["«Отпустить.»<br/>mad −1"]:::h8 --> H9');
+    L.push('H8 --> C8B["«Удержать силой.»<br/>mood −1 · blood +1<br/>Кровь ≥ 3 → sm_blood"]:::h8 --> STR{{"strenght"}}:::h8');
+    L.push('STR --> C8C["«Отчаянно бороться и вырываться.»"]:::h8 --> D1');
+    L.push('STR --> C8D["«Расслабиться.»<br/>mad +1, logic −1"]:::h8 --> M17{{"меню conv:1117"}}:::h8');
+    L.push('STR --> C8E["«Замереть.»<br/>mad −1, logic +1 ⚠ баг"]:::h8 --> M17');
+    L.push('M17 --> C8F["«А сами-то!»<br/>mad +1, mood +1"]:::h8 --> H9');
+    L.push('M17 --> C8G["«Промолчать»<br/>mad −1"]:::h8 --> H9');
+  } else {
+    L.push('H8 -->|"«отпустить» mad −1"| H9');
+    L.push('H8 -->|"«бороться»"| D1');
+    L.push('H8 -->|"«расслабиться / замереть»"| H9');
+  }
+  // --- H9 ---
+  if(EXP.has('H9')){
+    L.push('H9 --> C9A["«Со злости ударить дерево»<br/>logic −1, mad +1, mood −2"]:::h9 --> KRN{{"less_korn_menu<br/>циклы: «не шевелиться» mad+1 ·<br/>«вырваться» logic+1, mood−1"}}:::h9');
+    L.push('KRN --> C9B["«Обмякнуть и обмануть корни.»<br/>mad −1, logic +1, mood +1 → ushel"]:::h9 --> RB');
+    L.push('KRN --> C9C["«Извиниться.» (знает имя)<br/>logic +1, mood +2 → ushel"]:::h9 --> RB');
+    L.push('KRN --> C9D["«Расслабиться и поспать.»<br/>mad +1, mood +2"]:::h9 --> E1');
+    L.push('KRN --> C9E["«В панике бороться до конца.»"]:::h9 --> D2');
+    L.push('H9 --> C9F["«Это было опасно...» / «Что произошло?»<br/>logic +1, mad −1 → ushel"]:::h9 --> RB');
+    L.push('H9 --> C9G["«Броситься за ним.»"]:::h9 --> SLC');
+  } else {
+    L.push('H9 -->|"«обмякнуть» / «извиниться»"| RB');
+    L.push('H9 -->|"«поспать»"| E1');
+    L.push('H9 -->|"«бороться до конца»"| D2');
+    L.push('H9 -->|"«опасно…» / «что произошло?»"| RB');
+    L.push('H9 -->|"«броситься за ним»"| SLC');
+  }
+  // --- MEM ---
+  if(EXP.has('MEM')){
+    L.push('MEM --> CM1["«Х-хватит...»<br/>logic +1"]:::hm --> RB');
+    L.push('MEM --> CM2["«Идти до конца!»<br/>mad +1"]:::hm --> D3');
+  } else {
+    L.push('MEM -->|"«хватит…» logic +1"| RB');
+    L.push('MEM -->|"«до конца!» mad +1"| D3');
+  }
+  // classes
+  L.push('classDef h1 fill:#e6f4f2,stroke:#0f766e,color:#16302c');
+  L.push('classDef h2 fill:#ececfe,stroke:#4f46e5,color:#221f4d');
+  L.push('classDef h2a fill:#fdf1e2,stroke:#b45309,color:#4a2b08');
+  L.push('classDef h3 fill:#e5f2fa,stroke:#0369a1,color:#123043');
+  L.push('classDef h4 fill:#fde9ee,stroke:#be123c,color:#4d1223');
+  L.push('classDef h5 fill:#f1eafd,stroke:#7c3aed,color:#2f1c5c');
+  L.push('classDef h6 fill:#edf1f6,stroke:#475569,color:#1d2733');
+  L.push('classDef h7 fill:#f9efe2,stroke:#92400e,color:#42230a');
+  L.push('classDef h8 fill:#fce9e9,stroke:#b91c1c,color:#4a1414');
+  L.push('classDef h9 fill:#e7f4ea,stroke:#166534,color:#14331f');
+  L.push('classDef hm fill:#f0eafc,stroke:#6d28d9,color:#2b1557');
+  L.push('classDef term fill:#DDEFD8,stroke:#7cb87c,color:#1f2430');
+  L.push('classDef die fill:#222,stroke:#000,color:#fff');
+  L.push('classDef fin fill:#e6f4e6,stroke:#2E8B3E,color:#1e6b1e');
+  L.push('classDef ext fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
+  return L.join('\n');
+}
+
+async function render(){
+  const f=document.getElementById('fchart');
+  if(!f) return;
+  f.removeAttribute('data-processed');
+  f.textContent=build();
+  await mermaid.run({nodes:[f]});
+}
+window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
+window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
+
+render();
+const o=document.getElementById('ovchart');
+if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 </script>
 <script src="site9.js"></script>
 </head>
@@ -33,160 +245,9 @@ mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis',
 <div class="panel-rel">
 <div id="panel-full">
 <h2>Полная схема: все хабы и все выборы</h2>
-<p class="muted">Хабы свёрнуты: нажимайте на хаб или выбор, чтобы раскрыть ветку. У каждого хаба свой цвет ветки. Зелёные карточки «→ Хаб N» — переходы к уже раскрытым местам: клик подсветит и покажет нужный хаб. <button class="mini" onclick="setAll(true)">Развернуть всё</button> <button class="mini" onclick="setAll(false)">Свернуть всё</button></p>
-<style>
-.htree{font-size:15px}
-.htree details{margin:4px 0 4px 0}
-.htree summary{cursor:pointer;list-style:none;padding:7px 12px;border-radius:9px;border:1.6px solid var(--hc,#b9a7ff);background:var(--hcl,#f3effc);display:block}
-.htree summary::-webkit-details-marker{display:none}
-.htree summary:hover{filter:brightness(0.96)}
-.htree summary::before{content:"▸ ";color:var(--hc,#7a6bb3);font-weight:700}
-.htree details[open] > summary::before{content:"▾ "}
-.htree .hbody{margin:6px 0 10px 14px;padding:6px 0 2px 14px;border-left:3px solid var(--hc,#b9a7ff)}
-.ch{padding:5px 10px;margin:3px 0;border-radius:8px;background:#fff;border:1px solid #dfe3ea}
-.loop{padding:5px 10px;margin:3px 0;border-radius:8px;background:#f6f7f9;border:1px dashed #c6ccd6;color:#4a5160}
-.chip{display:inline-block;padding:2px 10px;border-radius:12px;background:#DDEFD8;border:1.4px solid #7cb87c;cursor:pointer;font-weight:700;color:#1f2430}
-.chip:hover{background:#cde7c6}
-.term{display:inline-block;padding:2px 10px;border-radius:12px;background:#DDEFD8;border:1.4px solid #7cb87c;font-weight:700}
-.die{display:inline-block;padding:2px 10px;border-radius:12px;background:#222;color:#fff;font-weight:700}
-.fin{display:inline-block;padding:2px 10px;border-radius:12px;background:#e6f4e6;border:1.4px solid #2E8B3E;color:#1e6b1e;font-weight:700}
-.ext{display:inline-block;padding:2px 10px;border-radius:12px;background:#eef0f4;border:1.4px solid #aab2c0;font-weight:700;color:#4a5160}
-.tag{font-size:12px;color:#6a7280;font-weight:400}
-button.mini{font-size:13px;padding:3px 10px;border-radius:8px;border:1px solid #c6ccd6;background:#fff;cursor:pointer}
-.h1{--hc:#0f766e;--hcl:#e6f4f2}
-.h2{--hc:#4f46e5;--hcl:#ececfe}
-.h2a{--hc:#b45309;--hcl:#fdf1e2}
-.h3{--hc:#0369a1;--hcl:#e5f2fa}
-.h4{--hc:#be123c;--hcl:#fde9ee}
-.h5{--hc:#7c3aed;--hcl:#f1eafd}
-.h6{--hc:#475569;--hcl:#edf1f6}
-.h7{--hc:#92400e;--hcl:#f9efe2}
-.h8{--hc:#b91c1c;--hcl:#fce9e9}
-.h9{--hc:#166534;--hcl:#e7f4ea}
-.hm{--hc:#6d28d9;--hcl:#f0eafc}
-</style>
-<div class="htree">
-<details class="hub h1" id="hub1"><summary><b>Хаб 1. Гляделки</b> <span class="tag">start_cycle · вход: первый разговор (стрелки script3_road / script3_nazad)</span></summary>
-<div class="hbody">
-<div class="loop">цикл «Пялиться на него дальше.»: на 4-й заход <span class="mood">mood +1</span>, дальше вниз</div>
-<details class="hub h2" id="hub2"><summary>«НАДОЕЛО.» → <b>Хаб 2. «Его имя?»</b> <span class="tag">conv_2 · вход также из сцены руки (script_1_less_hand)</span></summary>
-<div class="hbody">
-<details class="hub h3" id="hub3"><summary>«Не надо меня есть! Я не вкусная!» <span class="mood">mood +1</span> → <b>Хаб 3. «Кто я?»</b> <span class="tag">who_i_am</span></summary>
-<div class="hbody">
-<details class="hub h4" id="hub4"><summary>«П...Подожди!» · <span class="mood">mood ≥ 0</span> → <b>Хаб 4. Имя Лесса</b> <span class="tag">less_name · razg: вход в Хабы 4, 5, 7</span></summary>
-<div class="hbody">
-<details class="hub h5" id="hub5"><summary>«Видимо мы... Знакомы?» → <b>Хаб 5. Друзья</b> <span class="tag">we_meet</span></summary>
-<div class="hbody">
-<div class="ch">«Как же так! Значит будут.» <span class="mood">mood +1</span>, <span class="mad">mad −1</span> → <span class="chip" onclick="jumpHub('hub6')">→ Хаб 6 «Имя героини»</span></div>
-<div class="ch">«В конце концов, что вообще такое друзья?» <span class="mad">mad +1</span> → <span class="chip" onclick="jumpHub('hub6')">→ Хаб 6 «Имя героини»</span></div>
-</div></details>
-<details class="hub h4" id="sn"><summary>«Лесс? Странное имя» → <b>strange_name</b></summary>
-<div class="hbody">
-<div class="ch">«По-моему, отличное имя!» <span class="mad">mad +1</span> → <span class="chip" onclick="jumpHub('hub5')">→ Хаб 5 «Друзья»</span></div>
-<details class="hub h4" id="sn2"><summary>«Я не понимаю. В смысле, лес?» <span class="logic">logic +1</span> → <b>подменю реакции</b></summary>
-<div class="hbody">
-<details class="hub h4" id="sn3"><summary>«Раздраженно посмотреть» <span class="mad">mad −1</span>, <span class="mood">mood +1</span> ⚠ знаки · «Каменное лицо» <span class="mood">mood −1</span>, <span class="logic">logic +1</span> → <b>«Почему смерти?»</b></summary>
-<div class="hbody">
-<div class="ch">«Не стоит уточнять...» <span class="logic">logic +1</span> → <span class="chip" onclick="jumpHub('hub5')">→ Хаб 5 «Друзья»</span></div>
-<div class="ch">«С Лесом разобрались, а почему смерти?» → <b>шаг / горло:</b></div>
-<div class="ch">«Сделать шаг назад.» <span class="mood">mood +2</span> (logic ≥ 2) или <span class="mood">+1</span>, <span class="logic">logic +1</span> → <span class="chip" onclick="jumpHub('hub5')">→ Хаб 5 «Друзья»</span></div>
-<div class="ch">«Пожать плечами и подставить горло.» <span class="mad">mad +1</span>, <span class="mood">mood +1</span>, <span class="blood">blood +1</span> → <span class="chip" onclick="jumpHub('hub5')">→ Хаб 5 «Друзья»</span></div>
-</div></details>
-</div></details>
-</div></details>
-<details class="hub h6" id="hub6"><summary>«Приятно познакомиться...» → <b>Хаб 6. Имя героини</b> <span class="tag">i_dont_know_name</span></summary>
-<div class="hbody">
-<details class="hub h7" id="hub7"><summary>«Еще чего!» (имя «Вий») <span class="mad">mad +1</span> → <b>Хаб 7. Прощание</b> <span class="tag">less_end</span></summary>
-<div class="hbody">
-<div class="loop">при <span class="mood">mood &gt; 0</span> перед меню: <span class="mood">mood +1</span>, Урза узнаёт имя</div>
-<div class="ch">«Оставить в покое.» → <span class="term">script_3_less_gone → road_begin → экран strel</span></div>
-<div class="ch">«Попытаться его остановить.», <span class="mood">mood</span> &lt; 0 → <span class="term">script_3_less_gone → экран strel</span></div>
-<div class="ch">«Попытаться его остановить.», <span class="mood">mood</span> ≥ 0, <span class="mad">mad</span> ≥ 1 → <span class="term">script_3_less_gone → экран strel</span></div>
-<details class="hub h7" id="airat"><summary>«Попытаться его остановить.», <span class="mood">mood</span> ≥ 0, <span class="mad">mad</span> &lt; 1 → <b>Квест Айрата</b> <span class="tag">less_airat_predl</span></summary>
-<div class="hbody">
-<div class="loop">«А что мне за это будет?» <span class="mood">mood +1</span>, <span class="logic">logic +1</span>, <span class="mad">mad −1</span> — возврат в это же меню</div>
-<div class="ch">«Х-хорошо.» (без «reward» <span class="mood">mood −1</span>) → <span class="term">script_3_less_gone → экран strel</span></div>
-<div class="ch">«Еще чего!» <span class="mood">mood −2</span> → <span class="term">script_3_less_gone → экран strel</span></div>
-</div></details>
-</div></details>
-<div class="ch">ввод имени: пусто или «Вий» <span class="mad">mad +1</span> → <span class="chip" onclick="jumpHub('hub7')">→ Хаб 7 «Прощание»</span></div>
-<div class="ch">ввод имени: своё имя <span class="logic">logic +1</span>, <span class="mad">mad −1</span>, <span class="mood">mood +1</span> → <span class="chip" onclick="jumpHub('hub7')">→ Хаб 7 «Прощание»</span></div>
-</div></details>
-</div></details>
-<details class="hub h8" id="hub8"><summary>«Схватить за плечо.» → <b>Хаб 8. Хватание</b> <span class="tag">less_hand · strenght</span></summary>
-<div class="hbody">
-<div class="loop">вход в хаб: <span class="mood">mood −2</span></div>
-<div class="ch">«Отпустить.» <span class="mad">mad −1</span> → <span class="chip" onclick="jumpHub('hub9')">→ Хаб 9 «Уход Лесса»</span></div>
-<details class="hub h8" id="strenght"><summary>«Удержать силой.» <span class="mood">mood −1</span> → <b>strenght</b> <span class="tag"><span class="blood">blood +1</span> · Кровь ≥ 3 → sm_blood (скрытый выход)</span></summary>
-<div class="hbody">
-<div class="ch">«Отчаянно бороться и вырываться.» → <span class="die">BAD END «Тщетная борьба...»</span></div>
-<details class="hub h8" id="m1117"><summary>«Все в порядке, просто расслабиться.» <span class="mad">mad +1</span>, <span class="logic">logic −1</span> → <b>меню</b> <span class="tag">conv:1117</span></summary>
-<div class="hbody">
-<div class="ch">«А сами-то! Как-то невежливо!» <span class="mad">mad +1</span>, <span class="mood">mood +1</span> → <span class="chip" onclick="jumpHub('hub9')">→ Хаб 9 «Уход Лесса»</span></div>
-<div class="ch">«Промолчать» <span class="mad">mad −1</span> → <span class="chip" onclick="jumpHub('hub9')">→ Хаб 9 «Уход Лесса»</span></div>
-</div></details>
-<div class="ch">«Дико страшно... Но стоить замереть.» <span class="mad">mad −1</span>, <span class="logic">logic +1</span> ⚠ баг conv:1105 → <span class="chip" onclick="jumpHub('m1117')">→ то же меню</span></div>
-</div></details>
-</div></details>
-<div class="ch">«Дать уйти.» → <span class="chip" onclick="jumpHub('hub9')">→ Хаб 9 «Уход Лесса»</span></div>
-<div class="ch">«П...Подожди!» · <span class="mood">mood</span> &lt; 0 → <span class="chip" onclick="jumpHub('hub9')">→ Хаб 9 «Уход Лесса»</span></div>
-</div></details>
-<div class="ch">«Подставить шею для укуса.» <span class="mad">mad +1</span>, <span class="mood">mood +1</span>, <span class="blood">blood +1</span> → <span class="chip" onclick="jumpHub('hub3')">→ Хаб 3 «Кто я?»</span></div>
-<div class="ch">«Эээ... Кевин?» → wrong_name <span class="mood">mood −2</span> → not_remember2 <span class="blood">blood +1</span>, <span class="mood">mood +1</span> → <span class="chip" onclick="jumpHub('hub3')">→ Хаб 3 «Кто я?»</span></div>
-<div class="ch">«Я-я не помню.» → not_remember2 <span class="blood">blood +1</span>, <span class="mood">mood +1</span> → <span class="chip" onclick="jumpHub('hub3')">→ Хаб 3 «Кто я?»</span></div>
-<details class="hub h2a" id="nq"><summary>«Я знаю твое имя!» → <b>Ввод имени</b> <span class="tag">name_quest · регистр важен: «ЛЕСС» не пройдёт</span></summary>
-<div class="hbody">
-<details class="hub h2a" id="hub2a"><summary>верное («Лесс», «Лес», …) → <b>Хаб 2a. Амулет</b> <span class="tag">name_right</span></summary>
-<div class="hbody">
-<details class="hub h2a" id="samsp"><summary>«Безразлично улыбнуться.» <span class="mad">mad +2</span> → <b>samsp</b></summary>
-<div class="hbody">
-<div class="ch">«А почему нет? Ты же надо мной шутишь.» → <span class="die">BAD END «Шутка...»</span></div>
-<div class="ch">«Ээм... Нет?» → <span class="chip" onclick="jumpHub('hub9')">→ Хаб 9 «Уход Лесса»</span></div>
-</div></details>
-<details class="hub h2a" id="amul"><summary>«Это случайность! Я просто угадала!» <span class="mood">mood +5</span> (лупа: <span class="logic">logic +1</span>) → <b>Меню амулета</b> <span class="tag">amulmenu</span></summary>
-<div class="hbody">
-<div class="ch">«Н-нет. Не брать.» <span class="mood">mood +1</span> → <span class="chip" onclick="jumpHub('hub3')">→ Хаб 3 «Кто я?»</span></div>
-<div class="ch">«Без лишних слов надеть.» <span class="mad">mad +1</span>, <span class="mood">mood −1</span> → <span class="chip" onclick="jumpHub('hub3')">→ Хаб 3 «Кто я?»</span></div>
-<details class="hub h2a" id="take"><summary>«Спасибо... Взять амулет.» → <b>take</b></summary>
-<div class="hbody">
-<div class="ch">«Да (Надеть сразу)» → <span class="chip" onclick="jumpHub('hub3')">→ Хаб 3 «Кто я?»</span></div>
-<div class="ch">«Убрать в карман.» <span class="logic">logic +1</span>, <span class="mad">mad −1</span>, <span class="mood">mood +1</span> → <span class="chip" onclick="jumpHub('hub3')">→ Хаб 3 «Кто я?»</span></div>
-</div></details>
-<details class="hub h2a" id="wii"><summary>«Ч-что это?» <span class="logic">logic +1</span>, <span class="mad">mad −1</span>, <span class="mood">mood +1</span> → <b>what_is_it</b></summary>
-<div class="hbody">
-<div class="ch">«Это все что он делает?» ещё <span class="logic">logic +1</span>, <span class="mad">mad −1</span> → меню ниже</div>
-<div class="ch">«Поняла... Спасибо.» → меню ниже</div>
-<div class="ch"><b>Меню:</b> «Возьму» → <span class="chip" onclick="jumpHub('take')">→ take</span> · «Ну его.» <span class="mood">mood +1</span> → <span class="chip" onclick="jumpHub('hub3')">→ Хаб 3 «Кто я?»</span></div>
-</div></details>
-</div></details>
-</div></details>
-<div class="ch">неверное имя → wrong_name <span class="mood">mood −2</span> → not_remember2 <span class="blood">blood +1</span>, <span class="mood">mood +1</span> → <span class="chip" onclick="jumpHub('hub3')">→ Хаб 3 «Кто я?»</span></div>
-<div class="ch">пусто → not_remember2 <span class="blood">blood +1</span>, <span class="mood">mood +1</span> → <span class="chip" onclick="jumpHub('hub3')">→ Хаб 3 «Кто я?»</span></div>
-</div></details>
-</div></details>
-<div class="ch">«Бочком-бочком отсюда.» <span class="mood">mood −2</span> → <span class="term">road_begin → экран strel</span></div>
-</div></details>
-
-<details class="hub h9" id="hub9"><summary><b>Хаб 9. Уход Лесса</b> <span class="tag">script_3_less_go · сюда ведут все «→ Хаб 9»</span></summary>
-<div class="hbody">
-<details class="hub h9" id="korn"><summary>«Со злости ударить дерево» <span class="logic">logic −1</span>, <span class="mad">mad +1</span>, <span class="mood">mood −2</span> → <b>Корни</b> <span class="tag">less_korn_menu</span></summary>
-<div class="hbody">
-<div class="loop">цикл «Не шевелиться...»: <span class="mad">mad +1</span> · цикл «Пытаться вырваться.»: <span class="logic">logic +1</span>, <span class="mood">mood −1</span></div>
-<div class="ch">«Обмякнуть и попытаться обмануть корни.» <span class="mad">mad −1</span>, <span class="logic">logic +1</span>, <span class="mood">mood +1</span> → ushel → <span class="term">road_begin → экран strel</span></div>
-<div class="ch">«Извиниться.» (знает имя) <span class="logic">logic +1</span>, <span class="mood">mood +2</span> → ushel → <span class="term">road_begin → экран strel</span></div>
-<div class="ch">«Просто расслабиться и поспать.» <span class="mad">mad +1</span>, <span class="mood">mood +2</span> → <span class="fin">END? «Мирный сон...»</span></div>
-<div class="ch">«В панике бороться до конца.» → <span class="die">BAD END «Подкормка...»</span></div>
-</div></details>
-<div class="ch">«Это было чертовски опасно...» (blood &gt; 0) / «Я... Что вообще только что произошло?» (blood == 0) <span class="logic">logic +1</span>, <span class="mad">mad −1</span> → ushel <span class="tag">имя спрашивается заново</span> → <span class="term">road_begin → экран strel</span></div>
-<div class="ch">«Броситься за ним.» → <span class="ext">sluc (script3_road, вне сцены)</span></div>
-</div></details>
-
-<details class="hub hm" id="mem"><summary><b>Воспоминание</b> <span class="tag">son → суд → head_ache · <span class="blood">blood +1</span></span></summary>
-<div class="hbody">
-<div class="ch">«Х-хватит...» <span class="logic">logic +1</span> → <span class="term">экран strel</span></div>
-<div class="ch">«Идти до конца!» <span class="mad">mad +1</span> → <span class="die">Смерть (death_son)</span></div>
-</div></details>
-</div>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его ветки, повторный клик сворачивает. У каждого хаба свой цвет ветки. <button class="mini" onclick="allHubs(true)">Развернуть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button></p>
+<style>button.mini{font-size:13px;padding:3px 10px;border-radius:8px;border:1px solid #c6ccd6;background:#fff;cursor:pointer}</style>
+<div class="widechart"><pre class="mermaid" id="fchart"></pre></div>
 <div id="less-details">
 <div class="card">
 <h2>Детали по хабам</h2>
@@ -267,7 +328,7 @@ button.mini{font-size:13px;padding:3px 10px;border-radius:8px;border:1px solid #
 </div>
 <div id="panel-short" style="position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:100%">
 <h2>Обзор хабов</h2>
-<div class="mermaid fillcap">
+<div class="mermaid" id="ovchart">
 flowchart TB
 H0["<b>Хаб 0. Вход</b><br/>conv_0 / conv_1 → экран strel<br/>разговор стартует из script_2_less_conv"]:::scene
 H1["<b>Хаб 1. Гляделки</b> (start_cycle)<br/>«Пялиться дальше» — цикл, на 4-й раз <span style='color:#2E8B3E'>mood +1</span><br/>«НАДОЕЛО.» → дальше · «Бочком-бочком» <span style='color:#2E8B3E'>mood −2</span> → road_begin"]:::scene
