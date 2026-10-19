@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Сцена «Старт» — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=4">
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:45, rankSpacing:55, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'16px'}});
+mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
 
 </script>
 </head>
@@ -33,14 +33,14 @@ D2["«Все, кроме Лесса.»<br/>(razr = None)"]
 D6["«С.» (лето)<br/>razr остаётся 1"]
 D3["«Игра» → tash_game<br/>(мини-игра, вне схемы)"]
 D4["«Обучение» → назад в начало"]
-D5["Меню локаций: Айрат, Айрат квест,<br/>Гавань, Лес (только при razr = 1)"]
+D5["Меню локаций:<br/>Айрат, Айрат квест,<br/>Гавань, Лес (razr = 1)"]
 C["<b>Сцена 2. Пролог и стартовое меню</b> (start_menu)<br/>Чёрный экран, пролог, дневник, лупа<br/><span style='color:#7B3FA0'>Безумие 0/+1</span> · <span style='color:#2E6FD0'>Логика 0/+1</span><br/><span style='color:#C62828'>Кровь 0/0</span> · <span style='color:#2E8B3E'>Настроение 0/0</span>"]:::scene
 S["<b>Сцена 3. Сон</b> (c1_sleep)<br/>«Может, лечь поспать?» <span style='color:#7B3FA0'>Безумие +1</span> (вход)<br/>воспоминание о матери"]
 Sa["«Что это вообще сейчас было?»<br/>→ сцена воспоминаний (son)"]
 Sb["«Пожать плечами…»<br/>→ разговор с Лессом"]
 HD["<b>Сцена 4. Укус руки</b> (c1_hand)<br/>«Укусить себя за руку…» <span style='color:#7B3FA0'>Безумие +1</span> (вход)<br/><span style='color:#7B3FA0'>Безумие 0/+5</span> · <span style='color:#2E6FD0'>Логика 0/+2</span><br/><span style='color:#C62828'>Кровь 0/+1</span> · <span style='color:#2E8B3E'>Настроение 0/0</span>"]:::scene
 HA["«Хватит экспериментов.»<br/><span style='color:#2E6FD0'>Логика +1</span>, <span style='color:#7B3FA0'>Безумие −1</span>"]
-HB["«Укусить еще сильнее» <span style='color:#7B3FA0'>Безумие +1</span> <span style='color:#C62828'>Кровь +1</span><br/>→ земля: Бежать / Шипеть /<br/>Ничего не делать"]
+HB["«Укусить еще сильнее»<br/><span style='color:#7B3FA0'>Безумие +1</span> <span style='color:#C62828'>Кровь +1</span><br/>→ земля: Бежать / Шипеть /<br/>Ничего не делать"]
 HX["<b>BAD END «Подкормка…»</b>"]:::death
 L["<b>Разговор с Лессом</b><br/>через экран стрелок"]:::less
 G["«Пойти дальше.» → экран стрелок"]
