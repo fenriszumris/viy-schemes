@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Разговор с Лессом — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
@@ -14,8 +14,8 @@ mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis',
 <body>
 <header class="site"><div class="wrap">
 <h1>Разговор с Лессом</h1>
-<p>script_2_less_conv.rpy (conv) · script_2_less_conv_amul.rpy (amul) · script_3_less_end.rpy (end) · script_memory.rpy (mem) · day_1_less_razg.rpy (razg)</p>
-<nav class="crumbs"><a href="index.html">← Все схемы</a></nav>
+<p>Локация: <a href="location.html" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script_2_less_conv.rpy (conv) · script_2_less_conv_amul.rpy (amul) · script_3_less_end.rpy (end) · script_memory.rpy (mem) · day_1_less_razg.rpy (razg)</p>
+<nav class="crumbs"><a href="index.html">← Все схемы</a> · <a href="location.html">Локация «Место пробуждения»</a> · <a href="strel.html">Экран переходов</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -141,6 +141,17 @@ classDef endd fill:#e6f4e6,stroke:#2E8B3E,color:#1e6b1e
 </ul></div>
 </div>
 <p class="muted">Скрытые переходы: <code>setblood(x)</code> при Крови ≥ 3 прыгает в sm_blood из любой строки с blood+1. Имя героини переспрашивается в end:68 и end:112, даже если уже задано. Полный список найденных ошибок — на странице <a href="stats.html">«Статы»</a>.</p>
+<div class="card">
+<h2>Статы: минимумы и максимумы</h2>
+<table class="stats">
+<tr><th></th><th class="mad">Безумие</th><th class="logic">Логика</th><th class="blood">Кровь</th><th class="mood">Настроение Лесса</th></tr>
+<tr><td>Сцена «Старт»</td><td>0…+5</td><td>0…+3</td><td>0…+1</td><td>0</td></tr>
+<tr><td>Разговор с Лессом</td><td>−7…+6</td><td>−1…+9</td><td>0…+2</td><td>−6…+15</td></tr>
+<tr><td><b>Итого по локации</b></td><td><b>−7…+6</b></td><td><b>−1…+9</b></td><td><b>0…+2</b></td><td><b>−6…+15</b></td></tr>
+</table>
+<p class="muted">Посчитано по коду 15.10.2026, смерти не учитывались. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html">«Статы»</a>.</p>
+</div>
+
 </main>
 <footer>Схемы игры «Вий» · разговор с Лессом · выверено по коду 14.10.2026</footer>
 </body>

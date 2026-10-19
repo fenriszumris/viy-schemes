@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Экран переходов — Схемы игры «Вий»</title>
+<link rel="stylesheet" href="style.css?v=5">
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>Экран переходов (strel)</h1>
+<p>Как устроено перемещение по миру · script_newscreens.rpy, script _define.rpy, script.rpy</p>
+<nav class="crumbs"><a href="index.html">← Все схемы</a> · <a href="location.html">Локация «Место пробуждения»</a></nav>
+</div></header>
+<main>
+<div class="card">
+<h2>Как это работает (по коду)</h2>
+<ul>
+<li>Выход из любой сцены — вызов <code>call_screen_strel()</code>: он прыгает на <code>null_label</code>, откуда <code>call_creen_strel0()</code> показывает экран <code>strel</code> (script_newscreens.rpy:793-829, 1517). Код метки после вызова дальше не выполняется.</li>
+<li>Экран <code>strel</code> рисует текущую локацию (<code>my_location.name</code>) и её стрелки: влево, вправо, вверх, вниз.</li>
+<li>Клик по стрелке (<code>get_arrow_action</code>, script_newscreens.rpy:1170): меняется локация (<code>next_location</code>) и выполняется прыжок на её метку (<code>next_label</code>) — <code>change_location_name_def()</code>, script.rpy:532-560. У стрелки может быть только метка или только локация.</li>
+<li><b>Сами стрелки статов не меняют.</b> Но сцены по меткам стрелок могут: пример — script_3_road, «Стоит переждать» → Логика +1.</li>
+</ul>
+</div>
+<div class="card">
+<h2>Карта локаций вокруг начальной</h2>
+<p class="muted">Подписи на стрелках — направление стрелки и её <code>namebottom</code>/метка из кода (script _define.rpy:551-767). Серые — локации за пределами покрытых сцен (Айрат и Гавань на сайте не разобраны).</p>
+<div class="mermaid fill">
+flowchart LR
+START["<b>Место пробуждения</b> (less_start)<br/>стартовая локация<br/>сцены: «Старт», «Разговор с Лессом»"]:::loc
+PER["<b>Перекрёсток</b> (less_per)"]:::loc
+TASHB["Дорога, начало<br/>(less_tashroad_begin)"]:::loc
+TASHT["Дорога к Таше<br/>(less_tashroad_tash)"]:::loc
+SLIME["Слайм<br/>(less_slime)"]:::loc
+UPROAD["Дорога вверх<br/>(less_up_road)"]:::loc
+BARIER["Барьер<br/>(less_up_barier)"]:::loc
+LROAD["Дорога к Айрату<br/>(less_left_road)"]:::loc
+DEVROAD["Лесная дорога<br/>(less_left_dev_road)"]:::loc
+WWALL["Белая стена<br/>(less_white_wall)"]:::loc
+AIRAT["<b>Айрат</b> (airat_main)<br/>дальше не разобрано"]:::far
+TGAV["Тёмная дорога, ночь<br/>(loc_tgavan_road)<br/>дальше не разобрано"]:::far
+START -- "вправо → script_3_road<br/>первый раз: разговор с Лессом" --> PER
+START -- "влево → script3_nazad_begin<br/>первый раз: разговор с Лессом" --> TASHB
+PER -- "вниз «К месту пробуждения»" --> START
+TASHB -- "вправо «К началу»" --> START
+TASHB -- "влево «???»" --> TASHT
+TASHT -- "вправо «Назад»" --> TASHB
+TASHT -- "влево «Еще глубже»<br/>→ script3_nazad_gubert" --> SLIME
+SLIME -- "вправо «Назад»" --> TASHT
+PER -- "вверх → script_3_roadway_forward" --> UPROAD
+UPROAD -- "влево «Назад, к перекрестку»" --> PER
+UPROAD -- "вправо «Дальше»<br/>→ less_up_begin_barier_label" --> BARIER
+BARIER -- "вниз «Развернуться»" --> UPROAD
+PER -- "влево → script_3_road_airat" --> LROAD
+LROAD -- "вправо «К перекрёстку»" --> PER
+LROAD -- "влево «Дальше по дороге»<br/>→ script_3_road_dev_airat" --> DEVROAD
+DEVROAD -- "вправо «Глубже в лес» *" --> LROAD
+DEVROAD -- "влево «Дальше по дороге»<br/>→ label_wall" --> WWALL
+WWALL -- "вниз «Ближе к перекрестку»" --> DEVROAD
+WWALL -- "вверх → script_4_airat_in_wall" --> AIRAT
+PER -- "вправо (ночь)" --> TGAV
+classDef loc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430
+classDef far fill:#eeeeee,stroke:#aaaaaa,color:#555555
+</div>
+<p class="muted">* Подпись «Глубже в лес» стоит на стрелке, ведущей обратно к less_left_road, — в коде так (script _define.rpy:668-669). После первого разговора с Лессом правая стрелка стартовой локации меняется: метка становится <code>null_label</code>, подпись — «Перекресток» (script3_road.rpy:7-9), то есть сцена на дороге проигрывается один раз.</p>
+</div>
+<div class="card">
+<h2>Статы: минимумы и максимумы</h2>
+<table class="stats">
+<tr><th></th><th class="mad">Безумие</th><th class="logic">Логика</th><th class="blood">Кровь</th><th class="mood">Настроение Лесса</th></tr>
+<tr><td>Сцена «Старт»</td><td>0…+5</td><td>0…+3</td><td>0…+1</td><td>0</td></tr>
+<tr><td>Разговор с Лессом</td><td>−7…+6</td><td>−1…+9</td><td>0…+2</td><td>−6…+15</td></tr>
+<tr><td><b>Итого по локации</b></td><td><b>−7…+6</b></td><td><b>−1…+9</b></td><td><b>0…+2</b></td><td><b>−6…+15</b></td></tr>
+</table>
+<p class="muted">Посчитано по коду 15.10.2026, смерти не учитывались. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html">«Статы»</a>.</p>
+</div>
+
+</main>
+<footer>Схемы игры «Вий» · экран переходов · выверено по коду 19.10.2026</footer>
+</body>
+</html>
