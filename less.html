@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Разговор с Лессом — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style.css?v=5">
+<link rel="stylesheet" href="style.css?v=6">
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
@@ -21,6 +21,10 @@ mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis',
 <div class="card">
 <h2>Как читать</h2>
 <p class="muted">«Хаб» — кусок диалога с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение Лесса. «Экран strel» — переход на экран стрелок: дальше игра идёт по экрану, а не по коду метки. Входы conv_0/conv_1 (из начала игры, сна, руки, воспоминаний) ведут сразу на экран strel и разговор напрямую не запускают; сам разговор начинается через script_2_less_conv (стрелки от script3_road / script3_nazad) или с conv_2 (сцена руки).</p>
+</div>
+<div class="viewtoggle">
+<button id="btn-full" class="active" onclick="sv(1)">Детальнее</button>
+<button id="btn-short" onclick="sv(0)">Короче</button>
 </div>
 <h2>Обзор хабов</h2>
 <div class="mermaid fillcap">
@@ -66,6 +70,7 @@ classDef death fill:#222222,stroke:#000000,color:#ffffff
 classDef less fill:#DDEFD8,stroke:#7cb87c,color:#1f2430
 classDef endd fill:#e6f4e6,stroke:#2E8B3E,color:#1e6b1e
 </div>
+<div id="less-details">
 <div class="card">
 <h2>Детали по хабам</h2>
 <div class="hub"><h3>Хаб 0. Вход (conv:1–36)</h3>
@@ -141,6 +146,7 @@ classDef endd fill:#e6f4e6,stroke:#2E8B3E,color:#1e6b1e
 </ul></div>
 </div>
 <p class="muted">Скрытые переходы: <code>setblood(x)</code> при Крови ≥ 3 прыгает в sm_blood из любой строки с blood+1. Имя героини переспрашивается в end:68 и end:112, даже если уже задано. Полный список найденных ошибок — на странице <a href="stats.html">«Статы»</a>.</p>
+</div>
 <div class="card">
 <h2>Статы: минимумы и максимумы</h2>
 <table class="stats">
@@ -152,6 +158,13 @@ classDef endd fill:#e6f4e6,stroke:#2E8B3E,color:#1e6b1e
 <p class="muted">Посчитано по коду 15.10.2026, смерти не учитывались. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html">«Статы»</a>.</p>
 </div>
 
+<script>
+function sv(full){
+ document.getElementById('less-details').style.display = full ? '' : 'none';
+ document.getElementById('btn-full').className = full ? 'active' : '';
+ document.getElementById('btn-short').className = full ? '' : 'active';
+}
+</script>
 </main>
 <footer>Схемы игры «Вий» · разговор с Лессом · выверено по коду 14.10.2026</footer>
 </body>
