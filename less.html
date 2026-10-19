@@ -24,15 +24,15 @@ function dn(arr){ return arr.map(function(p){return '<span style="color:'+p[0]+'
 function mk(text, ups, downs){
   const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
   return '<div style="position:relative;display:inline-block;'+pad+'">'+text
-    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:12px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
-    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:12px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
+    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
+    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
     +'</div>';
 }
 // плашка хаба: диапазон прямых изменений внутри хаба, справа сверху
 function badge(ranges){
   if(!ranges.length) return '';
   const s=ranges.map(function(p){return '<span style="color:'+p[0]+';font-weight:700">'+p[1]+'</span>';}).join(' · ');
-  return '<span style="position:absolute;top:1px;right:2px;background:#fff;border:1.5px solid #c9c2e0;border-radius:9px;padding:1px 7px;font-size:12px;line-height:1.4;white-space:nowrap">'+s+'</span>';
+  return '<span style="position:absolute;top:1px;right:2px;background:#fff;border:1.5px solid #c9c2e0;border-radius:9px;padding:1px 7px;font-size:14px;line-height:1.4;white-space:nowrap">'+s+'</span>';
 }
 
 function hub(id,label,cls,ranges){
