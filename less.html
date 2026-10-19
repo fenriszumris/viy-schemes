@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Разговор с Лессом — Схемы игры «Вий»</title>
+<link rel="stylesheet" href="style.css">
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis'}, theme:'default'});
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>Разговор с Лессом</h1>
+<p>script_2_less_conv.rpy (conv) · script_2_less_conv_amul.rpy (amul) · script_3_less_end.rpy (end) · script_memory.rpy (mem) · day_1_less_razg.rpy (razg)</p>
+<nav class="crumbs"><a href="index.html">← Все схемы</a></nav>
+</div></header>
+<main>
+<div class="card">
+<h2>Как читать</h2>
+<p class="muted">«Хаб» — кусок диалога с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение Лесса. «Экран strel» — переход на экран стрелок: дальше игра идёт по экрану, а не по коду метки. Входы conv_0/conv_1 (из начала игры, сна, руки, воспоминаний) ведут сразу на экран strel и разговор напрямую не запускают; сам разговор начинается через script_2_less_conv (стрелки от script3_road / script3_nazad) или с conv_2 (сцена руки).</p>
+</div>
+<h2>Обзор хабов</h2>
+<div class="mermaid">
+flowchart TB
+H0["<b>Хаб 0. Вход</b><br/>conv_0 / conv_1 → экран strel<br/>разговор стартует из script_2_less_conv"]:::scene
+H1["<b>Хаб 1. Гляделки</b> (start_cycle)<br/>«Пялиться дальше» — цикл, на 4-й раз <span style='color:#2E8B3E'>mood +1</span><br/>«НАДОЕЛО.» → дальше · «Бочком-бочком» <span style='color:#2E8B3E'>mood −2</span> → road_begin"]:::scene
+H2["<b>Хаб 2. «Его имя?»</b> (conv_2)<br/>5 вариантов, см. детали ниже"]:::scene
+H2A["<b>Хаб 2a. Ветка амулета</b> (name_right, amul)<br/>верное имя → амулет: взять / не брать / надеть<br/><span style='color:#2E8B3E'>mood до +5</span>"]:::scene
+H3["<b>Хаб 3. «Кто я?»</b> (who_i_am)<br/>«Подожди!» · «Дать уйти» → Хаб 9 · «Схватить за плечо» → Хаб 8"]:::scene
+H4["<b>Хаб 4. Имя Лесса</b> (less_name)<br/>«Знакомы?» · «Странное имя» · «Приятно познакомиться»"]:::scene
+H5["<b>Хаб 5. Друзья</b> (we_meet)"]:::scene
+H6["<b>Хаб 6. Имя героини</b> (i_dont_know_name)<br/>«Еще чего!» → Вий · ввод своего имени"]:::scene
+H7["<b>Хаб 7. Прощание</b> (less_end)<br/>«Остановить» / «Оставить в покое»<br/>→ квест Айрата (less_airat_predl)"]:::scene
+H8["<b>Хаб 8. Хватание</b> (less_hand, strenght)<br/><span style='color:#2E8B3E'>mood −2</span>, <span style='color:#C62828'>blood +1</span>"]:::scene
+H9["<b>Хаб 9. Уход Лесса</b> (script_3_less_go)<br/>удар деревом → корни · ушёл · броситься за ним"]:::scene
+GONE["script_3_less_gone → road_begin<br/>→ экран strel"]:::less
+KORN["<b>Корни</b> (less_korn_menu)<br/>обмануть / поспать / вырваться / извиниться"]:::scene
+D1["<b>BAD END «Тщетная борьба...»</b>"]:::death
+D2["<b>BAD END «Подкормка...»</b>"]:::death
+D3["<b>BAD END «Шутка...»</b>"]:::death
+E1["<b>END? «Мирный сон...»</b>"]:::endd
+SLUC["«Броситься за ним» → sluc<br/>(script3_road, вне сцены)"]:::less
+H0 --> H1 --> H2
+H2 -- "верное имя" --> H2A
+H2A -- "смертельная шутка" --> D3
+H2A --> H3
+H2 --> H3
+H3 -- "Схватить за плечо" --> H8
+H3 -- "Подожди (mood ≥ 0)" --> H4
+H3 -- "Дать уйти" --> H9
+H4 --> H5 --> H6 --> H7
+H7 --> GONE
+H8 -- "бороться" --> D1
+H8 --> H9
+H9 -- "удар деревом" --> KORN
+H9 -- "ушёл" --> GONE
+H9 -- "броситься за ним" --> SLUC
+KORN -- "поспать" --> E1
+KORN -- "бороться до конца" --> D2
+KORN -- "обмануть / извиниться" --> GONE
+classDef scene fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430
+classDef death fill:#222222,stroke:#000000,color:#ffffff
+classDef less fill:#DDEFD8,stroke:#7cb87c,color:#1f2430
+classDef endd fill:#e6f4e6,stroke:#2E8B3E,color:#1e6b1e
+</div>
+<div class="card">
+<h2>Детали по хабам</h2>
+<div class="hub"><h3>Хаб 0. Вход (conv:1–36)</h3>
+<ul>
+<li><code>script_2_less_conv_0</code> и <code>script_2_less_conv_1</code>: сразу <code>call_screen_strel()</code> → экран strel. Код после вызова не выполняется (conv:3–7 — мёртвый код).</li>
+<li><code>script_2_less_conv</code> (conv:10) — реальный старт. Вход: script3_road.rpy:4, script3_nazad.rpy:5, :22; условие: <code>"less_begin"</code> нет в <code>vrem_memory["less_pers"]</code> и <code>not razr</code>.</li>
+</ul></div>
+<div class="hub"><h3>Хаб 1. Гляделки — start_cycle (conv:37)</h3>
+<ul>
+<li>«Пялиться на него дальше.» — цикл; на 4-й заход <span class="mood">mood +1</span> → start.</li>
+<li>«НАДОЕЛО.» → start → conv_2.</li>
+<li>«Бочком-бочком отсюда.» <span class="mood">mood −2</span> → road_begin (экран strel).</li>
+</ul></div>
+<div class="hub"><h3>Хаб 2. «Его имя?» — conv_2 (conv:97), меню conv:166</h3>
+<ul>
+<li>«Не надо меня есть! Я не вкусная!» <span class="mood">mood +1</span> → who_i_am.</li>
+<li>«Эээ... Кевин?» → wrong_name: <span class="mood">mood −2</span> → not_remember2: <span class="blood">blood +1</span>, <span class="mood">mood +1</span> → who_i_am.</li>
+<li>«Я-я не помню.» → not_remember2 → who_i_am.</li>
+<li>«Подставить шею для укуса.» <span class="mad">mad +1</span>, <span class="mood">mood +1</span>, <span class="blood">blood +1</span> → who_i_am.</li>
+<li>«Я знаю твое имя!» → ввод: пусто → not_remember; верное («Лесс», «Лес», …) → Хаб 2a; неверное → wrong_name. Регистр не нормализуется: «ЛЕСС» не пройдёт.</li>
+</ul></div>
+<div class="hub"><h3>Хаб 2a. Амулет — name_right (amul:1)</h3>
+<ul>
+<li>«Безразлично улыбнуться.» <span class="mad">mad +2</span> → samsp: «Ты же надо мной шутишь.» → <span class="death">BAD END «Шутка...»</span> · «Ээм... Нет?» → Хаб 9.</li>
+<li>«Это случайность! Я просто угадала!» <span class="mood">mood +5</span>, лупа на осмотр амулета (<span class="logic">logic +1</span>) → меню амулета: «Ч-что это?» (<span class="logic">logic +1</span>, <span class="mad">mad −1</span>, <span class="mood">mood +1</span>; «Это все что он делает?» ещё <span class="logic">logic +1</span>, <span class="mad">mad −1</span>) → «Возьму»/«Ну его.»; «Не брать.» <span class="mood">mood +1</span>; «Взять амулет.»; «Без лишних слов надеть.» <span class="mad">mad +1</span>, <span class="mood">mood −1</span>.</li>
+<li>Взять: «Надеть сразу» → who_i_am; «Убрать в карман.» <span class="logic">logic +1</span>, <span class="mad">mad −1</span>, <span class="mood">mood +1</span> → who_i_am.</li>
+</ul></div>
+<div class="hub"><h3>Хаб 3. «Кто я?» — who_i_am (conv:320), меню conv:349</h3>
+<ul>
+<li>«П...Подожди!» → stop: <span class="mood">mood</span> &lt; 0 → Хаб 9; иначе → Хаб 4.</li>
+<li>«Дать уйти.» → Хаб 9.</li>
+<li>«Схватить за плечо.» → Хаб 8.</li>
+</ul></div>
+<div class="hub"><h3>Хаб 4. Имя Лесса — less_name (conv:372), меню conv:389</h3>
+<ul>
+<li>«Видимо мы... Знакомы?» → Хаб 5.</li>
+<li>«Лесс? Странное имя» → strange_name: «Отличное имя!» <span class="mad">mad +1</span> → Хаб 5; «В смысле, лес?» <span class="logic">logic +1</span> → подменю: «Раздраженно посмотреть» <span class="mad">mad −1</span>, <span class="mood">mood +1</span> (похоже, знаки перепутаны) / «Каменное лицо» <span class="mood">mood −1</span>, <span class="logic">logic +1</span>; затем «Почему смерти?» → «Шаг назад»: <span class="mood">mood +2</span> (logic ≥ 2) или +1, <span class="logic">logic +1</span> → Хаб 5; «Пожать плечами и подставить горло» <span class="mad">mad +1</span>, <span class="mood">mood +1</span>, <span class="blood">blood +1</span> → Хаб 5.</li>
+<li>«Приятно познакомиться...» → Хаб 6 (или less_razg_menu при повторном разговоре).</li>
+</ul></div>
+<div class="hub"><h3>Хаб 5. Друзья — we_meet (conv:600), меню conv:622</h3>
+<ul>
+<li>«Как же так! Значит будут.» <span class="mood">mood +1</span>, <span class="mad">mad −1</span> → Хаб 6.</li>
+<li>«Что вообще такое друзья?» <span class="mad">mad +1</span> → Хаб 6.</li>
+</ul></div>
+<div class="hub"><h3>Хаб 6. Имя героини — i_dont_know_name (conv:651), меню conv:675</h3>
+<ul>
+<li>«Еще чего!» <span class="mad">mad +1</span>, имя «Вий» → Хаб 7.</li>
+<li>«Хорошая идея...» — ввод имени: пусто/«Вий» <span class="mad">mad +1</span>; своё имя <span class="logic">logic +1</span>, <span class="mad">mad −1</span>, <span class="mood">mood +1</span> → Хаб 7.</li>
+</ul></div>
+<div class="hub"><h3>Хаб 7. Прощание — less_end (conv:734), меню conv:775</h3>
+<ul>
+<li><span class="mood">mood &gt; 0</span>: благодушная ветка (<span class="mood">mood +1</span>, Урза узнаёт имя).</li>
+<li>«Попытаться его остановить.»: <span class="mood">mood</span> &lt; 0 → gone; иначе → continue: при mad ≥ 1 → gone; иначе квест Айрата (less_airat_predl): «Х-хорошо.» (без «reward» <span class="mood">mood −1</span>) → gone; «А что мне за это будет?» <span class="mood">mood +1</span>, <span class="logic">logic +1</span>, <span class="mad">mad −1</span> (повтор меню); «Еще чего!» <span class="mood">mood −2</span> → gone.</li>
+<li>«Оставить в покое.» → gone.</li>
+</ul></div>
+<div class="hub"><h3>Хаб 8. Хватание — less_hand (conv:986) и strenght (conv:1026)</h3>
+<ul>
+<li><span class="mood">mood −2</span>; «Отпустить.» <span class="mad">mad −1</span> → Хаб 9; «Удержать силой.» <span class="mood">mood −1</span> → strenght: <span class="blood">blood +1</span> (возможен скрытый выход sm_blood при Крови ≥ 3).</li>
+<li>«Отчаянно бороться...» → <span class="death">BAD END «Тщетная борьба...»</span>.</li>
+<li>«Расслабиться.» <span class="mad">mad +1</span>, <span class="logic">logic −1</span> → меню conv:1117. «Замереть.» <span class="mad">mad −1</span>, <span class="logic">logic +1</span> → меню conv:1117 (⚠️ conv:1105 персонаж «мь» не определён — ошибка).</li>
+<li>Меню conv:1117: «А сами-то!» <span class="mad">mad +1</span>, <span class="mood">mood +1</span> → Хаб 9; «Промолчать» <span class="mad">mad −1</span> → Хаб 9.</li>
+</ul></div>
+<div class="hub"><h3>Хаб 9. Уход Лесса — script_3_less_go (end:1), меню end:9</h3>
+<ul>
+<li>«Ударить дерево» <span class="logic">logic −1</span>, <span class="mad">mad +1</span>, <span class="mood">mood −2</span> → корни (less_korn_menu): «Не шевелиться» <span class="mad">mad +1</span> (цикл); «Обмякнуть» <span class="mad">mad −1</span>, <span class="logic">logic +1</span>, <span class="mood">mood +1</span> → ushel; «Поспать» <span class="mad">mad +1</span>, <span class="mood">mood +2</span> → <span class="end">END? «Мирный сон...»</span>; «Бороться до конца» → <span class="death">BAD END «Подкормка...»</span>; «Вырваться» <span class="logic">logic +1</span>, <span class="mood">mood −1</span> (цикл); «Извиниться» (если знает имя) <span class="logic">logic +1</span>, <span class="mood">mood +2</span> → ushel.</li>
+<li>«Чертовски опасно...» (blood &gt; 0) / «Что произошло?» (blood == 0) <span class="logic">logic +1</span>, <span class="mad">mad −1</span> → ushel → road_begin (экран strel).</li>
+<li>«Броситься за ним.» <span class="mad">mad +1</span> → ввод имени → sluc (script3_road, вне сцены).</li>
+</ul></div>
+<div class="hub"><h3>Воспоминания (mem) и повторный разговор (razg)</h3>
+<ul>
+<li>son → sud_memory → head_ache (<span class="blood">blood +1</span>): «Х-хватит...» <span class="logic">logic +1</span> → экран strel; «Идти до конца!» <span class="mad">mad +1</span> → смерть (death_son).</li>
+<li>less_razg_menu (повторные разговоры): вопросы-ветки назад в Хабы 4/7/5; «Конец» перезапускает меню, выход автоматический, когда остаётся один пункт → экран strel.</li>
+</ul></div>
+</div>
+<p class="muted">Скрытые переходы: <code>setblood(x)</code> при Крови ≥ 3 прыгает в sm_blood из любой строки с blood+1. Имя героини переспрашивается в end:68 и end:112, даже если уже задано. Полный список найденных ошибок — на странице <a href="stats.html">«Статы»</a>.</p>
+</main>
+<footer>Схемы игры «Вий» · разговор с Лессом · выверено по коду 14.10.2026</footer>
+</body>
+</html>

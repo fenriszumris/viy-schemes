@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Статы — Схемы игры «Вий»</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>Статы: минимумы и максимумы</h1>
+<p>Диапазоны по всем веткам сцены, посчитано по коду. Смерти не учитывались.</p>
+<nav class="crumbs"><a href="index.html">← Все схемы</a></nav>
+</div></header>
+<main>
+<div class="card">
+<h2>От начала игры до разговора с Лессом</h2>
+<table class="stats">
+<tr><th>Стат</th><th>Минимум</th><th>Максимум</th></tr>
+<tr><td class="mad">Безумие</td><td>0</td><td>+5</td></tr>
+<tr><td class="logic">Логика</td><td>0</td><td>+3</td></tr>
+<tr><td class="blood">Кровь</td><td>0</td><td>+1</td></tr>
+<tr><td class="mood">Настроение</td><td>0</td><td>0</td></tr>
+</table>
+</div>
+<div class="card">
+<h2>Разговор с Лессом (каждый стат отдельно)</h2>
+<table class="stats">
+<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Примечание</th></tr>
+<tr><td class="mad">Безумие</td><td>−7</td><td>+6</td><td></td></tr>
+<tr><td class="logic">Логика</td><td>−1</td><td>+9</td><td></td></tr>
+<tr><td class="blood">Кровь</td><td>0</td><td>+2</td><td>+2 только если на входе Кровь 0; из сцены руки вход всегда с Кровью 1, там предел +1</td></tr>
+<tr><td class="mood">Настроение Лесса</td><td>−6</td><td>+15</td><td>стартовое значение в коде не найдено, считалось 0</td></tr>
+</table>
+</div>
+<div class="card">
+<h2>Найденные в коде ошибки</h2>
+<h3>Ломают запуск</h3>
+<ul>
+<li><code>conv:1105</code> — реплика персонажа <code>мь</code>, который нигде не определён (по смыслу <code>vm</code>): ветка «Дико страшно... замереть» падает с ошибкой.</li>
+<li><code>mem:252</code> — персонаж <code>elf</code> не определён (ветка недостижима, см. ниже).</li>
+<li><code>razg:19</code> — вызов <code>show_less("smile")</code>: функция не найдена в коде.</li>
+</ul>
+<h3>Логика</h3>
+<ul>
+<li><code>amul:21</code> — <code>$ less.mood - 4</code> без присваивания: настроение не меняется (нужно <code>-=</code>).</li>
+<li>«Расслабиться» / «Замереть» / «Обмякнуть»: у add_logic дедупликация по причине, у add_mad нет — повторы начисляются неодинаково.</li>
+<li><code>conv:615</code> — <code>u_part(7.1)</code> вместо <code>u_part(7,1)</code>.</li>
+<li>Пороги настроения в прощании: <code>&gt;0</code> (conv:735) против <code>&lt;0</code> (conv:778): при ровно 0 срабатывает «благодушная» ветка.</li>
+<li>Условие «Обмякнуть» (end:158): <code>not ld1.d7 or ld1.d8</code> — после «Не шевелиться» вариант исчезает, после «Вырваться» появляется снова; похоже на опечатку.</li>
+<li><code>road_begin</code> проверяет <code>persistent.memory</code>, а не память текущего прохождения: реплика про скрижаль останется навсегда.</li>
+<li>Имя героини переспрашивается и перезаписывается в end:68 и end:112, даже если уже задано в разговоре.</li>
+<li>Две разные смерти пишутся в один ключ <code>deaths_list["less_eat"]</code>.</li>
+<li>«toggle» добавляется в заметку амулета дважды (amul:287-288 и 302-303).</li>
+<li><code>keep_cloath</code> (end:334) — метка без перехода в конце файла.</li>
+<li>«Конец» в повторном разговоре (razg:70) не завершает разговор, а перезапускает меню.</li>
+</ul>
+<h3>Мёртвый и недостижимый код</h3>
+<ul>
+<li><code>conv:3-7</code> — после <code>call_screen_strel()</code> не выполняется никогда.</li>
+<li><code>script_2_less_follow</code> (conv:921-951) закомментирован целиком; <code>script_2_less_end_follow</code> в коде нет.</li>
+<li><code>hand:230</code> — недостижимый <code>return</code> (комментарий «#доделать»).</li>
+<li><code>prop_memory</code> / <code>prop_memory2</code> (mem:234/250) — переходов на них нет; вторая заканчивается без jump/return.</li>
+<li><code>inv_end</code> (script.rpy:966) — вход в метку не найден.</li>
+<li>Стартовое меню разработчика (start3, begin:17) видит каждый игрок: <code>razr = 1</code> стоит жёстко.</li>
+</ul>
+<h3>Опечатки и разметка</h3>
+<ul>
+<li>conv:43 «принюхмивается», conv:44 «громогласнный», conv:969 «одиночестве .», conv:1101 / end:66 «стоить» вместо «стоит», end:326 «не богу придумать».</li>
+<li>amul:30 — лишняя <code>}</code> в разметке; conv:1042 — <code>"bite blood.mp3"</code> с пробелом (в других местах <code>bite_blood.mp3</code>).</li>
+<li>Метка <code>script_2_less_strenght</code> — опечатка в имени (strength); на работу не влияет.</li>
+</ul>
+</div>
+</main>
+<footer>Схемы игры «Вий» · статы и ошибки · выверено по коду 14–15.10.2026</footer>
+</body>
+</html>

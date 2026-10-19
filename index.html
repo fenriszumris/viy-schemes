@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Схемы игры «Вий»</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>Схемы игры «Вий»</h1>
+<p>Карты сюжетных веток визуальной новеллы. Собрано строго по исходному коду (Kraka42/viy_demo), без домыслов.</p>
+</div></header>
+<main>
+<div class="card">
+<h2>Схемы</h2>
+<ul class="toc">
+<li><a href="start.html">Сцена «Старт»</a><br><span class="muted">От начала игры до разговора с Лессом: обучение, хардмод, меню разработчика, сон, укус руки. Диаграмма.</span></li>
+<li><a href="less.html">Разговор с Лессом</a><br><span class="muted">Все хабы диалога: гляделки, имя, амулет, друзья, прощание, корни. Карта выборов с эффектами статов.</span></li>
+<li><a href="stats.html">Статы: минимумы и максимумы</a><br><span class="muted">Диапазоны Безумия, Логики, Крови и Настроения по сценам, плюс найденные в коде ошибки.</span></li>
+</ul>
+</div>
+<div class="card">
+<h2>Легенда</h2>
+<div class="legend">
+<span class="mad">Безумие</span>
+<span class="logic">Логика</span>
+<span class="blood">Кровь</span>
+<span class="mood">Настроение (в т.ч. Лесса)</span>
+</div>
+<p class="muted">Белые карточки — выборы. Голубые — сцены. Жёлтые — служебные меню (сложность, разработчик). Чёрные — смерти (BAD END). Зелёные — переходы дальше по сюжету. Пунктир — выход на экран стрелок (дальше нелинейно).</p>
+</div>
+<div class="card">
+<h2>Как это править</h2>
+<p>Каждая страница — обычный HTML-файл в репозитории. Диаграммы — текст Mermaid внутри блока <code>&lt;pre class="mermaid"&gt;</code>: правится как текст, удобно через <a href="https://mermaid.live">mermaid.live</a>. После сохранения в репозитории сайт обновляется сам.</p>
+<p class="muted">Проверено по коду 14–15 октября 2026. Если код игры изменился, скажи Лею — он перечитает исходники и обновит схемы.</p>
+</div>
+</main>
+<footer>Схемы игры «Вий» · обновляется Леем · исходники: github.com/Kraka42/viy_demo (только чтение)</footer>
+</body>
+</html>
