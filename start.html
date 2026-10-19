@@ -6,23 +6,25 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>Сцена «Старт» — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="style7.css">
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
 
 </script>
+<script src="site7.js"></script>
 </head>
 <body>
 <header class="site"><div class="wrap">
 <h1>Сцена «Старт»</h1>
-<p>От начала игры до разговора с Лессом · Локация: <a href="location.html?v=6" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script.rpy, script_1_less_begin.rpy, script_1_less_hand.rpy</p>
-<nav class="crumbs"><a href="index.html?v=6">← Все схемы</a> · <a href="location.html?v=6">Локация «Место пробуждения»</a> · <a href="strel.html?v=6">Экран переходов</a></nav>
+<p>От начала игры до разговора с Лессом · Локация: <a href="location.html?v=7" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script.rpy, script_1_less_begin.rpy, script_1_less_hand.rpy</p>
+<nav class="crumbs"><a href="index.html?v=7">← Все схемы</a> · <a href="location.html?v=7">Локация «Место пробуждения»</a> · <a href="strel.html?v=7">Экран переходов</a></nav>
 </div></header>
 <main>
 <div class="viewtoggle">
-<button id="btn-full" class="active" onclick="sv(1)">Детальнее</button>
-<button id="btn-short" onclick="sv(0)">Короче</button>
+<button id="btn-full" class="active" onclick="toggleView('start',1)">Детальнее</button>
+<button id="btn-short" onclick="toggleView('start',0)">Короче</button>
+<span id="view-label" class="muted">Сейчас показана ДЕТАЛЬНАЯ схема</span>
 </div>
 <div class="panel-rel">
 <div id="panel-full">
@@ -93,7 +95,7 @@ classDef death fill:#222222,stroke:#000000,color:#ffffff
 classDef less fill:#DDEFD8,stroke:#7cb87c,color:#1f2430
 </div>
 </div>
-<div id="panel-short" class="panel-hidden">
+<div id="panel-short" style="position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:100%">
 <div class="mermaid fill">
 flowchart TB
 S0["<b>Сцена 0. Выбор сложности</b> (hard)"]:::scene
@@ -133,18 +135,10 @@ classDef far fill:#eeeeee,stroke:#aaaaaa,color:#555555
 <tr><td>Разговор с Лессом</td><td>−7…+6</td><td>−1…+9</td><td>0…+2</td><td>−6…+15</td></tr>
 <tr><td><b>Итого по локации</b></td><td><b>−7…+6</b></td><td><b>−1…+9</b></td><td><b>0…+2</b></td><td><b>−6…+15</b></td></tr>
 </table>
-<p class="muted">Посчитано по коду 15.10.2026, смерти не учитывались. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=6">«Статы»</a>.</p>
+<p class="muted">Посчитано по коду 15.10.2026, смерти не учитывались. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=7">«Статы»</a>.</p>
 </div>
 
-<p class="muted">Лупа (start_osm: Логика +1, один раз) и воспоминания из дневника на диаграмме не показаны. Входы в разговор с Лессом и сам разговор — на странице <a href="less.html?v=6">«Разговор с Лессом»</a>. Диапазоны статов — на странице <a href="stats.html?v=6">«Статы»</a>.</p>
-<script>
-function sv(full){
- document.getElementById('panel-full').className = full ? '' : 'panel-hidden';
- document.getElementById('panel-short').className = full ? 'panel-hidden' : '';
- document.getElementById('btn-full').className = full ? 'active' : '';
- document.getElementById('btn-short').className = full ? '' : 'active';
-}
-</script>
+<p class="muted">Лупа (start_osm: Логика +1, один раз) и воспоминания из дневника на диаграмме не показаны. Входы в разговор с Лессом и сам разговор — на странице <a href="less.html?v=7">«Разговор с Лессом»</a>. Диапазоны статов — на странице <a href="stats.html?v=7">«Статы»</a>.</p>
 </main>
 <footer>Схемы игры «Вий» · сцена «Старт» · выверено по коду 15.10.2026</footer>
 </body>
