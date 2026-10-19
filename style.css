@@ -39,3 +39,8 @@ code{background:#eef0f4;border-radius:4px;padding:1px 5px;font-size:13px}
 .death{color:#fff;background:#222;border-radius:6px;padding:0 6px;font-weight:700}
 .end{background:#e6f4e6;border-radius:6px;padding:0 6px;font-weight:700;color:#1e6b1e}
 footer{max-width:none;margin:0 0 40px;padding:0 20px;color:var(--muted);font-size:13px}
+.viewtoggle{margin:0 0 14px}
+.viewtoggle button{font-family:inherit;font-size:15px;font-weight:600;padding:9px 18px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer;border-radius:8px;margin-right:8px}
+.viewtoggle button.active{background:#2b2440;color:#fff;border-color:#2b2440}
+.panel-rel{position:relative}
+.panel-hidden{position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:100%}
