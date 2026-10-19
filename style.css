@@ -29,7 +29,7 @@ table.stats th{background:#f0eef7}
 .mermaid{text-align:left}
 .mermaid svg{margin:0 !important;display:block}
 .mermaid.fill svg{max-width:none !important}
-.mermaid.fillcap svg{max-width:1000px !important;margin:0 auto !important}
+.mermaid.fillcap svg{max-width:1200px !important;margin:0 auto !important}
 .mermaid{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto}
 code{background:#eef0f4;border-radius:4px;padding:1px 5px;font-size:13px}
 .hub{border-left:4px solid #b9a7ff;padding:6px 0 6px 14px;margin:14px 0}
