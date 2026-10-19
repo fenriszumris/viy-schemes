@@ -7,18 +7,8 @@
 <link rel="stylesheet" href="style.css">
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:55, rankSpacing:70, padding:14}, theme:'default', themeVariables:{fontSize:'19px'}});
+mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:45, rankSpacing:55}, theme:'default', themeVariables:{fontSize:'16px'}});
 
-window.addEventListener('load', function(){
-  var tries = 0;
-  var t = setInterval(function(){
-    var done = false;
-    document.querySelectorAll('.mermaid').forEach(function(d){
-      if (d.scrollWidth > d.clientWidth + 10) { d.scrollLeft = (d.scrollWidth - d.clientWidth)/2; done = true; }
-    });
-    if (done || ++tries > 40) clearInterval(t);
-  }, 300);
-});
 </script>
 </head>
 <body>
@@ -150,7 +140,6 @@ classDef endd fill:#e6f4e6,stroke:#2E8B3E,color:#1e6b1e
 <li>less_razg_menu (повторные разговоры): вопросы-ветки назад в Хабы 4/7/5; «Конец» перезапускает меню, выход автоматический, когда остаётся один пункт → экран strel.</li>
 </ul></div>
 </div>
-<p class="muted">Диаграмму можно двигать вбок и приближать жестом. </p>
 <p class="muted">Скрытые переходы: <code>setblood(x)</code> при Крови ≥ 3 прыгает в sm_blood из любой строки с blood+1. Имя героини переспрашивается в end:68 и end:112, даже если уже задано. Полный список найденных ошибок — на странице <a href="stats.html">«Статы»</a>.</p>
 </main>
 <footer>Схемы игры «Вий» · разговор с Лессом · выверено по коду 14.10.2026</footer>
