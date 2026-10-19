@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<title>Назад (Таша) — Схемы игры «Вий»</title>
+<link rel="stylesheet" href="style7.css?v=22">
+<style>.widechart{overflow-x:auto}.widechart svg{max-width:none !important}.tmood{color:#D97706}</style>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'17px'}});
+
+const HUBS=['H1','H2','H3','H4','H5','H6','H7','H8','RT','DEAD'];
+const EXP=new Set();
+const c1='#0f766e', c2='#4f46e5', c3='#be123c', c4='#0369a1', c5='#15803d', c6='#0e7490', c7='#a16207', c8='#7e22ce', cR='#475569', cB='#64748b', cG='#9aa3b2';
+// цвета статов: mad фиолетовый, logic голубой, blood малиновый, mood красный (Лесс), Тм янтарный (Таша)
+const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_TM='rgb(217,119,6)';
+const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_TM]='rgb(253,240,221)';
+
+function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
+function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
+function mk(text, ups, downs){
+  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
+  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
+    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
+    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
+    +'</div>';
+}
+function cond(t){ return '<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">'+t+'</span>'; }
+function badge(ranges){
+  if(!ranges.length) return '';
+  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;line-height:1.5;white-space:nowrap">'+p[1]+'</span>';}).join(' ');
+  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
+}
+function hub(id,label,cls,ranges){
+  const arrow = EXP.has(id) ? '▾' : '▸';
+  const b=badge(ranges||[]);
+  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
+  return id + '["' + inner + '"]:::' + cls;
+}
+
+function build(){
+  const L=[]; const ST=[]; let ei=0;
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
+  L.push('flowchart TB');
+  L.push(hub('H1','Хаб 1. Встреча и погоня<br/>nazad:196–435','h1',[[C_TM,'−3…+2']]));
+  L.push(hub('H2','Хаб 2. Стоп и знакомство<br/>nazad:448–525, 615–728','h2',[[C_TM,'−1…+2'],[C_MAD,'0…+1']]));
+  L.push(hub('H3','Хаб 3. Таша расстроился (sad)<br/>nazad:526–614','h3',[[C_TM,'−5…+10']]));
+  L.push(hub('H4','Хаб 4. Карты и мини-игра<br/>nazad:729–766, 1339–1368 · tash_game.rpy','h4',[[C_TM,'−10…+10'],[C_MAD,'−1…+1']]));
+  L.push(hub('H5','Хаб 5. Большой разговор<br/>razg_2menu · nazad:767–1044, 1205–1337','h5',[[C_MAD,'0…+1'],[C_LOG,'0…+1']]));
+  L.push(hub('H6','Хаб 6. Урза и разлом<br/>nazad:1045–1134','h6',[[C_MAD,'−1…+1']]));
+  L.push(hub('H7','Хаб 7. Друзья и конец игры<br/>end · nazad:1370–1542','h7',[[C_MAD,'−1…+1'],[C_LOG,'0…+1']]));
+  L.push(hub('H8','Хаб 8. Серьёзный разговор<br/>ser / ser2_men · nazad:1544–1816','h8',[[C_TM,'−5…+3'],[C_MAD,'−1…+1'],[C_LOG,'0…+2']]));
+  L.push(hub('RT','Повторные разговоры<br/>razg_menu = «tash» · day_1_tash_razg.rpy','hrt',[[C_TM,'0…+1']]));
+  L.push(hub('DEAD','Мёртвый код<br/>nazadli · меню 948–987 · осмотры','hb',[]));
+  L.push('VH["Вход: script3_nazad_begin<br/>стрелкой из сцены «Дорога»"]:::ext');
+  L.push('VHR["Вход: razg_menu = «tash»<br/>повторный разговор"]:::ext');
+  L.push('GN["'+mk('gone: Таша уходит → 2gone<br/>→ my_location = less_slime',null,[[C_TM,3]])+'"]:::hb');
+  L.push('EX1["'+mk('→ strel: Таша помогает<br/>near + helpp · return (nazad:363)')+'"]:::term');
+  L.push('EX2["'+mk('→ strel: Таша с тобой (near)<br/>nazad:427')+'"]:::term');
+  L.push('EX3["'+mk('→ script3_nazad_gubert<br/>2gone (nazad:676)')+'"]:::term');
+  L.push('EX5["'+mk('→ strel: Таша исчез<br/>отказ идти к Урзе (nazad:1538)')+'"]:::term');
+  L.push('EX6["'+mk('return: конец сцены<br/>после разлома (urza2:1115)')+'"]:::term');
+  L.push('EX7["'+mk('КОНЕЦ ДЕМОВЕРСИИ<br/>urza3 (ветка «blu», nazad:1116)')+'"]:::term');
+  L.push('EX8["'+mk('→ script3_nazad_tash_afterser<br/>→ Губерт (gubert:5)')+'"]:::term');
+  L.push('EX9["'+mk('→ strel: разговоры окончены<br/>razg_menu = 0 (razg:22)')+'"]:::term');
+  L.push('CR1["'+mk('CRASH: NameError ssanity<br/>nazad:1666 — всегда')+'"]:::die');
+  L.push('CR2["'+mk('CRASH: метка urzali не найдена<br/>jump nazad:1043')+'"]:::die');
+  E('VH --> H1', cG);
+  E('VHR --> RT', cG);
+  E('GN --> EX3', cB);
+  // --- H1: встреча и погоня (nazad:196-435) ---
+  if(EXP.has('H1')){
+    E('H1 --> A1["'+mk('«Игнорировать его.» (nazad:249)',null,[[C_TM,1]])+'"]:::h1', c1);
+    E('A1 --> GO["меню: уход (go, nazad:264)"]:::h1', c1);
+    E('H1 --> A2["'+mk('«Подойти познакомиться.»'+cond('Тм+2 только в 1-й раз (nazad:213)'),[[C_TM,2]])+'"]:::h1', c1);
+    E('A2 --> H2', c1);
+    E('GO --> G1["'+mk('«Остановиться и поговорить.» (nazad:266)',[[C_TM,1]])+'"]:::h1', c1); E('G1 --> H2', c1);
+    E('GO --> G2["'+mk('«Прибавить шагу.»')+'"]:::h1', c1);
+    E('G2 --> RUN["меню: погоня (run, nazad:312)"]:::h1', c1);
+    E('GO --> G3["'+mk('«Пуститься наутек.»'+cond('vd1.d5 = 1 (nazad:275)'),null,[[C_TM,3]])+'"]:::h1', c1); E('G3 --> GN', c1);
+    E('RUN --> R1["'+mk('«Постараться убежать от него.»')+'"]:::h1', c1); E('R1 --> H3', c1);
+    E('RUN --> R2["'+mk('«У меня нет на тебя времени!» (nazad:323)',[[C_TM,1]])+'"]:::h1', c1);
+    E('R2 --> HP["меню: предложение помощи (help, nazad:331)"]:::h1', c1);
+    E('RUN --> R3["'+mk('«Остановиться и выяснить, чего он пристал.»')+'"]:::h1', c1); E('R3 --> H5', c1);
+    E('HP --> HP1["'+mk('«Ты правда хочешь помочь?»'+cond('1 раз (td.d3)'))+'"]:::h1', c1); E('HP1 --> HP', c1);
+    E('HP --> HP2["'+mk('«Нет, спасибо, не надо.»')+'"]:::h1', c1);
+    E('HP2 --> WY["меню: «я пока с тобой!» (withyou, nazad:374)"]:::h1', c1);
+    E('HP --> HP3["'+mk('«Хорошо, я буду рада помощи.»')+'"]:::h1', c1); E('HP3 --> EX1', c1);
+    E('HP --> HP4["'+mk('«Остановиться и нормально поговорить»'+cond('td4.d5 = 1 · если td4.d6 — сразу в разговор'))+'"]:::h1', c1); E('HP4 --> H2', c1);
+    E('WY --> W1["'+mk('«Что?! Зачем?!»'+cond('1 раз (td.d4)'))+'"]:::h1', c1); E('W1 --> WY', c1);
+    E('WY --> W2["'+mk('«Ни в коем случае!»')+'"]:::h1', c1);
+    E('W2 --> NY["меню: «А почему?» (ny, nazad:389)"]:::h1', c1);
+    E('WY --> W3["'+mk('«Л-ладно, иди.»'+cond('tash.near = True (nazad:420)'),[[C_TM,1]])+'"]:::h1', c1); E('W3 --> EX2', c1);
+    E('NY --> N1["'+mk('«Я... Ты мне просто не нравишься.»')+'"]:::h1', c1); E('N1 --> H3', c1);
+    E('NY --> N2["'+mk('«Я не могу сказать. Но не надо.» (nazad:402)',[[C_TM,1]])+'"]:::h1', c1); E('N2 --> GN', c1);
+    E('NY --> N3["'+mk('«Просто нет.» (nazad:413)',null,[[C_TM,3]])+'"]:::h1', c1); E('N3 --> GN', c1);
+  } else {
+    E('H1 --> H2', c1);
+    E('H1 --> H3', c1);
+    E('H1 --> H5', c1);
+    E('H1 --> EX1', c1);
+    E('H1 --> EX2', c1);
+    E('H1 --> GN', c1);
+  }
+  // --- H2: стоп и знакомство (nazad:448-728) ---
+  if(EXP.has('H2')){
+    E('H2 --> S1["'+mk('«Чего тебе!?»'+cond('vd1.d3 = 1'))+'"]:::h2', c2); E('S1 --> H4', c2);
+    E('H2 --> S2["'+mk('«Привет.» (nazad:462)',[[C_TM,1]])+'"]:::h2', c2);
+    E('S2 --> ST2["меню stop2 (nazad:468)"]:::h2', c2);
+    E('ST2 --> T1["'+mk('«Я... Просто испугалась.» (nazad:484)',null,[[C_TM,1]])+'"]:::h2', c2);
+    E('T1 --> SC["меню scared (nazad:487)"]:::h2', c2);
+    E('ST2 --> T2["'+mk('«Не знаю! Улыбнуться.» (nazad:506, 508)',[[C_TM,1],[C_MAD,1]])+'"]:::h2', c2);
+    E('T2 --> HL["меню hello (nazad:616)"]:::h2', c2);
+    E('ST2 --> T3["'+mk('«Потому что я не хочу с тобой разговаривать!» (nazad:513)',null,[[C_TM,1]])+'"]:::h2', c2); E('T3 --> H3', c2);
+    E('SC --> SC1["'+mk('«Ты похож на Лесса...»'+cond('если Лесс знаком; иначе «на того странного незнакомца»'))+'"]:::h2', c2); E('SC1 --> HL', c2);
+    E('SC --> SC2["'+mk('«Ты мне не нравишься.»')+'"]:::h2', c2); E('SC2 --> H3', c2);
+    E('HL --> L1["'+mk('«Я тоже очень рада!» (nazad:618)',[[C_TM,2]])+'"]:::h2', c2);
+    E('HL --> L2["'+mk('«...»'+cond('при Логике ≥ 2 — доп. реплика (nazad:620)'))+'"]:::h2', c2);
+    E('L1 --> R2Z["меню «у меня для тебя есть дело» (2razg, nazad:630)"]:::h2', c2);
+    E('L2 --> R2Z', c2);
+    E('R2Z --> Z1["'+mk('«У меня и своих полно...»'+cond('1 раз (td.d1)'))+'"]:::h2', c2); E('Z1 --> R2Z', c2);
+    E('R2Z --> Z2["'+mk('«Нет.»'+cond('только после «своих полно» (td.d1) · сразу 2gone, без −3 gone'),null,[[C_TM,1]])+'"]:::h2', c2); E('Z2 --> EX3', c2);
+    E('R2Z --> Z3["'+mk('«Конечно помогу! Что хочешь?»')+'"]:::h2', c2); E('Z3 --> H4', c2);
+    E('R2Z --> Z4["'+mk('«Узнать подробности.»')+'"]:::h2', c2); E('Z4 --> H4', c2);
+  } else {
+    E('H2 --> H4', c2);
+    E('H2 --> H3', c2);
+    E('H2 --> EX3', c2);
+  }
+  // --- H3: sad (nazad:526-614) ---
+  if(EXP.has('H3')){
+    E('H3 --> SD1["'+mk('«Остановить его.»'+cond('вход в sad: Тм−5 (nazad:533)'),null,[[C_TM,5]])+'"]:::h3', c3);
+    E('SD1 --> SR["меню sorry (nazad:559)"]:::h3', c3);
+    E('H3 --> SD2["'+mk('«Дать уйти.»'+cond('вход в sad: Тм−5 (nazad:533)'),null,[[C_TM,5]])+'"]:::h3', c3); E('SD2 --> GN', c3);
+    E('SR --> SR1["'+mk('«Извиниться.» (nazad:563)',[[C_TM,5]])+'"]:::h3', c3);
+    E('SR1 --> SR2["меню sorry2 (nazad:567)"]:::h3', c3);
+    E('SR --> SR3["'+mk('«Нет, ничего.»')+'"]:::h3', c3); E('SR3 --> GN', c3);
+    E('SR2 --> SR4["'+mk('«Прости, но у меня нет времени.»')+'"]:::h3', c3); E('SR4 --> GN', c3);
+    E('SR2 --> SR5["'+mk('«Ладно.» — карты (nazad:582)'+cond('партии в коде не ограничены'),[[C_TM,10]])+'"]:::h3', c3); E('SR5 --> H4', c3);
+  } else {
+    E('H3 --> H4', c3);
+    E('H3 --> GN', c3);
+  }
+  // --- H4: карты и мини-игра (nazad:729-766, 1339-1368; tash_game.rpy) ---
+  if(EXP.has('H4')){
+    E('H4 --> C1["'+mk('«Хорошо, давай сыграем.» (nazad:732)',[[C_TM,10]])+'"]:::h4', c4);
+    E('H4 --> C2["'+mk('«Нет!» (nazad:744)',null,[[C_TM,10]])+'"]:::h4', c4); E('C2 --> H3', c4);
+    E('H4 --> C3["'+mk('«П-подожди... Давай сначала поговорим!»')+'"]:::h4', c4); E('C3 --> H5', c4);
+    E('H4 --> C4["'+mk('«З...Зачем?»'+cond('1 раз (td.d5)'))+'"]:::h4', c4); E('C4 --> H4', c4);
+    E('C1 --> TG["меню игры (tash_game.rpy:86)"]:::h4', c4);
+    E('TG --> TG1["'+mk('«А правила!?» (tash_game:89)',null,[[C_MAD,1]])+'"]:::h4', c4);
+    E('TG --> TG2["'+mk('«Поехали!» (tash_game:101)',[[C_MAD,1]])+'"]:::h4', c4);
+    E('TG1 --> GM["партия (мини-игра)"]:::h4', c4);
+    E('TG2 --> GM', c4);
+    E('GM --> GM1["'+mk('бросить партию (cards_stop, tash_game:208)',null,[[C_TM,3]])+'"]:::h4', c4); E('GM1 --> H5', c4);
+    E('GM --> GM2["'+mk('доиграть'+cond('заметка «game» · played'))+'"]:::h4', c4);
+    E('GM2 --> IO["меню после игры (igra_over, nazad:1339)"]:::h4', c4);
+    E('IO --> IO1["'+mk('«Эм, хватит.»')+'"]:::h4', c4); E('IO1 --> H7', c4);
+    E('IO --> IO2["'+mk('«Да! Почему нет?» — рематч (nazad:1350)'+cond('рематчи в коде не ограничены'),[[C_TM,5]])+'"]:::h4', c4); E('IO2 --> TG', c4);
+    E('IO --> IO3["'+mk('«Может поговорим?»')+'"]:::h4', c4); E('IO3 --> H5', c4);
+  } else {
+    E('H4 --> H5', c4);
+    E('H4 --> H3', c4);
+    E('H4 --> H7', c4);
+  }
+  // --- H5: большой разговор (razg_2menu, nazad:767-1044, 1205-1337) ---
+  if(EXP.has('H5')){
+    E('H5 --> Q1["'+mk('«Как тебя зовут?»'+cond('1 раз (t22)'))+'"]:::h5', c5);
+    E('Q1 --> R2["razg_2: ответы про имя (nazad:1205)"]:::h5', c5);
+    E('H5 --> Q2["'+mk('«У меня уже были проблемы с памятью?»'+cond('после «зовут» (t23)'))+'"]:::h5', c5); E('Q2 --> H5', c5);
+    E('H5 --> Q3["'+mk('«Много что поменялось?»'+cond('после «памятью» (t26) · urza.zn →'))+'"]:::h5', c5);
+    E('H5 --> Q4["'+mk('«И что тогда со мной случилось в Лесу?»'+cond('после «памятью» (t24) · less.zn'))+'"]:::h5', c5); E('Q4 --> H5', c5);
+    E('R2 --> R2A["'+mk('«Я потеряла память.»')+'"]:::h5', c5);
+    E('R2 --> R2B["'+mk('«Сделать морду кирпичом.»')+'"]:::h5', c5); E('R2B --> H5', c5);
+    E('R2 --> R2C["'+mk('«Да! Классная же традиция!» (nazad:1236)',[[C_MAD,1]])+'"]:::h5', c5); E('R2C --> H5', c5);
+    E('R2A --> NM["nomemory (nazad:1241)"]:::h5', c5);
+    E('NM --> NM1["'+mk('«хочу знать больше»'+cond('набор опций по persistent.memory'))+'"]:::h5', c5);
+    E('NM1 --> HLP["2help: Урза может вернуть память (nazad:1293)"]:::h5', c5);
+    E('NM --> NM2["'+mk('«не хочу вспоминать»')+'"]:::h5', c5); E('NM2 --> H1', c5);
+    E('HLP --> HM["меню 2help (nazad:1315)"]:::h5', c5);
+    E('HLP -.->|"заметки «urza» и «urza_memory»"| H5', c5);
+    E('HM --> HM1["'+mk('«Расскажи о нем побольше.»'+cond('Логика ≥ 2 · 1 раз (t32) · БЕЗ +Лог!'))+'"]:::h5', c5); E('HM1 --> HM', c5);
+    E('HM --> HM2["'+mk('«Да, это отличная идея!»')+'"]:::h5', c5); E('HM2 --> H6', c5);
+    E('HM --> HM3["'+mk('«Нет, я не думаю, что стоит.»')+'"]:::h5', c5); E('HM3 --> H5', c5);
+    E('Q3 --> CU["меню canurza (nazad:991)"]:::h5', c5);
+    E('CU --> CU1["'+mk('«Ты... Можешь отвести меня к этому Урзе?»'+cond('td3.d1 = 1'))+'"]:::h5', c5);
+    E('CU --> CU2["'+mk('«Расскажешь о нем побольше?»')+'"]:::h5', c5);
+    E('CU --> CU3["'+mk('«Я бы хотела спросить о другом.»')+'"]:::h5', c5); E('CU3 --> H5', c5);
+    E('CU1 --> UQ["меню urza_question (nazad:1012)"]:::h5', c5);
+    E('CU2 --> UM["urzamore (nazad:1030)"]:::h5', c5);
+    E('UQ --> UQ1["'+mk('«Да, давай сейчас!»')+'"]:::h5', c5); E('UQ1 --> H6', c5);
+    E('UQ --> UQ2["'+mk('«Нет, не сейчас»')+'"]:::h5', c5); E('UQ2 --> H5', c5);
+    E('UQ --> UQ3["'+mk('«Может, сначала еще поговорим?»'+cond('td3.d1 = 1'))+'"]:::h5', c5); E('UQ3 --> H5', c5);
+    E('UQ --> UQ4["'+mk('«Сначала расскажи о нем побольше...»'+cond('Логика ≥ 2 · 1 раз (t32)'))+'"]:::h5', c5); E('UQ4 --> UM', c5);
+    E('UM --> UMN["'+mk('рассказ об Урзе'+cond('urza.zn_name == True — опечатка ==, не срабатывает (nazad:1034)'),[[C_LOG,1]])+'"]:::h5', c5);
+    E('UMN -- "если td3.d1 = 1" --> CR2', c8);
+    E('UMN --> CU', c5);
+    E('H5 --> Q6["'+mk('«Назад»'+cond('только при razg_menu = «tash»'))+'"]:::h5', c5); E('Q6 --> RT', c5);
+    E('H5 --> Q7["'+mk('«Хватит болтать!»'+cond('если партия была — в end, иначе в карты'))+'"]:::h5', c5);
+    E('Q7 --> H7', c5);
+    E('Q7 --> H4', c5);
+  } else {
+    E('H5 --> H4', c5);
+    E('H5 --> H7', c5);
+    E('H5 --> H6', c5);
+    E('H5 --> H1', c5);
+    E('H5 --> RT', c5);
+    E('H5 --> CR2', c5);
+  }
+  // --- H6: Урза и разлом (nazad:1045-1134) ---
+  if(EXP.has('H6')){
+    E('H6 --> UR["'+mk('идём к разлому'+cond('tash.near + tash.helpp · заметка «urza»'))+'"]:::h6', c6);
+    E('UR --> U2A["'+mk('«Прекрасно!» (nazad:1098)'+cond('add_mad с reason: повтор не начислится'),[[C_MAD,1]])+'"]:::h6', c6); E('U2A --> EX6', c6);
+    E('UR --> U2B["'+mk('«Сомнительно.» (nazad:1104)'+cond('add_mad с reason: повтор не начислится'),null,[[C_MAD,1]])+'"]:::h6', c6); E('U2B --> EX6', c6);
+    E('UR --> U3["'+mk('заколоченный тупик'+cond('только если «blu» в avt_d (nazad:1087)'))+'"]:::h6', c6); E('U3 --> EX7', c6);
+  } else {
+    E('H6 --> EX6', c6);
+    E('H6 --> EX7', c6);
+  }
+  // --- H7: друзья и конец игры (end, nazad:1370-1542) ---
+  if(EXP.has('H7')){
+    E('H7 --> EN1["'+mk('«У тебя есть друзья?»'+cond('1 раз (td3.d8)'))+'"]:::h7', c7); E('EN1 --> H7', c7);
+    E('H7 --> EN2["'+mk('«Я... Не понимаю что такое друзья.» (nazad:1383)'+cond('Безумие ≥ 3 · после «друзья?» (td3.d12)'),[[C_MAD,1]])+'"]:::h7', c7); E('EN2 --> H7', c7);
+    E('H7 --> EN3["'+mk('«Думаешь, кто-то бы пришел в такое место поиграть?»'+cond('Логика ≥ 2 · 1 раз (td3.d3)'))+'"]:::h7', c7); E('EN3 --> H7', c7);
+    E('H7 --> EN4["'+mk('«Ты... правда не боишься?» (nazad:1454, 1465)'+cond('после «кто-то пришел» (td3.d5)'),[[C_LOG,1]],[[C_MAD,1]])+'"]:::h7', c7); E('EN4 --> H7', c7);
+    E('H7 --> EN5["'+mk('«А почему твои друзья не могут прийти?»'+cond('1 раз (td3.d10) · без статов'))+'"]:::h7', c7); E('EN5 --> H7', c7);
+    E('H7 --> EN6["'+mk('«Ты что, никогда не бываешь серьезным?» (nazad:1485-1486)'+cond('ratio = Лог/(Без+Лог) > 0.5 · 1 раз (td3.d9)'),[[C_LOG,1]],[[C_MAD,1]])+'"]:::h7', c7); E('EN6 --> H8', c7);
+    E('H7 --> EN7["'+mk('«Промолчать.»')+'"]:::h7', c7);
+    E('EN7 --> EO["«Эх... Спасибо что сыграла!» (end_out, nazad:1490)"]:::h7', c7);
+    E('EO -- "Логика ≥ 2" --> TU["меню 2urza (nazad:1523)"]:::h7', c7);
+    E('EO -- "Логика < 2" --> H1', c7);
+    E('TU --> TU1["'+mk('«Хорошая идея.»')+'"]:::h7', c7); E('TU1 --> H6', c7);
+    E('TU --> TU2["'+mk('«Нет, не стоит...»')+'"]:::h7', c7); E('TU2 --> EX5', c7);
+  } else {
+    E('H7 --> H8', c7);
+    E('H7 --> H6', c7);
+    E('H7 --> H1', c7);
+    E('H7 --> EX5', c7);
+  }
+  // --- H8: серьёзный разговор (ser / ser2_men / reason_ser, nazad:1544-1816) ---
+  if(EXP.has('H8')){
+    E('H8 --> SE1["'+mk('«Настаиваю.»'+cond('Без−1 (nazad:1556), затем вход в ser2: Тм−5 (nazad:1565)'),null,[[C_MAD,1],[C_TM,5]])+'"]:::h8', c8);
+    E('SE1 --> S2["меню ser2_men (nazad:1587)"]:::h8', c8);
+    E('H8 --> SE2["'+mk('«Нет-нет!»')+'"]:::h8', c8); E('SE2 --> H7', c8);
+    E('S2 --> S21["'+mk('«Так кто ты?»'+cond('1 раз (td4.d2) · делит гейт с «Что тебе от меня нужно?»'))+'"]:::h8', c8); E('S21 --> S2', c8);
+    E('S2 --> S22["'+mk('«Ты... Некромант?»'+cond('после «кто ты» (td6.d2) · Тм+1 только при Безумии ≥ 3 (nazad:1614)'),[[C_TM,1]])+'"]:::h8', c8); E('S22 --> S2', c8);
+    E('S2 --> S23["'+mk('«Что ты знаешь о Лессе?» (nazad:1655)'+cond('если Лесс знаком (less.zn_name)'),null,[[C_TM,1]])+'"]:::h8', c8); E('S23 --> S2', c8);
+    E('S2 --> S24["'+mk('«Кто такой Урза?»'+cond('если Урза знаком (urza.zn_name) · ssanity — NameError ВСЕГДА (nazad:1666)'))+'"]:::h8', c8); E('S24 --> CR1', c8);
+    E('S2 --> S25["'+mk('«Что тебе от меня нужно?» (nazad:1685)'+cond('делит гейт td4.d2 с «Так кто ты?»'),null,[[C_TM,1]])+'"]:::h8', c8); E('S25 --> S2', c8);
+    E('S2 --> S26["'+mk('«Ты бы действительно помог мне?» (nazad:1697)'+cond('1 раз (td4.d3)'),null,[[C_TM,1]])+'"]:::h8', c8); E('S26 --> S2', c8);
+    E('S2 --> S27["'+mk('«У меня есть причина...»'+cond('после «кто ты» (td4.d4)'))+'"]:::h8', c8);
+    E('S27 --> RS["меню reason_ser (nazad:1727)"]:::h8', c8);
+    E('S2 --> S28["'+mk('«Извини...» (nazad:1720)'+cond('после «кто ты» · если «причина» не выбрана (td6.d1)'),[[C_TM,3]])+'"]:::h8', c8); E('S28 --> S2', c8);
+    E('S2 --> S29["'+mk('«А давай ты снова... перестанешь быть таким?»')+'"]:::h8', c8); E('S29 --> EX8', c8);
+    E('RS --> RS1["'+mk('«Я потеряла память.» (nazad:1756)',null,[[C_TM,1]])+'"]:::h8', c8); E('RS1 --> RS', c8);
+    E('RS --> RS2["'+mk('«Я хотела поговорить нормально.» (nazad:1765-1766)',[[C_LOG,1]],[[C_TM,1]])+'"]:::h8', c8); E('RS2 --> RS', c8);
+    E('RS --> RS3["'+mk('«Я... Я хотела лучше узнать тебя.» (nazad:1771)',[[C_TM,1]])+'"]:::h8', c8); E('RS3 --> RS', c8);
+    E('RS --> RS4["'+mk('«Я хотела узнать о мире...» (nazad:1784, 1789)',[[C_LOG,1]],[[C_TM,1]])+'"]:::h8', c8); E('RS4 --> RS', c8);
+    E('RS --> RS5["'+mk('«Я просто попросила. Мне было интересно.» (nazad:1796, 1801)',[[C_MAD,1]],[[C_TM,1]])+'"]:::h8', c8); E('RS5 --> RS', c8);
+    E('RS --> RS6["'+mk('«Я... Прости.» (nazad:1815)'+cond('после ровно 1 причины'),[[C_TM,3]])+'"]:::h8', c8); E('RS6 --> S2', c8);
+    E('RS -.->|"после 2 причин: Тм+3 если извинялась, иначе Тм−1 (nazad:1731-1739)"| S2', c8);
+  } else {
+    E('H8 --> H7', c8);
+    E('H8 --> CR1', c8);
+    E('H8 --> EX8', c8);
+  }
+  // --- RT: повторные разговоры (day_1_tash_razg.rpy) ---
+  if(EXP.has('RT')){
+    E('RT --> RT1["'+mk('«По поводу этого Урзы...»'+cond('заметка «urza»'))+'"]:::hrt', cR);
+    E('RT1 --> RU["меню t_urza_menu (razg:26)"]:::hrt', cR);
+    E('RT --> RT2["'+mk('«Как насчет карт?» (razg:13)'+cond('без ограничения числа партий'),[[C_TM,1]])+'"]:::hrt', cR); E('RT2 --> H4', cR);
+    E('RT --> RT3["'+mk('«Просто поболтать»')+'"]:::hrt', cR); E('RT3 --> H5', cR);
+    E('RT --> RT4["'+mk('«На сегодня хватит разговоров!»')+'"]:::hrt', cR); E('RT4 --> EX9', cR);
+    E('RU --> RU1["'+mk('«Он может вернуть мне память?»'+cond('1 раз (td3.d13) · заметка «urza_memory»'))+'"]:::hrt', cR); E('RU1 --> RU', cR);
+    E('RU --> RU2["'+mk('«Расскажи о нем побольше.»'+cond('1 раз (td3.d2) · БЕЗ +Лог · опечатка == (razg:38)'))+'"]:::hrt', cR); E('RU2 --> RU', cR);
+    E('RU --> RU3["'+mk('«Ты можешь отвести меня к нему?»'+cond('у перекрёстка (less_per / less_tashroad_tash / less_begin)'))+'"]:::hrt', cR); E('RU3 --> H6', cR);
+    E('RU --> RU4["'+mk('«Ты можешь отвести меня к нему?»'+cond('не у перекрёстка — «доберёмся сначала»'))+'"]:::hrt', cR); E('RU4 --> RU', cR);
+  } else {
+    E('RT --> H5', cR);
+    E('RT --> H4', cR);
+    E('RT --> H6', cR);
+    E('RT --> EX9', cR);
+  }
+  // --- DEAD: мёртвый код ---
+  if(EXP.has('DEAD')){
+    E('DEAD --> D1["'+mk('script3_nazadli (nazad:2)'+cond('входящих переходов нет · меню «в самую чащу?»'))+'"]:::hb', cB);
+    E('DEAD --> D2["'+mk('меню внутри «Хватит болтать!» (nazad:948–987)'+cond('недостижимо: флаги tash_game и script3_tash_cards_per ни в одном доступном .rpy не назначаются')+cond('«Давай сыграем!» (954) / «не буду...» (968) / «Спросить об Урзе»'),[[C_TM,10]],[[C_TM,10]])+'"]:::hb', cB);
+    E('DEAD --> D3["'+mk('осмотры и инвентарь'+cond('вызовов в доступном коде не найдено (inv_list — в недоступном файле)'))+'"]:::hb', cB);
+    E('D3 --> D31["'+mk('tash_tash_card: «Сыграем?» (nazad:1953)',[[C_TM,1]])+'"]:::hb', cB);
+    E('D3 --> D32["'+mk('bonny_1_tash: «Окей, забирай.» (nazad:2013)',[[C_TM,1]])+'"]:::hb', cB);
+    E('D3 --> D33["'+mk('mant_osm: «Осторожно снять с сучка» (nazad:2056)',[[C_TM,1]])+'"]:::hb', cB);
+    E('DEAD --> D4["'+mk('закомментировано'+cond('«Остановиться и нормально поговорить» vd1.d3 (nazad:429–431) · «Летающих городов?» (1621–1638, та же опечатка ssanity)'))+'"]:::hb', cB);
+    E('DEAD --> CR2', cB);
+  }
+  L.push('classDef h1 fill:#e6f4f2,stroke:#0f766e,color:#16302c');
+  L.push('classDef h2 fill:#ececfe,stroke:#4f46e5,color:#221f4d');
+  L.push('classDef h3 fill:#fde9ee,stroke:#be123c,color:#4d1223');
+  L.push('classDef h4 fill:#e5f2fa,stroke:#0369a1,color:#123043');
+  L.push('classDef h5 fill:#e7f4ea,stroke:#15803d,color:#17351f');
+  L.push('classDef h6 fill:#e5f5f9,stroke:#0e7490,color:#12343d');
+  L.push('classDef h7 fill:#f7f0dd,stroke:#a16207,color:#3d2f0b');
+  L.push('classDef h8 fill:#f2e9fd,stroke:#7e22ce,color:#2f1150');
+  L.push('classDef hrt fill:#eceff3,stroke:#475569,color:#1f2733');
+  L.push('classDef hb fill:#f1f3f5,stroke:#64748b,color:#333a45');
+  L.push('classDef term fill:#DDEFD8,stroke:#7cb87c,color:#1f2430');
+  L.push('classDef die fill:#7f1d1d,stroke:#450a0a,color:#fff');
+  L.push('classDef ext fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
+  return L.concat(ST).join('\n');
+}
+
+async function render(){
+  const f=document.getElementById('fchart');
+  if(!f) return;
+  f.removeAttribute('data-processed');
+  f.textContent=build();
+  await mermaid.run({nodes:[f]});
+  for(const ss of document.styleSheets){
+    let rules; try{rules=ss.cssRules;}catch(e){continue;}
+    for(let i=rules.length-1;i>=0;i--){
+      const r=rules[i];
+      if(r.selectorText && /\.(h1|h2|h3|h4|h5|h6|h7|h8|hrt|hb)( span| > \*)$/.test(r.selectorText)
+         && r.style && r.style.getPropertyPriority('color')==='important'){
+        r.style.removeProperty('color');
+      }
+    }
+  }
+  document.querySelectorAll('#fchart g.node').forEach(function(g){
+    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
+    if(m && HUBS.indexOf(m[1])>=0){
+      g.style.cursor='pointer';
+      g.addEventListener('click', function(){ window.th(m[1]); });
+    }
+  });
+}
+window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
+window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
+
+render();
+const o=document.getElementById('ovchart');
+if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
+</script>
+<script src="site9.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>Назад — встреча с Таширом (Ташей)</h1>
+<p>script3_nazad.rpy (nazad) · tash_game.rpy · day_1_tash_razg.rpy (razg) · вход стрелкой из сцены <a href="road.html?v=2" style="color:#b9a7ff">«Дорога»</a> или повторным разговором (razg_menu = «tash»)</p>
+<nav class="crumbs"><a href="index.html?v=22">← Все схемы</a> · <a href="road.html?v=2">Дорога</a> · <a href="strel.html?v=20">Экран переходов</a> · <a href="stats.html?v=23">Статы</a></nav>
+</div></header>
+<main>
+<div class="card">
+<h2>Статы по сцене (мин/макс, по коду)</h2>
+<table class="stats">
+<tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Типичный путь*</th></tr>
+<tr><td class="mad">Безумие</td><td>−3</td><td>+6</td><td>+0.1</td></tr>
+<tr><td class="logic">Логика</td><td>0</td><td>+4</td><td>+0.0</td></tr>
+<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td class="mood">Настроение Лесса</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td class="tmood">Настроение Таши</td><td>−25</td><td>+26</td><td>−1.2</td></tr>
+</table>
+<p class="muted">*Оценка: перебор всех путей по коду скриптом (~32,5 млрд путей с перестановками расспросов), выборы равновероятны. <b>В коде число партий и рематчей не ограничено</b> (приглашение +10, рематч +5, цикл отказов −10/−5/+5/+10/−3): реальные пределы Настроения Таши не ограничены. Для оценки выше число партий ограничено двумя. Стартовое значение Настроения Таши в доступном коде не найдено — считалось 0 (как у Лесса).</p>
+<p class="muted"><span style="color:#b91c1c;font-weight:700">Два краша в сцене:</span> <span style="color:#b91c1c;font-weight:700">«Кто такой Урза?» (ser2_men, nazad:1666) всегда падает — ssanity вместо sanity (и голая переменная logic там же)</span> · <span style="color:#b91c1c;font-weight:700">jump на несуществующую метку script3_nazad_tash_urzali (nazad:1043), если перед рассказом об Урзе уже спрашивала «отведи меня к нему» (td3.d1 = 1)</span>.</p>
+</div>
+
+<div class="card">
+<h2>Как читать</h2>
+<p class="muted">«Хаб» — кусок сцены с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение Лесса (в этой сцене не меняется), <span class="tmood">Тм</span> — Настроение Таши (tash.mood) — новый стат этой сцены; в коде условий на него нет. Сцена — обмен между экраном стрелок (strel) и кодом: часть веток заканчивается выходом на strel (Таша рядом / ушла), часть — переходом к Губерту или концом сцены (return). Меню расспросов перебирается в любом порядке, одноразовые пункты помечены «1 раз».</p>
+</div>
+<div class="viewtoggle">
+<button id="btn-full" class="active" onclick="toggleView('tasha',1)">Детальнее</button>
+<button id="btn-short" onclick="toggleView('tasha',0)">Короче</button>
+<span id="view-label" class="muted">Сейчас показана ДЕТАЛЬНАЯ схема</span>
+</div>
+<div class="panel-rel">
+<div id="panel-full">
+<h2>Полная схема: все хабы и все выборы</h2>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его ветки, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Развернуть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button></p><p class="muted" style="font-size:13px">Значки на выборах: <span style="color:#7048e8;font-weight:700">▲/▼ Безумие</span> · <span style="color:#1c7ed6;font-weight:700">▲/▼ Логика</span> · <span style="color:#bc1888;font-weight:700">▲/▼ Кровь</span> · <span style="color:#e41a1c;font-weight:700">▲/▼ Настроение Лесса</span> · <span style="color:#d97706;font-weight:700">▲/▼ Настроение Таши</span>. Плюсы — вверху справа карточки, минусы — внизу слева. Плашка на хабе — диапазон прямых изменений статов внутри хаба (по коду).</p>
+<style>button.mini{font-size:13px;padding:3px 10px;border-radius:8px;border:1px solid #c6ccd6;background:#fff;cursor:pointer}</style>
+<div class="widechart"><pre class="mermaid" id="fchart"></pre></div>
+<div id="tasha-details">
+<div class="card">
+<h2>Детали по хабам</h2>
+<div class="hub"><h3>Хаб 1. Встреча и погоня — menu_main / go / run / help / withyou / ny (nazad:196–435)</h3>
+<ul>
+<li>Вход: Таша догоняет героиню. «Игнорировать его.» <span class="tmood">Тм −1</span> (249) → меню ухода; «Подойти познакомиться.» <span class="tmood">Тм +2</span> только в первый раз (213) → знакомство (Хаб 2).</li>
+<li>Уход (go, 264): «Остановиться и поговорить.» <span class="tmood">Тм +1</span> (266) → Хаб 2; «Прибавить шагу.» → погоня (run); «Пуститься наутек.» <span class="tmood">Тм −3</span> (275, ставит vd1.d5) → gone (<span class="tmood">Тм −3</span>, 603) → 2gone → Губерт.</li>
+<li>Погоня (run, 312): «Постараться убежать» → sad (Хаб 3); «У меня нет на тебя времени!» <span class="tmood">Тм +1</span> (323) → помощь (help); «Остановиться и выяснить, чего он пристал.» → большой разговор (Хаб 5).</li>
+<li>Помощь (help, 331): «Ты правда хочешь помочь?» (1 раз, td.d3); «Нет, спасибо, не надо.» → withyou; «Хорошо, я буду рада помощи.» → выход на strel: <code>tash.near</code> + <code>tash.helpp</code>, return (363); «Остановиться и нормально поговорить» (td4.d5 = 1) → Хаб 2 (если td4.d6 — сразу в Хаб 5).</li>
+<li>«Я пока с тобой!» (withyou, 374): «Что?! Зачем?!» (1 раз, td.d4); «Ни в коем случае!» → подменю ny; «Л-ладно, иди.» <span class="tmood">Тм +1</span> (420, <code>tash.near</code>) → выход на strel.</li>
+<li>«А почему?» (ny, 389): «Ты мне просто не нравишься.» → sad; «Я не могу сказать. Но не надо.» <span class="tmood">Тм +1</span> (402) → gone; «Просто нет.» <span class="tmood">Тм −3</span> (413) → gone.</li>
+</ul></div>
+<div class="hub"><h3>Хаб 2. Стоп и знакомство — stop / stop2 / scared / hello / 2razg (nazad:448–525, 615–728)</h3>
+<ul>
+<li>«Чего тебе!?» (vd1.d3 = 1) → сразу к картам (Хаб 4); «Привет.» <span class="tmood">Тм +1</span> (462) → stop2.</li>
+<li>stop2 (468): «Просто испугалась.» <span class="tmood">Тм −1</span> (484) → scared; «Не знаю! Улыбнуться.» <span class="tmood">Тм +1</span> (506) и <span class="mad">mad +1</span> (508) → hello; «Не хочу с тобой разговаривать!» <span class="tmood">Тм −1</span> (513) → sad.</li>
+<li>scared (487): «Ты похож на Лесса...» (если Лесс знаком; иначе «на того странного незнакомца») → hello; «Ты мне не нравишься.» → sad.</li>
+<li>hello (616): «Я тоже очень рада!» <span class="tmood">Тм +2</span> (618); «...» (при <span class="logic">logic ≥ 2</span> — доп. реплика, 620). Дальше Таша просит «дело» — сыграть в карты.</li>
+<li>2razg (630): «У меня и своих полно...» (1 раз, td.d1); «Нет.» (только после неё) <span class="tmood">Тм −1</span> (658) → сразу 2gone → Губерт <b>без −3 gone</b>; «Конечно помогу!» / «Узнать подробности.» → Хаб 4.</li>
+</ul></div>
+<div class="hub"><h3>Хаб 3. Таша расстроился — sad / sorry / sorry2 (nazad:526–614)</h3>
+<ul>
+<li>Любой вход в sad: <span class="tmood">Тм −5</span> (533). «Остановить его.» → sorry; «Дать уйти.» → gone (<span class="tmood">Тм −3</span>) → Губерт.</li>
+<li>sorry (559): «Извиниться.» <span class="tmood">Тм +5</span> (563) → sorry2; «Нет, ничего.» → gone.</li>
+<li>sorry2 (567): «Прости, но у меня нет времени.» → gone; «Ладно.» <span class="tmood">Тм +10</span> (582) → игра (Хаб 4). Число повторов цикла sad → извиниться → карты в коде не ограничено.</li>
+</ul></div>
+<div class="hub"><h3>Хаб 4. Карты и мини-игра — 2cards / tash_game / igra_over (nazad:729–766, 1339–1368; tash_game.rpy)</h3>
+<ul>
+<li>2cards (729): «Хорошо, давай сыграем.» <span class="tmood">Тм +10</span> (732, <code>tash.good</code>) → мини-игра; «Нет!» <span class="tmood">Тм −10</span> (744, <code>tash.bad</code>) → sad; «Давай сначала поговорим!» → Хаб 5; «З...Зачем?» (1 раз, td.d5).</li>
+<li>Мини-игра (tash_game:86): «А правила!?» <span class="mad">mad −1</span> (tg:89, reason «А правила?!») / «Поехали!» <span class="mad">mad +1</span> (tg:101, reason «зачем правила?» — обе с reason, повторы того же варианта не начислятся). Бросить партию (cards_stop, tg:208): <span class="tmood">Тм −3</span> → Хаб 5; доиграть → заметка «game», igra_over.</li>
+<li>igra_over (1339): «Эм, хватит.» → конец игры (Хаб 7); «Да! Почему нет?» — рематч <span class="tmood">Тм +5</span> (1350), <b>рематчи в коде не ограничены</b>; «Может поговорим?» → Хаб 5.</li>
+</ul></div>
+<div class="hub"><h3>Хаб 5. Большой разговор — razg_2menu / razg_2 / nomemory / 2help / canurza / urzamore (nazad:767–1044, 1205–1337)</h3>
+<ul>
+<li>razg_2menu (767): «Как тебя зовут?» (1 раз) → razg_2; «У меня уже были проблемы с памятью?» (после «зовут»); «Много что поменялось?» (после «памятью», открывает ветку Урзы — canurza); «И что тогда со мной случилось в Лесу?» (после «памятью», Таша узнаёт Лесса); «Ты так любишь карты?» и «не смущает лес?» — без статов.</li>
+<li>razg_2 (1205): «Я потеряла память.» → nomemory; «морду кирпичом» → назад; «Да! Классная же традиция!» <span class="mad">mad +1</span> (1236, reason) → назад.</li>
+<li>nomemory (1241): набор ответов зависит от <code>persistent.memory</code>; «хочу знать больше» → 2help (1293): Урза может вернуть память — заметки «urza» и «urza_memory».</li>
+<li>2help_menu (1315): «Расскажи о нем побольше.» (<span class="logic">logic ≥ 2</span>, 1 раз) — <b>без начисления Логики</b>; «Да, это отличная идея!» → к Урзе (Хаб 6); «Нет...» → назад.</li>
+<li>canurza (991) / urza_question (1012): «отведи меня к Урзе» (ставит td3.d1) → «Да, давай сейчас!» → Хаб 6; отложенные варианты возвращают в разговор.</li>
+<li>urzamore (1030): рассказ об Урзе <span class="logic">logic +1</span> (reason «спросить об Урзе»); <code>urza.zn_name == True</code> — опечатка ==, не срабатывает (1034). <span style="color:#b91c1c;font-weight:700">Если td3.d1 = 1 — jump на несуществующую метку script3_nazad_tash_urzali (1043) → краш.</span></li>
+<li>«Назад» (только при razg_menu = «tash») → меню повторных разговоров (RT); «Хватит болтать!» → конец игры (Хаб 7, если партия была) или к картам (Хаб 4).</li>
+</ul></div>
+<div class="hub"><h3>Хаб 6. Урза и разлом — urza / urza2 / urza3 (nazad:1045–1134)</h3>
+<ul>
+<li>Таша ведёт к разлому (<code>tash.near</code> + <code>tash.helpp</code>, заметка «urza»).</li>
+<li>urza2 (1091): «Прекрасно!» <span class="mad">mad +1</span> (1098, reason) / «Сомнительно.» <span class="mad">mad −1</span> (1104, reason) → return (1115) — конец сцены.</li>
+<li>urza3 (1116): если в avt_d есть «blu» — заколоченный тупик → КОНЕЦ ДЕМОВЕРСИИ. Ветка статов не меняет.</li>
+</ul></div>
+<div class="hub"><h3>Хаб 7. Друзья и конец игры — end / end_out / 2urza (nazad:1370–1542)</h3>
+<ul>
+<li>«У тебя есть друзья?» (1 раз, td3.d8); «Я... Не понимаю что такое друзья.» (<span class="mad">mad ≥ 3</span>, после «друзья?») <span class="mad">mad +1</span> (1383); «Думаешь, кто-то бы пришел в такое место поиграть?» (<span class="logic">logic ≥ 2</span>, td3.d3); «А почему твои друзья не могут прийти?» (1 раз, td3.d10, без статов).</li>
+<li>«Ты... правда не боишься?» (после «кто-то пришел»): <span class="logic">logic +1</span> (1454, reason) и <span class="mad">mad −1</span> (1465).</li>
+<li>«Ты что, никогда не бываешь серьезным?» (ratio = logic/(mad+logic) &gt; 0.5): <span class="mad">mad −1</span> (1485), <span class="logic">logic +1</span> (1486) → серьёзный разговор (Хаб 8).</li>
+<li>«Промолчать.» → «Эх... Спасибо что сыграла!»: при <span class="logic">logic ≥ 2</span> — 2urza: «Хорошая идея.» → к Урзе (Хаб 6), «Нет, не стоит...» → Таша исчезает (strel); иначе → withyou (Хаб 1).</li>
+</ul></div>
+<div class="hub"><h3>Хаб 8. Серьёзный разговор — ser / ser2_men / reason_ser (nazad:1544–1816)</h3>
+<ul>
+<li>ser (1544): «Настаиваю.» <span class="mad">mad −1</span> (1556), затем вход в ser2 <span class="tmood">Тм −5</span> (1565); «Нет-нет!» → назад в end.</li>
+<li>ser2_men (1587): «Так кто ты?» (1 раз, td4.d2 — общий гейт с «Что тебе от меня нужно?»: доступна только одна из двух); «Ты... Некромант?» (после «кто ты») <span class="tmood">Тм +1</span> только при <span class="mad">mad ≥ 3</span> (1614); «Что ты знаешь о Лессе?» (если Лесс знаком) <span class="tmood">Тм −1</span> (1655).</li>
+<li><span style="color:#b91c1c;font-weight:700">«Кто такой Урза?» (если Урза знаком): всегда краш — <code>ssanity</code> вместо <code>sanity</code> и голая переменная <code>logic</code> (1666).</span></li>
+<li>«Что тебе от меня нужно?» <span class="tmood">Тм −1</span> (1685); «Ты бы действительно помог мне?» <span class="tmood">Тм −1</span> (1697, td4.d3); «У меня есть причина...» (после «кто ты», td4.d4) → reason_ser; «Извини...» (после «кто ты», если «причина» не выбрана) <span class="tmood">Тм +3</span> (1720).</li>
+<li>«А давай ты снова... перестанешь быть таким?» → afterser → Губерт (gubert:5) — выход из сцены.</li>
+<li>reason_ser (1727): причины — «потеряла память» <span class="tmood">Тм −1</span> (1756); «поговорить нормально» <span class="logic">logic +1</span> (1765) <span class="tmood">Тм −1</span> (1766); «лучше узнать тебя» <span class="tmood">Тм +1</span> (1771); «узнать о мире» <span class="logic">logic +1</span> (1784) <span class="tmood">Тм −1</span> (1789); «просто попросила» <span class="mad">mad +1</span> (1796, reason) <span class="tmood">Тм −1</span> (1801). После ровно 1 причины доступно «Я... Прости.» <span class="tmood">Тм +3</span> (1815). После 2 причин — авто-проверка: <span class="tmood">Тм +3</span> если извинялась (t_pr), иначе <span class="tmood">Тм −1</span> (1731–1739).</li>
+</ul></div>
+<div class="hub"><h3>Повторные разговоры — tash_razg_menu / tash_urza_menu (day_1_tash_razg.rpy)</h3>
+<ul>
+<li>Вход при razg_menu = «tash» (Таша рядом, разговор через strel): «По поводу этого Урзы...» (заметка «urza») → t_urza_menu; «Как насчет карт?» <span class="tmood">Тм +1</span> (razg:13) → мини-игра, <b>без ограничения числа партий</b>; «Просто поболтать» → razg_2menu (Хаб 5); «На сегодня хватит разговоров!» → strel (razg_menu = 0).</li>
+<li>t_urza_menu (razg:26): «Он может вернуть мне память?» (1 раз, td3.d13, заметка «urza_memory»); «Расскажи о нем побольше.» (1 раз, td3.d2 — без Логики, опечатка <code>==</code> в razg:38); «Ты можешь отвести меня к нему?» — у перекрёстка (less_per / less_tashroad_tash / less_begin) → Хаб 6, иначе «доберёмся сначала».</li>
+</ul></div>
+<div class="hub"><h3>Мёртвый код (nazad:2–17, 948–987, 1818–2079)</h3>
+<ul>
+<li><code>script3_nazadli</code> (nazad:2) — старая входная метка, входящих переходов нет (меню «Стоит ли идти в самую чащу?»).</li>
+<li>Внутреннее меню в «Хватит болтать!» (nazad:948–987): «Давай сыграем!» <span class="tmood">Тм +10</span> (954) / «в карты я играть не буду...» <span class="tmood">Тм −10</span> (968) / «Спросить об Урзе» — недостижимо: флаги <code>tash_game</code> и <code>script3_tash_cards_per</code> ни в одном доступном .rpy не назначаются (читаются в nazad:899 и nazad:930). Если они задаются в недоступном файле дефолтов — меню живо.</li>
+<li>Осмотры и инвентарь: <code>tash_cards_osm</code> → <code>tash_tash_card</code> («Сыграем?» <span class="tmood">Тм +1</span>, 1953), <code>bonny_1_osm</code> / <code>bonny_1_tash</code> («Окей, забирай.» <span class="tmood">Тм +1</span>, 2013), <code>mant_osm</code> («Осторожно снять с сучка» <span class="tmood">Тм +1</span>, 2056) — вызовов в доступном коде не найдено (inv_list и дефолты — в файле, которого нет в репозитории).</li>
+<li>Закомментировано: «Остановиться и нормально поговорить» с <span class="tmood">Тм +1</span> (nazad:429–431); «Летающих городов?» (nazad:1621–1638) — внутри та же опечатка <code>ssanity</code>.</li>
+</ul></div>
+</div>
+<p class="muted">Полный список найденных ошибок — на странице <a href="stats.html?v=23">«Статы»</a>.</p>
+</div>
+</div>
+<div id="panel-short" style="position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:100%">
+<h2>Обзор хабов</h2>
+<div class="mermaid" id="ovchart">
+flowchart TB
+VH["<b>Вход</b>: script3_nazad_begin (из «Дороги»)"]:::scene
+VHR["<b>Вход</b>: повторный разговор (razg_menu = «tash»)"]:::scene
+H1["<b>Хаб 1. Встреча и погоня</b><br/>игнор · уход · погоня · помощь · «я с тобой»<br/><span style='color:#D97706'>Тм −3…+2</span>"]:::scene
+H2["<b>Хаб 2. Стоп и знакомство</b><br/>«Привет» · улыбка <span style='color:#7048E8'>mad +1</span> · дело Таши<br/><span style='color:#D97706'>Тм −1…+2</span>"]:::scene
+H3["<b>Хаб 3. sad</b> — Таша расстроился <span style='color:#D97706'>Тм −5</span><br/>извиниться <span style='color:#D97706'>+5</span> · карты <span style='color:#D97706'>+10</span>"]:::scene
+H4["<b>Хаб 4. Карты и мини-игра</b><br/><span style='color:#D97706'>Тм −10…+10</span> · <span style='color:#7048E8'>mad ±1</span> · рематчи без лимита"]:::scene
+H5["<b>Хаб 5. Большой разговор</b><br/>имя · память · ветка Урзы <span style='color:#1C7ED6'>logic +1</span><br/>краш: метка urzali не найдена"]:::scene
+H6["<b>Хаб 6. Урза и разлом</b> <span style='color:#7048E8'>mad ±1</span><br/>return · КОНЕЦ ДЕМОВЕРСИИ (blu)"]:::scene
+H7["<b>Хаб 7. Друзья и конец игры</b><br/><span style='color:#7048E8'>mad ±1</span> · <span style='color:#1C7ED6'>logic +1</span> · серьёзный?"]:::scene
+H8["<b>Хаб 8. Серьёзный разговор</b> <span style='color:#D97706'>Тм −5…+3</span><br/>краш: ssanity · выход к Губерту"]:::scene
+RT["<b>Повторные разговоры</b> (razg_menu = «tash»)<br/>карты <span style='color:#D97706'>Тм +1</span> · Урза · хватит"]:::scene
+DEAD["<b>Мёртвый код</b>: nazadli · меню 948–987 · осмотры"]:::dead
+GUB["→ Губерт (gone / afterser)"]:::less
+STR["→ strel (Таша рядом / исчез)"]:::less
+ENDC["return / КОНЕЦ ДЕМОВЕРСИИ"]:::less
+VH --> H1
+VHR --> RT
+H1 --> H2
+H1 --> H3
+H2 --> H4
+H3 --> H4
+H4 --> H5
+H4 --> H7
+H5 --> H6
+H5 --> H7
+H7 --> H8
+H7 --> H6
+RT --> H5
+H1 --> GUB
+H3 --> GUB
+H8 --> GUB
+H1 --> STR
+H7 --> STR
+H6 --> ENDC
+RT --> STR
+classDef scene fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430
+classDef death fill:#7f1d1d,stroke:#450a0a,color:#ffffff
+classDef less fill:#DDEFD8,stroke:#7cb87c,color:#1f2430
+classDef dead fill:#f1f3f5,stroke:#64748b,color:#333a45
+</div>
+</div>
+</div>
+<div class="card">
+<h2>Статы: минимумы и максимумы</h2>
+<table class="stats">
+<tr><th></th><th class="mad">Безумие</th><th class="logic">Логика</th><th class="blood">Кровь</th><th class="mood">Настроение Лесса</th><th class="tmood">Настроение Таши</th></tr>
+<tr><td>Сцена «Старт»</td><td>0…+5</td><td>0…+3</td><td>0…+1</td><td>0</td><td>—</td></tr>
+<tr><td>Разговор с Лессом</td><td>−7…+6</td><td>−2…+9</td><td>0…+2</td><td>−7…+15</td><td>—</td></tr>
+<tr><td><b>Итого по локации</b></td><td><b>−7…+11</b></td><td><b>−2…+12</b></td><td><b>0…+3</b></td><td><b>−7…+15</b></td><td>—</td></tr>
+<tr><td>Дорога (перекрёсток)</td><td>0…+1</td><td>0…+1</td><td>0…+3</td><td>0</td><td>—</td></tr>
+<tr><td>Назад (Таша)</td><td>−3…+6</td><td>0…+4</td><td>0</td><td>0</td><td>−25…+26*</td></tr>
+</table>
+<p class="muted">Посчитано по коду 20.10.2026 перебором путей скриптом, смерти учтены. *При ограничении в 2 партии: в коде партии и рематчи не ограничены, реальные пределы Настроения Таши не ограничены. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=23">«Статы»</a>.</p>
+</div>
+
+</main>
+<footer>Схемы игры «Вий» · назад (Таша) · выверено по коду 20.10.2026</footer>
+</body>
+</html>
