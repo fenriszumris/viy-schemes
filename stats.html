@@ -7,12 +7,13 @@
 <meta http-equiv="Pragma" content="no-cache">
 <title>Статы — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
+<style>.tmood{color:#D97706}</style>
 </head>
 <body>
 <header class="site"><div class="wrap">
 <h1>Статы: минимумы и максимумы</h1>
 <p>Диапазоны по всем веткам сцены, посчитано по коду. Смерти не учитывались.</p>
-<nav class="crumbs"><a href="index.html?v=21">← Все схемы</a> · <a href="location.html?v=20">Локация «Место пробуждения»</a> · <a href="strel.html?v=20">Экран переходов</a></nav>
+<nav class="crumbs"><a href="index.html?v=22">← Все схемы</a> · <a href="location.html?v=20">Локация «Место пробуждения»</a> · <a href="strel.html?v=20">Экран переходов</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -47,17 +48,35 @@
 <tr><td class="mood">Настроение Лесса</td><td>0</td><td>0</td><td>0</td><td>в сцене не меняется</td></tr>
 </table>
 <p class="muted">*Оценка: перебор всех путей по коду скриптом (97 путей), выборы равновероятны. Встреча с Лессом на кругах (kr_less) статов не меняет. Схема сцены: <a href="road.html?v=2">«Дорога»</a>.</p>
-
+</div>
+<div class="card">
+<h2>Назад — Таша (script3_nazad.rpy + tash_game.rpy + day_1_tash_razg.rpy)</h2>
+<table class="stats">
+<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь*</th><th>Примечание</th></tr>
+<tr><td class="mad">Безумие</td><td>−3</td><td>+6</td><td>+0.1</td><td>−3: «А правила!?» ×2 (tash_game:89) и «Сомнительно.» (nazad:1104); +6: «Улыбнуться», «Поехали!» ×2, «традиция», «не понимаю друзей», «Прекрасно!»</td></tr>
+<tr><td class="logic">Логика</td><td>0</td><td>+4</td><td>+0.0</td><td>+4: «спросить об Урзе» (nazad:1032), «серьезным» (1486), 2 причины (1765, 1784)</td></tr>
+<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>0</td><td>в сцене не меняется</td></tr>
+<tr><td class="mood">Настроение Лесса</td><td>0</td><td>0</td><td>0</td><td>в сцене не меняется</td></tr>
+<tr><td class="tmood">Настроение Таши</td><td>−25</td><td>+26</td><td>−1.2</td><td>стартовое значение в коде не найдено, считалось 0; условий на tash.mood в коде нет. При капе 2 партии: в коде партии/рематчи/циклы отказов не ограничены — реальные пределы не ограничены</td></tr>
+</table>
+<p class="muted">*Оценка: перебор всех путей по коду скриптом (~32,5 млрд путей с перестановками расспросов), выборы равновероятны, число партий ограничено двумя. Схема сцены: <a href="tasha.html?v=1">«Назад (Таша)»</a>.</p>
+</div>
+<div class="card">
 <h2>Найденные в коде ошибки</h2>
 <h3>Ломают запуск</h3>
 <ul>
 <li><code>conv:1105</code> — реплика персонажа <code>мь</code>, который нигде не определён (по смыслу <code>vm</code>): ветка «Дико страшно... замереть» падает с ошибкой.</li>
 <li><code>mem:252</code> — персонаж <code>elf</code> не определён (ветка недостижима, см. ниже).</li>
 <li><code>razg:19</code> — вызов <code>show_less("smile")</code>: функция не найдена в коде.</li>
+<li><code>nazad:1666</code> — <code>ssanity.get_level("mad")</code> (опечатка, нужно <code>sanity</code>) и голая переменная <code>logic</code> в том же условии: опция «Кто такой Урза?» (ser2_men) падает с NameError всегда.</li>
+<li><code>nazad:1043</code> — <code>jump script3_nazad_tash_urzali</code>: такой метки нет — краш, если перед рассказом об Урзе уже спрашивали «отведи меня к нему» (td3.d1 = 1).</li>
 </ul>
 <h3>Логика</h3>
 <ul>
 <li><code>amul:21</code> — <code>$ less.mood - 4</code> без присваивания: настроение не меняется (нужно <code>-=</code>).</li>
+<li><code>nazad:1034</code> и <code>razg:38</code> — <code>$ urza.zn_name == True</code> (сравнение вместо присваивания): имя Урзы не запоминается (нужно <code>=</code>).</li>
+<li>«Так кто ты?» и «Что тебе от меня нужно?» (ser2_men) делят один гейт <code>td4.d2</code>: доступна только одна из двух опций.</li>
+<li>«Как насчет карт?» (razg:13) и рематч (nazad:1350) без ограничений: Настроение Таши растёт бесконечно (+1 / +5 за партию, +10 за приглашение из sad).</li>
 <li>«Расслабиться» / «Замереть» / «Обмякнуть»: у add_logic дедупликация по причине, у add_mad нет — повторы начисляются неодинаково.</li>
 <li><code>conv:615</code> — <code>u_part(7.1)</code> вместо <code>u_part(7,1)</code>.</li>
 <li>Пороги настроения в прощании: <code>&gt;0</code> (conv:735) против <code>&lt;0</code> (conv:778): при ровно 0 срабатывает «благодушная» ветка.</li>
@@ -79,6 +98,10 @@
 <li><code>kr_bur</code> / <code>bur_menu</code> / <code>bur_osm</code> (road:253–330, бурундук) — единственный переход (<code>jump kr_bur</code>, road:252) закомментирован.</li>
 <li><code>doroga3</code> (road:240) — «Конец предварительный», входящих переходов нет.</li>
 <li><code>script_3_zndorog</code> (road:80–90, 197–213) — ветка «знает дорогу» закомментирована целиком, вместе с <code>add_logic(1, "Вспомнить дорогу")</code> (road:210).</li>
+<li><code>script3_nazadli</code> (nazad:2) — входная метка «в самую чащу?», входящих переходов нет.</li>
+<li>Внутреннее меню «Хватит болтать!» (nazad:948–987) недостижимо: флаги <code>tash_game</code> и <code>script3_tash_cards_per</code> ни в одном доступном .rpy не назначаются.</li>
+<li><code>tash_cards_osm</code> / <code>tash_tash_card</code> / <code>bonny_1_osm</code> / <code>bonny_1_tash</code> / <code>mant_osm</code> (nazad:1818–2079) — вызовов в доступном коде не найдено (inv_list и дефолты — в недоступном файле).</li>
+<li>Закомментированы: «Остановиться и нормально поговорить» (nazad:429–431) и «Летающих городов?» (nazad:1621–1638, внутри та же опечатка <code>ssanity</code>).</li>
 <li>Стартовое меню разработчика (start3, begin:17) видит каждый игрок: <code>razr = 1</code> стоит жёстко.</li>
 </ul>
 <h3>Опечатки и разметка</h3>
