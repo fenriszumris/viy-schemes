@@ -26,7 +26,8 @@ table.stats{border-collapse:collapse;width:100%;margin:8px 0}
 table.stats th,table.stats td{border:1px solid var(--line);padding:8px 10px;text-align:left;font-size:14px}
 table.stats th{background:#f0eef7}
 .warn{background:#fff7e6;border:1px solid #f0dcae;border-radius:8px;padding:10px 14px;font-size:14px;margin:8px 0}
-.mermaid svg{max-width:none !important}
+.mermaid{text-align:left}
+.mermaid svg{max-width:none !important;margin:0 !important;display:block}
 .mermaid{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto}
 code{background:#eef0f4;border-radius:4px;padding:1px 5px;font-size:13px}
 .hub{border-left:4px solid #b9a7ff;padding:6px 0 6px 14px;margin:14px 0}
