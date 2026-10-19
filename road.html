@@ -98,7 +98,7 @@ function build(){
   if(EXP.has('H4')){
     E('H4 --> C4A["'+mk('«Да, есть кое-что»<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: less_delo</span><br/><span style="font-size:12px;color:#b91c1c;font-weight:700">без эффектов — встреча повторится</span>')+'"]:::h4', c4); E('C4A --> STR', c4);
     E('H4 --> C4B["'+mk('«Нет, ничего»<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: less_delo</span>')+'"]:::h4', c4); E('C4B --> STR', c4);
-    E('H4 --> C4C["'+mk('«Нет, я...» — Лесс уходит<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: не less_delo · флаг set_less("None"), meet_kr=1</span>')+'"]:::h4', c4); E('C4C --> STR', c4);
+    E('H4 --> C4C["'+mk('«Нет, я...» — Лесс уходит<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: не less_delo · флаг set_less(«None»), meet_kr=1</span>')+'"]:::h4', c4); E('C4C --> STR', c4);
     E('H4 -.->|"усл. реплики: Логика ≥ 3 — «Почему мышка?» (при Настроении > 4 — ответ)<br/>Безумие ≥ 3 — «Пи?» · знает имя — приветствие по имени"| STR', c4);
   } else {
     E('H4 --> STR', c4);
