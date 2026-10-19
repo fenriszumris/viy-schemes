@@ -10,7 +10,7 @@
 <style>.widechart{overflow-x:auto}.widechart svg{max-width:none !important}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, securityLevel:'loose', flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:24, rankSpacing:44, diagramPadding:16}, theme:'default', themeVariables:{fontSize:'17px'}});
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:20, rankSpacing:38, diagramPadding:12}, theme:'default', themeVariables:{fontSize:'17px'}});
 
 const HUBS=['H1','H2','H2A','H3','H4','H5','H6','H7','H8','H9','MEM'];
 const EXP=new Set();
@@ -60,8 +60,8 @@ function build(){
     L.push('H1 --> C1A["«НАДОЕЛО.»"]:::h1 --> H2');
     L.push('H1 --> C1B["«Бочком-бочком отсюда.»<br/>mood −2"]:::h1 --> RB');
   } else {
-    L.push('H1 -->|"«НАДОЕЛО.»"| H2');
-    L.push('H1 -->|"«Бочком-бочком» mood −2"| RB');
+    L.push('H1 --> H2');
+    L.push('H1 --> RB');
   }
   // --- H2 ---
   L.push('NQ{{"Ввод имени<br/>«ЛЕСС» не пройдёт"}}:::h2');
@@ -75,10 +75,10 @@ function build(){
     L.push('NQ --> C2G["неверное → wrong_name mood −2 →<br/>not_remember2 blood +1, mood +1"]:::h2 --> H3');
     L.push('NQ --> C2H["пусто → not_remember2<br/>blood +1, mood +1"]:::h2 --> H3');
   } else {
-    L.push('H2 -->|"«не вкусная!» · «шея» · «Кевин?» · «не помню»"| H3');
-    L.push('H2 -->|"«Я знаю твое имя!»"| NQ');
+    L.push('H2 --> H3');
+    L.push('H2 --> NQ');
     L.push('NQ -->|верное| H2A');
-    L.push('NQ -->|"неверное / пусто"| H3');
+    L.push('NQ -->|нет| H3');
   }
   // --- H2A ---
   if(EXP.has('H2A')){
@@ -95,9 +95,9 @@ function build(){
     L.push('WII --> CA11["«Возьму»"]:::h2a --> TK');
     L.push('WII --> CA12["«Ну его.»<br/>mood +1"]:::h2a --> H3');
   } else {
-    L.push('H2A -->|"меню амулета / take / what_is_it"| H3');
-    L.push('H2A -->|"«безразлично» mad +2 → «а почему нет?»"| D1A');
-    L.push('H2A -->|"«Ээм... Нет?»"| H9');
+    L.push('H2A --> H3');
+    L.push('H2A --> D1A');
+    L.push('H2A --> H9');
   }
   // --- H3 ---
   if(EXP.has('H3')){
@@ -106,9 +106,9 @@ function build(){
     L.push('H3 --> C3C["«Дать уйти.»"]:::h3 --> H9');
     L.push('H3 --> C3D["«Схватить за плечо.»"]:::h3 --> H8');
   } else {
-    L.push('H3 -->|"«Подожди!» mood ≥ 0"| H4');
-    L.push('H3 -->|"«Подожди!» mood &lt; 0 · «Дать уйти»"| H9');
-    L.push('H3 -->|"«Схватить за плечо»"| H8');
+    L.push('H3 --> H4');
+    L.push('H3 --> H9');
+    L.push('H3 --> H8');
   }
   // --- H4 ---
   if(EXP.has('H4')){
@@ -120,16 +120,16 @@ function build(){
     L.push('SN5 --> SN7["«Пожать плечами и подставить горло»<br/>mad +1, mood +1, blood +1"]:::h4 --> H5');
     L.push('H4 --> C4C["«Приятно познакомиться...»"]:::h4 --> H6');
   } else {
-    L.push('H4 -->|"«мы знакомы?»"| H5');
-    L.push('H4 -->|"«странное имя» (цепочка)"| H5');
-    L.push('H4 -->|"«приятно познакомиться»"| H6');
+    L.push('H4 --> H5');
+    L.push('H4 --> H5');
+    L.push('H4 --> H6');
   }
   // --- H5 ---
   if(EXP.has('H5')){
     L.push('H5 --> C5A["«Как же так! Значит будут.»<br/>mood +1, mad −1"]:::h5 --> H6');
     L.push('H5 --> C5B["«Что вообще такое друзья?»<br/>mad +1"]:::h5 --> H6');
   } else {
-    L.push('H5 -->|"2 варианта"| H6');
+    L.push('H5 --> H6');
   }
   // --- H6 ---
   if(EXP.has('H6')){
@@ -137,7 +137,7 @@ function build(){
     L.push('H6 --> C6B["ввод: пусто или «Вий»<br/>mad +1"]:::h6 --> H7');
     L.push('H6 --> C6C["ввод: своё имя<br/>logic +1, mad −1, mood +1"]:::h6 --> H7');
   } else {
-    L.push('H6 -->|"«Еще чего!» / ввод имени"| H7');
+    L.push('H6 --> H7');
   }
   // --- H7 ---
   if(EXP.has('H7')){
@@ -150,8 +150,8 @@ function build(){
     L.push('AIR --> C7E["«Х-хорошо.»<br/>(без reward: mood −1)"]:::h7 --> GN');
     L.push('AIR --> C7F["«Еще чего!»<br/>mood −2"]:::h7 --> GN');
   } else {
-    L.push('H7 -->|"«оставить» · «остановить»"| GN');
-    L.push('H7 -->|"квест Айрата"| GN');
+    L.push('H7 --> GN');
+    L.push('H7 --> GN');
   }
   // --- H8 ---
   if(EXP.has('H8')){
@@ -163,9 +163,9 @@ function build(){
     L.push('M17 --> C8F["«А сами-то!»<br/>mad +1, mood +1"]:::h8 --> H9');
     L.push('M17 --> C8G["«Промолчать»<br/>mad −1"]:::h8 --> H9');
   } else {
-    L.push('H8 -->|"«отпустить» mad −1"| H9');
-    L.push('H8 -->|"«бороться»"| D1');
-    L.push('H8 -->|"«расслабиться / замереть»"| H9');
+    L.push('H8 --> H9');
+    L.push('H8 --> D1');
+    L.push('H8 --> H9');
   }
   // --- H9 ---
   if(EXP.has('H9')){
@@ -177,19 +177,19 @@ function build(){
     L.push('H9 --> C9F["«Это было опасно...» / «Что произошло?»<br/>logic +1, mad −1 → ushel"]:::h9 --> RB');
     L.push('H9 --> C9G["«Броситься за ним.»"]:::h9 --> SLC');
   } else {
-    L.push('H9 -->|"«обмякнуть» / «извиниться»"| RB');
-    L.push('H9 -->|"«поспать»"| E1');
-    L.push('H9 -->|"«бороться до конца»"| D2');
-    L.push('H9 -->|"«опасно…» / «что произошло?»"| RB');
-    L.push('H9 -->|"«броситься за ним»"| SLC');
+    L.push('H9 --> RB');
+    L.push('H9 --> E1');
+    L.push('H9 --> D2');
+    L.push('H9 --> RB');
+    L.push('H9 --> SLC');
   }
   // --- MEM ---
   if(EXP.has('MEM')){
     L.push('MEM --> CM1["«Х-хватит...»<br/>logic +1"]:::hm --> RB');
     L.push('MEM --> CM2["«Идти до конца!»<br/>mad +1"]:::hm --> D3');
   } else {
-    L.push('MEM -->|"«хватит…» logic +1"| RB');
-    L.push('MEM -->|"«до конца!» mad +1"| D3');
+    L.push('MEM --> RB');
+    L.push('MEM --> D3');
   }
   // classes
   L.push('classDef h1 fill:#e6f4f2,stroke:#0f766e,color:#16302c');
