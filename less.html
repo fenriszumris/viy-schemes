@@ -14,6 +14,8 @@ mermaid.initialize({startOnLoad:false, securityLevel:'loose', flowchart:{htmlLab
 
 const HUBS=['H1','H2','H2A','H3','H4','H5','H6','H7','H8','H9','MEM'];
 const EXP=new Set();
+// цвета веток = цвета хабов
+const c1='#0f766e', c2='#4f46e5', c2a='#b45309', c3='#0369a1', c4='#be123c', c5='#7c3aed', c6='#475569', c7='#92400e', c8='#b91c1c', c9='#166534', cm='#6d28d9', cG='#9aa3b2';
 // цвета статов (как в Miro): mad фиолетовый, logic голубой, blood розовый, mood красный
 const C_MAD='#7c3aed', C_LOG='#4aa8d8', C_BLD='#d66a9e', C_MOO='#d43a3a';
 
@@ -43,7 +45,8 @@ function hub(id,label,cls,ranges){
 }
 
 function build(){
-  const L=[];
+  const L=[]; const ST=[]; let ei=0;
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
   L.push('flowchart TB');
   L.push(hub('H1','Хаб 1. Гляделки<br/>start_cycle','h1',[[C_MOO,'−2…+1']]));
   L.push(hub('H2','Хаб 2. «Его имя?»<br/>conv_2','h2',[[C_MAD,'0…+1'],[C_BLD,'0…+1'],[C_MOO,'−2…+1']]));
@@ -68,148 +71,148 @@ function build(){
   L.push('D2["BAD END<br/>«Подкормка...»"]:::die');
   L.push('D3["Смерть<br/>death_son"]:::die');
   L.push('E1["END?<br/>«Мирный сон...»"]:::fin');
-  L.push('VH --> H1');
-  L.push('RUKA --> H2');
-  L.push('RZG --> H4'); L.push('RZG --> H5'); L.push('RZG --> H7');
-  L.push('MEMV --> MEM');
-  L.push('GN --> RB');
+  E('VH --> H1', cG);
+  E('RUKA --> H2', cG);
+  E('RZG --> H4', cG); E('RZG --> H5', cG); E('RZG --> H7', cG);
+  E('MEMV --> MEM', cG);
+  E('GN --> RB', cG);
 
   // --- H1 ---
   if(EXP.has('H1')){
-    L.push('H1 -.->|"цикл «Пялиться дальше»: на 4-й раз mood +1"| H1');
-    L.push('H1 --> C1A["'+mk('«НАДОЕЛО.»')+'"]:::h1 --> H2');
-    L.push('H1 --> C1B["'+mk('«Бочком-бочком отсюда.»',null,[[C_MOO,2]])+'"]:::h1 --> RB');
+    E('H1 -.->|"цикл «Пялиться дальше»: на 4-й раз mood +1"| H1', c1);
+    E('H1 --> C1A["'+mk('«НАДОЕЛО.»')+'"]:::h1', c1); E('C1A --> H2', c1);
+    E('H1 --> C1B["'+mk('«Бочком-бочком отсюда.»',null,[[C_MOO,2]])+'"]:::h1', c1); E('C1B --> RB', c1);
   } else {
-    L.push('H1 --> H2');
-    L.push('H1 --> RB');
+    E('H1 --> H2', c1);
+    E('H1 --> RB', c1);
   }
   // --- H2 ---
   L.push('NQ{{"Ввод имени<br/>«ЛЕСС» не пройдёт"}}:::h2');
   if(EXP.has('H2')){
-    L.push('H2 --> C2A["'+mk('«Не надо меня есть! Я не вкусная!»',[[C_MOO,1]])+'"]:::h2 --> H3');
-    L.push('H2 --> C2B["'+mk('«Подставить шею для укуса.»',[[C_MAD,1],[C_MOO,1],[C_BLD,1]])+'"]:::h2 --> H3');
-    L.push('H2 --> C2C["'+mk('«Эээ... Кевин?»<br/><span style="font-size:12px;color:#6a7280">wrong_name → not_remember2</span>',[[C_BLD,1]],[[C_MOO,1]])+'"]:::h2 --> H3');
-    L.push('H2 --> C2D["'+mk('«Я-я не помню.»<br/><span style="font-size:12px;color:#6a7280">not_remember2</span>',[[C_BLD,1],[C_MOO,1]])+'"]:::h2 --> H3');
-    L.push('H2 --> C2E["'+mk('«Я знаю твое имя!»')+'"]:::h2 --> NQ');
-    L.push('NQ --> C2F["'+mk('верное («Лесс», «Лес»…)')+'"]:::h2 --> H2A');
-    L.push('NQ --> C2G["'+mk('неверное<br/><span style="font-size:12px;color:#6a7280">wrong_name → not_remember2</span>',[[C_BLD,1]],[[C_MOO,1]])+'"]:::h2 --> H3');
-    L.push('NQ --> C2H["'+mk('пусто<br/><span style="font-size:12px;color:#6a7280">not_remember2</span>',[[C_BLD,1],[C_MOO,1]])+'"]:::h2 --> H3');
+    E('H2 --> C2A["'+mk('«Не надо меня есть! Я не вкусная!»',[[C_MOO,1]])+'"]:::h2', c2); E('C2A --> H3', c2);
+    E('H2 --> C2B["'+mk('«Подставить шею для укуса.»',[[C_MAD,1],[C_MOO,1],[C_BLD,1]])+'"]:::h2', c2); E('C2B --> H3', c2);
+    E('H2 --> C2C["'+mk('«Эээ... Кевин?»<br/><span style="font-size:12px;color:#6a7280">wrong_name → not_remember2</span>',[[C_BLD,1]],[[C_MOO,1]])+'"]:::h2', c2); E('C2C --> H3', c2);
+    E('H2 --> C2D["'+mk('«Я-я не помню.»<br/><span style="font-size:12px;color:#6a7280">not_remember2</span>',[[C_BLD,1],[C_MOO,1]])+'"]:::h2', c2); E('C2D --> H3', c2);
+    E('H2 --> C2E["'+mk('«Я знаю твое имя!»')+'"]:::h2', c2); E('C2E --> NQ', c2);
+    E('NQ --> C2F["'+mk('верное («Лесс», «Лес»…)')+'"]:::h2', c2); E('C2F --> H2A', c2);
+    E('NQ --> C2G["'+mk('неверное<br/><span style="font-size:12px;color:#6a7280">wrong_name → not_remember2</span>',[[C_BLD,1]],[[C_MOO,1]])+'"]:::h2', c2); E('C2G --> H3', c2);
+    E('NQ --> C2H["'+mk('пусто<br/><span style="font-size:12px;color:#6a7280">not_remember2</span>',[[C_BLD,1],[C_MOO,1]])+'"]:::h2', c2); E('C2H --> H3', c2);
   } else {
-    L.push('H2 --> H3');
-    L.push('H2 --> NQ');
-    L.push('NQ -->|верное| H2A');
-    L.push('NQ -->|нет| H3');
+    E('H2 --> H3', c2);
+    E('H2 --> NQ', c2);
+    E('NQ -->|верное| H2A', c2);
+    E('NQ -->|нет| H3', c2);
   }
   // --- H2A ---
   if(EXP.has('H2A')){
-    L.push('H2A --> CA1["'+mk('«Безразлично улыбнуться.»',[[C_MAD,2]])+'"]:::h2a --> SAM{{"samsp"}}:::h2a');
-    L.push('SAM --> CA2["'+mk('«А почему нет? Ты же надо мной шутишь.»')+'"]:::h2a --> D1A');
-    L.push('SAM --> CA3["'+mk('«Ээм... Нет?»')+'"]:::h2a --> H9');
-    L.push('H2A --> CA4["'+mk('«Это случайность! Я просто угадала!»<br/><span style="font-size:12px;color:#6a7280">с лупой ещё логика +1</span>',[[C_MOO,5]])+'"]:::h2a --> AM{{"amulmenu"}}:::h2a');
-    L.push('AM --> CA5["'+mk('«Н-нет. Не брать.»',[[C_MOO,1]])+'"]:::h2a --> H3');
-    L.push('AM --> CA6["'+mk('«Без лишних слов надеть.»',[[C_MAD,1]],[[C_MOO,1]])+'"]:::h2a --> H3');
-    L.push('AM --> CA7["'+mk('«Спасибо... Взять амулет.»')+'"]:::h2a --> TK{{"take"}}:::h2a');
-    L.push('TK --> CA8["'+mk('«Надеть сразу»')+'"]:::h2a --> H3');
-    L.push('TK --> CA9["'+mk('«Убрать в карман.»',[[C_LOG,1],[C_MOO,1]],[[C_MAD,1]])+'"]:::h2a --> H3');
-    L.push('AM --> CA10["'+mk('«Ч-что это?»',[[C_LOG,1],[C_MOO,1]],[[C_MAD,1]])+'"]:::h2a --> WII{{"what_is_it<br/>«Это всё?» ещё логика +1, безумие −1"}}:::h2a');
-    L.push('WII --> CA11["'+mk('«Возьму»')+'"]:::h2a --> TK');
-    L.push('WII --> CA12["'+mk('«Ну его.»',[[C_MOO,1]])+'"]:::h2a --> H3');
+    E('H2A --> CA1["'+mk('«Безразлично улыбнуться.»',[[C_MAD,2]])+'"]:::h2a', c2a); E('CA1 --> SAM{{"samsp"}}:::h2a', c2a);
+    E('SAM --> CA2["'+mk('«А почему нет? Ты же надо мной шутишь.»')+'"]:::h2a', c2a); E('CA2 --> D1A', c2a);
+    E('SAM --> CA3["'+mk('«Ээм... Нет?»')+'"]:::h2a', c2a); E('CA3 --> H9', c2a);
+    E('H2A --> CA4["'+mk('«Это случайность! Я просто угадала!»<br/><span style="font-size:12px;color:#6a7280">с лупой ещё логика +1</span>',[[C_MOO,5]])+'"]:::h2a', c2a); E('CA4 --> AM{{"amulmenu"}}:::h2a', c2a);
+    E('AM --> CA5["'+mk('«Н-нет. Не брать.»',[[C_MOO,1]])+'"]:::h2a', c2a); E('CA5 --> H3', c2a);
+    E('AM --> CA6["'+mk('«Без лишних слов надеть.»',[[C_MAD,1]],[[C_MOO,1]])+'"]:::h2a', c2a); E('CA6 --> H3', c2a);
+    E('AM --> CA7["'+mk('«Спасибо... Взять амулет.»')+'"]:::h2a', c2a); E('CA7 --> TK{{"take"}}:::h2a', c2a);
+    E('TK --> CA8["'+mk('«Надеть сразу»')+'"]:::h2a', c2a); E('CA8 --> H3', c2a);
+    E('TK --> CA9["'+mk('«Убрать в карман.»',[[C_LOG,1],[C_MOO,1]],[[C_MAD,1]])+'"]:::h2a', c2a); E('CA9 --> H3', c2a);
+    E('AM --> CA10["'+mk('«Ч-что это?»',[[C_LOG,1],[C_MOO,1]],[[C_MAD,1]])+'"]:::h2a', c2a); E('CA10 --> WII{{"what_is_it<br/>«Это всё?» ещё логика +1, безумие −1"}}:::h2a', c2a);
+    E('WII --> CA11["'+mk('«Возьму»')+'"]:::h2a', c2a); E('CA11 --> TK', c2a);
+    E('WII --> CA12["'+mk('«Ну его.»',[[C_MOO,1]])+'"]:::h2a', c2a); E('CA12 --> H3', c2a);
   } else {
-    L.push('H2A --> H3');
-    L.push('H2A --> D1A');
-    L.push('H2A --> H9');
+    E('H2A --> H3', c2a);
+    E('H2A --> D1A', c2a);
+    E('H2A --> H9', c2a);
   }
   // --- H3 ---
   if(EXP.has('H3')){
-    L.push('H3 --> C3A["'+mk('«П...Подожди!»<br/><span style="font-size:12px;color:#6a7280">mood ≥ 0</span>')+'"]:::h3 --> H4');
-    L.push('H3 --> C3B["'+mk('«П...Подожди!»<br/><span style="font-size:12px;color:#6a7280">mood &lt; 0</span>')+'"]:::h3 --> H9');
-    L.push('H3 --> C3C["'+mk('«Дать уйти.»')+'"]:::h3 --> H9');
-    L.push('H3 --> C3D["'+mk('«Схватить за плечо.»')+'"]:::h3 --> H8');
+    E('H3 --> C3A["'+mk('«П...Подожди!»<br/><span style="font-size:12px;color:#6a7280">mood ≥ 0</span>')+'"]:::h3', c3); E('C3A --> H4', c3);
+    E('H3 --> C3B["'+mk('«П...Подожди!»<br/><span style="font-size:12px;color:#6a7280">mood &lt; 0</span>')+'"]:::h3', c3); E('C3B --> H9', c3);
+    E('H3 --> C3C["'+mk('«Дать уйти.»')+'"]:::h3', c3); E('C3C --> H9', c3);
+    E('H3 --> C3D["'+mk('«Схватить за плечо.»')+'"]:::h3', c3); E('C3D --> H8', c3);
   } else {
-    L.push('H3 --> H4');
-    L.push('H3 --> H9');
-    L.push('H3 --> H8');
+    E('H3 --> H4', c3);
+    E('H3 --> H9', c3);
+    E('H3 --> H8', c3);
   }
   // --- H4 ---
   if(EXP.has('H4')){
-    L.push('H4 --> C4A["'+mk('«Видимо мы... Знакомы?»')+'"]:::h4 --> H5');
-    L.push('H4 --> C4B["'+mk('«Лесс? Странное имя»')+'"]:::h4 --> SN1["'+mk('«По-моему, отличное имя!»',[[C_MAD,1]])+'"]:::h4 --> H5');
-    L.push('C4B --> SN2["'+mk('«В смысле, лес?»',[[C_LOG,1]])+'"]:::h4 --> SN3["'+mk('«Раздраженно» безумие −1, настроение +1 ⚠ знаки<br/>«Каменное лицо» настроение −1, логика +1')+'"]:::h4');
-    L.push('SN3 --> SN4["'+mk('«Не стоит уточнять...»',[[C_LOG,1]])+'"]:::h4 --> H5');
-    L.push('SN3 --> SN5["'+mk('«Почему смерти?»')+'"]:::h4 --> SN6["'+mk('«Шаг назад»<br/><span style="font-size:12px;color:#6a7280">настроение +2 при логике ≥ 2, иначе +1</span>',[[C_MOO,2],[C_LOG,1]])+'"]:::h4 --> H5');
-    L.push('SN5 --> SN7["'+mk('«Пожать плечами и подставить горло»',[[C_MAD,1],[C_MOO,1],[C_BLD,1]])+'"]:::h4 --> H5');
-    L.push('H4 --> C4C["'+mk('«Приятно познакомиться...»')+'"]:::h4 --> H6');
+    E('H4 --> C4A["'+mk('«Видимо мы... Знакомы?»')+'"]:::h4', c4); E('C4A --> H5', c4);
+    E('H4 --> C4B["'+mk('«Лесс? Странное имя»')+'"]:::h4', c4); E('C4B --> SN1["'+mk('«По-моему, отличное имя!»',[[C_MAD,1]])+'"]:::h4', c4); E('SN1 --> H5', c4);
+    E('C4B --> SN2["'+mk('«В смысле, лес?»',[[C_LOG,1]])+'"]:::h4', c4); E('SN2 --> SN3["'+mk('«Раздраженно» безумие −1, настроение +1 ⚠ знаки<br/>«Каменное лицо» настроение −1, логика +1')+'"]:::h4', c4);
+    E('SN3 --> SN4["'+mk('«Не стоит уточнять...»',[[C_LOG,1]])+'"]:::h4', c4); E('SN4 --> H5', c4);
+    E('SN3 --> SN5["'+mk('«Почему смерти?»')+'"]:::h4', c4); E('SN5 --> SN6["'+mk('«Шаг назад»<br/><span style="font-size:12px;color:#6a7280">настроение +2 при логике ≥ 2, иначе +1</span>',[[C_MOO,2],[C_LOG,1]])+'"]:::h4', c4); E('SN6 --> H5', c4);
+    E('SN5 --> SN7["'+mk('«Пожать плечами и подставить горло»',[[C_MAD,1],[C_MOO,1],[C_BLD,1]])+'"]:::h4', c4); E('SN7 --> H5', c4);
+    E('H4 --> C4C["'+mk('«Приятно познакомиться...»')+'"]:::h4', c4); E('C4C --> H6', c4);
   } else {
-    L.push('H4 --> H5');
-    L.push('H4 --> H5');
-    L.push('H4 --> H6');
+    E('H4 --> H5', c4);
+    E('H4 --> H5', c4);
+    E('H4 --> H6', c4);
   }
   // --- H5 ---
   if(EXP.has('H5')){
-    L.push('H5 --> C5A["'+mk('«Как же так! Значит будут.»',[[C_MOO,1]],[[C_MAD,1]])+'"]:::h5 --> H6');
-    L.push('H5 --> C5B["'+mk('«Что вообще такое друзья?»',[[C_MAD,1]])+'"]:::h5 --> H6');
+    E('H5 --> C5A["'+mk('«Как же так! Значит будут.»',[[C_MOO,1]],[[C_MAD,1]])+'"]:::h5', c5); E('C5A --> H6', c5);
+    E('H5 --> C5B["'+mk('«Что вообще такое друзья?»',[[C_MAD,1]])+'"]:::h5', c5); E('C5B --> H6', c5);
   } else {
-    L.push('H5 --> H6');
+    E('H5 --> H6', c5);
   }
   // --- H6 ---
   if(EXP.has('H6')){
-    L.push('H6 --> C6A["'+mk('«Еще чего!» (имя «Вий»)',[[C_MAD,1]])+'"]:::h6 --> H7');
-    L.push('H6 --> C6B["'+mk('ввод: пусто или «Вий»',[[C_MAD,1]])+'"]:::h6 --> H7');
-    L.push('H6 --> C6C["'+mk('ввод: своё имя',[[C_LOG,1],[C_MOO,1]],[[C_MAD,1]])+'"]:::h6 --> H7');
+    E('H6 --> C6A["'+mk('«Еще чего!» (имя «Вий»)',[[C_MAD,1]])+'"]:::h6', c6); E('C6A --> H7', c6);
+    E('H6 --> C6B["'+mk('ввод: пусто или «Вий»',[[C_MAD,1]])+'"]:::h6', c6); E('C6B --> H7', c6);
+    E('H6 --> C6C["'+mk('ввод: своё имя',[[C_LOG,1],[C_MOO,1]],[[C_MAD,1]])+'"]:::h6', c6); E('C6C --> H7', c6);
   } else {
-    L.push('H6 --> H7');
+    E('H6 --> H7', c6);
   }
   // --- H7 ---
   if(EXP.has('H7')){
-    L.push('H7 -.->|"mood &gt; 0 перед меню: mood +1"| H7');
-    L.push('H7 --> C7A["'+mk('«Оставить в покое.»')+'"]:::h7 --> GN');
-    L.push('H7 --> C7B["'+mk('«Остановить.»<br/><span style="font-size:12px;color:#6a7280">mood &lt; 0</span>')+'"]:::h7 --> GN');
-    L.push('H7 --> C7C["'+mk('«Остановить.»<br/><span style="font-size:12px;color:#6a7280">mood ≥ 0, mad ≥ 1</span>')+'"]:::h7 --> GN');
-    L.push('H7 --> C7D["'+mk('«Остановить.»<br/><span style="font-size:12px;color:#6a7280">mood ≥ 0, mad &lt; 1 → квест Айрата</span>')+'"]:::h7 --> AIR{{"less_airat_predl"}}:::h7');
-    L.push('AIR -.->|"цикл «А что мне будет?» mood+1, logic+1, mad−1"| AIR');
-    L.push('AIR --> C7E["'+mk('«Х-хорошо.»<br/><span style="font-size:12px;color:#6a7280">без «reward» −1 настроения</span>',null,[[C_MOO,1]])+'"]:::h7 --> GN');
-    L.push('AIR --> C7F["'+mk('«Еще чего!»',null,[[C_MOO,2]])+'"]:::h7 --> GN');
+    E('H7 -.->|"mood &gt; 0 перед меню: mood +1"| H7', c7);
+    E('H7 --> C7A["'+mk('«Оставить в покое.»')+'"]:::h7', c7); E('C7A --> GN', c7);
+    E('H7 --> C7B["'+mk('«Остановить.»<br/><span style="font-size:12px;color:#6a7280">mood &lt; 0</span>')+'"]:::h7', c7); E('C7B --> GN', c7);
+    E('H7 --> C7C["'+mk('«Остановить.»<br/><span style="font-size:12px;color:#6a7280">mood ≥ 0, mad ≥ 1</span>')+'"]:::h7', c7); E('C7C --> GN', c7);
+    E('H7 --> C7D["'+mk('«Остановить.»<br/><span style="font-size:12px;color:#6a7280">mood ≥ 0, mad &lt; 1 → квест Айрата</span>')+'"]:::h7', c7); E('C7D --> AIR{{"less_airat_predl"}}:::h7', c7);
+    E('AIR -.->|"цикл «А что мне будет?» mood+1, logic+1, mad−1"| AIR', c7);
+    E('AIR --> C7E["'+mk('«Х-хорошо.»<br/><span style="font-size:12px;color:#6a7280">без «reward» −1 настроения</span>',null,[[C_MOO,1]])+'"]:::h7', c7); E('C7E --> GN', c7);
+    E('AIR --> C7F["'+mk('«Еще чего!»',null,[[C_MOO,2]])+'"]:::h7', c7); E('C7F --> GN', c7);
   } else {
-    L.push('H7 --> GN');
-    L.push('H7 --> GN');
+    E('H7 --> GN', c7);
+    E('H7 --> GN', c7);
   }
   // --- H8 ---
   if(EXP.has('H8')){
-    L.push('H8 --> C8A["'+mk('«Отпустить.»',null,[[C_MAD,1]])+'"]:::h8 --> H9');
-    L.push('H8 --> C8B["'+mk('«Удержать силой.»<br/><span style="font-size:12px;color:#6a7280">Кровь ≥ 3 → sm_blood</span>',[[C_BLD,1]],[[C_MOO,1]])+'"]:::h8 --> STR{{"strenght"}}:::h8');
-    L.push('STR --> C8C["'+mk('«Отчаянно бороться и вырываться.»')+'"]:::h8 --> D1');
-    L.push('STR --> C8D["'+mk('«Расслабиться.»',[[C_MAD,1]],[[C_LOG,1]])+'"]:::h8 --> M17{{"меню conv:1117"}}:::h8');
-    L.push('STR --> C8E["'+mk('«Замереть.»<br/><span style="font-size:12px;color:#6a7280">⚠ баг conv:1105</span>',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h8 --> M17');
-    L.push('M17 --> C8F["'+mk('«А сами-то!»',[[C_MAD,1],[C_MOO,1]])+'"]:::h8 --> H9');
-    L.push('M17 --> C8G["'+mk('«Промолчать»',null,[[C_MAD,1]])+'"]:::h8 --> H9');
+    E('H8 --> C8A["'+mk('«Отпустить.»',null,[[C_MAD,1]])+'"]:::h8', c8); E('C8A --> H9', c8);
+    E('H8 --> C8B["'+mk('«Удержать силой.»<br/><span style="font-size:12px;color:#6a7280">Кровь ≥ 3 → sm_blood</span>',[[C_BLD,1]],[[C_MOO,1]])+'"]:::h8', c8); E('C8B --> STR{{"strenght"}}:::h8', c8);
+    E('STR --> C8C["'+mk('«Отчаянно бороться и вырываться.»')+'"]:::h8', c8); E('C8C --> D1', c8);
+    E('STR --> C8D["'+mk('«Расслабиться.»',[[C_MAD,1]],[[C_LOG,1]])+'"]:::h8', c8); E('C8D --> M17{{"меню conv:1117"}}:::h8', c8);
+    E('STR --> C8E["'+mk('«Замереть.»<br/><span style="font-size:12px;color:#6a7280">⚠ баг conv:1105</span>',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h8', c8); E('C8E --> M17', c8);
+    E('M17 --> C8F["'+mk('«А сами-то!»',[[C_MAD,1],[C_MOO,1]])+'"]:::h8', c8); E('C8F --> H9', c8);
+    E('M17 --> C8G["'+mk('«Промолчать»',null,[[C_MAD,1]])+'"]:::h8', c8); E('C8G --> H9', c8);
   } else {
-    L.push('H8 --> H9');
-    L.push('H8 --> D1');
-    L.push('H8 --> H9');
+    E('H8 --> H9', c8);
+    E('H8 --> D1', c8);
+    E('H8 --> H9', c8);
   }
   // --- H9 ---
   if(EXP.has('H9')){
-    L.push('H9 --> C9A["'+mk('«Со злости ударить дерево»',[[C_MAD,1]],[[C_LOG,1],[C_MOO,2]])+'"]:::h9 --> KRN{{"less_korn_menu<br/>циклы: «не шевелиться» безумие +1 ·<br/>«вырваться» логика +1, настроение −1"}}:::h9');
-    L.push('KRN --> C9B["'+mk('«Обмякнуть и обмануть корни.» → ushel',[[C_LOG,1],[C_MOO,1]],[[C_MAD,1]])+'"]:::h9 --> RB');
-    L.push('KRN --> C9C["'+mk('«Извиниться.» (знает имя) → ushel',[[C_LOG,1],[C_MOO,2]])+'"]:::h9 --> RB');
-    L.push('KRN --> C9D["'+mk('«Расслабиться и поспать.»',[[C_MAD,1],[C_MOO,2]])+'"]:::h9 --> E1');
-    L.push('KRN --> C9E["'+mk('«В панике бороться до конца.»')+'"]:::h9 --> D2');
-    L.push('H9 --> C9F["'+mk('«Это было опасно...» / «Что произошло?» → ushel',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h9 --> RB');
-    L.push('H9 --> C9G["'+mk('«Броситься за ним.»')+'"]:::h9 --> SLC');
+    E('H9 --> C9A["'+mk('«Со злости ударить дерево»',[[C_MAD,1]],[[C_LOG,1],[C_MOO,2]])+'"]:::h9', c9); E('C9A --> KRN{{"less_korn_menu<br/>циклы: «не шевелиться» безумие +1 ·<br/>«вырваться» логика +1, настроение −1"}}:::h9', c9);
+    E('KRN --> C9B["'+mk('«Обмякнуть и обмануть корни.» → ushel',[[C_LOG,1],[C_MOO,1]],[[C_MAD,1]])+'"]:::h9', c9); E('C9B --> RB', c9);
+    E('KRN --> C9C["'+mk('«Извиниться.» (знает имя) → ushel',[[C_LOG,1],[C_MOO,2]])+'"]:::h9', c9); E('C9C --> RB', c9);
+    E('KRN --> C9D["'+mk('«Расслабиться и поспать.»',[[C_MAD,1],[C_MOO,2]])+'"]:::h9', c9); E('C9D --> E1', c9);
+    E('KRN --> C9E["'+mk('«В панике бороться до конца.»')+'"]:::h9', c9); E('C9E --> D2', c9);
+    E('H9 --> C9F["'+mk('«Это было опасно...» / «Что произошло?» → ushel',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h9', c9); E('C9F --> RB', c9);
+    E('H9 --> C9G["'+mk('«Броситься за ним.»')+'"]:::h9', c9); E('C9G --> SLC', c9);
   } else {
-    L.push('H9 --> RB');
-    L.push('H9 --> E1');
-    L.push('H9 --> D2');
-    L.push('H9 --> RB');
-    L.push('H9 --> SLC');
+    E('H9 --> RB', c9);
+    E('H9 --> E1', c9);
+    E('H9 --> D2', c9);
+    E('H9 --> RB', c9);
+    E('H9 --> SLC', c9);
   }
   // --- MEM ---
   if(EXP.has('MEM')){
-    L.push('MEM --> CM1["'+mk('«Х-хватит...»',[[C_LOG,1]])+'"]:::hm --> RB');
-    L.push('MEM --> CM2["'+mk('«Идти до конца!»',[[C_MAD,1]])+'"]:::hm --> D3');
+    E('MEM --> CM1["'+mk('«Х-хватит...»',[[C_LOG,1]])+'"]:::hm', cm); E('CM1 --> RB', cm);
+    E('MEM --> CM2["'+mk('«Идти до конца!»',[[C_MAD,1]])+'"]:::hm', cm); E('CM2 --> D3', cm);
   } else {
-    L.push('MEM --> RB');
-    L.push('MEM --> D3');
+    E('MEM --> RB', cm);
+    E('MEM --> D3', cm);
   }
   L.push('classDef h1 fill:#e6f4f2,stroke:#0f766e,color:#16302c');
   L.push('classDef h2 fill:#ececfe,stroke:#4f46e5,color:#221f4d');
@@ -226,7 +229,7 @@ function build(){
   L.push('classDef die fill:#222,stroke:#000,color:#fff');
   L.push('classDef fin fill:#e6f4e6,stroke:#2E8B3E,color:#1e6b1e');
   L.push('classDef ext fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
-  return L.join('\n');
+  return L.concat(ST).join('\n');
 }
 
 async function render(){
@@ -255,8 +258,8 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <body>
 <header class="site"><div class="wrap">
 <h1>Разговор с Лессом</h1>
-<p>Локация: <a href="location.html?v=10" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script_2_less_conv.rpy (conv) · script_2_less_conv_amul.rpy (amul) · script_3_less_end.rpy (end) · script_memory.rpy (mem) · day_1_less_razg.rpy (razg)</p>
-<nav class="crumbs"><a href="index.html?v=10">← Все схемы</a> · <a href="location.html?v=10">Локация «Место пробуждения»</a> · <a href="strel.html?v=10">Экран переходов</a></nav>
+<p>Локация: <a href="location.html?v=11" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script_2_less_conv.rpy (conv) · script_2_less_conv_amul.rpy (amul) · script_3_less_end.rpy (end) · script_memory.rpy (mem) · day_1_less_razg.rpy (razg)</p>
+<nav class="crumbs"><a href="index.html?v=11">← Все схемы</a> · <a href="location.html?v=11">Локация «Место пробуждения»</a> · <a href="strel.html?v=11">Экран переходов</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -349,7 +352,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <li>less_razg_menu (повторные разговоры): вопросы-ветки назад в Хабы 4/7/5; «Конец» перезапускает меню, выход автоматический, когда остаётся один пункт → экран strel.</li>
 </ul></div>
 </div>
-<p class="muted">Скрытые переходы: <code>setblood(x)</code> при Крови ≥ 3 прыгает в sm_blood из любой строки с blood+1. Имя героини переспрашивается в end:68 и end:112, даже если уже задано. Полный список найденных ошибок — на странице <a href="stats.html?v=10">«Статы»</a>.</p>
+<p class="muted">Скрытые переходы: <code>setblood(x)</code> при Крови ≥ 3 прыгает в sm_blood из любой строки с blood+1. Имя героини переспрашивается в end:68 и end:112, даже если уже задано. Полный список найденных ошибок — на странице <a href="stats.html?v=11">«Статы»</a>.</p>
 </div>
 </div>
 <div id="panel-short" style="position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:100%">
@@ -407,7 +410,7 @@ classDef endd fill:#e6f4e6,stroke:#2E8B3E,color:#1e6b1e
 <tr><td>Разговор с Лессом</td><td>−7…+6</td><td>−1…+9</td><td>0…+2</td><td>−6…+15</td></tr>
 <tr><td><b>Итого по локации</b></td><td><b>−7…+6</b></td><td><b>−1…+9</b></td><td><b>0…+2</b></td><td><b>−6…+15</b></td></tr>
 </table>
-<p class="muted">Посчитано по коду 15.10.2026, смерти не учитывались. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=10">«Статы»</a>.</p>
+<p class="muted">Посчитано по коду 15.10.2026, смерти не учитывались. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=11">«Статы»</a>.</p>
 </div>
 
 </main>
