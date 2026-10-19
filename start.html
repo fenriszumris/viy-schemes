@@ -8,6 +8,14 @@
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:55, rankSpacing:70, padding:14}, theme:'default', themeVariables:{fontSize:'19px'}});
+
+window.addEventListener('load', function(){
+  setTimeout(function(){
+    document.querySelectorAll('.mermaid').forEach(function(d){
+      d.scrollLeft = Math.max(0,(d.scrollWidth - d.clientWidth)/2);
+    });
+  }, 900);
+});
 </script>
 </head>
 <body>
