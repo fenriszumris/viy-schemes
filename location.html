@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Локация «Место пробуждения» — Схемы игры «Вий»</title>
+<link rel="stylesheet" href="style.css?v=5">
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>Локация «Место пробуждения» (less_start)</h1>
+<p>Стартовая локация игры · script _define.rpy:551, script_1_less_begin.rpy:96, script3_road.rpy:1-4</p>
+<nav class="crumbs"><a href="index.html">← Все схемы</a> · <a href="strel.html">Экран переходов</a></nav>
+</div></header>
+<main>
+<div class="card">
+<h2>Что это за локация (по коду)</h2>
+<ul>
+<li>Объявлена как <code>less_start = location_class(crossroads = 1, location_area = "less_main", location_music = "viy")</code> — script _define.rpy:551. «crossroads» — вид с перекрёстком (стрелки).</li>
+<li>Русского названия в коде нет: «Место пробуждения» — из подписи стрелки «К месту пробуждения» на перекрёстке (script _define.rpy:704).</li>
+<li>Героиня просыпается здесь в прологе: <code>my_location.name = less_start</code> — script_1_less_begin.rpy:96. Это и есть начальная локация игры.</li>
+</ul>
+</div>
+<div class="card">
+<h2>Стрелки локации (переходы)</h2>
+<table class="stats">
+<tr><th>Стрелка</th><th>Куда (локация)</th><th>Метка (сцена по пути)</th></tr>
+<tr><td>Вправо</td><td>Перекрёсток (less_per)</td><td><code>script_3_road</code> — при первом проходе запускает <a href="less.html">разговор с Лессом</a> (условие: нет "less_begin" в памяти и не режим разработчика, script3_road.rpy:1-4)</td></tr>
+<tr><td>Влево</td><td>Дорога, начало (less_tashroad_begin)</td><td><code>script3_nazad_begin</code> — при первом проходе тоже запускает <a href="less.html">разговор с Лессом</a> (script3_nazad.rpy:19-22)</td></tr>
+</table>
+<p class="muted">Все соседние локации и их стрелки — на странице <a href="strel.html">«Экран переходов»</a>.</p>
+</div>
+<div class="card">
+<h2>Сцены локации</h2>
+<ul class="toc">
+<li><a href="start.html">Сцена «Старт»</a><br><span class="muted">Пролог, обучение, хардмод, меню разработчика, сон, укус руки. Локация задаётся в script_1_less_begin.rpy:96.</span></li>
+<li><a href="less.html">Разговор с Лессом</a><br><span class="muted">Запускается стрелками этой локации (script_3_road / script3_nazad_begin), локация та же: less_start (script_3_road:3).</span></li>
+</ul>
+</div>
+<div class="card">
+<h2>Статы: минимумы и максимумы</h2>
+<table class="stats">
+<tr><th></th><th class="mad">Безумие</th><th class="logic">Логика</th><th class="blood">Кровь</th><th class="mood">Настроение Лесса</th></tr>
+<tr><td>Сцена «Старт»</td><td>0…+5</td><td>0…+3</td><td>0…+1</td><td>0</td></tr>
+<tr><td>Разговор с Лессом</td><td>−7…+6</td><td>−1…+9</td><td>0…+2</td><td>−6…+15</td></tr>
+<tr><td><b>Итого по локации</b></td><td><b>−7…+6</b></td><td><b>−1…+9</b></td><td><b>0…+2</b></td><td><b>−6…+15</b></td></tr>
+</table>
+<p class="muted">Посчитано по коду 15.10.2026, смерти не учитывались. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html">«Статы»</a>.</p>
+</div>
+
+</main>
+<footer>Схемы игры «Вий» · локация «Место пробуждения» · выверено по коду 19.10.2026</footer>
+</body>
+</html>
