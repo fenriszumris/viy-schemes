@@ -33,11 +33,11 @@ mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis',
 <div class="panel-rel">
 <div id="panel-full">
 <h2>Полная схема: все хабы и все выборы</h2>
-<p class="muted">Схема очень широкая — листайте её вбок ползунком под схемой (или колесом мыши с Shift). Текст крупный, всё в натуральную величину.</p>
+<p class="muted">Схема широкая — листайте её вбок ползунком под схемой (или колесом мыши с Shift). Текст крупный, всё в натуральную величину.</p>
 <div class="mermaid fill">
-%%{init: {'flowchart': {'useMaxWidth': false}}}%%
+%%{init: {'flowchart': {'useMaxWidth': false, 'nodeSpacing': 12, 'rankSpacing': 28, 'diagramPadding': 8, 'curve': 'linear'}}}%%
 flowchart TB
-VHD["<b>Вход: первый разговор</b><br/>стрелки от script3_road / script3_nazad<br/>(нет «less_begin» в памяти, не режим разработчика)"]:::less
+VHD["<b>Вход: первый разговор</b><br/>стрелки script3_road / script3_nazad"]:::less
 VH2["<b>Вход: сцена руки</b><br/>(script_1_less_hand)"]:::less
 RAZG["<b>Повторный разговор</b> (day_1_less_razg)<br/>вход в Хабы 4, 5, 7"]:::less
 MEM["<b>Воспоминание</b> (son → sud → head_ache)<br/><span style='color:#C62828'>blood +1</span>"]:::scene
@@ -45,7 +45,7 @@ H1["<b>Хаб 1. Гляделки</b> (start_cycle)"]:::scene
 H2["<b>Хаб 2. «Его имя?»</b> (conv_2)"]:::scene
 WN["wrong_name<br/><span style='color:#2E8B3E'>mood −2</span>"]
 NR2["not_remember2<br/><span style='color:#C62828'>blood +1</span>, <span style='color:#2E8B3E'>mood +1</span>"]
-NQ["Ввод имени (name_quest)<br/>регистр важен: «ЛЕСС» не пройдёт"]
+NQ["Ввод имени (name_quest)<br/>«ЛЕСС» не пройдёт"]
 H2A["<b>Хаб 2a. Верное имя → амулет</b> (name_right)"]:::scene
 SAM["samsp<br/><span style='color:#7B3FA0'>mad +2</span>"]
 AM["Меню амулета (amulmenu)"]
@@ -66,11 +66,11 @@ H7["<b>Хаб 7. Прощание</b> (less_end)"]:::scene
 AIR["Квест Айрата (less_airat_predl)"]
 GONE["script_3_less_gone<br/>прощание по mood и квесту"]:::less
 H8["<b>Хаб 8. Хватание</b> (less_hand)<br/><span style='color:#2E8B3E'>mood −2</span>"]:::scene
-STR["strenght<br/><span style='color:#C62828'>blood +1</span><br/>(при Крови ≥ 3 скрытый выход sm_blood)"]
+STR["strenght<br/><span style='color:#C62828'>blood +1</span><br/>Кровь ≥ 3 → sm_blood"]
 M17["меню (conv:1117)"]
 H9["<b>Хаб 9. Уход Лесса</b> (script_3_less_go)"]:::scene
 KORN["<b>Корни</b> (less_korn_menu)"]:::scene
-USH["ushel: имя спрашивается заново<br/>(при poter_v_less → «броситься»)"]
+USH["ushel<br/>(имя спрашивается заново)"]
 RB["road_begin → экран strel"]:::less
 SLUC["sluc (script3_road, вне сцены)"]:::less
 D1["<b>BAD END «Тщетная борьба...»</b>"]:::death
@@ -135,7 +135,7 @@ H7 -- "«Остановить», <span style='color:#2E8B3E'>mood</span> &lt; 0"
 H7 -- "«Остановить», <span style='color:#2E8B3E'>mood</span> ≥ 0, <span style='color:#7B3FA0'>mad</span> ≥ 1" --> GONE
 H7 -- "«Остановить», <span style='color:#2E8B3E'>mood</span> ≥ 0, <span style='color:#7B3FA0'>mad</span> &lt; 1" --> AIR
 AIR -- "«Х-хорошо.»<br/>(без «reward» <span style='color:#2E8B3E'>mood −1</span>)" --> GONE
-AIR -- "«А что мне за это будет?»<br/><span style='color:#2E8B3E'>mood +1</span>, <span style='color:#2E6FD0'>logic +1</span>, <span style='color:#7B3FA0'>mad −1</span> (повтор меню)" --> AIR
+AIR -- "«А что мне за это будет?»<br/><span style='color:#2E8B3E'>mood +1</span>, <span style='color:#2E6FD0'>logic +1</span>, <span style='color:#7B3FA0'>mad −1</span>" --> AIR
 AIR -- "«Еще чего!»<br/><span style='color:#2E8B3E'>mood −2</span>" --> GONE
 GONE --> RB
 H8 -- "«Отпустить»<br/><span style='color:#7B3FA0'>mad −1</span>" --> H9
