@@ -17,12 +17,12 @@ const EXP=new Set();
 
 function hub(id,label,cls){
   const arrow = EXP.has(id) ? '▾' : '▸';
-  return id + '["<b>' + label + '</b> ' + arrow + '"]:::' + cls + '\nclick ' + id + ' call th("' + id + '")';
+  return id + '["<b>' + label + '</b> ' + arrow + '"]:::' + cls;
 }
 
 function build(){
   const L=[];
-  L.push('flowchart LR');
+  L.push('flowchart TB');
   // hub boxes (always present)
   L.push(hub('H1','Хаб 1. Гляделки<br/>start_cycle','h1'));
   L.push(hub('H2','Хаб 2. «Его имя?»<br/>conv_2','h2'));
@@ -216,6 +216,13 @@ async function render(){
   f.removeAttribute('data-processed');
   f.textContent=build();
   await mermaid.run({nodes:[f]});
+  document.querySelectorAll('#fchart g.node').forEach(function(g){
+    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
+    if(m && HUBS.indexOf(m[1])>=0){
+      g.style.cursor='pointer';
+      g.addEventListener('click', function(){ window.th(m[1]); });
+    }
+  });
 }
 window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
 window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
