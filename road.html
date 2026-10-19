@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<title>Дорога (перекрёсток) — Схемы игры «Вий»</title>
+<link rel="stylesheet" href="style7.css?v=22">
+<style>.widechart{overflow-x:auto}.widechart svg{max-width:none !important}</style>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'17px'}});
+
+const HUBS=['H1','H2','H3','H4','BUR'];
+const EXP=new Set();
+const c1='#0f766e', c2='#4f46e5', c3='#0369a1', c4='#be123c', cB='#64748b', cG='#9aa3b2';
+// цвета статов: mad фиолетовый, logic голубой, blood малиновый, mood красный
+const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)';
+const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)';
+
+function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
+function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
+function mk(text, ups, downs){
+  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
+  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
+    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
+    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
+    +'</div>';
+}
+function badge(ranges){
+  if(!ranges.length) return '';
+  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;line-height:1.5;white-space:nowrap">'+p[1]+'</span>';}).join(' ');
+  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
+}
+function hub(id,label,cls,ranges){
+  const arrow = EXP.has(id) ? '▾' : '▸';
+  const b=badge(ranges||[]);
+  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
+  return id + '["' + inner + '"]:::' + cls;
+}
+
+function build(){
+  const L=[]; const ST=[]; let ei=0;
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
+  L.push('flowchart TB');
+  L.push(hub('H1','Хаб 1. Ночь на развилке<br/>script_3_road','h1',[[C_LOG,'0…+1']]));
+  L.push(hub('H2','Хаб 2. Перекрёсток<br/>script_3_hzdorog','h2',[]));
+  L.push(hub('H3','Хаб 3. Барьер<br/>less_up_barier','h3',[[C_MAD,'0…+1'],[C_BLD,'0…+3']]));
+  L.push(hub('H4','Хаб 4. Лесс на кругах<br/>less_kr / kr_less','h4',[]));
+  L.push(hub('BUR','Мёртвый код: бурундук<br/>kr_bur / bur_menu','hb',[[C_MAD,'+1'],[C_LOG,'+1']]));
+  L.push('VH["Вход: road_begin (после Лесса)<br/>· strel · возврат из совы"]:::ext');
+  L.push('SOVA["script3_sova_begin<br/>сон / сова →"]:::term');
+  L.push('TG["script_3_tgavan_road_begin<br/>→ дорога к Тёмной Гавани<br/>(script3_tgavan_road.rpy)"]:::term');
+  L.push('NAZ["script3_nazad_begin<br/>→ назад (Таша)"]:::term');
+  L.push('STR["экран strel"]:::ext');
+  L.push('SMB["sm_blood<br/>Кровь ≥ 3 → смерть"]:::die');
+  L.push('DOR["doroga3: «Конец предварительный»<br/>входящих переходов нет — мёртвый код"]:::hb');
+  E('VH --> H1', cG);
+  E('H4 --> STR', c4);
+
+  // --- H1: ночное меню (road:26-60) ---
+  if(EXP.has('H1')){
+    E('H1 --> C1A["'+mk('«Не вижу никаких проблем.»<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">при Логике > 0 — доп. реплика (road:34)</span>')+'"]:::h1', c1); E('C1A --> H2', c1);
+    E('H1 --> C1B["'+mk('«Стоит переждать.»<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">только ночью · если Таша рядом — она уходит (set_tash st)</span>',[[C_LOG,1]])+'"]:::h1', c1); E('C1B --> SOVA', c1);
+    E('H1 -.->|"днём меню нет — сразу дальше"| H2', c1);
+  } else {
+    E('H1 --> H2', c1);
+    E('H1 --> SOVA', c1);
+  }
+  // --- H2: перекрёсток (road:92-114) ---
+  if(EXP.has('H2')){
+    E('H2 --> C2A["'+mk('Вперёд — к барьеру')+'"]:::h2', c2); E('C2A --> H3', c2);
+    E('H2 --> C2B["'+mk('«Куда-нибудь» (sluc)<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">случайно 1 из 2 (road:221)</span>')+'"]:::h2', c2);
+    E('C2B --> S1{{"renpy.random<br/>1 / 2"}}:::h2', c2);
+    E('S1 -- "1" --> RE["снова script_3_road<br/>(+1 круг)"]:::h2', c2); E('RE --> H1', c2);
+    E('S1 -- "2" --> NAZ', c2);
+    E('H2 --> C2C["'+mk('Направо (nezngavan / zngavan)')+'"]:::h2', c2); E('C2C --> TG', c2);
+    E('H2 -.->|"каждый заход через script_3_hzdorog: круг +1 (krug, script.rpy:292)<br/>с 4-го круга — встреча с Лессом"| H4', c2);
+  } else {
+    E('H2 --> H3', c2);
+    E('H2 --> NAZ', c2);
+    E('H2 --> TG', c2);
+    E('H2 --> H4', c2);
+  }
+  // --- H3: барьер (road:116-178) ---
+  if(EXP.has('H3')){
+    E('H3 --> C3A["'+mk('Осмотреть барьер (osm_barier)')+'"]:::h3', c3); E('C3A --> STR', c3);
+    E('H3 --> C3B["'+mk('Удариться головой<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">Безумие+1 только 1-й удар · Кровь+1 каждый удар с 4-го</span>',[[C_MAD,1],[C_BLD,1]])+'"]:::h3', c3);
+    E('C3B -- "повтор (через strel)" --> H3', c3);
+    E('C3B -- "Кровь ≥ 3" --> SMB', c3);
+    E('H3 --> C3C["'+mk('Таша: «Ты стучишься к эльфам!»<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: Таша рядом, 1 раз (td2.d10)</span><br/><span style="font-size:12px;color:#b91c1c;font-weight:700">открывает дневник квеста, часть 9 (u_part 9,1)</span>')+'"]:::h3', c3); E('C3C --> STR', c3);
+  } else {
+    E('H3 --> STR', c3);
+    E('H3 --> SMB', c3);
+  }
+  // --- H4: встреча с Лессом (road:247-250, 334-390) ---
+  if(EXP.has('H4')){
+    E('H4 --> C4A["'+mk('«Да, есть кое-что»<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: less_delo</span><br/><span style="font-size:12px;color:#b91c1c;font-weight:700">без эффектов — встреча повторится</span>')+'"]:::h4', c4); E('C4A --> STR', c4);
+    E('H4 --> C4B["'+mk('«Нет, ничего»<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: less_delo</span>')+'"]:::h4', c4); E('C4B --> STR', c4);
+    E('H4 --> C4C["'+mk('«Нет, я...» — Лесс уходит<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: не less_delo · флаг set_less("None"), meet_kr=1</span>')+'"]:::h4', c4); E('C4C --> STR', c4);
+    E('H4 -.->|"усл. реплики: Логика ≥ 3 — «Почему мышка?» (при Настроении > 4 — ответ)<br/>Безумие ≥ 3 — «Пи?» · знает имя — приветствие по имени"| STR', c4);
+  } else {
+    E('H4 --> STR', c4);
+  }
+  // --- BUR: мёртвый код ---
+  if(EXP.has('BUR')){
+    E('BUR --> CB1["'+mk('«Пройти мимо»')+'"]:::hb', cB);
+    E('BUR --> CB2["'+mk('«Взять с собой.»')+'"]:::hb', cB);
+    E('BUR --> CB3["'+mk('«Попробовать поговорить» (1 раз)<br/>ввод «пи…» → «Пиии!»')+'"]:::hb', cB);
+    E('BUR --> CB4["'+mk('лупа: «Осторожно осмотреть»',[[C_LOG,1]])+'"]:::hb', cB);
+    E('BUR --> CB5["'+mk('лупа: «Схватить и покрутить»',[[C_MAD,1]])+'"]:::hb', cB);
+  }
+  L.push('classDef h1 fill:#e6f4f2,stroke:#0f766e,color:#16302c');
+  L.push('classDef h2 fill:#ececfe,stroke:#4f46e5,color:#221f4d');
+  L.push('classDef h3 fill:#e5f2fa,stroke:#0369a1,color:#123043');
+  L.push('classDef h4 fill:#fde9ee,stroke:#be123c,color:#4d1223');
+  L.push('classDef hb fill:#f1f3f5,stroke:#64748b,color:#333a45');
+  L.push('classDef term fill:#DDEFD8,stroke:#7cb87c,color:#1f2430');
+  L.push('classDef die fill:#222,stroke:#000,color:#fff');
+  L.push('classDef ext fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
+  return L.concat(ST).join('\n');
+}
+
+async function render(){
+  const f=document.getElementById('fchart');
+  if(!f) return;
+  f.removeAttribute('data-processed');
+  f.textContent=build();
+  await mermaid.run({nodes:[f]});
+  for(const ss of document.styleSheets){
+    let rules; try{rules=ss.cssRules;}catch(e){continue;}
+    for(let i=rules.length-1;i>=0;i--){
+      const r=rules[i];
+      if(r.selectorText && /\.(h1|h2|h3|h4|hb)( span| > \*)$/.test(r.selectorText)
+         && r.style && r.style.getPropertyPriority('color')==='important'){
+        r.style.removeProperty('color');
+      }
+    }
+  }
+  document.querySelectorAll('#fchart g.node').forEach(function(g){
+    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
+    if(m && HUBS.indexOf(m[1])>=0){
+      g.style.cursor='pointer';
+      g.addEventListener('click', function(){ window.th(m[1]); });
+    }
+  });
+}
+window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
+window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
+
+render();
+const o=document.getElementById('ovchart');
+if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
+</script>
+<script src="site9.js"></script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>Дорога (перекрёсток)</h1>
+<p>script3_road.rpy (road) · переходы: script.rpy (krug, setblood) · вход после сцены <a href="less.html?v=24" style="color:#b9a7ff">«Разговор с Лессом»</a></p>
+<nav class="crumbs"><a href="index.html?v=21">← Все схемы</a> · <a href="strel.html?v=20">Экран переходов</a> · <a href="stats.html?v=22">Статы</a></nav>
+</div></header>
+<main>
+<div class="card">
+<h2>Статы по сцене (мин/макс, по коду)</h2>
+<table class="stats">
+<tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Типичный путь*</th></tr>
+<tr><td class="mad">Безумие</td><td>0</td><td>+1</td><td>+0.2</td></tr>
+<tr><td class="logic">Логика</td><td>0</td><td>+1</td><td>+0.3</td></tr>
+<tr><td class="blood">Кровь</td><td>0</td><td>+3</td><td>+0.0</td></tr>
+<tr><td class="mood">Настроение Лесса</td><td>0</td><td>0</td><td>0</td></tr>
+</table>
+<p class="muted">*Оценка: перебор всех путей по коду скриптом (97 путей), выборы равновероятны. Кровь +3 только при входе с Кровью 0: +1 за каждый удар о барьер начиная с 4-го, при Крови ≥ 3 — sm_blood. Логика +1 только ночью («Стоит переждать»).</p>
+</div>
+
+<div class="card">
+<h2>Как читать</h2>
+<p class="muted">«Хаб» — кусок сцены с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение Лесса. Сцена — обмен между экраном стрелок (strel) и кодом: стрелки приводят на метки этой сцены, события заканчиваются выходом на экран strel. Входное условие: если «less_begin» нет в <code>vrem_memory["less_pers"]</code> и не razr, вход вместо дороги бросает обратно в разговор с Лессом (road:2-4).</p>
+</div>
+<div class="viewtoggle">
+<button id="btn-full" class="active" onclick="toggleView('road',1)">Детальнее</button>
+<button id="btn-short" onclick="toggleView('road',0)">Короче</button>
+<span id="view-label" class="muted">Сейчас показана ДЕТАЛЬНАЯ схема</span>
+</div>
+<div class="panel-rel">
+<div id="panel-full">
+<h2>Полная схема: все хабы и все выборы</h2>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его ветки, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Развернуть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button></p><p class="muted" style="font-size:13px">Значки на выборах: <span style="color:#e41a1c;font-weight:700">▲/▼ Настроение</span> · <span style="color:#bc1888;font-weight:700">▲/▼ Кровь</span> · <span style="color:#7048e8;font-weight:700">▲/▼ Безумие</span> · <span style="color:#1c7ed6;font-weight:700">▲/▼ Логика</span>. Плюсы — вверху справа карточки, минусы — внизу слева. Плашка на хабе — диапазон прямых изменений статов внутри хаба (по коду).</p>
+<style>button.mini{font-size:13px;padding:3px 10px;border-radius:8px;border:1px solid #c6ccd6;background:#fff;cursor:pointer}</style>
+<div class="widechart"><pre class="mermaid" id="fchart"></pre></div>
+<div id="road-details">
+<div class="card">
+<h2>Детали по хабам</h2>
+<div class="hub"><h3>Хаб 1. Ночь на развилке — script_3_road (road:1–61)</h3>
+<ul>
+<li>Меню только ночью (<code>scene.daytime != "day"</code>): «Не вижу никаких проблем.» → дальше (при <span class="logic">logic &gt; 0</span> — доп. реплика, road:34); «Стоит переждать.» <span class="logic">logic +1</span> (без reason — дедупа нет, но после сна день, sova:90) → script3_sova_begin (сон/сова).</li>
+<li>Если Таша рядом (<code>tash.near</code>) при «Переждать»: Таша уходит (<code>set_tash("st")</code>, <code>tash.near = 0</code>).</li>
+<li>Днём меню нет — сразу на перекрёсток. Текст реплик зависит от <code>zndor</code> (знает дорогу).</li>
+</ul></div>
+<div class="hub"><h3>Хаб 2. Перекрёсток — script_3_roadway / script_3_hzdorog (road:63–114)</h3>
+<ul>
+<li>Каждый заход на <code>script_3_hzdorog</code>: <code>krug(1)</code> (script.rpy:292) — круг +1; с 4-го круга автоматически → встреча с Лессом (Хаб 4).</li>
+<li>Вперёд — к барьеру (Хаб 3). Направо — <code>nezngavan</code> / <code>zngavan</code> → <code>script_3_tgavan_road_begin</code> (дорога к Тёмной Гавани).</li>
+<li>«Куда-нибудь» (<code>sluc</code>, road:214): случайно 1 из 2 — снова <code>script_3_road</code> (+1 круг) или <code>script3_nazad_begin</code> (назад, к Таше).</li>
+</ul></div>
+<div class="hub"><h3>Хаб 3. Барьер — less_up_begin_barier / osm_barier / less_up_barier (road:116–178)</h3>
+<ul>
+<li>Первый подход: текст о барьере (<code>less_up_begin_barier_label</code>) → экран strel; осмотр (<code>osm_barier</code>) → экран strel.</li>
+<li>Удар головой (<code>less_up_barier_label</code>): <span class="mad">mad +1</span> только за первый удар (гейт <code>elfs_krug</code>); <span class="blood">blood +1</span> за каждый удар начиная с 4-го; при Крови ≥ 3 — sm_blood.</li>
+<li>Если Таша рядом и разговора ещё не было (<code>td2.d10</code>): диалог про эльфов и розыск — открывает часть 9 дневника квеста (<code>u_part(9,1)</code>).</li>
+</ul></div>
+<div class="hub"><h3>Хаб 4. Лесс на кругах — less_kr / kr_less (road:247–250, 334–390)</h3>
+<ul>
+<li>Условие: круг ≥ 4 и <code>script3_road_less_meet_kr == 0</code>. Статов не меняет.</li>
+<li>При <code>less_delo</code>: меню «Да, есть кое-что» / «Нет, ничего» — без эффектов, встреча повторяется на следующих кругах.</li>
+<li>Иначе: Лесс уходит (<code>set_less("None")</code>), <code>meet_kr = 1</code> — больше не появляется.</li>
+<li>Условные реплики: <span class="logic">logic ≥ 3</span> (get_level ≥ 1) — «Почему мышка?» (при <span class="mood">mood &gt; 4</span> — доп. ответ); <span class="mad">mad ≥ 3</span> — «Пи?»; при <code>less.zn_name</code> — приветствие по имени.</li>
+</ul></div>
+<div class="hub"><h3>Мёртвый код: бурундук и doroga3 (road:240–245, 252–330)</h3>
+<ul>
+<li><code>kr_bur</code> / <code>bur_menu</code> / <code>bur_osm</code> недостижимы: единственный переход (<code>jump kr_bur</code>, road:252) закомментирован. Внутри: «Пройти мимо» / «Взять с собой» / «Поговорить» (1 раз, ввод «пи…» → «Пиии!»); лупа: «Осторожно осмотреть» <span class="logic">logic +1</span> / «Схватить и покрутить» <span class="mad">mad +1</span>.</li>
+<li><code>doroga3</code> (road:240): «Конец предварительный» — входящих переходов нет.</li>
+<li>Закомментированная ветка знающего дорогу (<code>script_3_zndorog</code>, road:80–90, 197–213) и <code>add_logic(1, "Вспомнить дорогу")</code> (road:210) — не работают.</li>
+</ul></div>
+</div>
+<p class="muted">Скрытые переходы: <code>setblood(x)</code> при Крови ≥ 3 прыгает в sm_blood из любой строки с blood+1. Полный список найденных ошибок — на странице <a href="stats.html?v=22">«Статы»</a>.</p>
+</div>
+</div>
+<div id="panel-short" style="position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:100%">
+<h2>Обзор хабов</h2>
+<div class="mermaid" id="ovchart">
+flowchart TB
+VH["<b>Вход</b>: road_begin (после Лесса) · strel · возврат из совы<br/>если разговора не было — бросает в script_2_less_conv"]:::scene
+H1["<b>Хаб 1. Ночь на развилке</b> (script_3_road)<br/>ночное меню: «Нет проблем» → дальше · «Переждать» <span style='color:#1C7ED6'>logic +1</span> → сова"]:::scene
+H2["<b>Хаб 2. Перекрёсток</b> (script_3_hzdorog)<br/>круг +1 за заход · барьер · «Куда-нибудь» (случайно) · направо — Гавань"]:::scene
+H3["<b>Хаб 3. Барьер</b> (less_up_barier)<br/><span style='color:#7048E8'>mad +1</span> (1-й удар) · <span style='color:#BC1888'>blood +1</span> (с 4-го удара) · Таша про эльфов"]:::scene
+H4["<b>Хаб 4. Лесс на кругах</b> (less_kr / kr_less)<br/>с 4-го круга · без статов · Лесс может уйти (set_less None)"]:::scene
+BUR["<b>Мёртвый код</b>: бурундук (kr_bur) · doroga3 · ветка zndorog"]:::dead
+SOVA["сон / сова (script3_sova_begin)"]:::less
+TG["дорога к Тёмной Гавани"]:::less
+NAZ["назад (script3_nazad_begin)"]:::less
+SMB["sm_blood — Кровь ≥ 3"]:::death
+VH --> H1 --> H2
+H1 --> SOVA
+H2 --> H3
+H3 --> SMB
+H2 --> NAZ
+H2 --> TG
+H2 -- "4+ круг" --> H4
+classDef scene fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430
+classDef death fill:#222222,stroke:#000000,color:#ffffff
+classDef less fill:#DDEFD8,stroke:#7cb87c,color:#1f2430
+classDef dead fill:#f1f3f5,stroke:#64748b,color:#333a45
+</div>
+</div>
+</div>
+<div class="card">
+<h2>Статы: минимумы и максимумы</h2>
+<table class="stats">
+<tr><th></th><th class="mad">Безумие</th><th class="logic">Логика</th><th class="blood">Кровь</th><th class="mood">Настроение Лесса</th></tr>
+<tr><td>Сцена «Старт»</td><td>0…+5</td><td>0…+3</td><td>0…+1</td><td>0</td></tr>
+<tr><td>Разговор с Лессом</td><td>−7…+6</td><td>−2…+9</td><td>0…+2</td><td>−7…+15</td></tr>
+<tr><td><b>Итого по локации</b></td><td><b>−7…+11</b></td><td><b>−2…+12</b></td><td><b>0…+3</b></td><td><b>−7…+15</b></td></tr>
+<tr><td>Дорога (перекрёсток)</td><td>0…+1</td><td>0…+1</td><td>0…+3</td><td>0</td></tr>
+</table>
+<p class="muted">Посчитано по коду 20.10.2026 перебором путей скриптом, смерти учтены. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=22">«Статы»</a>.</p>
+</div>
+
+</main>
+<footer>Схемы игры «Вий» · дорога (перекрёсток) · выверено по коду 20.10.2026</footer>
+</body>
+</html>

@@ -258,3 +258,65 @@ def T_less(n, st):
 
 paths_less = enumerate_paths('start_cycle', INIT0, T_less)
 summarize('LESS CONV SCENE', paths_less)
+
+
+# ============ ROAD SCENE (script3_road.rpy) ============
+# Sources verified 20.10.2026: script3_road.rpy (road), script.rpy (krug, setblood, add_logic/add_mad)
+# idx: 4 day(1=день), 5 elfs_krug(удары о барьер), 6 circles(kr_less_per), 7 -, 8 meet_kr
+# Факты из кода:
+#  road:41  «Стоит переждать» add_logic(1) БЕЗ reason -> без дедупа, но только ночью; после совы day (sova:90)
+#  road:144-146 удар о барьер: add_mad(1) один раз (гейт elfs_krug)
+#  road:169-171 с 4-го удара (elfs_krug>=4 после +=1): setblood(blood+1) каждый удар; blood>=3 -> sm_blood (script.rpy:289)
+#  script.rpy:292-299 krug(1) вызывается ТОЛЬКО в script_3_hzdorog: круг +1 за заход через script_3_road/roadway
+#    (вход в сцену, «Нет проблем» ночью, sluc-вперёд). Возвраты от барьера и от встречи с Лессом идут через
+#    call_screen_strel и круг НЕ добавляют.
+#  road:336-390 kr_less: статов нет; less_delo -> меню без эффектов (встреча повторяется), иначе meet_kr=1
+#  kr_bur/bur_menu/bur_osm (road:253-330) НЕДОСТУЖНЫ: единственный jump закомментирован (road:252)
+CAP_CIRCLES=6; CAP_HITS=6
+def T_road(n, st):
+    mad, logic, blood, mood, day, hits, circ, _x, meet = st[0], st[1], st[2], st[3], st[4], st[5], st[6], st[7], st[8]
+    if n=='entry':
+        return [('(вход днём)',0,0,0,0,None,{'zn':1,'d8':1},'hz',None),
+                ('(вход ночью)',0,0,0,0,None,{'zn':0},'nm',None)]
+    if n=='nm':
+        return [('«Не вижу никаких проблем»',0,0,0,0,None,{'d8':circ+1},'hz',None),
+                ('«Стоит переждать» (Логика+1)',0,1,0,0,None,{},None,'EXIT script3_sova_begin (сон/сова)')]
+    if n=='hz':
+        if circ >= 4:
+            return [('(круг %d >= 4: встреча с Лессом)'%circ,0,0,0,0,None,{},'kr_less',None)]
+        r=[('«Куда-нибудь» (случайный выбор)',0,0,0,0,None,{},'sluc',None),
+           ('Направо — к Тёмной Гавани',0,0,0,0,None,{},None,'EXIT script_3_tgavan_road_begin')]
+        if hits < CAP_HITS:
+            r.append(('Вперёд — удариться о барьер',0,0,0,0,None,{},'bar',None))
+        return r
+    if n=='bar':
+        nh = hits + 1
+        dm = 1 if hits == 0 else 0
+        db = 1 if nh >= 4 else 0
+        d = 'удар #%d'%nh + (' (Безумие+1)' if dm else '') + (' (Кровь+1)' if db else '')
+        return [(d, dm,0,db,0,None,{'d7':nh},'hz',None)]  # возврат через strel, круг не растёт
+    if n=='sluc':
+        if circ + 1 > CAP_CIRCLES:
+            return [('(случайно: назад)',0,0,0,0,None,{},None,'EXIT script3_nazad_begin')]
+        # вперёд: снова script_3_road -> (ночью меню / днём roadway) -> hzdorog: круг +1
+        nxt = 'hz' if day else 'nm'
+        upd = {'d8':circ+1} if day else {}
+        return [('(случайно: вперёд, снова перекрёсток)',0,0,0,0,None,upd,nxt,None),
+                ('(случайно: назад)',0,0,0,0,None,{},None,'EXIT script3_nazad_begin')]
+    if n=='kr_less':
+        if meet:
+            return [('(Лесс уже ушёл: тишина)',0,0,0,0,None,{},'hz',None)]
+        return [('(встреча: «есть дело» — меню без эффектов)',0,0,0,0,None,{},'hz',None),
+                ('(встреча: дела нет — Лесс уходит)',0,0,0,0,None,{'reward':1},'hz',None)]
+    return []
+
+paths_road = enumerate_paths('entry', INIT0, T_road, maxdepth=40)
+summarize('ROAD SCENE', paths_road)
+print('  max-blood path:')
+for p in paths_road:
+    if p['d'][2] == max(q['d'][2] for q in paths_road):
+        print('   ', p['term'], p['d'], ' | '.join(p['path'])); break
+print('  max-logic path:')
+for p in paths_road:
+    if p['d'][1] == max(q['d'][1] for q in paths_road):
+        print('   ', p['term'], p['d'], ' | '.join(p['path'])); break

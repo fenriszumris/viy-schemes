@@ -12,7 +12,7 @@
 <header class="site"><div class="wrap">
 <h1>Статы: минимумы и максимумы</h1>
 <p>Диапазоны по всем веткам сцены, посчитано по коду. Смерти не учитывались.</p>
-<nav class="crumbs"><a href="index.html?v=20">← Все схемы</a> · <a href="location.html?v=20">Локация «Место пробуждения»</a> · <a href="strel.html?v=20">Экран переходов</a></nav>
+<nav class="crumbs"><a href="index.html?v=21">← Все схемы</a> · <a href="location.html?v=20">Локация «Место пробуждения»</a> · <a href="strel.html?v=20">Экран переходов</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -38,6 +38,16 @@
 <p class="muted">*Оценка: перебор всех путей по коду скриптом (17 688 путей), выборы равновероятны.</p>
 </div>
 <div class="card">
+<h2>Дорога — перекрёсток (script3_road.rpy, каждый стат отдельно)</h2>
+<table class="stats">
+<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь*</th><th>Примечание</th></tr>
+<tr><td class="mad">Безумие</td><td>0</td><td>+1</td><td>+0.2</td><td>первый удар о барьер (road:144), гейт elfs_krug</td></tr>
+<tr><td class="logic">Логика</td><td>0</td><td>+1</td><td>+0.3</td><td>«Стоит переждать» (road:45), только ночью; add_logic без reason, но после сна день</td></tr>
+<tr><td class="blood">Кровь</td><td>0</td><td>+3</td><td>+0.0</td><td>+1 за каждый удар о барьер с 4-го (road:175); максимум при входе с Кровью 0 — дальше sm_blood (Кровь ≥ 3)</td></tr>
+<tr><td class="mood">Настроение Лесса</td><td>0</td><td>0</td><td>0</td><td>в сцене не меняется</td></tr>
+</table>
+<p class="muted">*Оценка: перебор всех путей по коду скриптом (97 путей), выборы равновероятны. Встреча с Лессом на кругах (kr_less) статов не меняет. Схема сцены: <a href="road.html?v=1">«Дорога»</a>.</p>
+
 <h2>Найденные в коде ошибки</h2>
 <h3>Ломают запуск</h3>
 <ul>
@@ -66,6 +76,9 @@
 <li><code>hand:230</code> — недостижимый <code>return</code> (комментарий «#доделать»).</li>
 <li><code>prop_memory</code> / <code>prop_memory2</code> (mem:234/250) — переходов на них нет; вторая заканчивается без jump/return.</li>
 <li><code>inv_end</code> (script.rpy:966) — вход в метку не найден.</li>
+<li><code>kr_bur</code> / <code>bur_menu</code> / <code>bur_osm</code> (road:253–330, бурундук) — единственный переход (<code>jump kr_bur</code>, road:252) закомментирован.</li>
+<li><code>doroga3</code> (road:240) — «Конец предварительный», входящих переходов нет.</li>
+<li><code>script_3_zndorog</code> (road:80–90, 197–213) — ветка «знает дорогу» закомментирована целиком, вместе с <code>add_logic(1, "Вспомнить дорогу")</code> (road:210).</li>
 <li>Стартовое меню разработчика (start3, begin:17) видит каждый игрок: <code>razr = 1</code> стоит жёстко.</li>
 </ul>
 <h3>Опечатки и разметка</h3>
@@ -76,6 +89,6 @@
 </ul>
 </div>
 </main>
-<footer>Схемы игры «Вий» · статы и ошибки · выверено по коду 14–15.10.2026</footer>
+<footer>Схемы игры «Вий» · статы и ошибки · выверено по коду 14–20.10.2026</footer>
 </body>
 </html>
