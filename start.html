@@ -17,8 +17,8 @@ mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis',
 <body>
 <header class="site"><div class="wrap">
 <h1>Сцена «Старт»</h1>
-<p>От начала игры до разговора с Лессом · Локация: <a href="location.html?v=19" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script.rpy, script_1_less_begin.rpy, script_1_less_hand.rpy</p>
-<nav class="crumbs"><a href="index.html?v=19">← Все схемы</a> · <a href="location.html?v=19">Локация «Место пробуждения»</a> · <a href="strel.html?v=19">Экран переходов</a></nav>
+<p>От начала игры до разговора с Лессом · Локация: <a href="location.html?v=20" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script.rpy, script_1_less_begin.rpy, script_1_less_hand.rpy</p>
+<nav class="crumbs"><a href="index.html?v=20">← Все схемы</a> · <a href="location.html?v=20">Локация «Место пробуждения»</a> · <a href="strel.html?v=20">Экран переходов</a></nav>
 </div></header>
 <main>
 <div class="viewtoggle">
@@ -45,9 +45,14 @@ D3["«Игра» → tash_game<br/>(мини-игра, вне схемы)"]
 D4["«Обучение» → назад в начало"]
 D5["Меню локаций:<br/>Айрат, Айрат квест,<br/>Гавань, Лес (razr = 1)"]
 C["<b>Сцена 2. Пролог и стартовое меню</b> (start_menu)<br/>Чёрный экран, пролог, дневник, лупа<br/><span style='color:#7B3FA0'>Безумие 0/+1</span> · <span style='color:#2E6FD0'>Логика 0/+1</span><br/><span style='color:#C62828'>Кровь 0/0</span> · <span style='color:#2E8B3E'>Настроение 0/0</span>"]:::scene
-S["<b>Сцена 3. Сон</b> (c1_sleep)<br/>«Может, лечь поспать?» <span style='color:#7B3FA0'>Безумие +1</span> (вход)<br/>воспоминание о матери"]
-Sa["«Что это вообще сейчас было?»<br/>→ сцена воспоминаний (son)"]
+S["<b>Сцена 3. Сон</b> (c1_sleep)<br/>«Может, лечь поспать?» <span style='color:#7B3FA0'>Безумие +1</span> (вход)<br/>воспоминание о матери (mather_memory)<br/><span style='color:#7B3FA0'>Безумие +1/+3</span> · <span style='color:#2E6FD0'>Логика 0/+2</span><br/><span style='color:#C62828'>Кровь 0/+1</span> · <span style='color:#2E8B3E'>Настроение 0/0</span>"]
+Sa["«Что это вообще сейчас было?»<br/>→ воспоминание (son)"]
 Sb["«Пожать плечами…»<br/>→ разговор с Лессом"]
+Sa1["«Не стоит больше вспоминать...»<br/><span style='color:#2E6FD0'>Логика +1</span><br/>→ разговор с Лессом"]
+Sa2["«Пытаться вспомнить дальше.»<br/>→ воспоминание о суде (sud_memory)"]
+Sd["<b>Воспоминание о суде</b> (sud_memory)<br/>«Что за чертовщина...?!» <span style='color:#7B3FA0'>Безумие −1</span><br/>«Да бросьте, все в порядке!» <span style='color:#7B3FA0'>Безумие +1</span>"]
+HA2["<b>Головная боль</b> (head_ache)<br/><span style='color:#C62828'>Кровь +1</span> (setblood)<br/>«Х-хватит...» <span style='color:#2E6FD0'>Логика +1</span> → разговор с Лессом<br/>«Идти до конца!» <span style='color:#7B3FA0'>Безумие +1</span> → смерть"]
+HXS["<b>BAD END «Вспомнить все...»</b><br/>(death_son, deaths_list[vosp])"]:::death
 HD["<b>Сцена 4. Укус руки</b> (c1_hand)<br/>«Укусить себя за руку…» <span style='color:#7B3FA0'>Безумие +1</span> (вход)<br/><span style='color:#7B3FA0'>Безумие 0/+5</span> · <span style='color:#2E6FD0'>Логика 0/+2</span><br/><span style='color:#C62828'>Кровь 0/+1</span> · <span style='color:#2E8B3E'>Настроение 0/0</span>"]:::scene
 HA["«Хватит экспериментов.»<br/><span style='color:#2E6FD0'>Логика +1</span>, <span style='color:#7B3FA0'>Безумие −1</span>"]
 HB["«Укусить еще сильнее»<br/><span style='color:#7B3FA0'>Безумие +1</span> <span style='color:#C62828'>Кровь +1</span><br/>→ земля: Бежать / Шипеть /<br/>Ничего не делать"]
@@ -80,7 +85,13 @@ C --> HD
 C --> G
 S --> Sa
 S --> Sb
-Sa -. "после воспоминаний" .-> L
+Sa --> Sa1
+Sa --> Sa2
+Sa2 --> Sd
+Sd --> HA2
+Sa1 --> L
+HA2 -- "«Х-хватит...»" --> L
+HA2 -- "«Идти до конца!»" --> HXS
 Sb --> L
 G -. "экран стрелок" .-> L
 HD --> HA
@@ -107,6 +118,7 @@ TASH["tash_game (мини-игра, вне схемы)"]:::far
 STREL["<b>Экран переходов</b> (strel)"]:::dev
 LESS["<b>Разговор с Лессом</b>"]:::less
 BAD["<b>BAD END «Подкормка…»</b>"]:::death
+BADS["<b>BAD END «Вспомнить все…»</b><br/>(сон, death_son)"]:::death
 S0 --> S1
 S1 -- "«Обучение» → назад в начало" --> S0
 S1 -- "«Игра»" --> TASH
@@ -116,6 +128,7 @@ S2 --> S3
 S2 --> S4
 S2 -- "«Пойти дальше.»" --> STREL
 S3 --> LESS
+S3 -- "«Идти до конца!»" --> BADS
 S4 --> LESS
 S4 -- "«Ничего не делать»" --> BAD
 STREL -- "стрелки: первый раз → разговор" --> LESS
@@ -135,10 +148,10 @@ classDef far fill:#eeeeee,stroke:#aaaaaa,color:#555555
 <tr><td>Разговор с Лессом</td><td>−7…+6</td><td>−1…+9</td><td>0…+2</td><td>−6…+15</td></tr>
 <tr><td><b>Итого по локации</b></td><td><b>−7…+6</b></td><td><b>−1…+9</b></td><td><b>0…+2</b></td><td><b>−6…+15</b></td></tr>
 </table>
-<p class="muted">Посчитано по коду 15.10.2026, смерти не учитывались. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=19">«Статы»</a>.</p>
+<p class="muted">Посчитано по коду 15.10.2026, смерти не учитывались. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=20">«Статы»</a>.</p>
 </div>
 
-<p class="muted">Лупа (start_osm: Логика +1, один раз) и воспоминания из дневника на диаграмме не показаны. Входы в разговор с Лессом и сам разговор — на странице <a href="less.html?v=19">«Разговор с Лессом»</a>. Диапазоны статов — на странице <a href="stats.html?v=19">«Статы»</a>.</p>
+<p class="muted">Лупа (start_osm: Логика +1, один раз) и воспоминания из дневника на диаграмме не показаны. Входы в разговор с Лессом и сам разговор — на странице <a href="less.html?v=20">«Разговор с Лессом»</a>. Диапазоны статов — на странице <a href="stats.html?v=20">«Статы»</a>.</p>
 </main>
 <footer>Схемы игры «Вий» · сцена «Старт» · выверено по коду 15.10.2026</footer>
 </body>
