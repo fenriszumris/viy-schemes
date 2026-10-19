@@ -5,12 +5,12 @@
 *{box-sizing:border-box}
 body{margin:0;font:16px/1.55 -apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--ink);background:var(--bg)}
 header.site{background:#2b2440;color:#fff;padding:28px 20px}
-header.site .wrap{max-width:1400px;margin:0 auto}
+header.site .wrap{max-width:none;margin:0;padding:0 4px}
 header.site h1{margin:0 0 6px;font-size:26px}
 header.site p{margin:0;color:#c9c3e0;font-size:14px}
-nav.crumbs{max-width:1400px;margin:14px auto 0;font-size:14px}
+nav.crumbs{max-width:none;margin:14px 0 0;font-size:14px}
 nav.crumbs a{color:#b9a7ff;text-decoration:none}
-main{max-width:1400px;margin:24px auto 60px;padding:0 20px}
+main{max-width:none;margin:24px 0 60px;padding:0 20px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:0 0 20px}
 .card h2{margin:0 0 10px;font-size:20px}
 .card h3{margin:18px 0 8px;font-size:16px}
@@ -27,7 +27,7 @@ table.stats th,table.stats td{border:1px solid var(--line);padding:8px 10px;text
 table.stats th{background:#f0eef7}
 .warn{background:#fff7e6;border:1px solid #f0dcae;border-radius:8px;padding:10px 14px;font-size:14px;margin:8px 0}
 .mermaid{text-align:left}
-.mermaid svg{max-width:none !important;margin:0 !important;display:block}
+.mermaid svg{width:100% !important;height:auto !important;max-width:none !important;margin:0 !important;display:block}
 .mermaid{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto}
 code{background:#eef0f4;border-radius:4px;padding:1px 5px;font-size:13px}
 .hub{border-left:4px solid #b9a7ff;padding:6px 0 6px 14px;margin:14px 0}
@@ -36,4 +36,4 @@ code{background:#eef0f4;border-radius:4px;padding:1px 5px;font-size:13px}
 .hub li{margin:3px 0;font-size:15px}
 .death{color:#fff;background:#222;border-radius:6px;padding:0 6px;font-weight:700}
 .end{background:#e6f4e6;border-radius:6px;padding:0 6px;font-weight:700;color:#1e6b1e}
-footer{max-width:1400px;margin:0 auto 40px;padding:0 20px;color:var(--muted);font-size:13px}
+footer{max-width:none;margin:0 0 40px;padding:0 20px;color:var(--muted);font-size:13px}
