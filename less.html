@@ -20,8 +20,8 @@ const c1='#0f766e', c2='#4f46e5', c2a='#b45309', c3='#0369a1', c4='#be123c', c5=
 const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)';
 const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)';
 
-function up(arr){ return arr.map(function(p){return '<span style="color:'+p[0]+';font-weight:700">▲+'+p[1]+'</span>';}).join(' '); }
-function dn(arr){ return arr.map(function(p){return '<span style="color:'+p[0]+';font-weight:700">▼−'+p[1]+'</span>';}).join(' '); }
+function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
+function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
 
 // карточка выбора: плюсы сверху справа, минусы снизу слева
 function mk(text, ups, downs){
@@ -259,8 +259,8 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <body>
 <header class="site"><div class="wrap">
 <h1>Разговор с Лессом</h1>
-<p>Локация: <a href="location.html?v=16" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script_2_less_conv.rpy (conv) · script_2_less_conv_amul.rpy (amul) · script_3_less_end.rpy (end) · script_memory.rpy (mem) · day_1_less_razg.rpy (razg)</p>
-<nav class="crumbs"><a href="index.html?v=16">← Все схемы</a> · <a href="location.html?v=16">Локация «Место пробуждения»</a> · <a href="strel.html?v=16">Экран переходов</a></nav>
+<p>Локация: <a href="location.html?v=17" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script_2_less_conv.rpy (conv) · script_2_less_conv_amul.rpy (amul) · script_3_less_end.rpy (end) · script_memory.rpy (mem) · day_1_less_razg.rpy (razg)</p>
+<nav class="crumbs"><a href="index.html?v=17">← Все схемы</a> · <a href="location.html?v=17">Локация «Место пробуждения»</a> · <a href="strel.html?v=17">Экран переходов</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -353,7 +353,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <li>less_razg_menu (повторные разговоры): вопросы-ветки назад в Хабы 4/7/5; «Конец» перезапускает меню, выход автоматический, когда остаётся один пункт → экран strel.</li>
 </ul></div>
 </div>
-<p class="muted">Скрытые переходы: <code>setblood(x)</code> при Крови ≥ 3 прыгает в sm_blood из любой строки с blood+1. Имя героини переспрашивается в end:68 и end:112, даже если уже задано. Полный список найденных ошибок — на странице <a href="stats.html?v=16">«Статы»</a>.</p>
+<p class="muted">Скрытые переходы: <code>setblood(x)</code> при Крови ≥ 3 прыгает в sm_blood из любой строки с blood+1. Имя героини переспрашивается в end:68 и end:112, даже если уже задано. Полный список найденных ошибок — на странице <a href="stats.html?v=17">«Статы»</a>.</p>
 </div>
 </div>
 <div id="panel-short" style="position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:100%">
@@ -411,7 +411,7 @@ classDef endd fill:#e6f4e6,stroke:#2E8B3E,color:#1e6b1e
 <tr><td>Разговор с Лессом</td><td>−7…+6</td><td>−1…+9</td><td>0…+2</td><td>−6…+15</td></tr>
 <tr><td><b>Итого по локации</b></td><td><b>−7…+6</b></td><td><b>−1…+9</b></td><td><b>0…+2</b></td><td><b>−6…+15</b></td></tr>
 </table>
-<p class="muted">Посчитано по коду 15.10.2026, смерти не учитывались. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=16">«Статы»</a>.</p>
+<p class="muted">Посчитано по коду 15.10.2026, смерти не учитывались. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=17">«Статы»</a>.</p>
 </div>
 
 </main>
