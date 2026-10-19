@@ -23,7 +23,7 @@ mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis',
 <p class="muted">«Хаб» — кусок диалога с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение Лесса. «Экран strel» — переход на экран стрелок: дальше игра идёт по экрану, а не по коду метки. Входы conv_0/conv_1 (из начала игры, сна, руки, воспоминаний) ведут сразу на экран strel и разговор напрямую не запускают; сам разговор начинается через script_2_less_conv (стрелки от script3_road / script3_nazad) или с conv_2 (сцена руки).</p>
 </div>
 <h2>Обзор хабов</h2>
-<div class="mermaid">
+<div class="mermaid fillcap">
 flowchart TB
 H0["<b>Хаб 0. Вход</b><br/>conv_0 / conv_1 → экран strel<br/>разговор стартует из script_2_less_conv"]:::scene
 H1["<b>Хаб 1. Гляделки</b> (start_cycle)<br/>«Пялиться дальше» — цикл, на 4-й раз <span style='color:#2E8B3E'>mood +1</span><br/>«НАДОЕЛО.» → дальше · «Бочком-бочком» <span style='color:#2E8B3E'>mood −2</span> → road_begin"]:::scene
