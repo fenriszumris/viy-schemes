@@ -72,6 +72,9 @@ H9["<b>Хаб 9. Уход Лесса</b> (script_3_less_go)"]:::scene
 KORN["<b>Корни</b> (less_korn_menu)"]:::scene
 USH["ushel<br/>(имя спрашивается заново)"]
 RB["road_begin → экран strel"]:::less
+RBX1["road_begin → экран strel"]:::less
+RBX2["road_begin → экран strel"]:::less
+X3["<b>→ Хаб 3 «Кто я?»</b>"]:::less
 SLUC["sluc (script3_road, вне сцены)"]:::less
 D1["<b>BAD END «Тщетная борьба...»</b>"]:::death
 D2["<b>BAD END «Подкормка...»</b>"]:::death
@@ -83,7 +86,7 @@ VH2 --> H2
 RAZG -.-> H4
 H1 -- "«Пялиться дальше» (цикл;<br/>на 4-й раз <span style='color:#2E8B3E'>mood +1</span>)" --> H1
 H1 -- "«НАДОЕЛО.»" --> H2
-H1 -- "«Бочком-бочком отсюда»<br/><span style='color:#2E8B3E'>mood −2</span>" --> RB
+H1 -- "«Бочком-бочком отсюда»<br/><span style='color:#2E8B3E'>mood −2</span>" --> RBX1
 H2 -- "«Не надо меня есть! Я не вкусная!»<br/><span style='color:#2E8B3E'>mood +1</span>" --> H3
 H2 -- "«Эээ... Кевин?»" --> WN
 H2 -- "«Я-я не помню.»" --> NR2
@@ -93,22 +96,22 @@ H2 -- "«Я знаю твое имя!»" --> NQ
 NQ -- "верное («Лесс», «Лес», …)" --> H2A
 NQ -- "неверное" --> WN
 NQ -- "пусто" --> NR2
-NR2 --> H3
+NR2 --> X3
 H2A -- "«Безразлично улыбнуться»<br/><span style='color:#7B3FA0'>mad +2</span>" --> SAM
 SAM -- "«Ты же надо мной шутишь»" --> D3
 SAM -- "«Ээм... Нет?»" --> H9
 H2A -- "«Это случайность! Угадала!»<br/><span style='color:#2E8B3E'>mood +5</span> (лупа: <span style='color:#2E6FD0'>logic +1</span>)" --> AM
 AM -- "«Ч-что это?»" --> WII
-AM -- "«Не брать»<br/><span style='color:#2E8B3E'>mood +1</span>" --> H3
+AM -- "«Не брать»<br/><span style='color:#2E8B3E'>mood +1</span>" --> X3
 AM -- "«Взять амулет»" --> TAKE
-AM -- "«Без лишних слов надеть»<br/><span style='color:#7B3FA0'>mad +1</span>, <span style='color:#2E8B3E'>mood −1</span>" --> H3
+AM -- "«Без лишних слов надеть»<br/><span style='color:#7B3FA0'>mad +1</span>, <span style='color:#2E8B3E'>mood −1</span>" --> X3
 WII -- "«Это все что он делает?»" --> WEL
 WII -- "«Поняла... Спасибо»" --> AM2
 WEL --> AM2
 AM2 -- "«Возьму»" --> TAKE
-AM2 -- "«Ну его.»<br/><span style='color:#2E8B3E'>mood +1</span>" --> H3
-TAKE -- "«Надеть сразу»" --> H3
-TAKE -- "«Убрать в карман»<br/><span style='color:#2E6FD0'>logic +1</span>, <span style='color:#7B3FA0'>mad −1</span>, <span style='color:#2E8B3E'>mood +1</span>" --> H3
+AM2 -- "«Ну его.»<br/><span style='color:#2E8B3E'>mood +1</span>" --> X3
+TAKE -- "«Надеть сразу»" --> X3
+TAKE -- "«Убрать в карман»<br/><span style='color:#2E6FD0'>logic +1</span>, <span style='color:#7B3FA0'>mad −1</span>, <span style='color:#2E8B3E'>mood +1</span>" --> X3
 H3 -- "«Схватить за плечо»" --> H8
 H3 -- "«Дать уйти»" --> H9
 H3 -- "«П...Подожди!»" --> STOP
@@ -155,7 +158,7 @@ KORN -- "«Извиниться» (знает имя)<br/><span style='color:#2E
 KORN -- "«Расслабиться и поспать»<br/><span style='color:#7B3FA0'>mad +1</span>, <span style='color:#2E8B3E'>mood +2</span>" --> E1
 KORN -- "«В панике бороться до конца»" --> D2
 USH --> RB
-MEM -- "«Х-хватит...»<br/><span style='color:#2E6FD0'>logic +1</span>" --> RB
+MEM -- "«Х-хватит...»<br/><span style='color:#2E6FD0'>logic +1</span>" --> RBX2
 MEM -- "«Идти до конца!»<br/><span style='color:#7B3FA0'>mad +1</span>" --> DSON
 classDef scene fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430
 classDef death fill:#222222,stroke:#000000,color:#ffffff
