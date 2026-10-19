@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>Разговор с Лессом — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style7.css">
+<link rel="stylesheet" href="style7.css?v=22">
 <style>.widechart{overflow-x:auto}.widechart svg{max-width:none !important}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -389,15 +389,15 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <div class="mermaid" id="ovchart">
 flowchart TB
 H0["<b>Хаб 0. Вход</b><br/>conv_0 / conv_1 → экран strel<br/>разговор стартует из script_2_less_conv"]:::scene
-H1["<b>Хаб 1. Гляделки</b> (start_cycle)<br/>«Пялиться дальше» — цикл, на 4-й раз <span style='color:#2E8B3E'>mood +1</span><br/>«НАДОЕЛО.» → дальше · «Бочком-бочком» <span style='color:#2E8B3E'>mood −2</span> → road_begin"]:::scene
+H1["<b>Хаб 1. Гляделки</b> (start_cycle)<br/>«Пялиться дальше» — цикл, на 4-й раз <span style='color:#E41A1C'>mood +1</span><br/>«НАДОЕЛО.» → дальше · «Бочком-бочком» <span style='color:#E41A1C'>mood −2</span> → road_begin"]:::scene
 H2["<b>Хаб 2. «Его имя?»</b> (conv_2)<br/>5 вариантов, см. детали ниже"]:::scene
-H2A["<b>Хаб 2a. Ветка амулета</b> (name_right, amul)<br/>верное имя → амулет: взять / не брать / надеть<br/><span style='color:#2E8B3E'>mood до +5</span>"]:::scene
+H2A["<b>Хаб 2a. Ветка амулета</b> (name_right, amul)<br/>верное имя → амулет: взять / не брать / надеть<br/><span style='color:#E41A1C'>mood до +5</span>"]:::scene
 H3["<b>Хаб 3. «Кто я?»</b> (who_i_am)<br/>«Подожди!» · «Дать уйти» → Хаб 9 · «Схватить за плечо» → Хаб 8"]:::scene
 H4["<b>Хаб 4. Имя Лесса</b> (less_name)<br/>«Знакомы?» · «Странное имя» · «Приятно познакомиться»"]:::scene
 H5["<b>Хаб 5. Друзья</b> (we_meet)"]:::scene
 H6["<b>Хаб 6. Имя героини</b> (i_dont_know_name)<br/>«Еще чего!» → Вий · ввод своего имени"]:::scene
 H7["<b>Хаб 7. Прощание</b> (less_end)<br/>«Остановить» / «Оставить в покое»<br/>→ квест Айрата (less_airat_predl)"]:::scene
-H8["<b>Хаб 8. Хватание</b> (less_hand, strenght)<br/><span style='color:#2E8B3E'>mood −2</span>, <span style='color:#C62828'>blood +1</span>"]:::scene
+H8["<b>Хаб 8. Хватание</b> (less_hand, strenght)<br/><span style='color:#E41A1C'>mood −2</span>, <span style='color:#BC1888'>blood +1</span>"]:::scene
 H9["<b>Хаб 9. Уход Лесса</b> (script_3_less_go)<br/>удар деревом → корни · ушёл · броситься за ним"]:::scene
 GONE["script_3_less_gone → road_begin<br/>→ экран strel"]:::less
 KORN["<b>Корни</b> (less_korn_menu)<br/>обмануть / поспать / вырваться / извиниться"]:::scene
