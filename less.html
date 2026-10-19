@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="style.css">
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:45, rankSpacing:55}, theme:'default', themeVariables:{fontSize:'16px'}});
+mermaid.initialize({startOnLoad:true, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:45, rankSpacing:55, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'16px'}});
 
 </script>
 </head>
@@ -45,7 +45,7 @@ E1["<b>END? «Мирный сон...»</b>"]:::endd
 SLUC["«Броситься за ним» → sluc<br/>(script3_road, вне сцены)"]:::less
 H0 --> H1 --> H2
 H2 -- "верное имя" --> H2A
-H2A -- "смертельная шутка" --> D3
+H2A -- "смертельная<br/>шутка" --> D3
 H2A --> H3
 H2 --> H3
 H3 -- "Схватить за плечо" --> H8
@@ -60,7 +60,7 @@ H9 -- "ушёл" --> GONE
 H9 -- "броситься за ним" --> SLUC
 KORN -- "поспать" --> E1
 KORN -- "бороться до конца" --> D2
-KORN -- "обмануть / извиниться" --> GONE
+KORN -- "обмануть /<br/>извиниться" --> GONE
 classDef scene fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430
 classDef death fill:#222222,stroke:#000000,color:#ffffff
 classDef less fill:#DDEFD8,stroke:#7cb87c,color:#1f2430
