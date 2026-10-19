@@ -10,7 +10,7 @@
 <style>.widechart{overflow-x:auto}.widechart svg{max-width:none !important}.tmood{color:#D97706}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, securityLevel:'loose', flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'17px'}});
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'17px'}});
 
 const HUBS=['H1','H2','H3','H4','H5','H6','H7','H8','RT','DEAD'];
 const EXP=new Set();
@@ -62,8 +62,8 @@ function build(){
   L.push('EX2["'+mk('→ strel: Таша с тобой (near)<br/>nazad:427')+'"]:::term');
   L.push('EX3["'+mk('→ script3_nazad_gubert<br/>2gone (nazad:676)')+'"]:::term');
   L.push('EX5["'+mk('→ strel: Таша исчез<br/>отказ идти к Урзе (nazad:1538)')+'"]:::term');
-  L.push('EX6["'+mk('return: конец сцены<br/>после разлома (urza2:1115)')+'"]:::term');
-  L.push('EX7["'+mk('КОНЕЦ ДЕМОВЕРСИИ<br/>urza3 (ветка «blu», nazad:1116)')+'"]:::term');
+  L.push('EX6["'+mk('→ strel после разлома (urza2:1114)<br/>return (1116) — если экран закрыть')+'"]:::term');
+  L.push('EX7["'+mk('КОНЕЦ ДЕМОВЕРСИИ<br/>urza3 (ветка «blu», nazad:1117)')+'"]:::term');
   L.push('EX8["'+mk('→ script3_nazad_tash_afterser<br/>→ Губерт (gubert:5)')+'"]:::term');
   L.push('EX9["'+mk('→ strel: разговоры окончены<br/>razg_menu = 0 (razg:22)')+'"]:::term');
   L.push('CR1["'+mk('CRASH: NameError ssanity<br/>nazad:1666 — всегда')+'"]:::die');
@@ -425,8 +425,8 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <div class="hub"><h3>Хаб 6. Урза и разлом — urza / urza2 / urza3 (nazad:1045–1134)</h3>
 <ul>
 <li>Таша ведёт к разлому (<code>tash.near</code> + <code>tash.helpp</code>, заметка «urza»).</li>
-<li>urza2 (1091): «Прекрасно!» <span class="mad">mad +1</span> (1098, reason) / «Сомнительно.» <span class="mad">mad −1</span> (1104, reason) → return (1115) — конец сцены.</li>
-<li>urza3 (1116): если в avt_d есть «blu» — заколоченный тупик → КОНЕЦ ДЕМОВЕРСИИ. Ветка статов не меняет.</li>
+<li>urza2 (1091): «Прекрасно!» <span class="mad">mad +1</span> (1098, reason) / «Сомнительно.» <span class="mad">mad −1</span> (1104, reason) → выход на strel (1114); <code>return</code> (1116) срабатывает, только если экран закрыть без перехода (закомментированный «END?» рядом — 1115).</li>
+<li>urza3 (1117): если в avt_d есть «blu» — заколоченный тупик → КОНЕЦ ДЕМОВЕРСИИ (1131) и перезапуск. «blu» в доступном коде нигде не добавляется. Ветка статов не меняет.</li>
 </ul></div>
 <div class="hub"><h3>Хаб 7. Друзья и конец игры — end / end_out / 2urza (nazad:1370–1542)</h3>
 <ul>
@@ -478,7 +478,7 @@ RT["<b>Повторные разговоры</b> (razg_menu = «tash»)<br/>ка
 DEAD["<b>Мёртвый код</b>: nazadli · меню 948–987 · осмотры"]:::dead
 GUB["→ Губерт (gone / afterser)"]:::less
 STR["→ strel (Таша рядом / исчез)"]:::less
-ENDC["return / КОНЕЦ ДЕМОВЕРСИИ"]:::less
+ENDC["strel · КОНЕЦ ДЕМОВЕРСИИ"]:::less
 VH --> H1
 VHR --> RT
 H1 --> H2
