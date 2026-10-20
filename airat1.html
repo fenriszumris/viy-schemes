@@ -88,14 +88,17 @@ function build(){
   }
   L.push(hub('H3','К церкви<br/><small>airat_main_up, 197-236</small>','hhs',[]));
   if(EXP.has('H3')){
-    L.push('MUN["<div style=\'width:300px;white-space:normal\'>Стрелка «вверх, к церкви» (197)<br/>Луиза рядом и в церковь ещё не заходили (198)<br/><small>проверка: «ara_empty» ещё нет в ara_pers</small></div>"]:::sc');
+    L.push('MUN["<div style=\'width:300px;white-space:normal\'>Стрелка «вверх, к церкви» (197)</div>"]:::sc');
     E('H3 --> MUN', c3);
+    L.push('MUN0["<div style=\'width:300px;white-space:normal\'>Луиза рядом, церковь ещё не показывали (198)</div>"]:::sc');
+    E('MUN --> CM0["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза рядом и «ara_empty» ещё не записан (198):',null,null)+'</div>"]:::hhs', c3); E('CM0 --> MUN0', c3);
+    E('MUN --> CM00["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе (Луизы нет или «ara_empty» уже записан):',null,null)+'</div>"]:::hhs', c3); E('CM00 --> X3', c3);
     L.push('MUN1["<div style=\'width:300px;white-space:normal\'>Луиза: «Сейчас не лучшее время идти сюда. Мой дом слева» (199)</div>"]:::sc');
-    E('MUN --> CM1["<div style=\'width:290px;white-space:normal\'>'+mk('Если сейчас ночь или «sumer»:',null,null)+'</div>"]:::hhs', c3); E('CM1 --> MUN1', c3);
+    E('MUN0 --> CM1["<div style=\'width:290px;white-space:normal\'>'+mk('Если сейчас ночь или «sumer» (199):',null,null)+'</div>"]:::hhs', c3); E('CM1 --> MUN1', c3);
     E('MUN1 --> MU1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я пойду к тебе.»',null,null)+'</div>"]:::hhs', c3); E('MU1 --> X3', c3);
     E('MUN1 --> MU2["<div style=\'width:290px;white-space:normal\'>'+mk('«Иди одна.»'+flag('Луиза больше не рядом и остаётся у дома Луизы'),null,null)+'</div>"]:::hhs', c3); E('MU2 --> X3', c3);
-    L.push('MU3["<div style=\'width:300px;white-space:normal\'>«Это Церковь... Здесь слишком тихо»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «ara_empty» и ara_pers.keep = 1</span></div>"]:::sc');
-    E('MUN --> CM2["<div style=\'width:290px;white-space:normal\'>'+mk('Днём:',null,null)+'</div>"]:::hhs', c3); E('CM2 --> MU3', c3);
+    L.push('MU3["<div style=\'width:300px;white-space:normal\'>Луиза: «Это Церковь... Здесь слишком тихо»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «ara_empty» и ara_pers.keep = 1</span></div>"]:::sc');
+    E('MUN0 --> CM2["<div style=\'width:290px;white-space:normal\'>'+mk('Если сейчас день:',null,null)+'</div>"]:::hhs', c3); E('CM2 --> MU3', c3);
     E('MU3 --> X3', c3);
     L.push('X3["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
   } else {
