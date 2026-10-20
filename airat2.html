@@ -8,17 +8,234 @@
 <title>Айрат: дверь коридора и разговор с Лени — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
-<style>.hub{border:2px solid;border-radius:10px;margin:10px 0;background:#fff}.hub>summary{cursor:pointer;padding:8px 10px;font-size:15px;list-style:none}.hub>summary::before{content:"▸ ";}.hub[open]>summary::before{content:"▾ ";}.hub>div,.hub>.pl,.hub>.ch{margin-left:8px;margin-right:8px}.hub{padding-bottom:6px}
-.pl{border:1px solid #7a9cc6;border-radius:8px;padding:6px 8px;margin:6px 0;font-size:14px;line-height:1.35;overflow-wrap:anywhere}.pl.ex{border-color:#aab2c0;color:#4a5160}.pl.bad{border-color:#b91c1c;color:#4a1414}.pl.stub{border-color:#d97706}
-.ch{border:1.5px solid;border-radius:8px;margin:6px 0 6px 4px;padding:3px 4px;font-size:14px;overflow-wrap:anywhere}.ch .chh{padding-left:6px;font-weight:600}.ch .pl{margin-left:0}.ch .ch{margin-left:3px}
-.ref{font-size:13px;color:#475569;margin:4px 0 4px 6px}.muted{overflow-wrap:anywhere}
-@media(min-width:700px){.hub{max-width:900px}}</style><script>function openTo(a){var id=a.getAttribute('href').slice(1);var e=document.getElementById(id);var p=e;while(p){if(p.tagName=='DETAILS')p.open=true;p=p.parentElement}setTimeout(function(){e&&e.scrollIntoView({block:'center'})},50)}function allHubs(v){document.querySelectorAll('details.hub').forEach(function(d){d.open=v})}</script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
+const HUBS=["D", "O", "L1", "L2", "M"];
+const EXP=new Set();
+const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)', C_ADR='rgb(13,148,136)', C_NAR='rgb(101,163,13)', C_ADO='rgb(79,70,229)';
+const CHIP_BG2=1;
+const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)'; CHIP_BG[C_ADR]='rgb(204,244,240)'; CHIP_BG[C_NAR]='rgb(236,252,203)'; CHIP_BG[C_ADO]='rgb(224,231,255)';
+function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
+function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
+function mk(text, ups, downs){
+  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
+  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
+    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
+    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
+    +'</div>';
+}
+function badge(ranges){
+  if(!ranges.length) return '';
+  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;margin-left:3px">'+p[1]+'</span>';}).join('');
+  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
+}
+function hub(id,label,cls,ranges){
+  const arrow = EXP.has(id) ? '▾' : '▸';
+  const b=badge(ranges||[]);
+  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
+  return id + '["' + inner + '"]:::' + cls;
+}
+const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>'+t+'</span>';};
+const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>'+t+'</span>';};
+const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
+function build(){
+  const L=[]; const ST=[]; let ei=0;
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
+  L.push('flowchart TD');
+  const cG='#9aa3b2', c1='#166534', c2='#0369a1', c3='#b45309', c4='#7c3aed', c5='#be123c', c6='#475569', c7='#b91c1c';
+  L.push('ST["<div style=\'width:300px;white-space:normal\'>Экран переходов: правый коридор церкви (налево, к двери)</div>"]:::ex');
+  L.push('EXS["<div style=\'width:200px;white-space:normal\'>Экран переходов</div>"]:::ex');
+  E('ST --> D', c1);
+  L.push(hub('D','Дверь коридора<br/><small>airat_church_corridor_door, 520-550</small>','hhn',[]));
+  if(EXP.has('D')){
+    L.push('D0["<div style=\'width:320px;white-space:normal\'>Деревянная дверь в конце правого коридора: «Вид у неё такой, будто она очень стара» (522-523)</div>"]:::sc');
+    E('D --> D0', c1);
+    L.push('D1["<div style=\'width:300px;white-space:normal\'>Дверь не открывается; реплики по Логике (531-533) и Безумию (534-536) (525-536)</div>"]:::sc');
+    L.push('D2["<div style=\'width:240px;white-space:normal\'>Героиня стучит (538-540)</div>"]:::sc');
+    L.push('D3["<div style=\'width:260px;white-space:normal\'>«Тишина. Никого нет дома» (545-546)</div>"]:::sc');
+    E('D0 --> Dm1["<div style=\'width:290px;white-space:normal\'>'+mk('«Потянуть на себя»',null,null)+'</div>"]:::hhn', c1); E('Dm1 --> D1', c1);
+    E('D0 --> Dm2["<div style=\'width:290px;white-space:normal\'>'+mk('«Постучаться.»',null,null)+'</div>"]:::hhn', c1); E('Dm2 --> D2', c1);
+    E('D0 --> Dm3["<div style=\'width:290px;white-space:normal\'>'+mk('«Конец»',null,null)+'</div>"]:::hhn', c1); E('Dm3 --> EXS', c1);
+    E('D1 --> D0', c1);
+    E('D2 --> D2a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Лени в кабинете (542):',null,null)+'</div>"]:::hhn', c1); E('D2a --> OP', c1);
+    E('D2 --> D2b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Лени нет в кабинете:',null,null)+'</div>"]:::hhn', c1); E('D2b --> D3', c1);
+    E('D3 --> D0', c1);
+    L.push('OP["<div style=\'width:300px;white-space:normal\'>Лени открывает дверь (переход к хабу «Лени открывает»)</div>"]:::ex');
+  } else {
+    E('D --> EXS', c1);
+    E('D --> OP', c1);
+  }
+  L.push(hub('O','Лени открывает дверь<br/><small>corridor_arrows_up_next_label, 551-657</small>','hhl',[]));
+  if(EXP.has('O')){
+    L.push('O0["<div style=\'width:240px;white-space:normal\'>Героиня вежливо стучит (552)</div>"]:::sc');
+    E('O --> O0', c2);
+    L.push('O1["<div style=\'width:340px;white-space:normal\'>Грохот за дверью, «Аа-а-й. Ой-ой-ой.»; Лени: «Я хотел сказать, здравствуйте» (557-563)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Лени встречена»</span></div>"]:::sc');
+    L.push('O2["<div style=\'width:340px;white-space:normal\'>Лени: «Доброго дня! Или ночи. Минутку, только бумаги соберу. Проходите, тут высокий порог!» (566-571)</div>"]:::sc');
+    L.push('O3["<div style=\'width:320px;white-space:normal\'>Дверь открывается, героиня входит в кабинет Карралака (571-657)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: героиня в кабинете Карралака</span></div>"]:::sc');
+    E('O0 --> O1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если это первый стук (553):'+cond('Логика ≥ 1: запах пыли, старых книг и семечек (564-565)'),null,null)+'</div>"]:::hhl', c2); E('O1a --> O1', c2);
+    E('O0 --> O1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Лени уже открывал дверь:',null,null)+'</div>"]:::hhl', c2); E('O1b --> O2', c2);
+    E('O1 --> O2', c2);
+    E('O2 --> O3', c2);
+    L.push('LOUT["<div style=\'width:200px;white-space:normal\'>Разговор с Лени</div>"]:::ex');
+    E('O3 --> LOUT', c2);
+  } else {
+    E('O --> LOUT', c2);
+  }
+  L.push(hub('L1','Первая встреча с Лени<br/><small>script_4_airat_leni_dialog, 658-706</small>','hhk',[]));
+  if(EXP.has('L1')){
+    L.push('A0["<div style=\'width:240px;white-space:normal\'>Начало разговора с Лени (658-660)</div>"]:::sc');
+    E('L1 --> A0', c3);
+    L.push('A1["<div style=\'width:340px;white-space:normal\'>Из-за стола вылезает взъерошенный мальчик: «Вы ведь к Главному, я угадал?» (674-692)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Лени встречен второй раз»</span></div>"]:::sc');
+    L.push('A2["<div style=\'width:320px;white-space:normal\'>Лени представляется: «Я - Лени...» (701-704); имя героини над ним меняется с «Служка?» на «Лени»</div>"]:::sc');
+    E('A0 --> A1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Лени ещё не встречался в кабинете (661):'+cond('Безумие ≥ 1: шутка про святую воду (693-696); Логика ≥ 1: дрожащие пальцы, криво сидит воротник (698-700)'),null,null)+'</div>"]:::hhk', c3); E('A1a --> A1', c3);
+    E('A0 --> A1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Лени уже встречался в кабинете:',null,null)+'</div>"]:::hhk', c3); E('A1b --> LDN', c3);
+    L.push('LDN["<div style=\'width:220px;white-space:normal\'>К разговору про Луизу и к меню</div>"]:::ex');
+    E('A1 --> A2', c3);
+    E('A2 --> LDN', c3);
+  } else {
+    E('L1 --> LDN', c3);
+  }
+  L.push(hub('L2','Луиза и Лени<br/><small>dev_leni, 707-835</small>','hhs',[]));
+  if(EXP.has('L2')){
+    L.push('V0["<div style=\'width:220px;white-space:normal\'>Луиза рядом (707-710)</div>"]:::sc');
+    E('L2 --> V0', c4);
+    L.push('V1["<div style=\'width:320px;white-space:normal\'>Лени: «Л-л-л-луиза?!», падает за стол, выползает обратно (713-725)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Луиза и Лени встретились»</span></div>"]:::sc');
+    L.push('V2["<div style=\'width:340px;white-space:normal\'>Луиза ищет отца: «Он снова пропал!», Лени врёт про «выдающиеся успехи» и перевод (730-760)</div>"]:::sc');
+    L.push('V3["<div style=\'width:340px;white-space:normal\'>Лени: «Штатный лекарь! Он на задании, у постели больного», приказ о карантине (761-798)</div>"]:::sc');
+    L.push('V4["<div style=\'width:340px;white-space:normal\'>Луиза: «Он говорил про отдел Миллиании». Лени: «Межведомственные связи, всё такое» (799-812)</div>"]:::sc');
+    L.push('V5["<div style=\'width:300px;white-space:normal\'>Лени: «Он сейчас в...», осекается: «Я не могу сказать» (813-820)</div>"]:::sc');
+    L.push('V6["<div style=\'width:340px;white-space:normal\'>Лени: «Больше я ничего не могу сказать. Пожалуйста, Луиза...» (821-835)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Луиза уговорена, отец не найден» (ld.d3 = 1)</span></div>"]:::sc');
+    E('V0 --> V1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза рядом и ещё не говорила с Лени (710):',null,null)+'</div>"]:::hhs', c4); E('V1a --> V1', c4);
+    E('V0 --> V1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луизы нет рядом или она уже говорила с Лени:',null,null)+'</div>"]:::hhs', c4); E('V1b --> MENU', c4);
+    E('V1 --> V2', c4);
+    E('V2 --> V3', c4);
+    E('V3 --> V4', c4);
+    E('V4 --> V4a["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня раньше спрашивала про Элеона (736):'+cond('Лени: «Д-да, я слышал...» (737-738)'),null,null)+'</div>"]:::hhs', c4); E('V4a --> V6', c4);
+    E('V4 --> V4b["<div style=\'width:290px;white-space:normal\'>'+mk('Если про Элеона ещё не спрашивали (813):'+cond('Логика ≥ 1: «Он явно недоговаривает» (824-827)'),null,null)+'</div>"]:::hhs', c4); E('V4b --> V5', c4);
+    E('V5 --> V6', c4);
+    L.push('MENU["<div style=\'width:200px;white-space:normal\'>К меню Лени</div>"]:::ex');
+    E('V6 --> MENU', c4);
+  } else {
+    E('L2 --> MENU', c4);
+  }
+  L.push(hub('M','Меню Лени<br/><small>script_4_airat_leni_dialog, 841-1174</small>','hhl',[[C_MAD, '0…+2'], [C_LOG, '−3…+3'], [C_KAR, '−1…0'], [C_LEN, '−1…0'], [C_MOR, '−1…0']]));
+  if(EXP.has('M')){
+    L.push('LM["<div style=\'width:340px;white-space:normal\'>Меню Лени: «Парень с круглыми глазами, опираясь на стол, пытается удержаться» (841-842)</div>"]:::sc');
+    E('M --> LM', c5);
+    L.push('Q1["<div style=\'width:340px;white-space:normal\'>Лени: «Карралак Ар, Глава Военного Отдела». «Я сейчас за него. Я личный Служка Карралака» (844-860)</div>"]:::sc');
+    L.push('Q1a["<div style=\'width:240px;white-space:normal\'>Лени: «Занят? Д-да, занят» (863-866)</div>"]:::sc');
+    L.push('Q1b["<div style=\'width:300px;white-space:normal\'>Героиня: «Сдох, что ли?» Лени: «Разве!? КОГДА!?» (870-875)</div>"]:::sc');
+    L.push('Q1b1["<div style=\'width:320px;white-space:normal\'>Лени плачет: «Да как же так...», убегает в слезах (878-889)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Карралак умер», Лени больше не в кабинете</span></div>"]:::bad');
+    L.push('Q1b2["<div style=\'width:300px;white-space:normal\'>Героиня: «Я просто пошутила». Лени оседает, просит объяснить (895-908)</div>"]:::sc');
+    L.push('Q1b3["<div style=\'width:260px;white-space:normal\'>Меню: «Милли?» или «Не важно.» (909-917)</div>"]:::sc');
+    L.push('Q2["<div style=\'width:320px;white-space:normal\'>Героиня: «А это я, собственно, где?» Лени про Церковь Ара (919-928)</div>"]:::sc');
+    L.push('Q2a["<div style=\'width:260px;white-space:normal\'>«Церковь Ара?» Лени рассказывает мало (931-940)</div>"]:::sc');
+    L.push('Q2a1["<div style=\'width:260px;white-space:normal\'>Логика ≥ 1: «Видимо, он действительно мало что знает» (941-943)</div>"]:::sc');
+    L.push('Q2b["<div style=\'width:240px;white-space:normal\'>«Да ну её, эту Церковь» (945)</div>"]:::sc');
+    L.push('Q3["<div style=\'width:320px;white-space:normal\'>«А почему тут так пусто?» Лени: «Карантин, все заняты» (951-960)</div>"]:::sc');
+    L.push('Q4["<div style=\'width:320px;white-space:normal\'>Героиня: «Простите, я ищу кое-кого. Элеона Ара.» Лени удивлён (961-974)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «про Элеона спрашивали» (ld.d3 = 1)</span></div>"]:::sc');
+    L.push('Q4a["<div style=\'width:280px;white-space:normal\'>Лени оглядывает героиню с ног до головы (979-994)</div>"]:::sc');
+    L.push('Q4b["<div style=\'width:320px;white-space:normal\'>Лени краснеет, улыбается, роется в бумагах, обрывает фразу: расстроен (996-1016)</div>"]:::sc');
+    L.push('Q4b1["<div style=\'width:300px;white-space:normal\'>Логика ≥ 1: «Он вряд ли договаривает» (1017-1020)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Лени не договаривает»</span></div>"]:::sc');
+    L.push('Q4c["<div style=\'width:300px;white-space:normal\'>Героиня: «Просто так! Ага! Именно так!» (1023-1031)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «просто так ищет жреца»</span></div>"]:::sc');
+    L.push('Q5["<div style=\'width:340px;white-space:normal\'>Лени оглядывает руку Фенрира: «Не знаю, где тут аптечка. Вам бы к лекарям», Феня: «Там никого!» (1036-1057)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «про лапку Фени спрашивали» (ld.d4 = 1)</span></div>"]:::sc');
+    L.push('Q5a["<div style=\'width:280px;white-space:normal\'>Луиза: «У меня дома можно найти что-то подходящее» (1053-1055)</div>"]:::sc');
+    L.push('Q6["<div style=\'width:340px;white-space:normal\'>Лени: «Естественно. Пропуск. Отдайте старшему... Горран Ар» (1059-1071)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: пропуск у героини → открывает путь к статуе</span></div>"]:::sc');
+    L.push('Q7["<div style=\'width:320px;white-space:normal\'>Героиня: «Я отказываюсь вступать». Лени: «Л-ладно, как хочешь» (1077-1086)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: задание «Карралак» выполнено (отказ)</span></div>"]:::sc');
+    L.push('Q8["<div style=\'width:360px;white-space:normal\'>Героиня: «Я согласна вступить в служки». Лени: «Окей! Будешь выполнять мелкие поручения. Паладины говорили о странных событиях, поговори с ними» (1090-1111)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «согласна вступить» (to_church2, war) → открывает задание «статуя»</span></div>"]:::sc');
+    L.push('Q9["<div style=\'width:360px;white-space:normal\'>Героиня: «Мне негде остановиться». Лени: «Можешь остановиться у нас, при условии, что вступишь в служки. Это военный отдел» (1137-1163)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «предложено вступить» (to_church) → открывает задание «Карралак»</span></div>"]:::sc');
+    L.push('Q9a["<div style=\'width:340px;white-space:normal\'>Героиня: «Вам тут уборщицы не нужны? Я неплохо убираю, ну, кровь там и всё такое.» Лени поперхнулся (1142-1147)</div>"]:::sc');
+    L.push('BYE["<div style=\'width:320px;white-space:normal\'>Выход из разговора: «Знаешь, а собственно, и все.» Лени: «До свидания!» (1168-1174)</div>"]:::sc');
+    L.push('EXQ["<div style=\'width:200px;white-space:normal\'>Экран переходов (Лени убегает)</div>"]:::ex');
+    E('LM --> m1["<div style=\'width:290px;white-space:normal\'>'+mk('«Что за главный?»'+cond('один раз (843)'),null,null)+'</div>"]:::hhl', c5); E('m1 --> Q1', c5);
+    E('Q1 --> m1a["<div style=\'width:290px;white-space:normal\'>'+mk('«Что значит, он того?»',null,null)+'</div>"]:::hhl', c5); E('m1a --> Q1a', c5);
+    E('Q1 --> m1b["<div style=\'width:290px;white-space:normal\'>'+mk('«Он умер что ли?»',null,null)+'</div>"]:::hhl', c5); E('m1b --> Q1b', c5);
+    E('Q1b --> m1b1["<div style=\'width:290px;white-space:normal\'>'+mk('«Да вот, недавно!»',null,null)+'</div>"]:::hhl', c5); E('m1b1 --> Q1b1', c5);
+    E('Q1b --> m1b2["<div style=\'width:290px;white-space:normal\'>'+mk('«Успокойся, я пошутила.»',null,null)+'</div>"]:::hhl', c5); E('m1b2 --> Q1b2', c5);
+    E('Q1b2 --> Q1b3', c5);
+    E('Q1b3 --> m1b3["<div style=\'width:290px;white-space:normal\'>'+mk('«Милли?»',null,null)+'</div>"]:::hhl', c5); E('m1b3 --> LM', c5);
+    E('Q1b3 --> m1b4["<div style=\'width:290px;white-space:normal\'>'+mk('«Не важно.»',null,null)+'</div>"]:::hhl', c5); E('m1b4 --> LM', c5);
+    E('Q1a --> LM', c5);
+    E('Q1b1 --> EXQ', c5);
+    E('LM --> m2["<div style=\'width:290px;white-space:normal\'>'+mk('«А это я где?»'+cond('один раз (918)'),null,null)+'</div>"]:::hhl', c5); E('m2 --> Q2', c5);
+    E('Q2 --> m2a["<div style=\'width:290px;white-space:normal\'>'+mk('«А что это за церковь такая?»',null,null)+'</div>"]:::hhl', c5); E('m2a --> Q2a', c5);
+    E('Q2 --> m2b["<div style=\'width:290px;white-space:normal\'>'+mk('«Незачем уточнять»',null,null)+'</div>"]:::hhl', c5); E('m2b --> Q2b', c5);
+    E('Q2a --> Q2a1', c5);
+    E('Q2a1 --> LM', c5);
+    E('Q2b --> LM', c5);
+    E('LM --> m3["<div style=\'width:290px;white-space:normal\'>'+mk('«А почему тут собственно так пустынно?»'+cond('один раз (950)'),null,null)+'</div>"]:::hhl', c5); E('m3 --> Q3', c5);
+    E('Q3 --> LM', c5);
+    E('LM --> m4["<div style=\'width:290px;white-space:normal\'>'+mk('«Я ищу Элеона Ара.»'+cond('если задание «найти жреца» взято и про Элеона ещё не спрашивали (961)'),null,null)+'</div>"]:::hhl', c5); E('m4 --> Q4', c5);
+    E('Q4 --> m4a["<div style=\'width:290px;white-space:normal\'>'+mk('«По важному делу.»'+flag('записывает «по важному делу»'),null,null)+'</div>"]:::hhl', c5); E('m4a --> Q4a', c5);
+    E('Q4 --> m4b["<div style=\'width:290px;white-space:normal\'>'+mk('«Его искала его дочь»'+flag('записывает «Лени солгал про Луизу»'),null,null)+'</div>"]:::hhl', c5); E('m4b --> Q4b', c5);
+    E('Q4 --> m4c["<div style=\'width:290px;white-space:normal\'>'+mk('«Да просто так!»'+cond('если Безумие ≥ 1 (1023)'),null,null)+'</div>"]:::hhl', c5); E('m4c --> Q4c', c5);
+    E('Q4a --> LM', c5);
+    E('Q4b --> Q4b1', c5);
+    E('Q4b1 --> LM', c5);
+    E('Q4c --> LM', c5);
+    E('LM --> m5["<div style=\'width:290px;white-space:normal\'>'+mk('«Фенрира ранена.»'+cond('если задание «найти лекаря» взято, Феня ранена и про лапку ещё не спрашивали (1035); в коде стоит «ld.d4» вместо «не ld.d4», пункт сейчас недостижим'),null,null)+'</div>"]:::hhl', c5); E('m5 --> Q5', c5);
+    E('Q5 --> m5a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза рядом (1053):',null,null)+'</div>"]:::hhl', c5); E('m5a --> Q5a', c5);
+    E('Q5 --> m5b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луизы нет рядом:',null,null)+'</div>"]:::hhl', c5); E('m5b --> LM', c5);
+    E('Q5a --> LM', c5);
+    E('LM --> m6["<div style=\'width:290px;white-space:normal\'>'+mk('«Меня не пропускают.»'+cond('если задание «статуя» взято, а пропуск ещё не получен (1058)'),null,null)+'</div>"]:::hhl', c5); E('m6 --> Q6', c5);
+    E('Q6 --> LM', c5);
+    E('LM --> m7["<div style=\'width:290px;white-space:normal\'>'+mk('«Я отказываюсь вступать»'+cond('если Лени предложил вступить, а ответа ещё не было (1074)'),null,null)+'</div>"]:::hhl', c5); E('m7 --> Q7', c5);
+    E('LM --> m8["<div style=\'width:290px;white-space:normal\'>'+mk('«Я согласна вступить в служки»'+cond('если Лени предложил вступить, а ответа ещё не было (1087)'),null,null)+'</div>"]:::hhl', c5); E('m8 --> Q8', c5);
+    E('Q7 --> LM', c5);
+    E('Q8 --> LM', c5);
+    E('LM --> m9["<div style=\'width:290px;white-space:normal\'>'+mk('«Мне негде остановиться.»'+cond('если задание «найти жреца» не взято и вступить ещё не предлагали (1136)'),null,null)+'</div>"]:::hhl', c5); E('m9 --> Q9', c5);
+    E('Q9 --> m9a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Безумие ≥ 1 (1141):',null,null)+'</div>"]:::hhl', c5); E('m9a --> Q9a', c5);
+    E('Q9 --> m9b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Безумие ниже 1 уровня:',null,null)+'</div>"]:::hhl', c5); E('m9b --> LM', c5);
+    E('Q9a --> LM', c5);
+    E('LM --> m10["<div style=\'width:290px;white-space:normal\'>'+mk('«Конец»'+cond('выход из разговора (1165)'),null,null)+'</div>"]:::hhl', c5); E('m10 --> BYE', c5);
+    E('BYE --> EXS', c5);
+    E('EXQ --> EXS', c5);
+  } else {
+    E('M --> EXS', c5);
+  }
+  E('LOUT --> L1', c2);
+  E('LDN --> L2', c3);
+  E('MENU --> M', c4);
+  E('OP --> O', c1);
+  L.push('classDef hhk fill:#fde9ee,stroke:#be123c,color:#4d1223');
+  L.push('classDef hhl fill:#e5f2fa,stroke:#0369a1,color:#123043');
+  L.push('classDef hhn fill:#e7f4ea,stroke:#166534,color:#14331f');
+  L.push('classDef hhs fill:#edf1f6,stroke:#475569,color:#1d2733');
+  L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
+  L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
+  L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
+  return L.concat(ST).join('\n');
+}
+async function render(){
+  const f=document.getElementById('fchart');
+  if(!f) return;
+  f.removeAttribute('data-processed');
+  f.textContent=build();
+  await mermaid.run({nodes:[f]});
+  for(const ss of document.styleSheets){
+    let rules; try{rules=ss.cssRules;}catch(e){continue;}
+    for(let i=rules.length-1;i>=0;i--){
+      const r=rules[i];
+      if(r.selectorText && /\.(hh[a-z0-9]*|sc|ex|dd|ok)( span| > \*)$/.test(r.selectorText)
+         && r.style && r.style.getPropertyPriority('color')==='important'){ r.style.removeProperty('color'); }
+    }
+  }
+  document.querySelectorAll('#fchart g.node').forEach(function(g){
+    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
+    if(m && HUBS.indexOf(m[1])>=0){ g.style.cursor='pointer'; g.addEventListener('click', function(){ window.th(m[1]); }); }
+  });
+}
+window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
+window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
+render();
+</script>
 </head>
 <body>
 <header class="site"><div class="wrap">
 <h1>Айрат: дверь коридора и разговор с Лени</h1>
 <p>script_4_airat.rpy, 520-1174: дверь, Лени, меню разговора.</p>
-<nav class="crumbs"><a href="index.html?v=72">← Все схемы</a> · <a href="airat1.html?v=73">Вход и церковь</a> · <a href="airat3.html?v=66">Карралак</a> · <a href="stats.html?v=34">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=105">← Все схемы</a> · <a href="airat1.html?v=105">Вход и церковь</a> · <a href="airat3.html?v=105">Карралак</a> · <a href="stats.html?v=105">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -30,16 +247,10 @@
 
 <div class="card">
 <h2>Схема</h2>
-<p class="muted">Вертикальные плашки: нажмите на группу, чтобы раскрыть. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке группы: минимум и максимум по всем путям внутри группы. У выбора ▲ прибавка, ▼ убавка. <b style="color:#b91c1c">Красным</b> условие, 🚩 что выбор записывает. Выборы вложены под плашкой, к которой они относятся; «↩» ведёт к плашке выше, если путь сходится.</p>
-<div class="pl ex">Экран переходов: правый коридор церкви (налево, к двери)</div>
-<details class="hub" id="h_D" style="border-color:#166534"><summary style="color:#166534"><b>Дверь коридора<br/><br><small style="font-weight:400">airat_church_corridor_door, 520-550</small></b></summary><div class="muted">Вход: клик по двери коридора (script_npc_items.rpy:934)</div><div class="pl sc" id="n_D0" style="background:#E4EEF9">Деревянная дверь в конце правого коридора: «Вид у неё такой, будто она очень стара» (522-523)</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Потянуть на себя» </div><div class="pl sc" id="n_D1" style="background:#E4EEF9">Дверь не открывается; реплики по Логике (531-533) и Безумию (534-536) (525-536)</div><div class="ref">↩ продолжение выше: <a href="#n_D0" onclick="openTo(this)">Деревянная дверь в конце правого коридора: «Вид у неё такой,…</a></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Постучаться.» </div><div class="pl sc" id="n_D2" style="background:#E4EEF9">Героиня стучит (538-540)</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если Лени в кабинете (542): </div><div class="pl ex" id="n_OP" style="background:#eef0f4">Лени открывает дверь (переход к хабу «Лени открывает»)</div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если Лени нет в кабинете: </div><div class="pl sc" id="n_D3" style="background:#E4EEF9">«Тишина. Никого нет дома» (545-546)</div><div class="ref">↩ продолжение выше: <a href="#n_D0" onclick="openTo(this)">Деревянная дверь в конце правого коридора: «Вид у неё такой,…</a></div></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Конец» </div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div></details>
-<details class="hub" id="h_O" style="border-color:#0369a1"><summary style="color:#0369a1"><b>Лени открывает дверь<br/><br><small style="font-weight:400">corridor_arrows_up_next_label, 551-657</small></b></summary><div class="pl sc" id="n_O0" style="background:#E4EEF9">Героиня вежливо стучит (552)</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если это первый стук (553): <div style="font-size:12px;color:#b91c1c;font-weight:700">Логика ≥ 1: запах пыли, старых книг и семечек (564-565)</div></div><div class="pl sc" id="n_O1" style="background:#E4EEF9">Грохот за дверью, «Аа-а-й. Ой-ой-ой.»; Лени: «Я хотел сказать, здравствуйте» (557-563)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «Лени встречена»</span></div><div class="pl sc" id="n_O2" style="background:#E4EEF9">Лени: «Доброго дня! Или ночи. Минутку, только бумаги соберу. Проходите, тут высокий порог!» (566-571)</div><div class="pl sc" id="n_O3" style="background:#E4EEF9">Дверь открывается, героиня входит в кабинет Карралака (571-657)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает: героиня в кабинете Карралака</span></div><div class="pl ex" id="n_LOUT" style="background:#eef0f4">Разговор с Лени</div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если Лени уже открывал дверь: </div><div class="ref">↩ продолжение выше: <a href="#n_O2" onclick="openTo(this)">Лени: «Доброго дня! Или ночи. Минутку, только бумаги соберу.…</a></div></div></details>
-<details class="hub" id="h_L1" style="border-color:#be123c"><summary style="color:#be123c"><b>Первая встреча с Лени<br/><br><small style="font-weight:400">script_4_airat_leni_dialog, 658-706</small></b></summary><div class="pl sc" id="n_A0" style="background:#E4EEF9">Начало разговора с Лени (658-660)</div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">Если Лени ещё не встречался в кабинете (661): <div style="font-size:12px;color:#b91c1c;font-weight:700">Безумие ≥ 1: шутка про святую воду (693-696); Логика ≥ 1: дрожащие пальцы, криво сидит воротник (698-700)</div></div><div class="pl sc" id="n_A1" style="background:#E4EEF9">Из-за стола вылезает взъерошенный мальчик: «Вы ведь к Главному, я угадал?» (674-692)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «Лени встречен второй раз»</span></div><div class="pl sc" id="n_A2" style="background:#E4EEF9">Лени представляется: «Я - Лени...» (701-704); имя героини над ним меняется с «Служка?» на «Лени»</div><div class="pl ex" id="n_LDN" style="background:#eef0f4">К разговору про Луизу и к меню</div></div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">Если Лени уже встречался в кабинете: </div><div class="pl ex" id="n_LDN" style="background:#eef0f4">К разговору про Луизу и к меню</div></div></details>
-<details class="hub" id="h_L2" style="border-color:#475569"><summary style="color:#475569"><b>Луиза и Лени<br/><br><small style="font-weight:400">dev_leni, 707-835</small></b></summary><div class="pl sc" id="n_V0" style="background:#E4EEF9">Луиза рядом (707-710)</div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">Если Луиза рядом и ещё не говорила с Лени (710): </div><div class="pl sc" id="n_V1" style="background:#E4EEF9">Лени: «Л-л-л-луиза?!», падает за стол, выползает обратно (713-725)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «Луиза и Лени встретились»</span></div><div class="pl sc" id="n_V2" style="background:#E4EEF9">Луиза ищет отца: «Он снова пропал!», Лени врёт про «выдающиеся успехи» и перевод (730-760)</div><div class="pl sc" id="n_V3" style="background:#E4EEF9">Лени: «Штатный лекарь! Он на задании, у постели больного», приказ о карантине (761-798)</div><div class="pl sc" id="n_V4" style="background:#E4EEF9">Луиза: «Он говорил про отдел Миллиании». Лени: «Межведомственные связи, всё такое» (799-812)</div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">Если героиня раньше спрашивала про Элеона (736): <div style="font-size:12px;color:#b91c1c;font-weight:700">Лени: «Д-да, я слышал...» (737-738)</div></div><div class="pl sc" id="n_V6" style="background:#E4EEF9">Лени: «Больше я ничего не могу сказать. Пожалуйста, Луиза...» (821-835)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «Луиза уговорена, отец не найден» (ld.d3 = 1)</span></div><div class="pl ex" id="n_MENU" style="background:#eef0f4">К меню Лени</div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">Если про Элеона ещё не спрашивали (813): <div style="font-size:12px;color:#b91c1c;font-weight:700">Логика ≥ 1: «Он явно недоговаривает» (824-827)</div></div><div class="pl sc" id="n_V5" style="background:#E4EEF9">Лени: «Он сейчас в...», осекается: «Я не могу сказать» (813-820)</div><div class="ref">↩ продолжение выше: <a href="#n_V6" onclick="openTo(this)">Лени: «Больше я ничего не могу сказать. Пожалуйста, Луиза...…</a></div></div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">Если Луизы нет рядом или она уже говорила с Лени: </div><div class="pl ex" id="n_MENU" style="background:#eef0f4">К меню Лени</div></div></details>
-<details class="hub" id="h_M" style="border-color:#0369a1"><summary style="color:#0369a1"><b>Меню Лени<br/><br><small style="font-weight:400">script_4_airat_leni_dialog, 841-1174</small></b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(237,231,251);border:1.4px solid rgb(112,72,232);color:rgb(112,72,232);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>0…+2</span> <span style='display:inline-block;background:rgb(227,242,250);border:1.4px solid rgb(28,126,214);color:rgb(28,126,214);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−3…+3</span> <span style='display:inline-block;background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−1…0</span> <span style='display:inline-block;background:rgb(219,234,254);border:1.4px solid rgb(37,99,235);color:rgb(37,99,235);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−1…0</span> <span style='display:inline-block;background:rgb(241,245,249);border:1.4px solid rgb(71,85,105);color:rgb(71,85,105);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−1…0</span></div></summary><div class="pl sc" id="n_LM" style="background:#E4EEF9">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пытается удержаться» (841-842)</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Что за главный?» <div style="font-size:12px;color:#b91c1c;font-weight:700">один раз (843)</div></div><div class="pl sc" id="n_Q1" style="background:#E4EEF9">Лени: «Карралак Ар, Глава Военного Отдела». «Я сейчас за него. Я личный Служка Карралака» (844-860)</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Что значит, он того?» </div><div class="pl sc" id="n_Q1a" style="background:#E4EEF9">Лени: «Занят? Д-да, занят» (863-866) <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="ref">↩ продолжение выше: <a href="#n_LM" onclick="openTo(this)">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пыт…</a></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Он умер что ли?» </div><div class="pl sc" id="n_Q1b" style="background:#E4EEF9">Героиня: «Сдох, что ли?» Лени: «Разве!? КОГДА!?» (870-875) <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Да вот, недавно!» </div><div class="pl bad" id="n_Q1b1" style="background:#ffd6d6">Лени плачет: «Да как же так...», убегает в слезах (878-889)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «Карралак умер», Лени больше не в кабинете</span> <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Успокойся, я пошутила.» </div><div class="pl sc" id="n_Q1b2" style="background:#E4EEF9">Героиня: «Я просто пошутила». Лени оседает, просит объяснить (895-908)</div><div class="pl sc" id="n_Q1b3" style="background:#E4EEF9">Меню: «Милли?» или «Не важно.» (909-917)</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Милли?» </div><div class="ref">↩ продолжение выше: <a href="#n_LM" onclick="openTo(this)">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пыт…</a></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Не важно.» </div><div class="ref">↩ продолжение выше: <a href="#n_LM" onclick="openTo(this)">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пыт…</a></div></div></div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«А это я где?» <div style="font-size:12px;color:#b91c1c;font-weight:700">один раз (918)</div></div><div class="pl sc" id="n_Q2" style="background:#E4EEF9">Героиня: «А это я, собственно, где?» Лени про Церковь Ара (919-928)</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«А что это за церковь такая?» </div><div class="pl sc" id="n_Q2a" style="background:#E4EEF9">«Церковь Ара?» Лени рассказывает мало (931-940) <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl sc" id="n_Q2a1" style="background:#E4EEF9">Логика ≥ 1: «Видимо, он действительно мало что знает» (941-943)</div><div class="ref">↩ продолжение выше: <a href="#n_LM" onclick="openTo(this)">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пыт…</a></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Незачем уточнять» </div><div class="pl sc" id="n_Q2b" style="background:#E4EEF9">«Да ну её, эту Церковь» (945) <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></div><div class="ref">↩ продолжение выше: <a href="#n_LM" onclick="openTo(this)">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пыт…</a></div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«А почему тут собственно так пустынно?» <div style="font-size:12px;color:#b91c1c;font-weight:700">один раз (950)</div></div><div class="pl sc" id="n_Q3" style="background:#E4EEF9">«А почему тут так пусто?» Лени: «Карантин, все заняты» (951-960)</div><div class="ref">↩ продолжение выше: <a href="#n_LM" onclick="openTo(this)">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пыт…</a></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Я ищу Элеона Ара.» <div style="font-size:12px;color:#b91c1c;font-weight:700">если задание «найти жреца» взято и про Элеона ещё не спрашивали (961)</div></div><div class="pl sc" id="n_Q4" style="background:#E4EEF9">Героиня: «Простите, я ищу кое-кого. Элеона Ара.» Лени удивлён (961-974)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «про Элеона спрашивали» (ld.d3 = 1)</span></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«По важному делу.» <div style="font-size:12px;color:#92400e;font-weight:700">🚩 записывает «по важному делу»</div></div><div class="pl sc" id="n_Q4a" style="background:#E4EEF9">Лени оглядывает героиню с ног до головы (979-994) <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="ref">↩ продолжение выше: <a href="#n_LM" onclick="openTo(this)">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пыт…</a></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Его искала его дочь» <div style="font-size:12px;color:#92400e;font-weight:700">🚩 записывает «Лени солгал про Луизу»</div></div><div class="pl sc" id="n_Q4b" style="background:#E4EEF9">Лени краснеет, улыбается, роется в бумагах, обрывает фразу: расстроен (996-1016)</div><div class="pl sc" id="n_Q4b1" style="background:#E4EEF9">Логика ≥ 1: «Он вряд ли договаривает» (1017-1020)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «Лени не договаривает»</span></div><div class="ref">↩ продолжение выше: <a href="#n_LM" onclick="openTo(this)">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пыт…</a></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Да просто так!» <div style="font-size:12px;color:#b91c1c;font-weight:700">если Безумие ≥ 1 (1023)</div></div><div class="pl sc" id="n_Q4c" style="background:#E4EEF9">Героиня: «Просто так! Ага! Именно так!» (1023-1031)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «просто так ищет жреца»</span> <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> <span style='background:rgb(253,240,221);color:rgb(217,119,6);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></div><div class="ref">↩ продолжение выше: <a href="#n_LM" onclick="openTo(this)">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пыт…</a></div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Фенрира ранена.» <div style="font-size:12px;color:#b91c1c;font-weight:700">если задание «найти лекаря» взято, Феня ранена и про лапку ещё не спрашивали (1035); в коде стоит «ld.d4» вместо «не ld.d4», пункт сейчас недостижим</div></div><div class="pl sc" id="n_Q5" style="background:#E4EEF9">Лени оглядывает руку Фенрира: «Не знаю, где тут аптечка. Вам бы к лекарям», Феня: «Там никого!» (1036-1057)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «про лапку Фени спрашивали» (ld.d4 = 1)</span></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если Луиза рядом (1053): </div><div class="pl sc" id="n_Q5a" style="background:#E4EEF9">Луиза: «У меня дома можно найти что-то подходящее» (1053-1055)</div><div class="ref">↩ продолжение выше: <a href="#n_LM" onclick="openTo(this)">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пыт…</a></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если Луизы нет рядом: </div><div class="ref">↩ продолжение выше: <a href="#n_LM" onclick="openTo(this)">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пыт…</a></div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Меня не пропускают.» <div style="font-size:12px;color:#b91c1c;font-weight:700">если задание «статуя» взято, а пропуск ещё не получен (1058)</div></div><div class="pl sc" id="n_Q6" style="background:#E4EEF9">Лени: «Естественно. Пропуск. Отдайте старшему... Горран Ар» (1059-1071)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает: пропуск у героини → открывает путь к статуе</span></div><div class="ref">↩ продолжение выше: <a href="#n_LM" onclick="openTo(this)">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пыт…</a></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Я отказываюсь вступать» <div style="font-size:12px;color:#b91c1c;font-weight:700">если Лени предложил вступить, а ответа ещё не было (1074)</div></div><div class="pl sc" id="n_Q7" style="background:#E4EEF9">Героиня: «Я отказываюсь вступать». Лени: «Л-ладно, как хочешь» (1077-1086)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает: задание «Карралак» выполнено (отказ)</span></div><div class="ref">↩ продолжение выше: <a href="#n_LM" onclick="openTo(this)">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пыт…</a></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Я согласна вступить в служки» <div style="font-size:12px;color:#b91c1c;font-weight:700">если Лени предложил вступить, а ответа ещё не было (1087)</div></div><div class="pl sc" id="n_Q8" style="background:#E4EEF9">Героиня: «Я согласна вступить в служки». Лени: «Окей! Будешь выполнять мелкие поручения. Паладины говорили о странных событиях, поговори с ними» (1090-1111)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «согласна вступить» (to_church2, war) → открывает задание «статуя»</span></div><div class="ref">↩ продолжение выше: <a href="#n_LM" onclick="openTo(this)">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пыт…</a></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Мне негде остановиться.» <div style="font-size:12px;color:#b91c1c;font-weight:700">если задание «найти жреца» не взято и вступить ещё не предлагали (1136)</div></div><div class="pl sc" id="n_Q9" style="background:#E4EEF9">Героиня: «Мне негде остановиться». Лени: «Можешь остановиться у нас, при условии, что вступишь в служки. Это военный отдел» (1137-1163)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «предложено вступить» (to_church) → открывает задание «Карралак»</span></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если Безумие ≥ 1 (1141): </div><div class="pl sc" id="n_Q9a" style="background:#E4EEF9">Героиня: «Вам тут уборщицы не нужны? Я неплохо убираю, ну, кровь там и всё такое.» Лени поперхнулся (1142-1147) <span style='background:rgb(219,234,254);color:rgb(37,99,235);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></div><div class="ref">↩ продолжение выше: <a href="#n_LM" onclick="openTo(this)">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пыт…</a></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если Безумие ниже 1 уровня: </div><div class="ref">↩ продолжение выше: <a href="#n_LM" onclick="openTo(this)">Меню Лени: «Парень с круглыми глазами, опираясь на стол, пыт…</a></div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Конец» <div style="font-size:12px;color:#b91c1c;font-weight:700">выход из разговора (1165)</div></div><div class="pl sc" id="n_BYE" style="background:#E4EEF9">Выход из разговора: «Знаешь, а собственно, и все.» Лени: «До свидания!» (1168-1174)</div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div></details>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
+<div class="widechart"><div id="fchart" class="mermaid"></div></div>
 </div>
-
 </main>
-<footer>Схемы игры «Вий» · script_4_airat.rpy · сверка с кодом (20.10.2026) частичная. Подтверждённые участки и оставшиеся ограничения указаны на странице.</footer>
+<footer>Схемы игры «Вий» · script_4_airat.rpy · выверено по коду 20.10.2026</footer>
 </body>
 </html>

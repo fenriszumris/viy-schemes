@@ -8,17 +8,163 @@
 <title>Губерт (слизень) — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
-<style>.hub{border:2px solid;border-radius:10px;margin:10px 0;background:#fff}.hub>summary{cursor:pointer;padding:8px 10px;font-size:15px;list-style:none}.hub>summary::before{content:"▸ ";}.hub[open]>summary::before{content:"▾ ";}.hub>div,.hub>.pl,.hub>.ch{margin-left:8px;margin-right:8px}.hub{padding-bottom:6px}
-.pl{border:1px solid #7a9cc6;border-radius:8px;padding:6px 8px;margin:6px 0;font-size:14px;line-height:1.35;overflow-wrap:anywhere}.pl.ex{border-color:#aab2c0;color:#4a5160}.pl.bad{border-color:#b91c1c;color:#4a1414}.pl.stub{border-color:#d97706}
-.ch{border:1.5px solid;border-radius:8px;margin:6px 0 6px 4px;padding:3px 4px;font-size:14px;overflow-wrap:anywhere}.ch .chh{padding-left:6px;font-weight:600}.ch .pl{margin-left:0}.ch .ch{margin-left:3px}
-.ref{font-size:13px;color:#475569;margin:4px 0 4px 6px}.muted{overflow-wrap:anywhere}
-@media(min-width:700px){.hub{max-width:900px}}</style><script>function openTo(a){var id=a.getAttribute('href').slice(1);var e=document.getElementById(id);var p=e;while(p){if(p.tagName=='DETAILS')p.open=true;p=p.parentElement}setTimeout(function(){e&&e.scrollIntoView({block:'center'})},50)}function allHubs(v){document.querySelectorAll('details.hub').forEach(function(d){d.open=v})}</script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
+const HUBS=["G1", "G2", "G3"];
+const EXP=new Set();
+const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)', C_ADR='rgb(13,148,136)', C_NAR='rgb(101,163,13)', C_ADO='rgb(79,70,229)', C_BON='rgb(219,39,119)';
+const CHIP_BG2=1;
+const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)'; CHIP_BG[C_ADR]='rgb(204,244,240)'; CHIP_BG[C_NAR]='rgb(236,252,203)'; CHIP_BG[C_ADO]='rgb(224,231,255)'; CHIP_BG[C_BON]='rgb(252,231,243)';
+function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
+function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
+function mk(text, ups, downs){
+  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
+  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
+    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
+    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
+    +'</div>';
+}
+function badge(ranges){
+  if(!ranges.length) return '';
+  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;margin-left:3px">'+p[1]+'</span>';}).join('');
+  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
+}
+function hub(id,label,cls,ranges){
+  const arrow = EXP.has(id) ? '▾' : '▸';
+  const b=badge(ranges||[]);
+  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
+  return id + '["' + inner + '"]:::' + cls;
+}
+const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>'+t+'</span>';};
+const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>'+t+'</span>';};
+const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
+function build(){
+  const L=[]; const ST=[]; let ei=0;
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
+  L.push('flowchart TD');
+  const cG='#9aa3b2', c1='#475569', c2='#be123c', c3='#7c3aed', c4='#b45309', c5='#0f766e', c6='#0369a1', c7='#475569', c8='#b91c1c';
+  L.push('ST["<div style=\'width:300px;white-space:normal\'>Вход: стрелка «Еще глубже» на дороге к Таше (script _define.rpy:645-649) → сцена Губерта<br/><small>script3_nazad_gubert, 11</small><br/><a href=\'tasha.html?v=105\'>← страница «Назад: Таша»</a></div>"]:::ex');
+  L.push('EXS["<div style=\'width:300px;white-space:normal\'>Экран локации Губерта: стрелки, стена из веток, шляпа на земле (если лежит)<br/><small>script_newscreens.rpy:1152-1153, script_npc_items.rpy:1251</small></div>"]:::ex');
+  L.push('BAD1["<div style=\'width:260px;white-space:normal\'>BAD END «Главное блюдо»<br/><small>смерть, перезапуск игры</small></div>"]:::bad');
+  L.push('BAD2["<div style=\'width:260px;white-space:normal\'>BAD END «Часть чего-то большего»<br/><small>смерть, перезапуск игры</small></div>"]:::bad');
+  L.push('TS["<div style=\'width:280px;white-space:normal\'>Сцена Таши: героиня встречает Ташу (переход на script3_nazad_tash_go)<br/><a href=\'tasha.html?v=105\'>страница «Назад: Таша»</a></div>"]:::ex');
+  E('ST --> G1', cG);
+  L.push(hub('G1','Встреча с Губертом<br/><small>script3_nazad_gubert, 11-150</small>','hhn',[]));
+  if(EXP.has('G1')){
+    L.push('A0["<div style=\'width:280px;white-space:normal\'>Героиня идёт по тропе «Еще глубже» (11-27)</div>"]:::sc');
+    E('G1 --> A0', c1);
+    L.push('FM["<div style=\'width:320px;white-space:normal\'>Первая встреча: героиня забрела в тупик, слышит покашливание, появляется слизень. Он называет себя Мистер Губерт, говорит, что героиня аппетитно пахнет, и просит присоединиться к её ужину (36-71)</div>"]:::sc');
+    L.push('RM["<div style=\'width:320px;white-space:normal\'>Повторная встреча: Губерт рад снова видеть героиню и спрашивает, всё ли она решила позвать его к ужину (19-25, 69-72)</div>"]:::sc');
+    L.push('GM["<div style=\'width:240px;white-space:normal\'>Губерт ждёт ответа</div>"]:::sc');
+    L.push('TA["<div style=\'width:320px;white-space:normal\'>Таша убеждает Губерта: героиня под её защитой, в коллекции Таши найдётся другая еда; Губерт уходит (78-115)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Таша больше не рядом и не помогает; открывает путь вправо на дорогу к Таше; шляпа остаётся лежать на земле</span></div>"]:::sc');
+    L.push('AM["<div style=\'width:320px;white-space:normal\'>Губерт видит на героине чёрный амулет от Леса, пугается и убегает (116-150)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 открывает путь вправо на дорогу к Таше; шляпа остаётся лежать на земле</span></div>"]:::sc');
+    E('A0 --> C1["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня ещё не встречала Ташу и Таша не отказалась помогать (12-17):',null,null)+'</div>"]:::hhn', c1); E('C1 --> TS', c1);
+    E('A0 --> C2["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня ещё не говорила Губерту «меня нет в меню» (26-71):'+cond('если уровень Логики не ниже 1: героиня думает, что заблудилась'),null,null)+'</div>"]:::hhn', c1); E('C2 --> FM', c1);
+    E('A0 --> C3["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня уже говорила Губерту «меня нет в меню» (19-25):',null,null)+'</div>"]:::hhn', c1); E('C3 --> RM', c1);
+    E('FM --> GM', c1);
+    E('RM --> GM', c1);
+    E('GM --> C4["<div style=\'width:290px;white-space:normal\'>'+mk('Если Таша рядом и помогает героине:',null,null)+'</div>"]:::hhn', c1); E('C4 --> TA', c1);
+    E('GM --> C5["<div style=\'width:290px;white-space:normal\'>'+mk('Если Таша не помогает, но на героине чёрный амулет от Леса:',null,null)+'</div>"]:::hhn', c1); E('C5 --> AM', c1);
+    E('GM --> C6["<div style=\'width:290px;white-space:normal\'>'+mk('Если Таши и амулета нет:',null,null)+'</div>"]:::hhn', c1); E('C6 --> G2', c1);
+    E('TA --> EXS', c1);
+    E('AM --> EXS', c1);
+  } else {
+    E('G1 --> TS', c1);
+    E('G1 --> EXS', c1);
+    E('G1 --> G2', c1);
+  }
+  L.push(hub('G2','Меню Губерта<br/><small>script3_nazad_slime_menu, 151-345</small>','hhr',[]));
+  if(EXP.has('G2')){
+    L.push('MM["<div style=\'width:300px;white-space:normal\'>Меню Губерта: «Не возражаете, если я присоединюсь к вашему ужину?» (151)</div>"]:::sc');
+    E('G2 --> MM', c2);
+    L.push('HM["<div style=\'width:320px;white-space:normal\'>Разговор о шляпе: героиня спрашивает, откуда шляпа; Губерт «нашёл на дороге» и отдавать не хочет (153-165)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: разговор о шляпе состоялся</span></div>"]:::sc');
+    L.push('HX["<div style=\'width:320px;white-space:normal\'>Обмен: Губерт пробует Сливочную Капибару и в восторге отдаёт шляпу; Губерт уходит (170-203)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Сливочная Капибара отдана; шляпа теперь в инвентаре; путь вправо открыт</span></div>"]:::sc');
+    L.push('PD["<div style=\'width:320px;white-space:normal\'>Героиня соглашается, предупреждая, что ядовитая; Губерт обволакивает её слизью (206-235). Если Таша рядом, он не вмешивается: держит слово</div>"]:::sc');
+    L.push('N1["<div style=\'width:300px;white-space:normal\'>Первый отказ: Губерт тает, обещая подождать, пока героиня «созреет» (240-254)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: первый отказ «меня нет в меню»</span></div>"]:::sc');
+    L.push('N2["<div style=\'width:300px;white-space:normal\'>Повторный отказ: Губерт «пересмотрел меню» и объявляет, что героиня в нём (255-264)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 пункт «меня нет в меню» пропадает из меню</span></div>"]:::sc');
+    L.push('IG["<div style=\'width:300px;white-space:normal\'>Героиня бросается на Губерта с иглой; он убегает (267-283)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 игла потрачена; путь вправо открыт; шляпа остаётся лежать на земле</span></div>"]:::sc');
+    L.push('RF["<div style=\'width:300px;white-space:normal\'>Героиня отказывается; Губерт нападает и затягивает её внутрь (293-321). Если Таша рядом, он не вмешивается</div>"]:::sc');
+    L.push('EH["<div style=\'width:300px;white-space:normal\'>Героиня кусает Губерта; слизь заполняет рот, героиня превращается в часть Губерта (322-345)</div>"]:::sc');
+    E('MM --> Q1["<div style=\'width:290px;white-space:normal\'>'+mk('«По поводу шляпки...»'+cond('если взят квест Сливочной Капибары (153)'),null,null)+'</div>"]:::hhr', c2); E('Q1 --> HM', c2);
+    E('HM --> Q1a["<div style=\'width:290px;white-space:normal\'>'+mk('«Боюсь, нет...»',null,null)+'</div>"]:::hhr', c2); E('Q1a --> MM', c2);
+    E('HM --> Q1b["<div style=\'width:290px;white-space:normal\'>'+mk('«А как насчет... Сливочной Капибары?»'+cond('если у героини есть Сливочная Капибара (170)'),null,null)+'</div>"]:::hhr', c2); E('Q1b --> HX', c2);
+    E('HX --> EXS', c2);
+    E('MM --> Q2["<div style=\'width:290px;white-space:normal\'>'+mk('«Давай, но учти, я ядовитая!»',null,null)+'</div>"]:::hhr', c2); E('Q2 --> PD', c2);
+    E('PD --> BAD1', c8);
+    E('MM --> Q3["<div style=\'width:290px;white-space:normal\'>'+mk('«Я... Боюсь сегодня меня нет в меню. Простите.»'+cond('первый раз; пункт виден, пока не было повторного отказа (240)'),null,null)+'</div>"]:::hhr', c2); E('Q3 --> N1', c2);
+    E('MM --> Q3b["<div style=\'width:290px;white-space:normal\'>'+mk('То же, но отказ повторный',null,null)+'</div>"]:::hhr', c2); E('Q3b --> N2', c2);
+    E('N1 --> EXS', c2);
+    E('N2 --> MM', c2);
+    E('MM --> Q4["<div style=\'width:290px;white-space:normal\'>'+mk('«Воткнуть в него иглу»'+cond('если у героини есть игла (267)'),null,null)+'</div>"]:::hhr', c2); E('Q4 --> IG', c2);
+    E('IG --> EXS', c2);
+    E('MM --> Q5["<div style=\'width:290px;white-space:normal\'>'+mk('«Боюсь, я вынуждена отказаться!»',null,null)+'</div>"]:::hhr', c2); E('Q5 --> RF', c2);
+    E('RF --> BAD1', c8);
+    E('MM --> Q6["<div style=\'width:290px;white-space:normal\'>'+mk('«Съесть его!»'+cond('если уровень Безумия не ниже 1 (322)'),null,null)+'</div>"]:::hhr', c2); E('Q6 --> EH', c2);
+    E('EH --> BAD2', c8);
+  } else {
+    E('G2 --> EXS', c2);
+    E('G2 --> BAD1', c2);
+    E('G2 --> BAD2', c2);
+  }
+  L.push(hub('G3','Что можно делать на локации Губерта<br/><small>script_npc_items.rpy:1251-1308, script3_gubert.rpy:412-459</small>','hhn',[[C_MOO, '−2…0']]));
+  if(EXP.has('G3')){
+    L.push('L0["<div style=\'width:300px;white-space:normal\'>Героиня на экране локации Губерта (после ухода Губерта)</div>"]:::sc');
+    E('G3 --> L0', c3);
+    L.push('WA["<div style=\'width:320px;white-space:normal\'>Стена из змеистых веток: героиня проводит рукой по ветке: «Теплая!». Чтобы пройти, нужно что-то больше, чем «лапки» (430-445)</div>"]:::sc');
+    L.push('WF["<div style=\'width:320px;white-space:normal\'>Героиня пытается поджечь стену веток: «Не работает. Эта штука не горит, совсем.» (447-459)</div>"]:::sc');
+    L.push('HT["<div style=\'width:300px;white-space:normal\'>Шляпа лежит на дороге: «Маленький черный циллиндр» (412-418)</div>"]:::sc');
+    L.push('HY["<div style=\'width:260px;white-space:normal\'>Героиня берёт шляпу (421-424)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 шляпа теперь в инвентаре</span></div>"]:::sc');
+    L.push('HN["<div style=\'width:260px;white-space:normal\'>Героиня оставляет шляпу лежать (425-428)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 шляпа остаётся на земле: её можно взять позже</span></div>"]:::sc');
+    E('L0 --> W1["<div style=\'width:290px;white-space:normal\'>'+mk('Клик по стене веток (script_npc_items.rpy:1286)',null,null)+'</div>"]:::hhn', c3); E('W1 --> WA', c3);
+    E('L0 --> W2["<div style=\'width:290px;white-space:normal\'>'+mk('Перетащить на стену горящий факел или кремень (script_newscreens.rpy:482-525)'+cond('весь осмотр можно повторять без ограничения'),null,[[C_MOO, 2]])+'</div>"]:::hhn', c3); E('W2 --> WF', c3);
+    E('L0 --> W3["<div style=\'width:290px;white-space:normal\'>'+mk('Клик по шляпе на земле (script_npc_items.rpy:1296-1308)'+cond('если шляпа лежит на земле'),null,null)+'</div>"]:::hhn', c3); E('W3 --> HT', c3);
+    E('HT --> W3a["<div style=\'width:290px;white-space:normal\'>'+mk('«Взять»',null,null)+'</div>"]:::hhn', c3); E('W3a --> HY', c3);
+    E('HT --> W3b["<div style=\'width:290px;white-space:normal\'>'+mk('«Оставить»',null,null)+'</div>"]:::hhn', c3); E('W3b --> HN', c3);
+    E('WA --> EXS', c3);
+    E('WF --> L0', c3);
+    E('HY --> EXS', c3);
+    E('HN --> EXS', c3);
+  } else {
+    E('G3 --> EXS', c3);
+  }
+  E('EXS --> G3', cG);
+  L.push('classDef hhn fill:#e7f4ea,stroke:#166534,color:#14331f');
+  L.push('classDef hhr fill:#fce9e9,stroke:#b91c1c,color:#4a1414');
+  L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
+  L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
+  L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
+  return L.concat(ST).join('\n');
+}
+async function render(){
+  const f=document.getElementById('fchart');
+  if(!f) return;
+  f.removeAttribute('data-processed');
+  f.textContent=build();
+  await mermaid.run({nodes:[f]});
+  for(const ss of document.styleSheets){
+    let rules; try{rules=ss.cssRules;}catch(e){continue;}
+    for(let i=rules.length-1;i>=0;i--){
+      const r=rules[i];
+      if(r.selectorText && /\.(hh[a-z0-9]*|sc|ex|dd|ok)( span| > \*)$/.test(r.selectorText)
+         && r.style && r.style.getPropertyPriority('color')==='important'){ r.style.removeProperty('color'); }
+    }
+  }
+  document.querySelectorAll('#fchart g.node').forEach(function(g){
+    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
+    if(m && HUBS.indexOf(m[1])>=0){ g.style.cursor='pointer'; g.addEventListener('click', function(){ window.th(m[1]); }); }
+  });
+}
+window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
+window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
+render();
+</script>
 </head>
 <body>
 <header class="site"><div class="wrap">
 <h1>Губерт (слизень): «Еще глубже»</h1>
 <p>script3_gubert.rpy: встреча со слизнем на дороге к Таше, меню Губерта, две концовки BAD END, объекты на локации Губерта.</p>
-<nav class="crumbs"><a href="index.html?v=72">← Все схемы</a> · <a href="tasha.html?v=94">Назад: Таша</a> · <a href="stats.html?v=37">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=105">← Все схемы</a> · <a href="tasha.html?v=105">Назад: Таша</a> · <a href="stats.html?v=105">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -30,14 +176,11 @@
 
 <div class="card">
 <h2>Схема</h2>
-<p class="muted">Вертикальные плашки: нажмите на группу, чтобы раскрыть. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке группы: минимум и максимум по всем путям внутри группы. У выбора ▲ прибавка, ▼ убавка. <b style="color:#b91c1c">Красным</b> условие, 🚩 что выбор записывает. Выборы вложены под плашкой, к которой они относятся; «↩» ведёт к плашке выше, если путь сходится.</p>
-<div class="pl ex">Вход: стрелка «Еще глубже» на дороге к Таше (script _define.rpy:645-649) → сцена Губерта<br/><small>script3_nazad_gubert, 11</small><br/><a href='tasha.html?v=94'>← страница «Назад: Таша»</a></div>
-<details class="hub" id="h_G1" style="border-color:#166534"><summary style="color:#166534"><b>Встреча с Губертом<br/><br><small style="font-weight:400">script3_nazad_gubert, 11-150</small></b></summary><div class="pl sc" id="n_A0" style="background:#E4EEF9">Героиня идёт по тропе «Еще глубже» (11-27)</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если героиня ещё не встречала Ташу и Таша не отказалась помогать (12-17): </div><div class="pl ex" id="n_TS" style="background:#eef0f4">Сцена Таши: героиня встречает Ташу (переход на script3_nazad_tash_go)<br/><a href='tasha.html?v=94'>страница «Назад: Таша»</a></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если героиня ещё не говорила Губерту «меня нет в меню» (26-71): <div style="font-size:12px;color:#b91c1c;font-weight:700">если уровень Логики не ниже 1: героиня думает, что заблудилась</div></div><div class="pl sc" id="n_FM" style="background:#E4EEF9">Первая встреча: героиня забрела в тупик, слышит покашливание, появляется слизень. Он называет себя Мистер Губерт, говорит, что героиня аппетитно пахнет, и просит присоединиться к её ужину (36-71)</div><div class="pl sc" id="n_GM" style="background:#E4EEF9">Губерт ждёт ответа</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если Таша рядом и помогает героине: </div><div class="pl sc" id="n_TA" style="background:#E4EEF9">Таша убеждает Губерта: героиня под её защитой, в коллекции Таши найдётся другая еда; Губерт уходит (78-115)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 Таша больше не рядом и не помогает; открывает путь вправо на дорогу к Таше; шляпа остаётся лежать на земле</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран локации Губерта: стрелки, стена из веток, шляпа на земле (если лежит)<br/><small>script_newscreens.rpy:1152-1153, script_npc_items.rpy:1251</small></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если Таша не помогает, но на героине чёрный амулет от Леса: </div><div class="pl sc" id="n_AM" style="background:#E4EEF9">Губерт видит на героине чёрный амулет от Леса, пугается и убегает (116-150)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 открывает путь вправо на дорогу к Таше; шляпа остаётся лежать на земле</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран локации Губерта: стрелки, стена из веток, шляпа на земле (если лежит)<br/><small>script_newscreens.rpy:1152-1153, script_npc_items.rpy:1251</small></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если Таши и амулета нет: </div></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если героиня уже говорила Губерту «меня нет в меню» (19-25): </div><div class="pl sc" id="n_RM" style="background:#E4EEF9">Повторная встреча: Губерт рад снова видеть героиню и спрашивает, всё ли она решила позвать его к ужину (19-25, 69-72)</div><div class="ref">↩ продолжение выше: <a href="#n_GM" onclick="openTo(this)">Губерт ждёт ответа…</a></div></div></details>
-<details class="hub" id="h_G2" style="border-color:#b45309"><summary style="color:#b45309"><b>Меню Губерта<br/><br><small style="font-weight:400">script3_nazad_slime_menu, 151-345</small></b></summary><div class="muted">Вход: продолжение после группы «Встреча с Губертом»</div><div class="pl sc" id="n_MM" style="background:#E4EEF9">Меню Губерта: «Не возражаете, если я присоединюсь к вашему ужину?» (151)</div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«По поводу шляпки...» <div style="font-size:12px;color:#b91c1c;font-weight:700">если взят квест Сливочной Капибары (153)</div></div><div class="pl sc" id="n_HM" style="background:#E4EEF9">Разговор о шляпе: героиня спрашивает, откуда шляпа; Губерт «нашёл на дороге» и отдавать не хочет (153-165)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает: разговор о шляпе состоялся</span></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Боюсь, нет...» </div><div class="ref">↩ продолжение выше: <a href="#n_MM" onclick="openTo(this)">Меню Губерта: «Не возражаете, если я присоединюсь к вашему у…</a></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«А как насчет... Сливочной Капибары?» <div style="font-size:12px;color:#b91c1c;font-weight:700">если у героини есть Сливочная Капибара (170)</div></div><div class="pl sc" id="n_HX" style="background:#E4EEF9">Обмен: Губерт пробует Сливочную Капибару и в восторге отдаёт шляпу; Губерт уходит (170-203)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 Сливочная Капибара отдана; шляпа теперь в инвентаре; путь вправо открыт</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран локации Губерта: стрелки, стена из веток, шляпа на земле (если лежит)<br/><small>script_newscreens.rpy:1152-1153, script_npc_items.rpy:1251</small></div></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Давай, но учти, я ядовитая!» </div><div class="pl sc" id="n_PD" style="background:#E4EEF9">Героиня соглашается, предупреждая, что ядовитая; Губерт обволакивает её слизью (206-235). Если Таша рядом, он не вмешивается: держит слово</div><div class="pl bad" id="n_BAD1" style="background:#ffd6d6">BAD END «Главное блюдо»<br/><small>смерть, перезапуск игры</small></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Я... Боюсь сегодня меня нет в меню. Простите.» <div style="font-size:12px;color:#b91c1c;font-weight:700">первый раз; пункт виден, пока не было повторного отказа (240)</div></div><div class="pl sc" id="n_N1" style="background:#E4EEF9">Первый отказ: Губерт тает, обещая подождать, пока героиня «созреет» (240-254)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает: первый отказ «меня нет в меню»</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран локации Губерта: стрелки, стена из веток, шляпа на земле (если лежит)<br/><small>script_newscreens.rpy:1152-1153, script_npc_items.rpy:1251</small></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">То же, но отказ повторный </div><div class="pl sc" id="n_N2" style="background:#E4EEF9">Повторный отказ: Губерт «пересмотрел меню» и объявляет, что героиня в нём (255-264)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 пункт «меня нет в меню» пропадает из меню</span></div><div class="ref">↩ продолжение выше: <a href="#n_MM" onclick="openTo(this)">Меню Губерта: «Не возражаете, если я присоединюсь к вашему у…</a></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Воткнуть в него иглу» <div style="font-size:12px;color:#b91c1c;font-weight:700">если у героини есть игла (267)</div></div><div class="pl sc" id="n_IG" style="background:#E4EEF9">Героиня бросается на Губерта с иглой; он убегает (267-283)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 игла потрачена; путь вправо открыт; шляпа остаётся лежать на земле</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран локации Губерта: стрелки, стена из веток, шляпа на земле (если лежит)<br/><small>script_newscreens.rpy:1152-1153, script_npc_items.rpy:1251</small></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Боюсь, я вынуждена отказаться!» </div><div class="pl sc" id="n_RF" style="background:#E4EEF9">Героиня отказывается; Губерт нападает и затягивает её внутрь (293-321). Если Таша рядом, он не вмешивается</div><div class="pl bad" id="n_BAD1" style="background:#ffd6d6">BAD END «Главное блюдо»<br/><small>смерть, перезапуск игры</small></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Съесть его!» <div style="font-size:12px;color:#b91c1c;font-weight:700">если уровень Безумия не ниже 1 (322)</div></div><div class="pl sc" id="n_EH" style="background:#E4EEF9">Героиня кусает Губерта; слизь заполняет рот, героиня превращается в часть Губерта (322-345)</div><div class="pl bad" id="n_BAD2" style="background:#ffd6d6">BAD END «Часть чего-то большего»<br/><small>смерть, перезапуск игры</small></div></div></details>
-<details class="hub" id="h_G3" style="border-color:#166534"><summary style="color:#166534"><b>Что можно делать на локации Губерта<br/><br><small style="font-weight:400">script_npc_items.rpy:1251-1308, script3_gubert.rpy:412-459</small></b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(255,235,235);border:1.4px solid rgb(228,26,28);color:rgb(228,26,28);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−2…0</span></div></summary><div class="pl sc" id="n_L0" style="background:#E4EEF9">Героиня на экране локации Губерта (после ухода Губерта)</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Клик по стене веток (script_npc_items.rpy:1286) </div><div class="pl sc" id="n_WA" style="background:#E4EEF9">Стена из змеистых веток: героиня проводит рукой по ветке: «Теплая!». Чтобы пройти, нужно что-то больше, чем «лапки» (430-445)</div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран локации Губерта: стрелки, стена из веток, шляпа на земле (если лежит)<br/><small>script_newscreens.rpy:1152-1153, script_npc_items.rpy:1251</small></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Перетащить на стену горящий факел или кремень (script_newscreens.rpy:482-525) <span style='background:rgb(255,235,235);color:rgb(228,26,28);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span><div style="font-size:12px;color:#b91c1c;font-weight:700">весь осмотр можно повторять без ограничения; путь «перетащить на стену» в файлах не подтверждён: цель gub_osm не входит в список зон, у кремня нет need_drop, стена только кликается (script_npc_items.rpy:1253-1286)</div></div><div class="pl sc" id="n_WF" style="background:#E4EEF9">Героиня пытается поджечь стену веток: «Не работает. Эта штука не горит, совсем.» (447-459) · TODO (Кейт): позже добавить сцену; Лесс −2 остаётся</div><div class="ref">↩ продолжение выше: <a href="#n_L0" onclick="openTo(this)">Героиня на экране локации Губерта (после ухода Губерта)…</a></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Клик по шляпе на земле (script_npc_items.rpy:1296-1308) <div style="font-size:12px;color:#b91c1c;font-weight:700">если шляпа лежит на земле</div></div><div class="pl sc" id="n_HT" style="background:#E4EEF9">Шляпа лежит на дороге: «Маленький черный циллиндр» (412-418)</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Взять» </div><div class="pl sc" id="n_HY" style="background:#E4EEF9">Героиня берёт шляпу (421-424)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 шляпа теперь в инвентаре</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран локации Губерта: стрелки, стена из веток, шляпа на земле (если лежит)<br/><small>script_newscreens.rpy:1152-1153, script_npc_items.rpy:1251</small></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Оставить» </div><div class="pl sc" id="n_HN" style="background:#E4EEF9">Героиня оставляет шляпу лежать (425-428)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 шляпа остаётся на земле: её можно взять позже</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран локации Губерта: стрелки, стена из веток, шляпа на земле (если лежит)<br/><small>script_newscreens.rpy:1152-1153, script_npc_items.rpy:1251</small></div></div></div></details>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
+<div class="widechart"><div id="fchart" class="mermaid"></div></div>
 </div>
 
 </main>
-<footer>Схемы игры «Вий» · script3_gubert.rpy · сверка с кодом (20.10.2026) частичная. Подтверждённые участки и оставшиеся ограничения указаны на странице.</footer>
+<footer>Схемы игры «Вий» · script3_gubert.rpy · выверено по коду 20.10.2026</footer>
 </body>
 </html>
