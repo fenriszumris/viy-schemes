@@ -13,9 +13,9 @@ import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.mi
 mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
 const HUBS=["A", "B", "C", "D", "E", "F", "G"];
 const EXP=new Set();
-const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)', C_ADR='rgb(13,148,136)', C_NAR='rgb(101,163,13)', C_ADO='rgb(79,70,229)';
+const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)', C_ADR='rgb(13,148,136)', C_NAR='rgb(101,163,13)', C_ADO='rgb(79,70,229)', C_BON='rgb(219,39,119)';
 const CHIP_BG2=1;
-const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)'; CHIP_BG[C_ADR]='rgb(204,244,240)'; CHIP_BG[C_NAR]='rgb(236,252,203)'; CHIP_BG[C_ADO]='rgb(224,231,255)';
+const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)'; CHIP_BG[C_ADR]='rgb(204,244,240)'; CHIP_BG[C_NAR]='rgb(236,252,203)'; CHIP_BG[C_ADO]='rgb(224,231,255)'; CHIP_BG[C_BON]='rgb(252,231,243)';
 function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
 function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
 function mk(text, ups, downs){
@@ -183,20 +183,20 @@ function build(){
   } else {
     E('E --> EXS', c5);
   }
-  L.push(hub('F','Концовки демоверсии<br/><small>airat_end_dev, 1933-1983</small>','hhk',[]));
+  L.push(hub('F','Концовки демоверсии<br/><small>airat_end_dev, 1933-1984</small>','hhk',[]));
   if(EXP.has('F')){
     L.push('F0["<div style=\'width:380px;white-space:normal\'>Луиза читает записку: «Подожди-подожди.» «Что это?» «Что за записи? КОД?» «Это странно. Действительно странно.» (1936-1940)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записка прочитана</span></div>"]:::sc');
     E('F --> F0', c7);
     L.push('F1["<div style=\'width:340px;white-space:normal\'>Героиня: «Я тоже». «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Без понятия что тут творится.» (1942-1944)</div>"]:::bad');
-    L.push('F2["<div style=\'width:380px;white-space:normal\'>Героиня: «Церковь действительно не так чиста?» «Они точно не невинные овечки.» Луиза: «Я уже ни в чем не уверена.» «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Что-то творится в светлом королевстве.» (1947-1960)</div>"]:::bad');
-    L.push('F3["<div style=\'width:360px;white-space:normal\'>Героиня: «Может, ему это подкинули?» «Подорвать доверие.» «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Подстава» (1962-1972)</div>"]:::bad');
-    L.push('F4["<div style=\'width:360px;white-space:normal\'>Героиня: «Может это было для блага?» Луиза: «Я хочу ему верить.» «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Высокая цена.» (1974-1981)</div>"]:::bad');
-    L.push('FM["<div style=\'width:160px;white-space:normal\'>Меню (1945)</div>"]:::sc');
+    L.push('F2["<div style=\'width:380px;white-space:normal\'>Героиня: «Церковь действительно не так чиста?» «Они точно не невинные овечки.» Луиза: «Я уже ни в чем не уверена.» «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Что-то творится в светлом королевстве.» (1948-1961)</div>"]:::bad');
+    L.push('F3["<div style=\'width:360px;white-space:normal\'>Героиня: «Может, ему это подкинули?» «Подорвать доверие.» «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Подстава» (1963-1973)</div>"]:::bad');
+    L.push('F4["<div style=\'width:360px;white-space:normal\'>Героиня: «Может это было для блага?» Луиза: «Я хочу ему верить.» «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Высокая цена.» (1975-1982)</div>"]:::bad');
+    L.push('FM["<div style=\'width:160px;white-space:normal\'>Меню (1946)</div>"]:::sc');
     E('F0 --> Fc1["<div style=\'width:290px;white-space:normal\'>'+mk('Если Мораль ниже 1, жрец не лгал не записан и Логика ниже 2 (1941):',null,null)+'</div>"]:::hhk', c7); E('Fc1 --> F1', c7);
     E('F0 --> Fc2["<div style=\'width:290px;white-space:normal\'>'+mk('Если хотя бы одно из этих условий не выполнено:',null,null)+'</div>"]:::hhk', c7); E('Fc2 --> FM', c7);
-    E('FM --> Fm1["<div style=\'width:290px;white-space:normal\'>'+mk('«Церковь действительно не так чиста?»'+cond('если героиня решила, что жрец лгал (1946)'),null,null)+'</div>"]:::hhk', c7); E('Fm1 --> F2', c7);
-    E('FM --> Fm2["<div style=\'width:290px;white-space:normal\'>'+mk('«Может, ему это подкинули?»'+cond('если Логика ≥ 2 (1961)'),null,null)+'</div>"]:::hhk', c7); E('Fm2 --> F3', c7);
-    E('FM --> Fm3["<div style=\'width:290px;white-space:normal\'>'+mk('«Может быть, так было лучше?»'+cond('если Мораль ≥ 1 (1973)'),null,null)+'</div>"]:::hhk', c7); E('Fm3 --> F4', c7);
+    E('FM --> Fm1["<div style=\'width:290px;white-space:normal\'>'+mk('«Церковь действительно не так чиста?»'+cond('если героиня решила, что жрец лгал (1947)'),null,null)+'</div>"]:::hhk', c7); E('Fm1 --> F2', c7);
+    E('FM --> Fm2["<div style=\'width:290px;white-space:normal\'>'+mk('«Может, ему это подкинули?»'+cond('если Логика ≥ 2 (1962)'),null,null)+'</div>"]:::hhk', c7); E('Fm2 --> F3', c7);
+    E('FM --> Fm3["<div style=\'width:290px;white-space:normal\'>'+mk('«Может быть, так было лучше?»'+cond('если Мораль ≥ 1 (1974)'),null,null)+'</div>"]:::hhk', c7); E('Fm3 --> F4', c7);
     E('F1 --> END', c7);
     E('F2 --> END', c7);
     E('F3 --> END', c7);
@@ -204,9 +204,9 @@ function build(){
   } else {
     E('F --> END', c7);
   }
-  L.push(hub('G','Сон в доме<br/><small>airat_sleep, 1987-1991</small>','hhs',[]));
+  L.push(hub('G','Сон в доме<br/><small>airat_sleep, 1988-1992</small>','hhs',[]));
   if(EXP.has('G')){
-    L.push('G0["<div style=\'width:340px;white-space:normal\'>Луиза: «Сейчас глубокая ночь.» «Стоит поспать, да и отец должен быть дома.» (1988-1989)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 задание «Где жрец?» взято</span></div>"]:::sc');
+    L.push('G0["<div style=\'width:340px;white-space:normal\'>Луиза: «Сейчас глубокая ночь.» «Стоит поспать, да и отец должен быть дома.» (1989-1990)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 задание «Где жрец?» взято</span></div>"]:::sc');
     E('G --> G0', c6);
     E('G0 --> EXS', c6);
   } else {
@@ -253,7 +253,7 @@ render();
 <body>
 <header class="site"><div class="wrap">
 <h1>Айрат: дом Луизы</h1>
-<p>script_4_airat.rpy, 1616-1991: дверь, дом, бинты Фени, выбор об отце, осмотр, концовки демо.</p>
+<p>script_4_airat.rpy, 1616-1992: дверь, дом, бинты Фени, выбор об отце, осмотр, концовки демо.</p>
 <nav class="crumbs"><a href="index.html?v=70">← Все схемы</a> · <a href="airat3.html?v=62">Карралак</a> · <a href="airat5.html?v=62">Стража</a> · <a href="stats.html?v=34">Статы</a></nav>
 </div></header>
 <main>
@@ -268,15 +268,6 @@ render();
 <h2>Схема</h2>
 <p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
 <div class="widechart"><div id="fchart" class="mermaid"></div></div>
-</div>
-<div class="card">
-<h2>Ошибки и особенности кода</h2>
-<ul>
-<li><span style="color:#b91c1c;font-weight:700">Строка 1714</span>: проверялась метка «medicine_2», а при осмотре чёрной аптечки записывается «medicine2» (1910). Исправлено в ветке fix/bugs-viy-demo-oct20.</li>
-<li><span style="color:#b91c1c;font-weight:700">Строки 1941-1945</span>: после концовки «Без понятия» меню не имеет доступных пунктов. Добавлен перезапуск игры после 1944 (подтверждено Кейт).</li>
-<li>1630: <code>dev_bad</code> читается в двери, а задаётся только в airat_house_luiza (1677): до первого захода в дом значение берётся из прошлых переменных.</li>
-<li>1880-1890: после «Ага. Отличная идея.» флаг «Луиза рядом» (<code>dev.near</code>) не сбрасывается. Неясно, задумано ли это.</li>
-</ul>
 </div>
 
 </main>
