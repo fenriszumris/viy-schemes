@@ -61,7 +61,7 @@ function build(){
     E('IN --> H1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если рядом Луиза (18):',null,null)+'</div>"]:::hhn', c1); E('H1b --> LU', c1);
     E('IN --> H1c["<div style=\'width:290px;white-space:normal\'>'+mk('Если раньше вы ушли от двери (69):',null,null)+'</div>"]:::hhn', c1); E('H1c --> H2B', c1);
     E('IN --> H1d["<div style=\'width:290px;white-space:normal\'>'+mk('Если раньше вы решили вернуться (80):',null,null)+'</div>"]:::hhn', c1); E('H1d --> H5', c1);
-    E('IN --> H1e["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе:',null,null)+'</div>"]:::hhn', c1); E('H1e --> KN', c1);
+    E('IN --> H1e["<div style=\'width:290px;white-space:normal\'>'+mk('Если разрешения нет, Луизы нет рядом и от двери не уходили:',null,null)+'</div>"]:::hhn', c1); E('H1e --> KN', c1);
     E('LU --> LU1["<div style=\'width:290px;white-space:normal\'>'+mk('«Стоит спросить.»'+cond('при Безумии не ниже 1 уровня: «как пройти к библиотеке?» (−1 к настроению Луизы)'),null,[[C_DEV, 1]])+'</div>"]:::hhn', c1); E('LU1 --> LK', c1);
     E('LU --> LU2["<div style=\'width:290px;white-space:normal\'>'+mk('«Я хочу войти внутрь!»',null,null)+'</div>"]:::hhn', c1); E('LU2 --> LI', c1);
     E('LI --> IN', c1);
@@ -109,7 +109,7 @@ function build(){
     E('H3 --> R', c4);
     L.push('NM["<div style=\'width:240px;white-space:normal\'>Адриан: «Ваше имя?» (271)</div>"]:::sc');
     E('R --> R1["<div style=\'width:290px;white-space:normal\'>'+mk('Если Безумие не ниже 1 уровня («чей-то сон»):',null,[[C_ADR, 1]])+'</div>"]:::hho', c4); E('R1 --> NM', c4);
-    E('R --> R2["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе («я заблудилась»):',[[C_ADR, 1]],null)+'</div>"]:::hho', c4); E('R2 --> NM', c4);
+    E('R --> R2["<div style=\'width:290px;white-space:normal\'>'+mk('Если Безумие ниже 1 уровня («я заблудилась»):',[[C_ADR, 1]],null)+'</div>"]:::hho', c4); E('R2 --> NM', c4);
     L.push('C3["<div style=\'width:260px;white-space:normal\'>Адриан: «Это не имя...» (296)</div>"]:::sc');
     E('NM --> C1["<div style=\'width:290px;white-space:normal\'>'+mk('«Меня зовут [v].»'+cond('если имя героини «Вий»: сразу ветка про Вия'),null,null)+'</div>"]:::hho', c4); E('C1 --> H4', c4);
     E('NM --> C2["<div style=\'width:290px;white-space:normal\'>'+mk('«Я... Миранда.»'+cond('один раз (286)'),null,[[C_ADR, 1]])+'</div>"]:::hho', c4); E('C2 --> NM', c4);
@@ -145,7 +145,7 @@ function build(){
     L.push('M["<div style=\'width:260px;white-space:normal\'>Меню разговора с Адрианом (500)</div>"]:::sc');
     E('AR --> AR1["<div style=\'width:290px;white-space:normal\'>'+mk('Если Логика не ниже 1 уровня:',[[C_ADR, 1]],null)+'</div>"]:::hhk', c5); E('AR1 --> M', c5);
     E('AR --> AR2["<div style=\'width:290px;white-space:normal\'>'+mk('Если Безумие не ниже 1 уровня (и Логики нет):',null,[[C_ADR, 1]])+'</div>"]:::hhk', c5); E('AR2 --> M', c5);
-    E('AR --> AR3["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе:',null,null)+'</div>"]:::hhk', c5); E('AR3 --> M', c5);
+    E('AR --> AR3["<div style=\'width:290px;white-space:normal\'>'+mk('Если ни Логика, ни Безумие не достигли 1 уровня:',null,null)+'</div>"]:::hhk', c5); E('AR3 --> M', c5);
     L.push('M1p["<div style=\'width:280px;white-space:normal\'>Если Безумие не ниже 2 уровня: Адриан хмурится (531)</div>"]:::sc');
     E('M --> M1["<div style=\'width:290px;white-space:normal\'>'+mk('«Что такое Белая Стража?»'+cond('один раз (502)'),[[C_ADR, 1]],null)+'</div>"]:::hhk', c5); E('M1 --> M', c5);
     E('M --> M1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Безумие не ниже 2 уровня (Белая Стража):',null,[[C_ADR, 1]])+'</div>"]:::hhk', c5); E('M1b --> M', c5);
@@ -245,22 +245,22 @@ render();
 <header class="site"><div class="wrap">
 <h1>Дверь Адриана (Тёмная Гавань)</h1>
 <p>script3_tgavan_begin.rpy, 1-1107: лес у двери, разговор с Адрианом, правила города, имя, зелье, ветка про Вия</p>
-<nav class="crumbs"><a href="index.html?v=66">← Все схемы</a> · <a href="gavan.html?v=4">Тёмная Гавань</a> · <a href="stats.html?v=33">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=66">← Все схемы</a> · <a href="gavan.html?v=1">Тёмная Гавань</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
 <h2>Статы по сцене (мин/макс по всем вариантам, по коду)</h2>
 <table class="stats">
-<tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Типичный путь*</th></tr>
-<tr><td class="mad">Безумие</td><td>−2</td><td>+6</td><td>+0.35</td></tr>
-<tr><td class="logic">Логика</td><td>−1</td><td>+2</td><td>0.00</td></tr>
+<tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Типичный путь (суждение)*</th></tr>
+<tr><td class="mad">Безумие</td><td>−2</td><td>+6</td><td>−1</td></tr>
+<tr><td class="logic">Логика</td><td>−1</td><td>+2</td><td>+1</td></tr>
 <tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>0</td></tr>
-<tr><td class="mood">Настроение Лесса</td><td>−1</td><td>0</td><td>0 (−1 только за «Постучать», 113)</td></tr>
-<tr><td class="omood">Настроение Адриана (oh.mood)</td><td>−18</td><td>+13</td><td>−0.91</td></tr>
+<tr><td class="mood">Настроение Лесса</td><td>−1</td><td>0</td><td>0</td></tr>
+<tr><td class="omood">Настроение Адриана (oh.mood)</td><td>−18</td><td>+13</td><td>+3</td></tr>
 </table>
-<p class="muted">*Оценка: перебор всех путей по коду скриптом, выборы равновероятны. «Типичный путь» = базовый сценарий: безумие 0, логика 0, нет чёрного амулета, viy.zn_name = False, persistent.memory = False (4 599 путей). Мин/макс взяты по всем 24 сценариям (3 стартовых уровня × амулет × viy.zn_name × persistent.memory). Пути, возвращающиеся в уже пройденное состояние, не считаются (меню можно листать бесконечно).</p>
+<p class="muted">*Типичный путь: один путь из схемы, выбранный по самым вероятным выборам (суждение, не среднее). Путь: «Окликнуть.» → «Замереть.» → «Я послушаю!» → «Меня зовут (имя героини)» → «Что такое Белая Стража?» → «Я все узнала что хотела.» → «Я... Хочу войти.» → «Взять очень осторожно.». Настроение Лесса −1 в минимуме только за «Постучать» (строка 113), в типичном пути не выбирается. Мин и макс взяты по всем вариантам входа (уровни Безумия и Логики, чёрный амулет, имя Вий, память).</p>
 <p class="muted">«Настроение Адриана» (<code>oh.mood</code>) — новый стат этой сцены. Цвет <span class="omood">бирюзовый</span> выбран мной: у Кати его нет в палитре.</p>
-<p class="muted"><span style="color:#b91c1c;font-weight:700">Начальные значения безумия и логики зависят от пройденных сцен</span>: от них зависят уровни (get_level: безумие ≥ 3 = уровень 1, ≥ 6 = 2, ≥ 9 = 3; логика ≥ 2 = уровень 1, ≥ 4 = 2, ≥ 6 = 3), а от уровней — доступные пункты и тексты. <span style="color:#b91c1c;font-weight:700">Определения mad_l() и logic_l() определены в script.rpy:208-211 как lambda: sanity.get_level, т.е. mad_l() ≥ 1 равно Безумие ≥ 3, logic_l() ≥ 1 равно Логика ≥ 2 (проверено по коду).</span></p>
+<p class="muted"><span style="color:#b91c1c;font-weight:700">Начальные значения безумия и логики зависят от пройденных сцен</span>: от них зависят уровни (get_level: безумие ≥ 3 = уровень 1, ≥ 6 = 2, ≥ 9 = 3; логика ≥ 2 = уровень 1, ≥ 4 = 2, ≥ 6 = 3), а от уровней — доступные пункты и тексты. <span style="color:#b91c1c;font-weight:700">В условиях «Если...» уровень Безумия 1 начинается с 3 очков, уровень Логики 1 с 2 очков.</span></p>
 </div>
 <div class="card">
 <h2>Типичный путь (суждение, не измерение)</h2>
