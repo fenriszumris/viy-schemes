@@ -12,7 +12,7 @@
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, securityLevel:'loose', flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'17px'}});
 
-const HUBS=['H1','H2','H2A','H3','H4','H5','H6','H7','H8','H9','MEM'];
+const HUBS=['H1','H2','H2A','H3','H4','H5','H6','H7','H8','H9'];
 const EXP=new Set();
 // цвета веток = цвета хабов
 const c1='#0f766e', c2='#4f46e5', c2a='#b45309', c3='#0369a1', c4='#be123c', c5='#7c3aed', c6='#475569', c7='#92400e', c8='#b91c1c', c9='#166534', cm='#6d28d9', cG='#9aa3b2';
@@ -68,7 +68,6 @@ function build(){
   L.push('D1["BAD END<br/>«Тщетная борьба...»"]:::die');
   L.push('D1A["BAD END<br/>«Шутка...»"]:::die');
   L.push('D2["BAD END<br/>«Подкормка...»"]:::die');
-  L.push('D3["Смерть во сне<br/><small>(Идти до конца!)</small>"]:::die');
   L.push('E1["END?<br/>«Мирный сон...»"]:::fin');
   E('VH --> H1', cG);
   E('RUKA --> H2', cG);
@@ -208,37 +207,9 @@ function build(){
     E('H9 --> RB', c9);
     E('H9 --> SLC', c9);
   }
-  // --- СОН ---
-  L.push('subgraph DREAM["💤 СОН (c1_sleep → mather_memory → son)"]');
-  L.push('DS0["Начало игры: start_menu<br/><small>script_1_less_begin:175-190</small>"]:::ext');
-  E('DS0 --> DC["'+mk('«Может, лечь поспать?»<br/><small>start_menu :180, затем c1_sleep</small>',[[C_MAD,1]])+'"]:::hm', cm); E('DC --> DS1', cm);
-  L.push('DS1["<b style=\'font-size:20px\'>▶ НАЧАЛО СНА</b><br/>c1_sleep (script_1_less_begin:270-286): чёрный экран, «Это... Сон?»<br/>сцена mather_memory (script_memory:7-39): женщина с пепельной кожей и девочка, пощёчина"]:::dstart');
-  E('DS1 --> DS2', cm);
-  L.push('DS2["Пробуждение: «Странный был сон...»<br/><small>script_1_less_begin:296</small>"]:::hm');
-  E('DS2 --> DQ1["'+mk('«Что это вообще сейчас было?»<br/><small>→ метка son (script_memory:43)</small>')+'"]:::hm', cm); E('DQ1 --> MEM', cm);
-  E('DS2 --> DQ2["'+mk('«Пожать плечами и выбросить этот бред из головы.»')+'"]:::hm', cm); E('DQ2 --> DE0', cm);
-  L.push('DE0["<b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0<br/><small>script_1_less_begin:309</small>"]:::dend');
-  L.push(hub('MEM','Воспоминание<br/>сон → суд','hm',[[C_MAD,'−1…+2'],[C_LOG,'0…+1'],[C_BLD,'0…+1']]));
-  if(EXP.has('MEM')){
-    L.push('SUD["воспоминание о суде<br/>(суды, цепи, семейные драмы)"]:::hm');
-    L.push('HA["головная боль, кровь из носа"]:::hm');
-    L.push('DE1["<b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0<br/><small>script_memory:78</small>"]:::dend');
-    L.push('DE2["<b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0<br/><small>script_memory:194</small>"]:::dend');
-    E('MEM --> CM0["'+mk('«Не стоит больше вспоминать...»',[[C_LOG,1]])+'"]:::hm', cm); E('CM0 --> DE1', cm);
-    E('MEM --> CM3["'+mk('«Пытаться вспомнить дальше.»')+'"]:::hm', cm); E('CM3 --> SUD', cm);
-    E('SUD --> CM4["'+mk('«Что за чертовщина там вообще произошла?!»',[[C_BLD,1]],[[C_MAD,1]])+'"]:::hm', cm); E('CM4 --> HA', cm);
-    E('SUD --> CM5["'+mk('«Хм? Да бросьте, все в полном порядке!»',[[C_MAD,1],[C_BLD,1]])+'"]:::hm', cm); E('CM5 --> HA', cm);
-    E('HA --> CM1["'+mk('«Х-хватит...»',[[C_LOG,1]])+'"]:::hm', cm); E('CM1 --> DE2', cm);
-    E('HA --> CM2["'+mk('«Идти до конца!»',[[C_MAD,1]])+'"]:::hm', cm); E('CM2 --> D3', cm);
-  } else {
-    L.push('DE1["<b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0"]:::dend');
-    E('MEM --> DE1', cm);
-    E('MEM --> D3', cm);
-  }
-  L.push('end');
-  L.push('style DREAM fill:#fffbe6,stroke:#d97706,stroke-width:4px');
-  L.push('classDef dstart fill:#fde047,stroke:#a16207,stroke-width:4px,color:#1f2430');
-  L.push('classDef dend fill:#fef3c7,stroke:#a16207,stroke-width:3px,color:#1f2430');
+  // --- СОН: разобран на странице «Старт» ---
+  L.push('SONV["💤 СОН разобран на странице «Старт» (Хаб 2)<br/>вход: start_menu «Может, лечь поспать?»<br/>выход из сна → script_2_less_conv_0"]:::ext');
+  E('SONV --> RB', cG);
 
   L.push('classDef h1 fill:#e6f4f2,stroke:#0f766e,color:#16302c');
   L.push('classDef h2 fill:#ececfe,stroke:#4f46e5,color:#221f4d');
@@ -399,7 +370,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 </ul></div>
 <div class="hub"><h3>Воспоминания (mem) и повторный разговор (razg)</h3>
 <ul>
-<li>сон → воспоминание о суде → головная боль (<span class="blood">кровь +1</span>, script_memory.rpy:183; «Что за чертовщина...?!» безумие −1, «Да бросьте...» безумие +1): «Х-хватит...» <span class="logic">logic +1</span> → экран strel; «Идти до конца!» <span class="mad">mad +1</span> → смерть во сне (death_son).</li>
+<li>Сон (start_menu «Может, лечь поспать?» → c1_sleep → son → головная боль) разобран на странице «Старт», Хаб 2; выход из сна ведёт в script_2_less_conv_0.</li>
 <li>less_razg_menu (повторные разговоры): вопросы-ветки назад в Хабы 4/7/5; «Конец» перезапускает меню, выход автоматический, когда остаётся один пункт → экран strel.</li>
 </ul></div>
 </div>
