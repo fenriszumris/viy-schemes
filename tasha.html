@@ -64,7 +64,6 @@ function build(){
   L.push('EX5["'+mk('→ strel: Таша исчез<br/>отказ идти к Урзе (nazad:1538)')+'"]:::term');
   L.push('EX6["'+mk('→ strel после разлома (urza2:1114)<br/>return (1116) — если экран закрыть')+'"]:::term');
   L.push('EX7["'+mk('КОНЕЦ ДЕМОВЕРСИИ<br/>urza3 (ветка «blu», nazad:1117)')+'"]:::term');
-  L.push('EX8["'+mk('→ script3_nazad_tash_afterser<br/>→ Губерт (gubert:5)')+'"]:::term');
   L.push('EX9["'+mk('→ strel: разговоры окончены<br/>razg_menu = 0 (razg:22)')+'"]:::term');
   L.push('CR1["'+mk('CRASH: NameError ssanity<br/>nazad:1666 — всегда')+'"]:::die');
   L.push('CR2["'+mk('CRASH: метка urzali не найдена<br/>jump nazad:1043')+'"]:::die');
@@ -254,7 +253,7 @@ function build(){
     E('S2 --> S27["'+mk('«У меня есть причина...»'+cond('после «кто ты» (td4.d4)'))+'"]:::h8', c8);
     E('S27 --> RS["меню reason_ser (nazad:1727)"]:::h8', c8);
     E('S2 --> S28["'+mk('«Извини...» (nazad:1720)'+cond('после «кто ты» · если «причина» не выбрана (td6.d1)'),[[C_TM,3]])+'"]:::h8', c8); E('S28 --> S2', c8);
-    E('S2 --> S29["'+mk('«А давай ты снова... перестанешь быть таким?»')+'"]:::h8', c8); E('S29 --> EX8', c8);
+    E('S2 --> S29["'+mk('«А давай ты снова... перестанешь быть таким?»')+'"]:::h8', c8); E('S29 --> H7', c8);
     E('RS --> RS1["'+mk('«Я потеряла память.» (nazad:1756)',null,[[C_TM,1]])+'"]:::h8', c8); E('RS1 --> RS', c8);
     E('RS --> RS2["'+mk('«Я хотела поговорить нормально.» (nazad:1765-1766)',[[C_LOG,1]],[[C_TM,1]])+'"]:::h8', c8); E('RS2 --> RS', c8);
     E('RS --> RS3["'+mk('«Я... Я хотела лучше узнать тебя.» (nazad:1771)',[[C_TM,1]])+'"]:::h8', c8); E('RS3 --> RS', c8);
@@ -265,7 +264,6 @@ function build(){
   } else {
     E('H8 --> H7', c8);
     E('H8 --> CR1', c8);
-    E('H8 --> EX8', c8);
   }
   // --- RT: повторные разговоры (day_1_tash_razg.rpy) ---
   if(EXP.has('RT')){
@@ -348,7 +346,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <header class="site"><div class="wrap">
 <h1>Назад — встреча с Таширом (Ташей)</h1>
 <p>script3_nazad.rpy (nazad) · tash_game.rpy · day_1_tash_razg.rpy (razg) · вход стрелкой из сцены <a href="road.html?v=2" style="color:#b9a7ff">«Дорога»</a> или повторным разговором (razg_menu = «tash»)</p>
-<nav class="crumbs"><a href="index.html?v=22">← Все схемы</a> · <a href="road.html?v=2">Дорога</a> · <a href="strel.html?v=20">Экран переходов</a> · <a href="stats.html?v=23">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="road.html?v=2">Дорога</a> · <a href="strel.html?v=20">Экран переходов</a> · <a href="stats.html?v=32">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -361,7 +359,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <tr><td class="mood">Настроение Лесса</td><td>0</td><td>0</td><td>0</td></tr>
 <tr><td class="tmood">Настроение Таши</td><td>−25</td><td>+26</td><td>−1.2</td></tr>
 </table>
-<p class="muted">*Оценка: перебор всех путей по коду скриптом (~32,5 млрд путей с перестановками расспросов), выборы равновероятны. <b>В коде число партий и рематчей не ограничено</b> (приглашение +10, рематч +5, цикл отказов −10/−5/+5/+10/−3): реальные пределы Настроения Таши не ограничены. Для оценки выше число партий ограничено двумя. Стартовое значение Настроения Таши в доступном коде не найдено — считалось 0 (как у Лесса).</p>
+<p class="muted">*Оценка: перебор всех путей по коду скриптом (порядка 10^10 путей с перестановками расспросов), выборы равновероятны. <b>В коде число партий и рематчей не ограничено</b> (приглашение +10, рематч +5, цикл отказов −10/−5/+5/+10/−3): реальные пределы Настроения Таши не ограничены. Для оценки выше число партий ограничено двумя. Стартовое значение Настроения Таши в доступном коде не найдено — считалось 0 (как у Лесса).</p>
 <p class="muted"><span style="color:#b91c1c;font-weight:700">Два краша в сцене:</span> <span style="color:#b91c1c;font-weight:700">«Кто такой Урза?» (ser2_men, nazad:1666) всегда падает — ssanity вместо sanity (и голая переменная logic там же)</span> · <span style="color:#b91c1c;font-weight:700">jump на несуществующую метку script3_nazad_tash_urzali (nazad:1043), если перед рассказом об Урзе уже спрашивала «отведи меня к нему» (td3.d1 = 1)</span>.</p>
 </div>
 
@@ -441,7 +439,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <li>ser2_men (1587): «Так кто ты?» (1 раз, td4.d2 — общий гейт с «Что тебе от меня нужно?»: доступна только одна из двух); «Ты... Некромант?» (после «кто ты») <span class="tmood">Тм +1</span> только при <span class="mad">mad ≥ 3</span> (1614); «Что ты знаешь о Лессе?» (если Лесс знаком) <span class="tmood">Тм −1</span> (1655).</li>
 <li><span style="color:#b91c1c;font-weight:700">«Кто такой Урза?» (если Урза знаком): всегда краш — <code>ssanity</code> вместо <code>sanity</code> и голая переменная <code>logic</code> (1666).</span></li>
 <li>«Что тебе от меня нужно?» <span class="tmood">Тм −1</span> (1685); «Ты бы действительно помог мне?» <span class="tmood">Тм −1</span> (1697, td4.d3); «У меня есть причина...» (после «кто ты», td4.d4) → reason_ser; «Извини...» (после «кто ты», если «причина» не выбрана) <span class="tmood">Тм +3</span> (1720).</li>
-<li>«А давай ты снова... перестанешь быть таким?» → afterser → Губерт (gubert:5) — выход из сцены.</li>
+<li>«А давай ты снова... перестанешь быть таким?» → set_tash(«st») → afterser (gubert:5) → назад в меню конца (end, nazad:1370). Это не выход из сцены.</li>
 <li>reason_ser (1727): причины — «потеряла память» <span class="tmood">Тм −1</span> (1756); «поговорить нормально» <span class="logic">logic +1</span> (1765) <span class="tmood">Тм −1</span> (1766); «лучше узнать тебя» <span class="tmood">Тм +1</span> (1771); «узнать о мире» <span class="logic">logic +1</span> (1784) <span class="tmood">Тм −1</span> (1789); «просто попросила» <span class="mad">mad +1</span> (1796, reason) <span class="tmood">Тм −1</span> (1801). После ровно 1 причины доступно «Я... Прости.» <span class="tmood">Тм +3</span> (1815). После 2 причин — авто-проверка: <span class="tmood">Тм +3</span> если извинялась (t_pr), иначе <span class="tmood">Тм −1</span> (1731–1739).</li>
 </ul></div>
 <div class="hub"><h3>Повторные разговоры — tash_razg_menu / tash_urza_menu (day_1_tash_razg.rpy)</h3>
@@ -457,7 +455,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <li>Закомментировано: «Остановиться и нормально поговорить» с <span class="tmood">Тм +1</span> (nazad:429–431); «Летающих городов?» (nazad:1621–1638) — внутри та же опечатка <code>ssanity</code>.</li>
 </ul></div>
 </div>
-<p class="muted">Полный список найденных ошибок — на странице <a href="stats.html?v=23">«Статы»</a>.</p>
+<p class="muted">Полный список найденных ошибок — на странице <a href="stats.html?v=32">«Статы»</a>.</p>
 </div>
 </div>
 <div id="panel-short" style="position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:100%">
@@ -476,7 +474,7 @@ H7["<b>Хаб 7. Друзья и конец игры</b><br/><span style='color:
 H8["<b>Хаб 8. Серьёзный разговор</b> <span style='color:#D97706'>Тм −5…+3</span><br/>краш: ssanity · выход к Губерту"]:::scene
 RT["<b>Повторные разговоры</b> (razg_menu = «tash»)<br/>карты <span style='color:#D97706'>Тм +1</span> · Урза · хватит"]:::scene
 DEAD["<b>Мёртвый код</b>: nazadli · меню 948–987 · осмотры"]:::dead
-GUB["→ Губерт (gone / afterser)"]:::less
+GUB["→ Губерт (gone)"]:::less
 STR["→ strel (Таша рядом / исчез)"]:::less
 ENDC["strel · КОНЕЦ ДЕМОВЕРСИИ"]:::less
 VH --> H1
@@ -494,7 +492,6 @@ H7 --> H6
 RT --> H5
 H1 --> GUB
 H3 --> GUB
-H8 --> GUB
 H1 --> STR
 H7 --> STR
 H6 --> ENDC
@@ -516,7 +513,7 @@ classDef dead fill:#f1f3f5,stroke:#64748b,color:#333a45
 <tr><td>Дорога (перекрёсток)</td><td>0…+1</td><td>0…+1</td><td>0…+3</td><td>0</td><td>—</td></tr>
 <tr><td>Назад (Таша)</td><td>−3…+6</td><td>0…+4</td><td>0</td><td>0</td><td>−25…+26*</td></tr>
 </table>
-<p class="muted">Посчитано по коду 20.10.2026 перебором путей скриптом, смерти учтены. *При ограничении в 2 партии: в коде партии и рематчи не ограничены, реальные пределы Настроения Таши не ограничены. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=23">«Статы»</a>.</p>
+<p class="muted">Посчитано по коду 20.10.2026 перебором путей скриптом, смерти учтены. *При ограничении в 2 партии: в коде партии и рематчи не ограничены, реальные пределы Настроения Таши не ограничены. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=32">«Статы»</a>.</p>
 </div>
 
 </main>

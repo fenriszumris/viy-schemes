@@ -320,3 +320,315 @@ print('  max-logic path:')
 for p in paths_road:
     if p['d'][1] == max(q['d'][1] for q in paths_road):
         print('   ', p['term'], p['d'], ' | '.join(p['path'])); break
+
+
+# ============ TASHA SCENE (script3_nazad.rpy + tash_game.rpy + day_1_tash_razg.rpy) ============
+# Sources verified 20.10.2026: script3_nazad.rpy (2079 lines, full read), tash_game.rpy (1046), day_1_tash_razg.rpy (61)
+# idx3 = НАСТРОЕНИЕ ТАШИ (tash.mood) — в этой сцене less.mood не меняется, крови нет.
+# Гейты (одноразовые d-флаги кода):
+IDX.update({'td1':10,'td3':11,'td4':12,'td5':13,
+ 't22':14,'t23':15,'t24':16,'t25':17,'t26':18,'t27':19,
+ 't31':20,'t32':21,'t34':22,'t38':23,'t312':24,'t37':25,'t33':26,'t35':27,'t310':28,'t39':29,
+ 't42':30,'t43':31,'t44':32,'t45':33,'t46':34,
+ 't51':35,'t52':36,'t53':37,'t54':38,'t55':39,
+ 't61':40,'t62':41,'t64':42,'tpr':43,
+ 'vd5':44,'played':45,'games':46,'uzn':47,'rt':48,'znl':49,'blu':50,'vd3':51,
+ 't65':52,'note_u':53,'note_um':54,'t313':55})
+
+def mlev(m): return 0 if m<=2 else (1 if m<=5 else (2 if m<=8 else 3))   # script.rpy:153-161
+def llev(l): return 0 if l<=1 else (1 if l<=3 else (2 if l<=5 else 3))   # script.rpy:162-168
+def ratio05(mad,logic):
+    t = mad+logic
+    return (0.5 if t==0 else logic/t) > 0.5                               # script.rpy:134-139
+
+CAP_GAMES = 3  # рематчи и повторные партии в коде не ограничены; кап для оценки (на странице пометка)
+
+# Факты из кода:
+#  nazad:213 +2 (первое «Подойти»), 249 -1 (игнор), 266 +1, 275 -3 (наутёк, vd1.d5), 323 +1,
+#  402 +1, 413 -3, 420 +1, 462 +1 («Привет.»), 484 -1, 506+508 +1/Без+1 («Улыбнуться»), 513 -1,
+#  533 -5 (sad), 563 +5 (извиниться), 582 +10 («Ладно» карты), 603 -3 (gone), 618 +2,
+#  658 -1 («Нет.»), 732 +10, 744 -10, 954 +10, 968 -10, 1350 +5 (рематч),
+#  1383 Без+1 («не понимаю друзей», гейт Без>=3), 1454 Лог+1 reason, 1465 Без-1, 1485-1486 Без-1 Лог+1,
+#  1556 Без-1 («Настаиваю»), 1565 -5 (ser2), 1614 +1 (некромант при Без>=3), 1655 -1 (Лесс),
+#  1666 CRASH ssanity («Кто такой Урза?») — NameError всегда; 1685 -1, 1697 -1,
+#  1720 +3 («Извини...»), 1733 +3 / 1737 -1 (авто-проверка reason tpp==2),
+#  1756 -1, 1765 Лог+1/1766 -1, 1771 +1 (t_pr), 1784 Лог+1/1789 -1, 1796 Без+1/1801 -1, 1815 +3 («Прости»),
+#  1953 +1 (tash_tash_card, инвентарь), 2013 +1 (bonny), 2056 +1 (mant)
+#  1032 Лог+1 reason «спросить об Урзе» (urzamore); 1043 jump urzali — LABEL НЕ СУЩЕСТВУЕТ -> crash
+#  1098 Без+1 / 1104 Без-1 (urza2 разлом) -> return (конец); 1087 «blu» -> urza3 КОНЕЦ ДЕМОВЕРСИИ
+#  tash_game:89 Без-1 («А правила!?»), 101 Без+1 («Поехали!»), cards_stop:208 -3
+#  day_1_tash_razg:13 +1 («Как насчет карт?»)
+#  nazad:930: флаги tash_game / script3_tash_cards_per не назначаются ни в одном .rpy сцены —
+#  считались False => внутреннее меню (nazad:948-987) недостижимо (мёртвый код), «Хватит болтать!» -> end/2cards.
+
+def T_tasha(n, st):
+    mad, logic, tmood = st[0], st[1], st[3]
+    g = lambda name: st[IDX[name]]
+    ml, ll = mlev(mad), llev(logic)
+    if n == 'entry':
+        r = []
+        for znl in (1, 0):
+            for blu in (0, 1):
+                lbl = '(вход%s%s)' % ('' if znl else ', Лесс незнаком', ', «blu» дежавю' if blu else '')
+                r.append((lbl, 0,0,0,0,None,{'rt':0,'znl':znl,'blu':blu},'menu_main',None))
+        for znl in (1, 0):
+            for blu in (0, 1):
+                lbl = '(вход-разговор razg_menu=tash%s%s)' % ('' if znl else ', Лесс незнаком', ', «blu»' if blu else '')
+                r.append((lbl, 0,0,0,0,None,{'rt':1,'znl':znl,'blu':blu},'t_razg_menu',None))
+        return r
+    if n == 'menu_main':  # nazad:196
+        return [('«Игнорировать его.» (Тм-1)', 0,0,0,-1,None,{},'go_menu',None),
+                ('«Подойти познакомиться.» (Тм+2, 1-й раз)', 0,0,0,2,None,{},'hello_menu',None)]
+    if n == 'go_menu':  # nazad:264
+        return [('«Остановиться и поговорить.» (Тм+1)', 0,0,0,1,None,{},'stop_menu',None),
+                ('«Прибавить шагу.»', 0,0,0,0,None,{},'run_menu',None),
+                ('«Пуститься наутек.» (Тм-3, vd1.d5)', 0,0,0,-3,None,{'vd5':1},'gone',None)]
+    if n == 'run_menu':  # nazad:312
+        return [('«Постараться убежать от него.»', 0,0,0,0,None,{},'sad',None),
+                ('«У меня нет на тебя времени!» (Тм+1)', 0,0,0,1,None,{},'help_menu',None),
+                ('«Остановиться и выяснить, чего он пристал.»', 0,0,0,0,None,{},'razg_2menu',None)]
+    if n == 'help_menu':  # nazad:331
+        r = []
+        if not g('td3'):
+            r.append(('«Ты правда хочешь помочь?» (1 раз)', 0,0,0,0,None,{'td3':1},'help_menu',None))
+        r.append(('«Нет, спасибо, не надо.»', 0,0,0,0,None,{},'withyou',None))
+        r.append(('«Хорошо, я буду рада помощи.»', 0,0,0,0,None,{},None,'EXIT strel (Таша помогает: near+helpp)'))
+        r.append(('«Остановиться и нормально поговорить» (td4.d5)', 0,0,0,0,None,{'td5':1},
+                  'stop_menu' if not g('t46') else 'razg_2menu', None))
+        return r
+    if n == 'withyou':  # nazad:374
+        r = []
+        if not g('td4'):
+            r.append(('«Что?! Зачем?!» (1 раз)', 0,0,0,0,None,{'td4':1},'withyou',None))
+        r.append(('«Ни в коем случае!»', 0,0,0,0,None,{},'ny_menu',None))
+        r.append(('«Л-ладно, иди.» (Тм+1)', 0,0,0,1,None,{},None,'EXIT strel (Таша с тобой: near)'))
+        return r
+    if n == 'ny_menu':  # nazad:389
+        return [('«Я... Ты мне просто не нравишься.»', 0,0,0,0,None,{},'sad',None),
+                ('«Я не могу сказать. Но не надо.» (Тм+1)', 0,0,0,1,None,{},'gone',None),
+                ('«Просто нет.» (Тм-3)', 0,0,0,-3,None,{},'gone',None)]
+    if n == 'gone':  # nazad:602 Тм-3 -> 2gone -> gubert
+        return [('(Таша уходит, Тм-3) → Губерт', 0,0,0,-3,None,{},None,'EXIT script3_nazad_gubert')]
+    if n == 'stop_menu':  # nazad:448 (vd1.d3=1)
+        return [('«Чего тебе!?»', 0,0,0,0,None,{'vd3':1},'2cards',None),
+                ('«Привет.» (Тм+1)', 0,0,0,1,None,{'vd3':1},'stop2_menu',None)]
+    if n == 'stop2_menu':  # nazad:468
+        return [('«Я... Просто испугалась.» (Тм-1)', 0,0,0,-1,None,{},'scared_menu',None),
+                ('«Не знаю! Улыбнуться.» (Тм+1, Без+1)', 1,0,0,1,None,{},'hello_menu',None),
+                ('«Потому что я не хочу с тобой разговаривать!» (Тм-1)', 0,0,0,-1,None,{},'sad',None)]
+    if n == 'scared_menu':  # nazad:487
+        r = [('«Ты похож на Лесса...»' if g('znl') else '«Ты похож на того странного незнакомца...»', 0,0,0,0,None,{},'hello_menu',None)]
+        r.append(('«Ты мне не нравишься.»', 0,0,0,0,None,{},'sad',None))
+        return r
+    if n == 'sad':  # nazad:526 Тм-5
+        return [('(Таша расстроился, Тм-5) «Остановить его.»', 0,0,0,-5,None,{},'sorry_menu',None),
+                ('(Таша расстроился, Тм-5) «Дать уйти.»', 0,0,0,-5,None,{},'gone',None)]
+    if n == 'sorry_menu':  # nazad:559
+        return [('«Извиниться.» (Тм+5)', 0,0,0,5,None,{},'sorry2_menu',None),
+                ('«Нет, ничего.»', 0,0,0,0,None,{},'gone',None)]
+    if n == 'sorry2_menu':  # nazad:567
+        r = [('«Прости, но у меня нет времени.»', 0,0,0,0,None,{},'gone',None)]
+        if g('games') < CAP_GAMES:
+            r.append(('«Ладно.» (Тм+10, карты)', 0,0,0,10,None,{},'tash_game',None))
+        return r
+    if n == 'hello_menu':  # nazad:616
+        return [('«Я тоже очень рада!» (Тм+2)', 0,0,0,2,None,{},'2razg',None),
+                ('«...»', 0,0,0,0,None,{},'2razg',None)]
+    if n == '2razg':  # nazad:630
+        r = []
+        if not g('td1'):
+            r.append(('«У меня и своих полно...» (1 раз)', 0,0,0,0,None,{'td1':1},'2razg',None))
+        else:
+            r.append(('«Нет.» (Тм-1)', 0,0,0,-1,None,{},None,'EXIT script3_nazad_gubert (через 2gone)'))
+        r.append(('«Конечно помогу! Что хочешь?»', 0,0,0,0,None,{},'2cards',None))
+        r.append(('«Узнать подробности.»', 0,0,0,0,None,{},'2cards',None))
+        return r
+    if n == '2cards':  # nazad:729
+        r = []
+        if g('games') < CAP_GAMES:
+            r.append(('«Хорошо, давай сыграем.» (Тм+10)', 0,0,0,10,None,{},'tash_game',None))
+        r += [('«Нет!» (Тм-10)', 0,0,0,-10,None,{},'sad',None),
+             ('«П-подожди... Давай сначала поговорим!»', 0,0,0,0,None,{},'razg_2menu',None)]
+        if not g('td5'):
+            r.append(('«З...Зачем?» (1 раз)', 0,0,0,0,None,{'td5':1},'2cards',None))
+        return r
+    if n == 'razg_2menu':  # nazad:767
+        r = []
+        if not g('t22'):
+            r.append(('«Как тебя зовут?»', 0,0,0,0,None,{'t22':1},'razg_2',None))
+        if not g('t23') and g('t22'):
+            r.append(('«У меня уже были проблемы с памятью?»', 0,0,0,0,None,{'t23':1},'razg_2menu',None))
+        if g('t23') and not g('t26'):
+            r.append(('«Много что поменялось?» (urza.zn)', 0,0,0,0,None,{'t26':1,'uzn':1},
+                      'razg_2menu' if g('rt') else 'canurza', None))
+        if g('t23') and not g('t24'):
+            r.append(('«И что тогда со мной случилось в Лесу?»', 0,0,0,0,None,{'t24':1},'razg_2menu',None))
+        if not g('t25') and (g('t24') or g('t32')):
+            r.append(('«Ты так любишь карты?»', 0,0,0,0,None,{'t25':1},'razg_2menu',None))
+        if ll >= 1 and not g('t27'):
+            r.append(('«А тебя не смущает, что мы в этом лесу?» (Лог>=2)', 0,0,0,0,None,{'t27':1},'razg_2menu',None))
+        if g('rt'):
+            r.append(('«Назад» (в меню разговоров)', 0,0,0,0,None,{},'t_razg_menu',None))
+        else:
+            r.append(('«Хватит болтать!»', 0,0,0,0,None,{},'end' if g('played') else '2cards',None))
+        return r
+    if n == 'razg_2':  # nazad:1205
+        return [('«Я потеряла память.»', 0,0,0,0,None,{},'nomemory',None),
+                ('«Сделать морду кирпичом.»', 0,0,0,0,None,{},'razg_2menu',None),
+                ('«Да! Классная же традиция!» (Без+1)', 1,0,0,0,None,{},'razg_2menu',None)]
+    if n == 'nomemory':  # nazad:1241 (persistent.memory меняет пару опций, итоги те же)
+        nxt = 'razg_2menu' if g('rt') else 'withyou'
+        return [('«Я кое-что помню, но хотелось бы знать больше.» (memory)', 0,0,0,0,None,{},'2help',None),
+                ('«Мне не нравится то что я помню.» (memory)', 0,0,0,0,None,{},nxt,None),
+                ('«Я ничего не помню... Но хочу знать кто я...» (не memory)', 0,0,0,0,None,{},'2help',None),
+                ('«Я ничего не помню. Но может так и лучше.» (не memory)', 0,0,0,0,None,{},nxt,None)]
+    if n == '2help':  # nazad:1293 (urza.zn_name=True, заметки urza/urza_memory)
+        nxt = 'razg_2menu' if g('rt') else '2help_menu'
+        return [('(Урза может вернуть память)', 0,0,0,0,None,{'uzn':1,'note_u':1,'note_um':1},nxt,None)]
+    if n == '2help_menu':  # nazad:1315
+        r = []
+        if ll >= 1 and not g('t32'):
+            r.append(('«Расскажи о нем побольше.» (Лог>=2, без +Лог!)', 0,0,0,0,None,{'t32':1},'2help_menu',None))
+        r.append(('«Да, это отличная идея!»', 0,0,0,0,None,{},'urza',None))
+        r.append(('«Нет, я не думаю, что стоит.»', 0,0,0,0,None,{},'razg_2menu',None))
+        return r
+    if n == 'canurza':  # nazad:991
+        r = [('«Ты... Можешь отвести меня к этому Урзе?»', 0,0,0,0,None,{'t31':1},'urza_question',None)]
+        if not g('t32'):
+            r.append(('«Расскажешь о нем побольше?»', 0,0,0,0,None,{},'urzamore',None))
+        r.append(('«Я бы хотела спросить о другом.»', 0,0,0,0,None,{'t34':1},'razg_2menu',None))
+        return r
+    if n == 'urza_question':  # nazad:1012
+        r = [('«Да, давай сейчас!»', 0,0,0,0,None,{},'urza',None),
+             ('«Нет, не сейчас»', 0,0,0,0,None,{},'razg_2menu',None),
+             ('«Может, сначала еще поговорим?»', 0,0,0,0,None,{'t31':1},'razg_2menu',None)]
+        if ll >= 1 and not g('t32'):
+            r.append(('«Сначала расскажи о нем побольше...» (Лог>=2)', 0,0,0,0,None,{},'urzamore',None))
+        return r
+    if n == 'urzamore':  # nazad:1030 Лог+1 reason; при td3.d1 -> urzali (МЕТКА НЕ НАЙДЕНА)
+        nxt = None
+        term = None
+        if g('t31'):
+            term = 'CRASH: label script3_nazad_tash_urzali не найден (nazad:1043)'
+        return [('(рассказ об Урзе, Лог+1)', 0,1,0,0,'спросить об Урзе',{'t32':1},nxt or 'canurza',term)]
+    if n == 'urza':  # nazad:1045 (near+helpp)
+        return [('(идём к разлому)', 0,0,0,0,None,{},'urza3' if g('blu') else 'urza2',None)]
+    if n == 'urza2':  # nazad:1091
+        return [('«Прекрасно!» (Без+1)', 1,0,0,0,'Проход в какую-то дичь - это прекрасно!',{},None,'EXIT return после разлома (urza2:1115)'),
+                ('«Сомнительно.» (Без-1)', -1,0,0,0,'Проход в какую-то дичь - это сомнительно!',{},None,'EXIT return после разлома (urza2:1115)')]
+    if n == 'urza3':  # nazad:1116
+        return [('(заколоченный тупик)', 0,0,0,0,None,{},None,'КОНЕЦ ДЕМОВЕРСИИ (urza3, «blu» в avt_d)')]
+    if n == 'tash_game':  # tash_game:86
+        return [('«А правила!?» (Без-1)', -1,0,0,0,None,{},'game_mid',None),
+                ('«Поехали!» (Без+1)', 1,0,0,0,None,{},'game_mid',None)]
+    if n == 'game_mid':  # партия: можно бросить (cards_stop Тм-3) или доиграть
+        ng = g('games') + 1
+        if g('rt'):
+            return [('(партия #%d, бросить, Тм-3)' % ng, 0,0,0,-3,None,{'games':ng},'t_razg_menu',None),
+                    ('(партия #%d, доиграть)' % ng, 0,0,0,0,None,{'games':ng},'t_razg_menu',None)]
+        return [('(партия #%d, бросить, Тм-3)' % ng, 0,0,0,-3,None,{'games':ng},'razg_2menu',None),
+                ('(партия #%d, доиграть)' % ng, 0,0,0,0,None,{'games':ng,'played':1},'igra_over',None)]
+    if n == 'igra_over':  # nazad:1339 (заметка game)
+        r = [('«Эм, хватит.»', 0,0,0,0,None,{},'end',None)]
+        if g('games') < CAP_GAMES:
+            r.append(('«Да! Почему нет?» (Тм+5, рематч)', 0,0,0,5,None,{},'tash_game',None))
+        r.append(('«Может поговорим?»', 0,0,0,0,None,{},'razg_2menu',None))
+        return r
+    if n == 'end':  # nazad:1370
+        r = []
+        if not g('t38'):
+            r.append(('«У тебя есть друзья?»', 0,0,0,0,None,{'t38':1},'end',None))
+        if ml >= 1 and not g('t312') and g('t38'):
+            r.append(('«Я... Не понимаю что такое друзья.» (Без>=3, Без+1)', 1,0,0,0,None,{'t312':1},'end',None))
+        if g('t38') and not g('t37'):
+            r.append(('«Врагов?»', 0,0,0,0,None,{'t37':1},'end',None))
+        if ll >= 1 and not g('t33'):
+            r.append(('«Думаешь, кто-то бы пришел в такое место поиграть?» (Лог>=2)', 0,0,0,0,None,{'t33':1},'end',None))
+        if g('t33') and not g('t35'):
+            r.append(('«Ты... правда не боишься?» (Лог+1, Без-1)', -1,1,0,0,'Ты... правда не боишься?',{'t35':1},'end',None))
+        if not g('t310'):
+            r.append(('«А почему твои друзья не могут прийти?»', 0,0,0,0,None,{'t310':1},'end',None))
+        if not g('t39') and ratio05(mad, logic):
+            r.append(('«Ты что, никогда не бываешь серьезным?» (Без-1, Лог+1, ratio>0.5)', -1,1,0,0,None,{'t39':1},'ser',None))
+        r.append(('«Промолчать.»', 0,0,0,0,None,{},'end_out',None))
+        return r
+    if n == 'end_out':  # nazad:1490 (после меню)
+        return [('(«Эх... Спасибо что сыграла!»)', 0,0,0,0,None,{},'2urza' if ll >= 1 else 'withyou',None)]
+    if n == '2urza':  # nazad:1523
+        return [('«Хорошая идея.»', 0,0,0,0,None,{},'urza',None),
+                ('«Нет, не стоит...»', 0,0,0,0,None,{},None,'EXIT strel (Таша исчез после отказа от Урзы)')]
+    if n == 'ser':  # nazad:1544
+        return [('«Настаиваю.» (Без-1, затем Тм-5)', -1,0,0,-5,None,{},'ser2_men',None),
+                ('«Нет-нет!»', 0,0,0,0,None,{},'end',None)]
+    if n == 'ser2_men':  # nazad:1587
+        r = []
+        if not g('t42'):
+            r.append(('«Так кто ты?»', 0,0,0,0,None,{'t42':1},'ser2_men',None))
+        if g('t42') and not g('t62'):
+            r.append(('«Ты... Некромант?» (Тм+1 при Без>=3)', 0,0,0,1 if ml >= 1 else 0,None,{'t62':1},'ser2_men',None))
+        if not g('t64') and g('znl'):
+            r.append(('«Что ты знаешь о Лессе?» (Тм-1)', 0,0,0,-1,None,{'t64':1},'ser2_men',None))
+        if not g('t65') and g('uzn'):
+            r.append(('«Кто такой Урза?» (nazad:1666 ssanity)', 0,0,0,0,None,{},None,'CRASH NameError ssanity (nazad:1666)'))
+        if not g('t42'):
+            pass  # «Что тебе от меня нужно?» делит гейт t42 с «Так кто ты?» — одна из двух
+        r2 = []
+        if not g('t42'):
+            r2.append(('«Что тебе от меня нужно?» (Тм-1)', 0,0,0,-1,None,{'t42':1},'ser2_men',None))
+        if not g('t43'):
+            r2.append(('«Ты бы действительно помог мне?» (Тм-1)', 0,0,0,-1,None,{'t43':1},'ser2_men',None))
+        if not g('t44') and g('t42'):
+            r2.append(('«У меня есть причина...»', 0,0,0,0,None,{'t44':1,'t61':1},'reason_ser',None))
+        if not g('t61') and g('t42'):
+            r2.append(('«Извини...» (Тм+3, t_pr)', 0,0,0,3,None,{'t61':1,'tpr':1},'ser2_men',None))
+        r2.append(('«А давай ты снова... перестанешь быть таким?» (afterser, gubert:5)', 0,0,0,0,None,{},'end',None))  # afterser: set_tash st, jump script3_nazad_tash_end — НЕ выход
+        return r[:2] + r[2:] + r2 if False else r + r2
+    if n == 'reason_ser':  # nazad:1727
+        tpp = g('t51') + g('t52') + g('t53') + g('t54') + g('t55')
+        if tpp == 2 and g('tpr'):
+            return [('(2 причины + извинение: Тм+3)', 0,0,0,3,None,{},'ser2_men',None)]
+        if tpp == 2 and not g('tpr'):
+            return [('(2 причины без извинения: Тм-1)', 0,0,0,-1,None,{},'ser2_men',None)]
+        r = []
+        if not g('t51'):
+            r.append(('«Я потеряла память.» (Тм-1)', 0,0,0,-1,None,{'t51':1},'reason_ser',None))
+        if not g('t52'):
+            r.append(('«Я хотела поговорить нормально.» (Лог+1, Тм-1)', 0,1,0,-1,None,{'t52':1},'reason_ser',None))
+        if not g('t53'):
+            r.append(('«Я... Я хотела лучше узнать тебя.» (Тм+1, t_pr)', 0,0,0,1,None,{'t53':1,'tpr':1},'reason_ser',None))
+        if not g('t54'):
+            r.append(('«Я хотела узнать о мире...» (Лог+1, Тм-1)', 0,1,0,-1,None,{'t54':1},'reason_ser',None))
+        if not g('t55'):
+            r.append(('«Я просто попросила. Мне было интересно.» (Без+1, Тм-1)', 1,0,0,-1,'Просто спросила!',{'t55':1},'reason_ser',None))
+        if tpp == 1:
+            r.append(('«Я... Прости.» (Тм+3, t_pr)', 0,0,0,3,None,{'tpr':1},'ser2_men',None))
+        return r
+    if n == 't_razg_menu':  # day_1_tash_razg:1 (razg_menu="tash")
+        r = []
+        if g('note_u'):
+            r.append(('«По поводу этого Урзы...»', 0,0,0,0,None,{},'t_urza_menu',None))
+        if g('games') < CAP_GAMES:
+            r.append(('«Как насчет карт?» (Тм+1)', 0,0,0,1,None,{},'tash_game',None))
+        r.append(('«Просто поболтать»', 0,0,0,0,None,{},'razg_2menu',None))
+        r.append(('«На сегодня хватит разговоров!»', 0,0,0,0,None,{},None,'EXIT strel (разговоры окончены)'))
+        return r
+    if n == 't_urza_menu':  # day_1_tash_razg:26
+        r = []
+        if g('note_um') and not g('t313'):
+            r.append(('«Он может вернуть мне память?» (1 раз)', 0,0,0,0,None,{'t313':1},'t_urza_menu',None))
+        if not g('t32'):
+            r.append(('«Расскажи о нем побольше.» (без +Лог!)', 0,0,0,0,None,{'t32':1},'t_urza_menu',None))
+        r.append(('«Ты можешь отвести меня к нему?» (у перекрёстка)', 0,0,0,0,None,{},'urza',None))
+        r.append(('«Ты можешь отвести меня к нему?» (не у перекрёстка — позже)', 0,0,0,0,None,{},'t_urza_menu',None))
+        return r
+    return []
+
+INIT_T = tuple([0]*9 + [frozenset()] + [0]*46)
+paths_tasha = enumerate_paths('entry', INIT_T, T_tasha, maxdepth=90)
+summarize('TASHA SCENE (idx3 = Настроение Таши)', paths_tasha)
+for nm, i, fn in [('min tmood',3,min), ('max tmood',3,max), ('max logic',1,max), ('min mad',0,min), ('max mad',0,max)]:
+    best = fn(q['d'][i] for q in paths_tasha)
+    for p in paths_tasha:
+        if p['d'][i] == best:
+            print('  %s (%+d):' % (nm, best), p['term'], p['d'])
+            print('     ', ' | '.join(p['path'])); break

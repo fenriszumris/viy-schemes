@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<title>Айрат: дом Луизы и концовки — Схемы игры «Вий»</title>
+<link rel="stylesheet" href="style7.css?v=22">
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
+</script>
+<style>.warn{color:#b91c1c;font-weight:700}</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>Айрат: дом Луизы, записка, концовки демо — script_4_airat.rpy</h1>
+<p>Строки 1616-1991: дверь дома, перевязка Фени, выбор об отце, 4 концовки демоверсии</p>
+<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="airat3.html?v=2">Карралак и лазарет</a> · <a href="stats.html?v=32">Статы</a></nav>
+</div></header>
+<main>
+<div class="card">
+<h2>Статы (дом Луизы и концовки: script_4_airat.rpy 1616-1991)</h2>
+<table class="stats">
+<tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Комментарий</th></tr>
+<tr><td class="mad">Безумие</td><td>0</td><td>+1</td><td>«Мне плевать.» (1865)</td></tr>
+<tr><td class="logic">Логика</td><td>0</td><td>+1</td><td>«Не хочу тебя расстраивать, но он мог лгать.» (1844)</td></tr>
+<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>не меняется</td></tr>
+<tr><td style="color:#16a34a">Настроение Луизы</td><td>−3</td><td>+1</td><td>«Да ты издеваешься!» −1 (1774, один раз); «Не думаю, что он мог лгать...» +1 (1860); «Мне плевать.» −2 (1868)</td></tr>
+<tr><td>Мораль</td><td>−1</td><td>+2</td><td>перевязка Фени +1 (1803); «Не думаю, что он мог лгать» +1 (1858); «Мне плевать.» −1 (1866)</td></tr>
+<tr><td style="color:#be123c">Настроение Фени</td><td>0</td><td>+1</td><td>перевязка +1 (1802)</td></tr>
+</table>
+<p class="muted">4 концовки демо (centered «КОНЕЦ ДЕМОВЕРСИИ»): airat__dont, airat__notclean, airat__pods, airat__notclean2. Допущение: стартовая Мораль = 0 (в доступных файлах не найдено); значения Морали по всему Айрату суммируются с страницами airat3/airat2.</p>
+</div>
+<div class="card">
+<h2>Схема</h2>
+<div class="widechart"><div class="mermaid">
+flowchart TD
+ST["<b>strel: левая сторона главной улицы</b>"]:::out
+DD{"<b>dev_door_label</b> (1616): дверь дома Луизы<br/>меню: «Войти» (если Луиза рядом) / «Постучаться» (если нет) / «Конец»"}:::hub
+DK["«Постучаться»: <span style='color:#b91c1c;font-weight:700'>dev.lock == дом Луизы</span><br/><span style='color:#b91c1c;font-weight:700'>dev_bad (to_airat_bad / after_airat_bad)</span>: «Уходите! Я занята!»; <span style='color:#b91c1c;font-weight:700'>если Феня ранена и рядом</span>: Луиза пускает только Феню, rana = 1 → strel<br/>иначе → дом<br/>если Луизы в доме нет: «Тишина. И пустота.»"]:::scene
+H["<b>airat_house_luiza</b> (1674): дом Луизы<br/>первый раз «home_luiza»; ночью — «поспи на скамейке», change_day(day, 5), dev.near = 1"]:::scene
+F0["<span style='color:#b91c1c;font-weight:700'>Феня ранена и рядом (fenya_rana)</span>: Луиза просит найти аптечку"]:::scene
+F1["<span style='color:#b91c1c;font-weight:700'>«medicine» в заметках quest_find_doc</span> → <b>airat_house_fenya_bint</b> (1787)<br/>Луиза перевязывает Феню, rana = 1<br/><span style='background:rgb(255,228,230);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▲+1</span><br/>если Луиза ищет жреца → luiza_next, иначе Феня «пойдёмте» → strel"]:::scene
+F2["иначе → strel (осмотр аптечки)"]:::out
+Q{"<span style='color:#b91c1c;font-weight:700'>quest_find_priest.keep</span>: выбор продолжения"}:::hub
+Q1["«dev_priest_home2»: «Надо пойти в Церковь» → strel"]:::out
+Q2["повторно, «dev_church» ещё нет: cycle.d1 += 1<br/>на 4-й раз «Да ты издеваешься!» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> (один раз, ==4)"]:::scene
+Q3["<span style='color:#b91c1c;font-weight:700'>«dev_church» есть и «node» (записка) есть, «node2» нет</span> → <b>airat_end_dev</b> (1933)"]:::bad
+LN{"<span style='color:#b91c1c;font-weight:700'>«dev_church» есть, «dev_priest_home4» нет</span> → <b>airat_house_luiza_next</b> (1819)"}:::hub
+L1["«Не хочу тебя расстраивать, но он мог лгать.» <span style='color:#b91c1c;font-weight:700'>(если «miranda_dev» в airat_sp и т. п.)</span><br/><span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> заметка priest_lie"]:::scene
+L2["«Не думаю, что он мог лгать...»<br/><span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▲+1</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> заметка not_priest_lie"]:::scene
+L3["«Мне плевать.» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▼−1</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span><br/>«Пожалуй, я остаюсь.» / «Ага. Отличная идея.»"]:::scene
+L3b["«Ага. Отличная идея.»: quest_find_priest, find_doc, know_priest → false; dev.bad = 1 → strel (Луиза ушла)"]:::bad
+L4["«Помоги осмотреть дом» → strel (осмотр дома: airat_house_priest_menu)"]:::out
+PM{"<b>airat_house_priest_menu</b> (1900): лупа в доме<br/>«Осмотреть записку» (node: зашифрованная записка с гербом Церкви) / «Осмотреть медицинские вещи» (medicine) / «Осмотреть странную аптечку» (medicine2) / «Закончить осмотр»"}:::hub
+E0["<b>КОНЕЦ ДЕМОВЕРСИИ «Без понятия что тут творится»</b><br/><span style='color:#b91c1c;font-weight:700'>мораль &lt; 1 и нет priest_lie и Логика (get_level) &lt; 2</span><br/>airat__dont; затем меню без доступных пунктов и общий <code>renpy.full_restart()</code> (1983)"]:::bad
+E1["<b>КОНЕЦ «Что-то творится в светлом королевстве»</b><br/>«Церковь действительно не так чиста?» <span style='color:#b91c1c;font-weight:700'>(priest_lie)</span> airat__notclean"]:::bad
+E2["<b>КОНЕЦ «Подстава»</b><br/>«Может, ему это подкинули?» <span style='color:#b91c1c;font-weight:700'>(Логика get_level ≥ 2)</span> airat__pods"]:::bad
+E3["<b>КОНЕЦ «Высокая цена»</b><br/>«Может быть, так было лучше?» <span style='color:#b91c1c;font-weight:700'>(мораль ≥ 1)</span> airat__notclean2<br/>после — <code>renpy.full_restart()</code> (1983)"]:::bad
+SL["<b>airat_sleep</b> (1987): «Сейчас глубокая ночь... стоит поспать»<br/>quest_find_priest.keep = 1 → strel"]:::out
+ST --> DD
+DD --> DK
+DD -- "«Войти»" --> H
+DK --> H
+H --> F0
+F0 --> F1
+F0 -- "пока не осмотрела" --> F2
+H --> Q
+Q -- "церковь ещё не открывали" --> Q1
+Q --> Q2
+Q --> Q3
+Q --> LN
+F1 --> LN
+LN --> L1
+LN --> L2
+LN --> L3
+L3 --> L3b
+L1 --> L4
+L2 --> L4
+L3 -- "«Пожалуй, я остаюсь.»" --> L4
+L4 --> PM
+PM -- "записка найдена, вернуться к Луизе" --> Q3
+Q3 --> E0
+Q3 --> E1
+Q3 --> E2
+Q3 --> E3
+H -- "ночью, при входе с Луизой из ворот (in_wall 120)" --> SL
+classDef scene fill:#E4EEF9,stroke:#7a9cc6
+classDef hub fill:#fff3bf,stroke:#d4a017
+classDef bad fill:#ffd6d6,stroke:#b91c1c
+classDef out fill:#d8f5e0,stroke:#2f9e44
+</div></div>
+</div>
+<div class="card">
+<h2>Ошибки и особенности кода</h2>
+<ul>
+<li>Проверка <code>"medicine_2" in quest_find_doc._note</code> (1714) не совпадает с записью <code>"medicine2"</code> (1910): осмотр «странной аптечки» не засчитывается: для перевязки нужен именно пункт «Осмотреть медицинские вещи» (1714).</li>
+<li>Все концовки заканчиваются общим <code>renpy.full_restart()</code> (1983) после меню. В концовке «Без понятия что тут творится» меню не имеет доступных пунктов (результат в Ren'Py не проверен), затем тот же перезапуск. Метка <code>airat_sleep</code> по провалу не достигается.</li>
+<li>Мёртвый вход <code>dev_door_osm2</code> (1664): флаги dev.lock, реплики; вызовы не найдены в доступных файлах.</li>
+</ul>
+</div>
+</main>
+<footer>Схемы игры «Вий» · Айрат: дом Луизы и концовки · выверено по коду 20.10.2026</footer>
+</body>
+</html>

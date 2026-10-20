@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<title>Айрат: стража и статуя — Схемы игры «Вий»</title>
+<link rel="stylesheet" href="style7.css?v=22">
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
+</script>
+<style>.warn{color:#b91c1c;font-weight:700}</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>Айрат: стража, кошка Мурисса, статуя — script_5_airat.rpy</h1>
+<p>Строки 1-871: Горран и Алекс, пропуск, каменная кошка, четыре концовки «END?»</p>
+<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="airat4.html?v=2">Дом Луизы и концовки</a> · <a href="stats.html?v=32">Статы</a></nav>
+</div></header>
+<main>
+<div class="card">
+<h2>Статы (стража, кошка, статуя: script_5_airat.rpy)</h2>
+<table class="stats">
+<tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Комментарий</th></tr>
+<tr><td class="mad">Безумие</td><td>−2</td><td>+5</td><td>мин: «Что за идиотизм?» −1 и «Слышу.» −1 (или «Тут что-то не так» −1); макс: «Опереться на стену» +1, «Кошки - страшные создания!» +1, «Неа!» +1, «Лизнуть» +1, «Вырываться.» +1 (завершающий выбор). Пункты с гейтом уровня зависят от стартовых значений</td></tr>
+<tr><td class="logic">Логика</td><td>−4</td><td>+4</td><td>макс: «Прервать их» +1, «Тут что-то не так» +1, «А точнее?» +1, «Сделать вид, что поверила» +1; мин: «Кошки - страшные создания!» −1, «Неа!» −1, «Вы очень важная кошка!» −1, «сломанная статуя» −1. Причины разные, add_logic не склеивает</td></tr>
+<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>не меняется</td></tr>
+</table>
+<p class="muted">Экстремумы посчитаны суммой независимых выборов с учётом гейтов; не полным перебором (в отличие от dev.html). add_mad не склеивает одинаковые причины (проверено в script.rpy), add_logic склеивает; здесь все причины разные. mad_l()/logic_l() — lambda get_level (script.rpy:208-211).</p>
+</div>
+<div class="card">
+<h2>Схема</h2>
+<div class="widechart"><div class="mermaid">
+flowchart TD
+ST["<b>strel: правый коридор церкви, стража у статуи</b><br/>вход в script_5_airat_guard (2); «meet» сбрасывает стрелку airat_church_corridor._arrows._right._next_label"]:::out
+G0["<b>script_5_airat_guard</b> (2): первая встреча «meet» в quest_statue<br/>Алекс (g2) и Горран (g1) ругаются про страх и чай"]:::scene
+G1{"меню (50) при первой встрече"}:::hub
+G1a["«Прервать их» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (причина «Прервать стражников сразу.»)"]:::scene
+G1b["«Это весело!» → второе меню (71)"]:::scene
+G1c["«Хватит!» без статов"]:::scene
+G1d["«Опереться на стену и смотреть» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (причина «Не прервать стражников дважды.»)"]:::scene
+GH{"<b>Хаб разговора со стражей</b> (135)"}:::hub
+GA["«А что здесь, собственно происходит?» (once «what») → quest_statue.diary"]:::scene
+GB["<span style='color:#b91c1c;font-weight:700'>«А можно посмотреть?» (после «what»)</span> (once «watch»)"]:::scene
+GC["<span style='color:#b91c1c;font-weight:700'>«В учебнике про Вий?» (после «drou»)</span> (once)"]:::scene
+GD["«Разве что чаю!» (once «tea»): tea активен; «Дроу?» / «Не уточнять»"]:::scene
+GE["<span style='color:#b91c1c;font-weight:700'>«Я ищу кое-кого. Элеона Ара.» (quest_find_priest.keep, нет guards1)</span><br/><span style='color:#b91c1c;font-weight:700'>Логика ≥ 1</span>: «Попытаться соврать что-то убедительное.» (guards2, снова хаб) / «Его ищет его дочь.»"]:::scene
+GX["«Думаю, ничего.» → strel"]:::out
+P["<b>guard1_propusk</b> (398): «Держите пропуск!»<br/>Алекс/Горран забирают пропуск, inv propusk note = enter → strel<br/>(guard2_propusk / vosp_propusk — пустые метки, 386-397)"]:::out
+CI["<b>cat_inspect</b> (432): осмотр статуи кошки<br/>без пропуска: diary 2, → strel<br/>если уже «Бросить дело» (5.1) или «Убежать» (5.2): реплика и → strel<br/>иначе my_location = airat_cat"]:::scene
+CT{"<b>cat_talk</b> (454): статуя кошки (razg = cat)<br/>меню (460)"}:::hub
+CT1["«Что за идиотизм? Это глупо.» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><br/>«Бросить это дело»: quest_statue.false, quest_karralak.false → strel / «Продолжить»"]:::scene
+CT2["«Кошки - страшные создания!» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><br/>«Убежать.»: те же квесты false → strel / «Продолжить.»"]:::scene
+CT3["«Тут что-то не так.» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
+CH["«Привет?»; <span style='color:#b91c1c;font-weight:700'>Безумие ≥ 1: «Мяу!»</span>; <span style='color:#b91c1c;font-weight:700'>Логика ≥ 1: «не каменные же!»</span><br/>меню (555): «Неа!» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> / «Слышу.» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
+S2{"<b>script_5_airat_statue_2</b> (582): разговор с кошкой Муриссой Белой"}:::hub
+S2a["«Кто ты?» (catd.d2, один раз)"]:::scene
+S2b["«И чем именно ты занималась?» (после d2, d3)<br/>«А точнее?» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> / «Вы очень важная кошка!» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
+S2d["«Лизнуть ее в нос.» (catd.d1, один раз) <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"]:::scene
+S2c{"«Почему пугаешь паладинов?» (без гейта, можно повторять)<br/>Карралак (Жрец?) говорит, kar.zn_name = 1<br/>меню"}:::hub
+E1["<span style='color:#b91c1c;font-weight:700'>«Вырываться.» (Безумие ≥ 1)</span> <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/><b>END? Забывчивость</b> (church__memory) → renpy.full_restart()"]:::bad
+E2["<span style='color:#b91c1c;font-weight:700'>«Сделать вид, что поверила.» (Логика ≥ 1)</span> <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/><b>END? Что-то здесь не так.</b> (church__lie2) → renpy.full_restart()"]:::bad
+E3["«Вы ведь врете.»<br/><b>END? Лжецы.</b> (church__lie) → renpy.full_restart()"]:::bad
+E4["«Это действительно похоже на сломанную статую.» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><br/>quest_statue.done = 1<br/><b>END? Доверие.</b> (church__trust) → renpy.full_restart()"]:::bad
+ST --> G0
+G0 --> G1
+G1 --> G1a
+G1 --> G1b
+G1b --> G1c
+G1b --> G1d
+G1a --> GH
+G1c --> GH
+G1d --> GH
+GH --> GA
+GA --> GH
+GH --> GB
+GB --> GH
+GH --> GC
+GC --> GH
+GH --> GD
+GD --> GH
+GH --> GE
+GE --> GH
+GH --> GX
+ST -- "с пропуском от Лени/Карралака" --> P
+ST --> CI
+CI --> CT
+CT --> CT1
+CT --> CT2
+CT --> CT3
+CT1 -- "«Продолжить» / дальше" --> CH
+CT2 -- "«Продолжить» / дальше" --> CH
+CT3 -- "«Продолжить» / дальше" --> CH
+CH --> S2
+S2 --> S2a
+S2a --> S2
+S2 --> S2b
+S2b --> S2
+S2 --> S2d
+S2d --> S2
+S2 --> S2c
+S2c --> E1
+S2c --> E2
+S2c --> E3
+S2c --> E4
+classDef scene fill:#E4EEF9,stroke:#7a9cc6
+classDef hub fill:#fff3bf,stroke:#d4a017
+classDef bad fill:#ffd6d6,stroke:#b91c1c
+classDef out fill:#d8f5e0,stroke:#2f9e44
+</div></div>
+</div>
+<div class="card">
+<h2>Ошибки и особенности кода</h2>
+<ul>
+<li>Меню статуи (statue_2) без «Конец»: выйти можно только концовками «END?» (каждая заканчивается <code>renpy.full_restart()</code>, 699/712/724/740) или «Бросить дело» / «Убежать» раньше.</li>
+<li>«Почему пугаешь паладинов?» без гейта, но каждый его исход ведёт к перезапуску, так что повторов нет.</li>
+<li><code>guard2_propusk</code>, <code>vosp_propusk</code>, <code>look_cap</code>, <code>keep_cap</code>, <code>cap_cap_ch</code>, <code>cat_inspect_osm</code>: короткие метки без статов (вход через экраны, вызовы не разбирались).</li>
+<li>Условие 240: <code>not tea._active or cap._active</code> без скобок, приоритет операторов даёт «чай не активен или кружка активна».</li>
+</ul>
+</div>
+</main>
+<footer>Схемы игры «Вий» · Айрат: стража и статуя · выверено по коду 20.10.2026</footer>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<title>Сова и сны — Схемы игры «Вий»</title>
+<link rel="stylesheet" href="style7.css?v=22">
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
+</script>
+<style>.tmood{color:#D97706}.warn{color:#b91c1c;font-weight:700}.chip{display:inline-block;border-radius:6px;padding:0 6px;font-weight:700;color:#fff}</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>Сова и сны — script3_sova.rpy</h1>
+<p>Ночёвка в лесу: сон про кору, воспоминание о Лессе, сова · script3_sova.rpy (359 строк)</p>
+<nav class="crumbs"><a href="index.html?v=22">← Все схемы</a> · <a href="road.html?v=2">Дорога (road)</a> · <a href="gubert.html?v=1">Губерт</a></nav>
+</div></header>
+<main>
+<div class="card">
+<h2>Статы по сцене (мин/макс, по коду)</h2>
+<table class="stats">
+<tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Комментарий</th></tr>
+<tr><td class="mad">Безумие</td><td>0</td><td>0</td><td>не меняется (только читается в условиях)</td></tr>
+<tr><td class="logic">Логика</td><td>0</td><td>0</td><td>не меняется</td></tr>
+<tr><td class="blood">Кровь</td><td>−1</td><td>+2</td><td>−1 на входе, если Кровь &gt; 0 (23-24); +1 «Пытаться вспомнить» (168); +1 клевок совы (319). При Крови ≥ 3 setblood ведёт в sm_blood. Минимум −1 только при начальной Крови &gt; 0; при Крови 0 диапазон 0…+2.</td></tr>
+<tr><td class="mood">Настроение Лесса</td><td>0</td><td>0</td><td>не меняется; только условия: ≥ 3 и &lt; 0 (297, 311)</td></tr>
+</table>
+<p class="muted">Вход: road, «Стоит переждать» (Логика +1 даёт road, не эта сцена). Смерть во сне: «Идти до конца!» → <code>death_son</code> (сцена смерти из цепочки сна, см. start.html). Типичный путь: Кровь около 0 (−1…+1 по выборам).</p>
+<p class="muted"><span class="warn">Мёртвый код:</span> <code>script3_sova_logic</code> (241-274, флаг mag = True) недостижим: переход в него закомментирован (227-228); весь блок «Сова-питомец» 336-359 закомментирован.</p>
+</div>
+<div class="card">
+<h2>Схема сцены</h2>
+<div class="widechart"><div class="mermaid">
+flowchart TD
+IN["<b>Вход</b> script3_sova_begin (1)<br/>от road: «Стоит переждать»<br/>если логика &gt; 0 — описание леса; если безумие ≥ 3 и madlogic &lt; 3 — реплики «уютно»"]:::scene
+IN --> B0["<span style='color:#b91c1c;font-weight:700'>если Кровь &gt; 0</span><br/>Кровь <span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> (23-24)"]:::blood
+B0 --> D1["<b>Сон 1</b> son_less1 (27)<br/>кора, Лесс забирает кору"]:::scene
+IN --> D1
+D1 --> E1["son_less_end (87): просыпается<br/>sova_meet = 1, день 5"]:::scene
+E1 --> M1{"меню (109)<br/>начинает болеть голова"}:::hub
+M1 -- "«Думаю хватит.»" --> ST["script_3_sova_stop (177)"]:::scene
+M1 -- "«Пытаться вспомнить.»" --> D2["<b>Сон 2</b> son_less2 (122)<br/>Лесс кусает, «Лес Смерти»"]:::scene
+D2 --> E2["son_less2_end (157)<br/>less.zn_name = 1<br/>Кровь <span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (168); из носа кровь"]:::blood
+E2 --> M2{"меню (170)"}:::hub
+M2 -- "«Х-хватит...»" --> ST
+M2 -- "«{i}Идти до конца!{/i}»" --> DS["<b>death_son</b> (176)<br/>смерть во сне"]:::bad
+ST --> ST1["реплики по статам (180-193):<br/>логика ≥ 1 / безумие ≤ 1 / ratio &lt; 0.5"]:::scene
+ST1 --> SV["script3_sova_sova (196)<br/>sova_meet = 1, sova.lock = less_per"]:::scene
+SV --> M3{"меню (202)"}:::hub
+M3 -- "«Игнорировать.»" --> RD["script3_sova_road (275)<br/>→ script_3_roadway (дорога)"]:::out
+M3 -- "«Посмотреть ближе.»" --> TN["<span style='color:#b91c1c;font-weight:700'>если tash.near</span><br/>Таша: «она в моем вкусе... мертва» (210-223)"]:::scene
+M3 --> TN
+TN --> Q{"ratio &gt; 0.7? (225)"}:::scene
+Q -- "нет" --> PL["сова улетает (236)"]:::scene
+PL --> RD
+Q -- "да" --> MAD["script3_sova_mad (287)"]:::scene
+MAD --> Q2{"<span style='color:#b91c1c;font-weight:700'>less.mood ≥ 3</span>(297)"}:::scene
+Q2 -- "да" --> G["гладит сову, просит с собой (300-305)"]:::scene
+G --> M2M["script3_sova_2mad (328): сова улетает"]:::scene
+M2M --> RD
+Q2 -- "нет" --> Q3{"<span style='color:#b91c1c;font-weight:700'>less.mood &lt; 0</span>(311)"}:::scene
+Q3 -- "да" --> PK["сова клюёт руку<br/>Кровь <span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (319); при Крови ≥ 3 → sm_blood"]:::blood
+PK --> FL["сова улетает (323)"]:::scene
+Q3 -- "нет" --> FL
+FL --> RD
+classDef scene fill:#E4EEF9,stroke:#7a9cc6
+classDef hub fill:#fff3bf,stroke:#d4a017
+classDef bad fill:#ffd6d6,stroke:#b91c1c
+classDef out fill:#d8f5e0,stroke:#2f9e44
+classDef blood fill:#fbe0f0,stroke:#bc1888
+</div></div>
+</div>
+<div class="card">
+<h2>Что это значит</h2>
+<ul>
+<li>Кровь <span style="background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px">▼−1</span> на входе только при Крови &gt; 0; <span style="background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px">▲+1</span> за «Пытаться вспомнить» (168); <span style="background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px">▲+1</span> за клевок совы (319), если ratio &gt; 0.7 (логика преобладает) и настроение Лесса &lt; 0.</li>
+<li>Ветка sova_mad (название вводит в заблуждение) идёт при ratio() &gt; 0.7, а ratio = логика/(безумие+логика) (script.rpy:134-139): то есть когда <b>преобладает логика</b>. При 0.5 (оба 0) и ниже 0.7 сова просто улетает.</li>
+<li>Настроение Лесса &ge; 3 даёт «гладить сову» без крови; &lt; 0 даёт клевок; от 0 до 2 — просто улетает.</li>
+</ul>
+</div>
+<div class="card">
+<h2>Ошибки и особенности кода</h2>
+<ul>
+<li>Недостижимая ветка <code>script3_sova_logic</code> (mag = True) — мёртвый код (переход закомментирован в 227-228).</li>
+<li>Ветка <code>sov</code> «сова-питомец» (336-359) закомментирована целиком.</li>
+<li><code>sova_meet</code> задаётся дважды (88 и 200), второй раз безусловно.</li>
+</ul>
+</div>
+</main>
+<footer>Схемы игры «Вий» · Сова · выверено по коду 20.10.2026</footer>
+</body>
+</html>

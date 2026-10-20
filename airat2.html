@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<title>Айрат: коридор и Лени — Схемы игры «Вий»</title>
+<link rel="stylesheet" href="style7.css?v=22">
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
+</script>
+<style>.warn{color:#b91c1c;font-weight:700}</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>Айрат: дверь коридора и разговор с Лени — script_4_airat.rpy</h1>
+<p>Строки 520-1174: деревянная дверь, служка Лени, хаб разговоров</p>
+<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="airat1.html?v=3">Айрат: вход и церковь</a> · <a href="stats.html?v=32">Статы</a></nav>
+</div></header>
+<main>
+<div class="card">
+<h2>Статы (коридор, Лени: script_4_airat.rpy 520-1174)</h2>
+<table class="stats">
+<tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Комментарий</th></tr>
+<tr><td class="mad">Безумие</td><td>0</td><td>+2</td><td>«Да просто так!» +1 (1028); «Да вот, недавно!» +1 (882, выход из сцены)</td></tr>
+<tr><td class="logic">Логика</td><td>−3</td><td>+3</td><td>+1: «Что значит, он того?», «А что это за церковь», «По важному делу»; −1: «Он умер что ли?», «Незачем уточнять», «Да просто так!». Причины разные, дедупликация не мешает</td></tr>
+<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>не меняется</td></tr>
+<tr><td style="color:#b45309">Настроение Карралака (kar.mood)</td><td>−1</td><td>0</td><td>«Да просто так!» (1025); НОВЫЙ стат, янтарный — мой цвет</td></tr>
+<tr><td style="color:#0369a1">Настроение Лени (leni.mood)</td><td>−1</td><td>0</td><td>«Вам тут уборщицы не нужны?» (1148); НОВЫЙ стат, голубой — мой цвет</td></tr>
+<tr><td>Мораль (sanity.moral)</td><td>−1</td><td>0</td><td>«Да вот, недавно!» (883); стат вне схемы цветов Кати</td></tr>
+</table>
+<p class="muted">Все пункты хаба Лени одноразовые (флаги ld.d1/d2/d3/d5, kar_dialog), значения считаны суммой возможных пунктов. mad_l()/logic_l() определены в script.rpy:208-211 как lambda: sanity.get_level, т.е. mad_l() ≥ 1 равно Безумие ≥ 3, logic_l() ≥ 1 равно Логика ≥ 2 (проверено по коду).</p>
+</div>
+<div class="card">
+<h2>Схема</h2>
+<div class="widechart"><div class="mermaid">
+flowchart TD
+IN{"<b>airat_church_corridor_door</b> (520): деревянная дверь в конце правого коридора<br/>меню «Потянуть на себя» (не открывается; реплики по Логике/Безумию) / «Постучаться.» / «Конец»"}:::hub
+KN0["«Постучаться.»: <span style='color:#b91c1c;font-weight:700'>если leni.lock == airat_church_kar (535)</span> → открывают<br/>иначе: «Никого нет дома.»"]:::scene
+OPEN["<b>corridor_arrows_up_next_label</b> (551): Лени открывает дверь<br/>первый раз «leni_meet»; my_location = airat_church_kar → strel"]:::out
+LD["<b>script_4_airat_leni_dialog</b> (658): разговор с Лени (razg = leni)<br/>первая встреча «leni_meet2»: реплики по Безумию/Логике; имя «Служка?» → «Лени»"]:::scene
+LDV["<span style='color:#b91c1c;font-weight:700'>если Луиза рядом и «dev_leni» ещё нет (710)</span><br/>Луиза требует сказать, где отец; ld.d3 = 1<br/><span style='color:#b91c1c;font-weight:700'>Логика ≥ 1</span>: «leni_lie» (Лени врёт)"]:::scene
+H{"<b>Хаб разговора с Лени</b> (841)<br/>меню, «Конец» → leni_dialog_end (1168)"}:::hub
+D1["«Что за главный?» (ld.d1, один раз)<br/>Карралак Ар, Лени «за него»"]:::scene
+D1a["«Что значит, он того?» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (причина «Караллак, чего?»)"]:::scene
+D1b["«Он умер что ли?» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> (причина «Карралак умер?»)"]:::scene
+D1c["«Да вот, недавно!» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/>мораль −1 (sanity.moral, 883); Лени убегает в слезах<br/>leni.note += kar_died, leni.lock = пусто → strel"]:::bad
+D1d["«Успокойся, я пошутила.» → Лени выясняет про Милли"]:::scene
+D1e["«Милли?» / «Не важно.» без статов"]:::scene
+D2["«А это я где?» (ld.d2, один раз)"]:::scene
+D2a["«А что это за церковь такая?» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/>Логика ≥ 1: доп. реплика"]:::scene
+D2b["«Незачем уточнять» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
+D5["«А почему тут так пустынно?» (ld.d5, один раз)<br/>без статов"]:::scene
+D3["<span style='color:#b91c1c;font-weight:700'>«Я ищу Элеона Ара.» (quest_find_priest.keep и не ld.d3)</span><br/>ld.d3 = 1, «А зачем он вам нужен?»"]:::scene
+D3a["«По важному делу.» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (причина «По важному делу ищу Элеона.»)"]:::scene
+D3b["«Его искала его дочь» (leni_luiza)<br/>без статов; <span style='color:#b91c1c;font-weight:700'>Логика ≥ 1</span>: «leni_lie»"]:::scene
+D3c["<span style='color:#b91c1c;font-weight:700'>«Да просто так!» (Безумие ≥ 1 по get_level)</span><br/><span style='background:rgb(254,243,199);color:rgb(180,83,9);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"]:::scene
+D4["<span style='color:#b91c1c;font-weight:700'>«Фенрира ранена.» (quest_find_doc.keep и ...)</span><br/>ld.d4 = 1; Лени не знает аптечки; если Луиза рядом: «у меня дома можно найти»"]:::scene
+D6["<span style='color:#b91c1c;font-weight:700'>«Меня не пропускают.» (диалог со стражей у статуи)</span><br/>Лени даёт пропуск (inv_list[propusk] активен), «отдайте Горран Ар»; quest_statue.diary"]:::scene
+D7["<span style='color:#b91c1c;font-weight:700'>«Мне негде остановиться.» (Луиза не ищет жреца и нет «to_church»)</span><br/><span style='color:#b91c1c;font-weight:700'>Безумие ≥ 1: «уборщицы не нужны? ... кровь»</span> <span style='background:rgb(224,242,254);color:rgb(3,105,161);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><br/>Лени предлагает остановиться, если вступит в служки; «to_church», quest_karralak.keep"]:::scene
+D8["<span style='color:#b91c1c;font-weight:700'>«Я согласна вступить в служки» (to_church и нет to_church2)</span><br/>«war», quest_statue.keep = 1; работа со служкой Лени"]:::scene
+D9["<span style='color:#b91c1c;font-weight:700'>«Я отказываюсь вступать» (to_church, нет to_church2)</span><br/>quest_karralak.done = 1"]:::scene
+END["«Конец» → leni_dialog_end (1168): «и все» → strel"]:::out
+IN --> KN0
+KN0 -- "да" --> OPEN
+OPEN --> LD
+LD --> LDV
+LD --> H
+LDV --> H
+H --> D1
+D1 --> D1a
+D1 --> D1b
+D1b --> D1c
+D1b --> D1d
+D1a --> D1e
+D1d --> D1e
+D1e --> H
+H --> D2
+D2 --> D2a
+D2 --> D2b
+D2a --> H
+D2b --> H
+H --> D5
+D5 --> H
+H --> D3
+D3 --> D3a
+D3 --> D3b
+D3 --> D3c
+D3a --> H
+D3b --> H
+D3c --> H
+H --> D4
+D4 --> H
+H --> D6
+D6 --> H
+H --> D7
+D7 --> H
+H --> D8
+D8 --> H
+H --> D9
+D9 --> H
+H --> END
+classDef scene fill:#E4EEF9,stroke:#7a9cc6
+classDef hub fill:#fff3bf,stroke:#d4a017
+classDef bad fill:#ffd6d6,stroke:#b91c1c
+classDef out fill:#d8f5e0,stroke:#2f9e44
+</div></div>
+</div>
+<div class="card">
+<h2>Ошибки и особенности кода</h2>
+<ul>
+<li>Если сказать Лени «Да вот, недавно!» (Карралак умер), Лени убегает и leni.lock очищается: в кабинет больше не попасть (дверь «Никого нет дома»).</li>
+<li>Условие «Мне негде остановиться» требует, чтобы Луиза не искала жреца (quest_find_priest.keep == 0).</li>
+<li>Строки 628-630 закомментированы (kar.mood, add_mad).</li>
+</ul>
+</div>
+</main>
+<footer>Схемы игры «Вий» · Айрат: коридор и Лени · выверено по коду 20.10.2026</footer>
+</body>
+</html>
