@@ -17,7 +17,7 @@ mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:
 <header class="site"><div class="wrap">
 <h1>Луиза: повторные разговоры — day_1_dev_razg.rpy</h1>
 <p>dev_razg_menu, dev_father, белая стена (label_wall). Файл 208 строк</p>
-<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="dev.html?v=4">Луиза на дороге</a> · <a href="stats.html?v=32">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="dev.html?v=40">Луиза на дороге</a> · <a href="stats.html?v=32">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -29,21 +29,21 @@ mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:
 <tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>не меняется</td></tr>
 <tr><td style="color:#16a34a">Настроение Луизы</td><td>−2</td><td>0</td><td>«Что ты так на меня взъелась?» −1 (32; devd.d6, один раз, только после «Увязаться»); «не до тебя» −1 (82; dev_father)</td></tr>
 </table>
-<p class="muted">В этом файле logic_l() используется как уровень: <code>logic_l()&gt;=2</code>, <code>if logic_l():</code> — это lambda: sanity.get_level(«logic») (script.rpy:211). Ссылки: <a href="dev.html?v=4">Луиза на дороге</a>.</p>
+<p class="muted">В этом файле logic_l() используется как уровень: <code>logic_l()&gt;=2</code>, <code>if logic_l():</code> — это lambda: sanity.get_level(«logic») (script.rpy:211). Ссылки: <a href="dev.html?v=40">Луиза на дороге</a>.</p>
 </div>
 <div class="card">
 <h2>Схема</h2>
 <div class="widechart"><div class="mermaid">
 flowchart TD
-IN{"<b>dev_razg_menu</b> (day_1_dev_razg.rpy 1): «Поговорить» с Луизой по кнопке<br/>razg_menu = dev, razg = dev"}:::hub
+IN["<b>dev_razg_menu</b> (day_1_dev_razg.rpy 1): «Поговорить» с Луизой по кнопке<br/>razg_menu = dev, razg = dev"]:::hub
 A["<span style='color:#b91c1c;font-weight:700'>devd.d5 (Увязаться за ней: она на вас обижена)</span><br/>единственный пункт «Что ты так на меня взъелась?» (devd.d6, один раз) <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><br/>«Конец» → dev_razg_menu_end: «она более и слова не скажет»"]:::scene
-B{"<span style='color:#b91c1c;font-weight:700'>иначе (нормальные отношения)</span>: меню разговора"}:::hub
+B["<span style='color:#b91c1c;font-weight:700'>иначе (нормальные отношения)</span>: меню разговора"]:::hub
 B1["<span style='color:#b91c1c;font-weight:700'>«А где твой дом?» (airat_go и нет dev_home1 и не d10)</span><br/>самое левое здание, табличка «Элеон Ар»; devd.d10 = 1"]:::scene
 B2["<span style='color:#b91c1c;font-weight:700'>«Я тогда не спросила как ты вообще в лесу оказалась...» (нет devd.d2)</span><br/>→ 1menu из dev.html: <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (961-963), «Что за ловушки?», рассказ про побег"]:::scene
 B3["<span style='color:#b91c1c;font-weight:700'>«Я бы хотела уточнить пару моментов о твоем побеге.» (devd.d2 и devd.d4 &lt; 4)</span><br/>→ хаб вопросов dev.html; все его выходы возвращают в dev_razg_menu (menu_jump)"]:::scene
 B4["<span style='color:#b91c1c;font-weight:700'>«По поводу всей этой истории с твоим отцом...» (quest_find_priest.keep и (leni_per_dev_razg или Луиза рядом))</span><br/>→ dev_father"]:::scene
 B5["«На сегодня хватит разговоров!» → razg_menu = 0 → strel"]:::out
-F{"<b>dev_father</b> (day_1_dev_razg 71): о папе, о Лени"}:::hub
+F["<b>dev_father</b> (day_1_dev_razg 71): о папе, о Лени"]:::hub
 F1["<span style='color:#b91c1c;font-weight:700'>«Знаешь, мне сейчас не до тебя. Справляйся без меня.» (dev.near)</span><br/><span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>; quest_find_priest и quest_know_priest = false; dev.near = 0 → strel"]:::bad
 F2["<span style='color:#b91c1c;font-weight:700'>«Этот Лени...» (leni_per_dev_razg)</span>: Луиза о Лени (сирота из Церкви)"]:::scene
 F2a["<span style='color:#b91c1c;font-weight:700'>«Знаешь, что-то тут не чисто.» (Логика get_level ≥ 2, нет devd.d8)</span><br/>без статов; devd.d8 = 1"]:::scene
