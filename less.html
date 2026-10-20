@@ -88,7 +88,7 @@ function build(){
     E('H1 --> RB', c1);
   }
   // --- H2 ---
-  L.push('NQ{{"Ввод имени<br/>«ЛЕСС» не пройдёт"}}:::h2');
+  L.push('NQ["Ввод имени<br/>«ЛЕСС» не пройдёт"]:::h2');
   if(EXP.has('H2')){
     E('H2 --> C2A["'+mk('«Не надо меня есть! Я не вкусная!»',[[C_MOO,1]])+'"]:::h2', c2); E('C2A --> H3', c2);
     E('H2 --> C2B["'+mk('«Подставить шею для укуса.»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">метка less_bite</span>',[[C_MAD,1],[C_MOO,1],[C_BLD,1]])+'"]:::h2', c2); E('C2B --> H3', c2);
@@ -106,16 +106,16 @@ function build(){
   }
   // --- H2A ---
   if(EXP.has('H2A')){
-    E('H2A --> CA1["'+mk('«Безразлично улыбнуться.»',[[C_MAD,2]])+'"]:::h2a', c2a); E('CA1 --> SAM{{"samsp"}}:::h2a', c2a);
+    E('H2A --> CA1["'+mk('«Безразлично улыбнуться.»',[[C_MAD,2]])+'"]:::h2a', c2a); E('CA1 --> SAM["samsp"]:::h2a', c2a);
     E('SAM --> CA2["'+mk('«А почему нет? Ты же надо мной шутишь.»')+'"]:::h2a', c2a); E('CA2 --> D1A', c2a);
     E('SAM --> CA3["'+mk('«Ээм... Нет?»')+'"]:::h2a', c2a); E('CA3 --> H9', c2a);
-    E('H2A --> CA4["'+mk('«Это случайность! Я просто угадала!»<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">метка less_amul · с лупой ещё логика +1</span>',[[C_MOO,5]])+'"]:::h2a', c2a); E('CA4 --> AM{{"amulmenu"}}:::h2a', c2a);
+    E('H2A --> CA4["'+mk('«Это случайность! Я просто угадала!»<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">метка less_amul · с лупой ещё логика +1</span>',[[C_MOO,5]])+'"]:::h2a', c2a); E('CA4 --> AM["amulmenu"]:::h2a', c2a);
     E('AM --> CA5["'+mk('«Н-нет. Не брать.»',[[C_MOO,1]])+'"]:::h2a', c2a); E('CA5 --> H3', c2a);
     E('AM --> CA6["'+mk('«Без лишних слов надеть.»',[[C_MAD,1]],[[C_MOO,1]])+'"]:::h2a', c2a); E('CA6 --> H3', c2a);
-    E('AM --> CA7["'+mk('«Спасибо... Взять амулет.»')+'"]:::h2a', c2a); E('CA7 --> TK{{"take"}}:::h2a', c2a);
+    E('AM --> CA7["'+mk('«Спасибо... Взять амулет.»')+'"]:::h2a', c2a); E('CA7 --> TK["take"]:::h2a', c2a);
     E('TK --> CA8["'+mk('«Надеть сразу»')+'"]:::h2a', c2a); E('CA8 --> H3', c2a);
     E('TK --> CA9["'+mk('«Убрать в карман.»',[[C_LOG,1],[C_MOO,1]],[[C_MAD,1]])+'"]:::h2a', c2a); E('CA9 --> H3', c2a);
-    E('AM --> CA10["'+mk('«Ч-что это?»',[[C_LOG,1],[C_MOO,1]],[[C_MAD,1]])+'"]:::h2a', c2a); E('CA10 --> WII{{"what_is_it<br/>«Это всё?» ещё логика +1, безумие −1"}}:::h2a', c2a);
+    E('AM --> CA10["'+mk('«Ч-что это?»',[[C_LOG,1],[C_MOO,1]],[[C_MAD,1]])+'"]:::h2a', c2a); E('CA10 --> WII["what_is_it<br/>«Это всё?» ещё логика +1, безумие −1"]:::h2a', c2a);
     E('WII --> CA11["'+mk('«Возьму»')+'"]:::h2a', c2a); E('CA11 --> TK', c2a);
     E('WII --> CA12["'+mk('«Ну его.»',[[C_MOO,1]])+'"]:::h2a', c2a); E('CA12 --> H3', c2a);
   } else {
@@ -171,7 +171,7 @@ function build(){
     E('H7 --> C7A["'+mk('«Оставить в покое.»')+'"]:::h7', c7); E('C7A --> GN', c7);
     E('H7 --> C7B["'+mk('«Остановить.»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: mood &lt; 0</span>')+'"]:::h7', c7); E('C7B --> GN', c7);
     E('H7 --> C7C["'+mk('«Остановить.»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: mood ≥ 0, безумие ≥ 3</span>')+'"]:::h7', c7); E('C7C --> GN', c7);
-    E('H7 --> C7D["'+mk('«Остановить.»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: mood ≥ 0, безумие ≤ 2 → квест Айрата</span>')+'"]:::h7', c7); E('C7D --> AIR{{"less_airat_predl"}}:::h7', c7);
+    E('H7 --> C7D["'+mk('«Остановить.»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: mood ≥ 0, безумие ≤ 2 → квест Айрата</span>')+'"]:::h7', c7); E('C7D --> AIR["less_airat_predl"]:::h7', c7);
     E('AIR --> C7R["'+mk('«А что мне за это будет?»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: только без «reward» · открывает «reward»</span>',[[C_MOO,1],[C_LOG,1]],[[C_MAD,1]])+'"]:::h7', c7); E('C7R --> AIR', c7);
     E('AIR --> C7E["'+mk('«Х-хорошо.»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">без «reward»</span>',null,[[C_MOO,1]])+'"]:::h7', c7); E('C7E --> GN', c7);
     E('AIR --> C7E2["'+mk('«Х-хорошо.»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">с «reward»</span>')+'"]:::h7', c7); E('C7E2 --> GN', c7);
@@ -183,9 +183,9 @@ function build(){
   // --- H8 ---
   if(EXP.has('H8')){
     E('H8 --> C8A["'+mk('«Отпустить.»',null,[[C_MAD,1]])+'"]:::h8', c8); E('C8A --> H9', c8);
-    E('H8 --> C8B["'+mk('«Удержать силой.»<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: Кровь ≥ 3 → sm_blood</span>',[[C_BLD,1]],[[C_MOO,1]])+'"]:::h8', c8); E('C8B --> STR{{"strenght"}}:::h8', c8);
+    E('H8 --> C8B["'+mk('«Удержать силой.»<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: Кровь ≥ 3 → sm_blood</span>',[[C_BLD,1]],[[C_MOO,1]])+'"]:::h8', c8); E('C8B --> STR["strenght"]:::h8', c8);
     E('STR --> C8C["'+mk('«Отчаянно бороться и вырываться.»')+'"]:::h8', c8); E('C8C --> D1', c8);
-    E('STR --> C8D["'+mk('«Расслабиться.»',[[C_MAD,1]],[[C_LOG,1]])+'"]:::h8', c8); E('C8D --> M17{{"меню conv:1117"}}:::h8', c8);
+    E('STR --> C8D["'+mk('«Расслабиться.»',[[C_MAD,1]],[[C_LOG,1]])+'"]:::h8', c8); E('C8D --> M17["меню conv:1117"]:::h8', c8);
     E('STR --> C8E["'+mk('«Замереть.»<br/><span style="font-size:12px;color:rgb(106,114,128)">⚠ баг conv:1105</span>',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h8', c8); E('C8E --> M17', c8);
     E('M17 --> C8F["'+mk('«А сами-то!»',[[C_MAD,1],[C_MOO,1]])+'"]:::h8', c8); E('C8F --> H9', c8);
     E('M17 --> C8G["'+mk('«Промолчать»',null,[[C_MAD,1]])+'"]:::h8', c8); E('C8G --> H9', c8);
@@ -196,7 +196,7 @@ function build(){
   }
   // --- H9 ---
   if(EXP.has('H9')){
-    E('H9 --> C9A["'+mk('«Со злости ударить дерево»',[[C_MAD,1]],[[C_LOG,1],[C_MOO,2]])+'"]:::h9', c9); E('C9A --> KRN{{"less_korn_menu<br/>циклы: «не шевелиться» безумие +1 ·<br/>«вырваться» логика +1, настроение −1"}}:::h9', c9);
+    E('H9 --> C9A["'+mk('«Со злости ударить дерево»',[[C_MAD,1]],[[C_LOG,1],[C_MOO,2]])+'"]:::h9', c9); E('C9A --> KRN["less_korn_menu<br/>циклы: «не шевелиться» безумие +1 ·<br/>«вырваться» логика +1, настроение −1"]:::h9', c9);
     E('KRN --> C9B["'+mk('«Обмякнуть и обмануть корни.» → ushel<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: без «не шевелиться» или после «вырваться»</span>',[[C_LOG,1],[C_MOO,1]],[[C_MAD,1]])+'"]:::h9', c9); E('C9B --> RB', c9);
     E('KRN --> C9C["'+mk('«Извиниться.» → ushel<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: героиня знает имя Лесса</span>',[[C_LOG,1],[C_MOO,2]])+'"]:::h9', c9); E('C9C --> RB', c9);
     E('KRN --> C9D["'+mk('«Расслабиться и поспать.»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: после «не шевелиться»</span>',[[C_MAD,1],[C_MOO,2]])+'"]:::h9', c9); E('C9D --> E1', c9);
@@ -214,7 +214,7 @@ function build(){
   // --- MEM ---
   if(EXP.has('MEM')){
     L.push('SUD["воспоминание о суде<br/>(суды, цепи, семейные драмы)"]:::hm');
-    L.push('HA{{"головная боль, кровь из носа"}}:::hm');
+    L.push('HA["головная боль, кровь из носа"]:::hm');
     E('MEM --> CM0["'+mk('«Не стоит больше вспоминать...»',[[C_LOG,1]])+'"]:::hm', cm); E('CM0 --> RB', cm);
     E('MEM --> CM3["'+mk('«Пытаться вспомнить дальше.»')+'"]:::hm', cm); E('CM3 --> SUD', cm);
     E('SUD --> CM4["'+mk('«Что за чертовщина там вообще произошла?!»',[[C_BLD,1]],[[C_MAD,1]])+'"]:::hm', cm); E('CM4 --> HA', cm);

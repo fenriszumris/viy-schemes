@@ -73,9 +73,9 @@ function build(){
   }
   // --- H2 ---
   if(EXP.has('H2')){
-    L.push('SON{{"сон (son)"}}:::h2');
-    L.push('SUD{{"воспоминание о суде<br/>(sud_memory)"}}:::h2');
-    L.push('HA{{"головная боль (head_ache)"}}:::h2');
+    L.push('SON["сон (son)"]:::h2');
+    L.push('SUD["воспоминание о суде<br/>(sud_memory)"]:::h2');
+    L.push('HA["головная боль (head_ache)"]:::h2');
     E('H2 --> C2A["'+mk('«Что это вообще сейчас было?»')+'"]:::h2', c2); E('C2A --> SON', c2);
     E('H2 --> C2B["'+mk('«Пожать плечами и выбросить из головы.»')+'"]:::h2', c2); E('C2B --> ST', c2);
     E('SON --> C2C["'+mk('«Не стоит больше вспоминать...»',[[C_LOG,1]])+'"]:::h2', c2); E('C2C --> ST', c2);
@@ -90,11 +90,11 @@ function build(){
   }
   // --- H3 ---
   if(EXP.has('H3')){
-    L.push('HN{{"hand_next"}}:::h3');
-    L.push('ZM{{"zeml_menu"}}:::h3');
-    L.push('ZSH{{"zeml_sh"}}:::h3');
-    L.push('SHH{{"shh"}}:::h3');
-    L.push('ZR{{"zeml_ran"}}:::h3');
+    L.push('HN["hand_next"]:::h3');
+    L.push('ZM["zeml_menu"]:::h3');
+    L.push('ZSH["zeml_sh"]:::h3');
+    L.push('SHH["shh"]:::h3');
+    L.push('ZR["zeml_ran"]:::h3');
     E('H3 --> C3A["'+mk('«Хватит экспериментов.»',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h3', c3); E('C3A --> ST', c3);
     E('H3 --> C3B["'+mk('«Укусить еще сильнее. Для верности.»',[[C_MAD,1],[C_BLD,1]])+'"]:::h3', c3); E('C3B --> HN', c3);
     E('HN --> ZM', c3);
@@ -179,7 +179,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 </div>
 <div class="card">
 <h2>Как читать</h2>
-<p class="muted">«Хаб» — кусок сцены с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение (в этой сцене не меняется). «Экран стрелок» — переход на экран перемещения: дальше игра идёт по экрану, а не по коду метки. Ветка руки и корней входит в разговор с Лессом напрямую (conv_2), минуя гляделки; остальные выходы — через экран стрелок (conv_0/conv_1). Сам разговор — на странице <a href="less.html?v=27">«Разговор с Лессом»</a>.</p>
+<p class="muted">«Хаб» — кусок сцены с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение (в этой сцене не меняется). «Экран стрелок» — переход на экран перемещения: дальше игра идёт по экрану, а не по коду метки. Ветка руки и корней входит в разговор с Лессом напрямую (conv_2), минуя гляделки; остальные выходы — через экран стрелок (conv_0/conv_1). Сам разговор — на странице <a href="less.html?v=40">«Разговор с Лессом»</a>.</p>
 </div>
 <div class="viewtoggle">
 <button id="btn-full" class="active" onclick="toggleView('start',1)">Детальнее</button>
