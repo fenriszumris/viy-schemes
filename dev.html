@@ -73,9 +73,9 @@ function build(){
     E('H2 --> P1', c2);
     E('H2 --> IL', c2);
   }
-  L.push(hub('H3','Ловушка, побег и вопросы<br/><small>строки 377-588, 935-1006</small>','hhs',[[C_MAD, '−1…+1'], [C_LOG, '0…+3'], [C_DEV, '−5…+3']]));
+  L.push(hub('H3','Ловушка, побег и вопросы<br/><small>строки 377-588, 934-1005</small>','hhs',[[C_MAD, '−1…+1'], [C_LOG, '0…+3'], [C_DEV, '−5…+3']]));
   if(EXP.has('H3')){
-    L.push('P1["<div style=\'width:280px;white-space:normal\'>Луиза боится: «Здесь ловушка...» (935)</div>"]:::sc');
+    L.push('P1["<div style=\'width:280px;white-space:normal\'>Луиза боится: «Здесь ловушка...» (934)</div>"]:::sc');
     L.push('P2["<div style=\'width:280px;white-space:normal\'>Луиза рассказывает про ловушки и побег из дома</div>"]:::sc');
     L.push('M2["<div style=\'width:240px;white-space:normal\'>Что дальше с Луизой?</div>"]:::sc');
     L.push('Q["<div style=\'width:260px;white-space:normal\'>Вопросы к Луизе: каждый пункт один раз</div>"]:::sc');
@@ -111,40 +111,40 @@ function build(){
   } else {
     E('H3 --> NM', c3);
   }
-  L.push(hub('H4','Имя и реакция Луизы<br/><small>строки 1164-1370; «Э... Шутка.» по кругу: каждый круг −2</small>','hhp',[[C_BLD, '0…+1'], [C_DEV, '−22…+1']]));
+  L.push(hub('H4','Имя и реакция Луизы<br/><small>строки 1163-1369; «Э... Шутка.» по кругу: каждый круг −2</small>','hhp',[[C_BLD, '0…+1'], [C_DEV, '−22…+1']]));
   if(EXP.has('H4')){
     L.push('NM["<div style=\'width:260px;white-space:normal\'>Луиза: «А тебя как зовут?» (594)</div>"]:::sc');
     L.push('AMX["<div style=\'width:260px;white-space:normal\'>Луиза: «Ох... Потерять память?» (655)</div>"]:::sc');
-    L.push('MY["<div style=\'width:300px;white-space:normal\'>Луиза называет своё имя, вы называетесь: «Приятно познакомиться!» (1164)</div>"]:::sc');
-    L.push('VN["<div style=\'width:280px;white-space:normal\'>Луиза в ужасе: это имя нельзя произносить (1242)</div>"]:::bad');
+    L.push('MY["<div style=\'width:300px;white-space:normal\'>Луиза называет своё имя, вы называетесь: «Приятно познакомиться!» (1163)</div>"]:::sc');
+    L.push('VN["<div style=\'width:280px;white-space:normal\'>Луиза в ужасе: это имя нельзя произносить (1241)</div>"]:::bad');
     E('H4 --> NM', c4);
     E('NM --> K1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я не помню... пока называй меня [v].»',null,null)+'</div>"]:::hhp', c4); E('K1 --> AMX', c4);
     E('NM --> K2["<div style=\'width:290px;white-space:normal\'>'+mk('«Я – [v].»',null,null)+'</div>"]:::hhp', c4); E('K2 --> MY', c4);
     E('NM --> K3["<div style=\'width:290px;white-space:normal\'>'+mk('«Ээ... Сапуля Те Ля Камоле Каптуче Холе.»',null,null)+'</div>"]:::hhp', c4); E('K3 --> MY', c4);
     E('NM --> K4["<div style=\'width:290px;white-space:normal\'>'+mk('«Эээ... Миранда.»',[[C_DEV, 1]],null)+'</div>"]:::hhp', c4); E('K4 --> MY', c4);
     E('NM --> K5["<div style=\'width:290px;white-space:normal\'>'+mk('Если имя героини «Вий» (первые два варианта):',null,[[C_DEV, 2]])+'</div>"]:::hhp', c4); E('K5 --> VN', c4);
-    L.push('MS["<div style=\'width:300px;white-space:normal\'>Если назвались Сапулей: Луиза не удивляется (1172)</div>"]:::sc');
+    L.push('MS["<div style=\'width:300px;white-space:normal\'>Если назвались Сапулей: Луиза не удивляется (1171)</div>"]:::sc');
     E('MY --> SM1["<div style=\'width:290px;white-space:normal\'>'+mk('Если выбрана «Сапуля»:',null,null)+'</div>"]:::hhp', c4); E('SM1 --> MS', c4);
     E('MS --> SA["<div style=\'width:290px;white-space:normal\'>'+mk('«Шутка! Меня зовут Миранда!»',null,[[C_DEV, 1]])+'</div>"]:::hhp', c4); E('SA --> MY', c4);
     E('MS --> SB["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет конечно! Меня зовут [v].»',null,[[C_DEV, 1]])+'</div>"]:::hhp', c4); E('SB --> MY', c4);
     E('MS --> SC["<div style=\'width:290px;white-space:normal\'>'+mk('«Конечно!! Меня зовут Сапуля! Это что, преступление?!»',null,null)+'</div>"]:::hhp', c4); E('SC --> ME', c4);
-    L.push('ME["<div style=\'width:300px;white-space:normal\'>Если рядом Ташир: он представляется; Луиза идёт рядом → экран переходов (1216-1240)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Луиза идёт рядом</span></div>"]:::sc');
+    L.push('ME["<div style=\'width:300px;white-space:normal\'>Если рядом Ташир: он представляется; Луиза идёт рядом → экран переходов (1215-1239)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Луиза идёт рядом</span></div>"]:::sc');
     E('MY --> SM2["<div style=\'width:290px;white-space:normal\'>'+mk('Если выбрано другое имя (не «Сапуля» и не «Вий»):',null,null)+'</div>"]:::hhp', c4); E('SM2 --> ME', c4);
-    E('MY --> SM3["<div style=\'width:290px;white-space:normal\'>'+mk('Если имя героини «Вий» (1165):',null,[[C_DEV, 2]])+'</div>"]:::hhp', c4); E('SM3 --> VN', c4);
+    E('MY --> SM3["<div style=\'width:290px;white-space:normal\'>'+mk('Если имя героини «Вий» (1164):',null,[[C_DEV, 2]])+'</div>"]:::hhp', c4); E('SM3 --> VN', c4);
     E('VN --> V1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я не шучу. Я – Вий.»',null,[[C_DEV, 20]])+'</div>"]:::hhp', c4); E('V1 --> RN', c4);
     E('VN --> V2["<div style=\'width:290px;white-space:normal\'>'+mk('«Э... Шутка.»',null,null)+'</div>"]:::hhp', c4); E('V2 --> MY', c4);
-    L.push('RN["<div style=\'width:260px;white-space:normal\'>Луиза убегает с криком (1276)</div>"]:::sc');
+    L.push('RN["<div style=\'width:260px;white-space:normal\'>Луиза убегает с криком (1275)</div>"]:::sc');
     E('RN --> R1["<div style=\'width:290px;white-space:normal\'>'+mk('«Пытаться догнать.»',null,null)+'</div>"]:::hhp', c4); E('R1 --> RM', c4);
     E('RN --> R2["<div style=\'width:290px;white-space:normal\'>'+mk('«Игнорировать.»',null,null)+'</div>"]:::hhp', c4); E('R2 --> RA', c4);
-    L.push('RM["<div style=\'width:260px;white-space:normal\'>Грудь горит, не успеваете (1299)</div>"]:::sc');
+    L.push('RM["<div style=\'width:260px;white-space:normal\'>Грудь горит, не успеваете (1298)</div>"]:::sc');
     E('RM --> R3["<div style=\'width:290px;white-space:normal\'>'+mk('«Пытаться догнать изо всех сил.»'+cond('при Крови не ниже 3: теряете сознание, переход в сцену крови')+flag('кровь +1'),[[C_BLD, 1]],null)+'</div>"]:::hhp', c4); E('R3 --> RA', c4);
     E('RM --> R4["<div style=\'width:290px;white-space:normal\'>'+mk('«Отставить попытки.»',null,null)+'</div>"]:::hhp', c4); E('R4 --> RA', c4);
-    L.push('RA["<div style=\'width:260px;white-space:normal\'>«От меня нередко убегали» → экран переходов (1356)</div>"]:::ex');
+    L.push('RA["<div style=\'width:260px;white-space:normal\'>«От меня нередко убегали» → экран переходов (1355)</div>"]:::ex');
   } else {
     E('H4 --> AMX', c4);
     E('H4 --> EXS', c4);
   }
-  L.push(hub('H5','Потеря памяти, Лес Смерти, Хаос<br/><small>строки 655-930</small>','hhk',[[C_MAD, '−2…+5'], [C_LOG, '−4…+2'], [C_DEV, '−10…+2']]));
+  L.push(hub('H5','Потеря памяти, Лес Смерти, Хаос<br/><small>строки 655-929</small>','hhk',[[C_MAD, '−2…+5'], [C_LOG, '−4…+2'], [C_DEV, '−10…+2']]));
   if(EXP.has('H5')){
     L.push('AM0["<div style=\'width:260px;white-space:normal\'>Луиза спрашивает про память (655)</div>"]:::sc');
     L.push('AL["<div style=\'width:320px;white-space:normal\'>Луиза: «Ты знаешь, где мы?»; рассказ про Лес Смерти и Хаос (707-782)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Лесс называл имя места: «Лес Смерти»; если не называл - Луиза называет сама; при Безумии не ниже 1 уровня настроение Луизы −1 (736)</span></div>"]:::sc');
@@ -166,7 +166,7 @@ function build(){
     E('CH --> C2["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет. Это звучит плохо.»',[[C_LOG, 2], [C_DEV, 1]],[[C_MAD, 2]])+'</div>"]:::hhk', c5); E('C2 --> MEM', c5);
     E('CH --> C3["<div style=\'width:290px;white-space:normal\'>'+mk('«А кто это?»'+note('один раз'),[[C_LOG, 1]],null)+'</div>"]:::hhk', c5); E('C3 --> CH', c5);
     L.push('W2N["<div style=\'width:300px;white-space:normal\'>Если про церковь Ара ещё не спрашивали и Логика не ниже 1 уровня: вопрос про церковников (как в хабе вопросов)</div>"]:::sc');
-    L.push('CR["<div style=\'width:300px;white-space:normal\'>Если ни одно условие не выполнено: игра перезапускается без концовки (баг, 882)</div>"]:::bad');
+    L.push('CR["<div style=\'width:300px;white-space:normal\'>Если ни одно условие не выполнено: переход к вопросу про имя героини (881; раньше здесь игра перезапускалась без концовки, исправлено в ветке)</div>"]:::sc');
     E('MEM --> E1["<div style=\'width:290px;white-space:normal\'>'+mk('«Хорошо...»',[[C_DEV, 2]],[[C_MAD, 1]])+'</div>"]:::hhk', c5); E('E1 --> W2N', c5);
     E('MEM --> E2["<div style=\'width:290px;white-space:normal\'>'+mk('«Со мной все в порядке – нет.»',[[C_MAD, 1]],[[C_DEV, 1]])+'</div>"]:::hhk', c5); E('E2 --> W2N', c5);
     E('MEM --> E3["<div style=\'width:290px;white-space:normal\'>'+mk('Если про церковь уже спрашивали или Логика ниже 1 уровня:',null,null)+'</div>"]:::hhk', c5); E('E3 --> CR', c5);
@@ -175,12 +175,12 @@ function build(){
     E('H5 --> IL', c5);
     E('H5 --> MY', c5);
   }
-  L.push(hub('H6','Луиза хочет уйти<br/><small>строки 1009-1104</small>','hhs',[[C_MAD, '0…+2'], [C_DEV, '−7…−4']]));
+  L.push(hub('H6','Луиза хочет уйти<br/><small>строки 1008-1103</small>','hhs',[[C_MAD, '0…+2'], [C_DEV, '−7…−4']]));
   if(EXP.has('H6')){
-    L.push('IL["<div style=\'width:300px;white-space:normal\'>Луиза: «Я ухожу! Сама дойду!» (1009)<span style=\'background:rgb(220,252,231);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px\'>▼−4</span></div>"]:::sc');
-    L.push('IL2["<div style=\'width:280px;white-space:normal\'>Вы идёте следом, Луиза пугается (1043)<span style=\'background:rgb(220,252,231);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px\'>▼−1</span></div>"]:::sc');
-    L.push('M5["<div style=\'width:280px;white-space:normal\'>Договор: идти вместе до ворот Айрата? (1081)</div>"]:::sc');
-    L.push('EG["<div style=\'width:280px;white-space:normal\'>Луиза идёт рядом: дальше экран переходов (1103)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Луиза рядом</span></div>"]:::sc');
+    L.push('IL["<div style=\'width:300px;white-space:normal\'>Луиза: «Я ухожу! Сама дойду!» (1008)<span style=\'background:rgb(220,252,231);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px\'>▼−4</span></div>"]:::sc');
+    L.push('IL2["<div style=\'width:280px;white-space:normal\'>Вы идёте следом, Луиза пугается (1042)<span style=\'background:rgb(220,252,231);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px\'>▼−1</span></div>"]:::sc');
+    L.push('M5["<div style=\'width:280px;white-space:normal\'>Договор: идти вместе до ворот Айрата? (1080)</div>"]:::sc');
+    L.push('EG["<div style=\'width:280px;white-space:normal\'>Луиза идёт рядом: дальше экран переходов (1102)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Луиза рядом</span></div>"]:::sc');
     E('H6 --> IL', c6);
     E('IL --> IL1["<div style=\'width:290px;white-space:normal\'>'+mk('«Увязаться за ней.»',[[C_MAD, 1]],null)+'</div>"]:::hhs', c6); E('IL1 --> IL2', c6);
     E('IL --> IL0["<div style=\'width:290px;white-space:normal\'>'+mk('«Оставить в покое.»',null,null)+'</div>"]:::hhs', c6); E('IL0 --> EXS', c6);
@@ -246,7 +246,7 @@ render();
 <tr><th>Стат</th><th>Имя ≠ Вий</th><th>Имя = Вий</th><th>Типичный путь (суждение)</th><th>Комментарий</th></tr>
 <tr><td class="mad">Безумие</td><td>−3…+9</td><td>−1…+3</td><td>0</td><td>Безумие в типичном пути не меняется</td></tr>
 <tr><td class="logic">Логика</td><td>−4…+6</td><td>0…+4</td><td>+2</td><td>одинаковая причина Логики засчитывается один раз; исключение: «Паршивая ситуация.»</td></tr>
-<tr><td class="blood">Кровь</td><td>0</td><td>0…+1</td><td>0</td><td>+1 только «Пытаться догнать изо всех сил» (1305)</td></tr>
+<tr><td class="blood">Кровь</td><td>0</td><td>0…+1</td><td>0</td><td>+1 только «Пытаться догнать изо всех сил» (1304)</td></tr>
 <tr><td class="dmood">Настроение Луизы (dev.mood)</td><td>−21…+8</td><td>−29…+4</td><td>+2</td><td>новый стат, цвет зелёный (выбран мной). Границ в коде не найдено</td></tr>
 </table>
 <p class="muted">Типичный путь: один путь из схемы, описан в карточке выше (суждение, не среднее). Мин и макс: перебор 64 стартовых набора (Безумие 0/3/6/9 × Логика 0/2/4/6 × Лесс назвал имя места да/нет × имя Вий да/нет), равновероятные выборы, ~40-53 тыс. путей на набор (базовый 3/2, имя не Вий: 53 241 путь). Ветки ratio() считаются по абсолютным значениям Безумия/Логики. Доли исходов (база 3/2): перезапуск игры без концовки 35%, вместе идут 46%, разошлись (не по пути / оставить) 19%.</p>
@@ -266,11 +266,11 @@ render();
 <div class="card">
 <h2>Ошибки и особенности кода</h2>
 <ul>
-<li><b>Неожиданный перезапуск:</b> в <code>inless_conv_memory</code> (838-882) без условия «про церковь Ара не спрашивали и Логика ≥ 1» метка кончается на <code>перезапуск игры</code> — игра перезапускается. Достижимо при «Это... и правда нехорошо.» / «Пожать плечами.» / «Нет. Это звучит плохо.».</li>
-<li>После <code>call_screen_strel()</code> (1059) стоит недостижимый <code>jump script_3_road_nodev_airat</code>; такой метки в доступных файлах нет.</li>
+<li><b>Неожиданный перезапуск:</b> в <code>inless_conv_memory</code> (838-881) без условия «про церковь Ара не спрашивали и Логика ≥ 1» метка кончается на <code>перезапуск игры</code> — игра перезапускается. Достижимо при «Это... и правда нехорошо.» / «Пожать плечами.» / «Нет. Это звучит плохо.».</li>
+<li>После <code>call_screen_strel()</code> (1058) стоит недостижимый <code>jump script_3_road_nodev_airat</code>; такой метки в доступных файлах нет.</li>
 <li><code>этот пункт</code> нигде не присваивается (всегда 0), поэтому блок 707-760 идёт всегда.</li>
-<li>Мёртвый код: закомментированный блок dev.mood (290-299), закомментированная сова (1365-1372).</li>
-<li>«Шутка» при имени «Вий» (1267-1274) возвращает в myname, где dv всё ещё «Вий» → снова viyname и ещё −2 dev.mood.</li>
+<li>Мёртвый код: закомментированный блок dev.mood (290-299), закомментированная сова (1364-1371).</li>
+<li>«Шутка» при имени «Вий» (1266-1273) возвращает в myname, где dv всё ещё «Вий» → снова viyname и ещё −2 dev.mood.</li>
 </ul>
 </div>
 
