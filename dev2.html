@@ -40,7 +40,7 @@ const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;f
 const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
 function build(){
   const L=[]; const ST=[]; let ei=0;
-  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#be123c', c2='#166534', c3='#b45309';
   L.push('ST["<div style=\'width:300px;white-space:normal\'>Кнопка «Поговорить» с Луизой<br/><small>dev_razg_menu (1): razg_menu = dev, razg = dev</small></div>"]:::ex');

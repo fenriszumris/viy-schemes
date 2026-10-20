@@ -40,7 +40,7 @@ const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;f
 const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
 function build(){
   const L=[]; const ST=[]; let ei=0;
-  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#4f46e5', c2='#be123c', c3='#0f766e';
   L.push('ST["<div style=\'width:320px;white-space:normal\'>Вход script3_sova_begin (1) от road: «Стоит переждать»<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Логика > 0 - описание леса; если Безумие ≥ 3 и madlogic < 3 - реплики «уютно»</span></div>"]:::ex');
@@ -131,7 +131,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Сова и сны - script3_sova.rpy</h1>
 <p>Ночёвка в лесу: сон про кору, воспоминание о Лессе, сова · script3_sova.rpy (359 строк)</p>
-<nav class="crumbs"><a href="index.html?v=22">← Все схемы</a> · <a href="road.html?v=40">Дорога (road)</a> · <a href="gubert.html?v=46">Губерт</a></nav>
+<nav class="crumbs"><a href="index.html?v=22">← Все схемы</a> · <a href="road.html?v=60">Дорога (road)</a> · <a href="gubert.html?v=60">Губерт</a></nav>
 </div></header>
 <main>
 <div class="card">
