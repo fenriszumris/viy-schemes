@@ -71,7 +71,7 @@ function build(){
   // --- H2: перекрёсток (road:92-114) ---
   if(EXP.has('H2')){
     E('H2 --> C2A["'+mk('Вперёд — к барьеру')+'"]:::h2', c2); E('C2A --> H3', c2);
-    E('H2 --> C2B["'+mk('«Куда-нибудь» (sluc)<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">случайно 1 из 2 (road:221)</span>')+'"]:::h2', c2);
+    E('H2 --> C2B["'+mk('«Куда-нибудь»<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">случайно 1 из 2 (road:221)</span>')+'"]:::h2', c2);
     E('C2B --> S1["renpy.random<br/>1 / 2"]:::h2', c2);
     E('S1 -- "1" --> RE["снова script_3_road<br/>(+1 круг)"]:::h2', c2); E('RE --> H1', c2);
     E('S1 -- "2" --> NAZ', c2);
@@ -158,7 +158,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <body>
 <header class="site"><div class="wrap">
 <h1>Дорога (перекрёсток)</h1>
-<p>script3_road.rpy (road) · переходы: script.rpy (krug, setblood) · вход после сцены <a href="less.html?v=60" style="color:#b9a7ff">«Разговор с Лессом»</a></p>
+<p>script3_road.rpy (road) · переходы: script.rpy (krug, setblood) · вход после сцены <a href="less.html?v=63" style="color:#b9a7ff">«Разговор с Лессом»</a></p>
 <nav class="crumbs"><a href="index.html?v=21">← Все схемы</a> · <a href="strel.html?v=23">Экран переходов</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
