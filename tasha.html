@@ -43,7 +43,7 @@ function hub(id,label,cls,ranges){
 
 function build(){
   const L=[]; const ST=[]; let ei=0;
-  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TB');
   L.push(hub('H1','Хаб 1. Встреча и погоня<br/>nazad:196–435','h1',[[C_TM,'−3…+2']]));
   L.push(hub('H2','Хаб 2. Стоп и знакомство<br/>nazad:448–525, 615–728','h2',[[C_TM,'−1…+2'],[C_MAD,'0…+1']]));
@@ -345,8 +345,8 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <body>
 <header class="site"><div class="wrap">
 <h1>Назад — встреча с Таширом (Ташей)</h1>
-<p>script3_nazad.rpy (nazad) · tash_game.rpy · day_1_tash_razg.rpy (razg) · вход стрелкой из сцены <a href="road.html?v=40" style="color:#b9a7ff">«Дорога»</a> или повторным разговором (razg_menu = «tash»)</p>
-<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="road.html?v=40">Дорога</a> · <a href="strel.html?v=23">Экран переходов</a> · <a href="stats.html?v=33">Статы</a></nav>
+<p>script3_nazad.rpy (nazad) · tash_game.rpy · day_1_tash_razg.rpy (razg) · вход стрелкой из сцены <a href="road.html?v=60" style="color:#b9a7ff">«Дорога»</a> или повторным разговором (razg_menu = «tash»)</p>
+<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="road.html?v=60">Дорога</a> · <a href="strel.html?v=23">Экран переходов</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
