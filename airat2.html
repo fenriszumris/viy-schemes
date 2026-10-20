@@ -5,23 +5,111 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<title>Айрат: коридор и Лени — Схемы игры «Вий»</title>
+<title>Айрат: дверь и Лени — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
+<style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
+const HUBS=["HD", "HO"];
+const EXP=new Set();
+const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)';
+const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)';
+function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
+function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
+function mk(text, ups, downs){
+  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
+  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
+    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
+    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
+    +'</div>';
+}
+function badge(ranges){
+  if(!ranges.length) return '';
+  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;margin-left:3px">'+p[1]+'</span>';}).join('');
+  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
+}
+function hub(id,label,cls,ranges){
+  const arrow = EXP.has(id) ? '▾' : '▸';
+  const b=badge(ranges||[]);
+  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
+  return id + '["' + inner + '"]:::' + cls;
+}
+const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>'+t+'</span>';};
+const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
+function build(){
+  const L=[]; const ST=[]; let ei=0;
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
+  L.push('flowchart TD');
+  const cG='#9aa3b2', cD='#166534', cO='#0369a1', cM='#b45309';
+  L.push('ST["<div style=\'width:300px;white-space:normal\'>Экран переходов: правый коридор</div>"]:::ex');
+  L.push('EXS["<div style=\'width:300px;white-space:normal\'>Экран переходов</div>"]:::ex');
+  L.push(hub('HD','Дверь коридора<br/><small>airat_church_corridor_door, 520-550</small>','hhn',[]));
+  if(EXP.has('HD')){
+    L.push('IN["<div style=\'width:300px;white-space:normal\'>Деревянная дверь в конце правого коридора<br/><small>airat_church_corridor_door (520)</small></div>"]:::sc');
+    E('HD --> IN', cD);
+    E('IN --> D1["<div style=\'width:290px;white-space:normal\'>'+mk('«Потянуть на себя»'+cond('не открывается; реплики зависят от Логики (logic_l) и Безумия (mad_l)'),null,null)+'</div>"]:::hhn', cD); E('D1 --> IN', cD);
+    E('IN --> D2["<div style=\'width:290px;white-space:normal\'>'+mk('«Постучаться.»'+cond('если leni.lock == airat_church_kar (535)')+cond('иначе «Никого нет дома.», дверь остаётся закрытой'),null,null)+'</div>"]:::hhn', cD); E('D2 --> OP', cD);
+    E('IN --> D3["<div style=\'width:290px;white-space:normal\'>'+mk('«Конец»',null,null)+'</div>"]:::hhn', cD); E('D3 --> DX', cD);
+    L.push('OP["<div style=\'width:300px;white-space:normal\'>Лени открывает дверь первый раз<br/><small>corridor_arrows_up_next_label (551): «leni_meet», my_location = airat_church_kar</small></div>"]:::sc');
+    L.push('DX["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
+  } else {
+    E('HD --> EXS', cD);
+  }
+  L.push(hub('HO','Лени: встреча и меню разговора<br/><small>leni_meet2 … leni_dialog, 658-1174</small>','hhl',[[C_MAD, '0…+2'], [C_LOG, '−3…+3'], [C_MOR, '−1…0'], [C_KAR, '−1…0'], [C_LEN, '−1…0']]));
+  if(EXP.has('HO')){
+    L.push('LD["<div style=\'width:300px;white-space:normal\'>Первая встреча с Лени (658)<br/><small>script_4_airat_leni_dialog: «leni_meet2», реплики по Безумию/Логике; «Служка?» → «Лени»</small></div>"]:::sc');
+    L.push('LDV["<div style=\'width:300px;white-space:normal\'>Луиза рядом и «dev_leni» ещё нет (710)<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>Луиза требует сказать, где отец; ld.d3 = 1; при Логике ≥ 1 пишется «leni_lie»</span></div>"]:::sc');
+    E('HO --> LD', cO);
+    E('LD --> LDV', cO);
+    E('LDV --> LM', cO);
+    L.push('LM["<div style=\'width:400px;white-space:normal\'><b>Меню Лени <small>(841)</small><br/><small>пункт «один раз» исчезает после выбора; «Конец» выходит</small></b><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Что за главный?»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>один раз (ld.d1)</span><br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>Карралак Ар, Лени «за него»</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>↳ «Что значит, он того?» <span style=\'background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>↳ «Он умер что ли?» <span style=\'background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px\'>▼−1</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>↳↳ «Да вот, недавно!» <span style=\'background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span> <span style=\'background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px\'>▼−1</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 leni.note += kar_died, leni.lock = пусто → Лени убегает, в кабинет больше не попасть (882-891)</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>↳↳ «Успокойся, я пошутила.»<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>дальше «Милли?» / «Не важно.», без статов</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«А это я где?»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>один раз (ld.d2)</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>↳ «А что это за церковь такая?» <span style=\'background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span><br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>при Логике ≥ 1 доп. реплика</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>↳ «Незачем уточнять» <span style=\'background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px\'>▼−1</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«А почему тут так пустынно?»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>один раз (ld.d5)</span><br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>без статов</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Я ищу Элеона Ара.»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>есть quest_find_priest.keep и ещё не ld.d3</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 ld.d3 = 1, «А зачем он вам нужен?»</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>↳ «По важному делу.» <span style=\'background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает leni_delo</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>↳ «Его искала его дочь»<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает leni_luiza; при Логике ≥ 1 ещё leni_lie</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>↳ «Да просто так!» <span style=\'background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span> <span style=\'background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px\'>▼−1</span> <span style=\'background:rgb(253,240,221);color:rgb(217,119,6);font-weight:700;border-radius:5px;padding:0 3px\'>▼−1</span><br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>нужен уровень Безумия ≥ 1</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Фенрира ранена.»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>quest_find_doc.keep и ld.d4 и rana (1035)</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 ld.d4 = 1</span><br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>Лени не знает аптечки; Луиза рядом: «у меня дома можно найти»</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Меня не пропускают.»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>задание «статуя» взято</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 Лени даёт пропуск (inv_list[propusk]), «отдайте Горран Ар»; quest_statue.diary</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Мне негде остановиться.» <span style=\'background:rgb(219,234,254);color:rgb(37,99,235);font-weight:700;border-radius:5px;padding:0 3px\'>▼−1</span><br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>Луиза не ищет жреца и нет «to_church»</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает to_church, quest_karralak.keep</span><br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>при Безумии ≥ 1 (mad_l): «уборщицы не нужны?», настроение Лени −1 (1148)</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Я согласна вступить в служки»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>есть to_church, нет to_church2</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 to_church2, war (нигде не читается), quest_statue.keep = 1</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Я отказываюсь вступать»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>есть to_church, нет to_church2</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 quest_karralak.done = 1</span></div></div>"]:::hhl');
+    L.push('LX["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
+    E('LM -- "«Конец» (1165)" --> LX', cO);
+  } else {
+    E('HO --> EXS', cO);
+  }
+  E('ST -- "налево, к двери" --> HD', cG);
+  E('HD -- "Лени открыла" --> HO', cG);
+  L.push('classDef hhl fill:#e5f2fa,stroke:#0369a1,color:#123043');
+  L.push('classDef hhn fill:#e7f4ea,stroke:#166534,color:#14331f');
+  L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
+  L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
+  return L.concat(ST).join('\n');
+}
+async function render(){
+  const f=document.getElementById('fchart');
+  if(!f) return;
+  f.removeAttribute('data-processed');
+  f.textContent=build();
+  await mermaid.run({nodes:[f]});
+  for(const ss of document.styleSheets){
+    let rules; try{rules=ss.cssRules;}catch(e){continue;}
+    for(let i=rules.length-1;i>=0;i--){
+      const r=rules[i];
+      if(r.selectorText && /\.(hh[a-z0-9]*|sc|ex|dd|ok)( span| > \*)$/.test(r.selectorText)
+         && r.style && r.style.getPropertyPriority('color')==='important'){ r.style.removeProperty('color'); }
+    }
+  }
+  document.querySelectorAll('#fchart g.node').forEach(function(g){
+    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
+    if(m && HUBS.indexOf(m[1])>=0){ g.style.cursor='pointer'; g.addEventListener('click', function(){ window.th(m[1]); }); }
+  });
+}
+window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
+window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
+render();
 </script>
-<style>.warn{color:#b91c1c;font-weight:700}</style>
 </head>
 <body>
 <header class="site"><div class="wrap">
-<h1>Айрат: дверь коридора и разговор с Лени — script_4_airat.rpy</h1>
-<p>Строки 520-1174: деревянная дверь, служка Лени, хаб разговоров</p>
-<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="airat1.html?v=40">Айрат: вход и церковь</a> · <a href="stats.html?v=32">Статы</a></nav>
+<h1>Айрат: дверь коридора и разговор с Лени</h1>
+<p>script_4_airat.rpy, строки 520-1174: дверь, служка Лени, меню разговора</p>
+<nav class="crumbs"><a href="index.html?v=41">← Все схемы</a> · <a href="airat1.html?v=40">Вход и церковь</a> · <a href="airat3.html?v=5">Карралак</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
-<h2>Статы (коридор, Лени: script_4_airat.rpy 520-1174)</h2>
+<h2>Статы сцены (строки 520-1174)</h2>
 <table class="stats">
 <tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Комментарий</th></tr>
 <tr><td class="mad">Безумие</td><td>0</td><td>+2</td><td>«Да просто так!» +1 (1028); «Да вот, недавно!» +1 (882, выход из сцены)</td></tr>
@@ -34,79 +122,15 @@ mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:
 <p class="muted">Все пункты хаба Лени одноразовые (флаги ld.d1/d2/d3/d5, kar_dialog), значения считаны суммой возможных пунктов. mad_l()/logic_l() определены в script.rpy:208-211 как lambda: sanity.get_level, т.е. mad_l() ≥ 1 равно Безумие ≥ 3, logic_l() ≥ 1 равно Логика ≥ 2 (проверено по коду).</p>
 </div>
 <div class="card">
+<h2>Типичный путь (суждение, не измерение)</h2>
+<p><b>Как иду:</b> «Постучаться.» → Лени открывает; меню: «Что за главный?» → «Что значит, он того?»; «А это я где?» → «А что это за церковь такая?»; «Я ищу Элеона Ара.» → «По важному делу.»; «Конец».</p>
+<p><b>Итог по сцене:</b> Безумие 0 · Логика +3 · Кровь 0 · Мораль 0.</p>
+</div>
+
+<div class="card">
 <h2>Схема</h2>
-<div class="widechart"><div class="mermaid">
-flowchart TD
-IN["<b>airat_church_corridor_door</b> (520): деревянная дверь в конце правого коридора<br/>меню «Потянуть на себя» (не открывается; реплики по Логике/Безумию) / «Постучаться.» / «Конец»"]:::hub
-KN0["«Постучаться.»: <span style='color:#b91c1c;font-weight:700'>если leni.lock == airat_church_kar (535)</span> → открывают<br/>иначе: «Никого нет дома.»"]:::scene
-OPEN["<b>corridor_arrows_up_next_label</b> (551): Лени открывает дверь<br/>первый раз «leni_meet»; my_location = airat_church_kar → strel"]:::out
-LD["<b>script_4_airat_leni_dialog</b> (658): разговор с Лени (razg = leni)<br/>первая встреча «leni_meet2»: реплики по Безумию/Логике; имя «Служка?» → «Лени»"]:::scene
-LDV["<span style='color:#b91c1c;font-weight:700'>если Луиза рядом и «dev_leni» ещё нет (710)</span><br/>Луиза требует сказать, где отец; ld.d3 = 1<br/><span style='color:#b91c1c;font-weight:700'>Логика ≥ 1</span>: «leni_lie» (Лени врёт)"]:::scene
-H["<b>Хаб разговора с Лени</b> (841)<br/>меню, «Конец» → leni_dialog_end (1168)"]:::hub
-D1["«Что за главный?» (ld.d1, один раз)<br/>Карралак Ар, Лени «за него»"]:::scene
-D1a["«Что значит, он того?» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (причина «Караллак, чего?»)"]:::scene
-D1b["«Он умер что ли?» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> (причина «Карралак умер?»)"]:::scene
-D1c["«Да вот, недавно!» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/>мораль −1 (sanity.moral, 883); Лени убегает в слезах<br/>leni.note += kar_died, leni.lock = пусто → strel"]:::bad
-D1d["«Успокойся, я пошутила.» → Лени выясняет про Милли"]:::scene
-D1e["«Милли?» / «Не важно.» без статов"]:::scene
-D2["«А это я где?» (ld.d2, один раз)"]:::scene
-D2a["«А что это за церковь такая?» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/>Логика ≥ 1: доп. реплика"]:::scene
-D2b["«Незачем уточнять» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
-D5["«А почему тут так пустынно?» (ld.d5, один раз)<br/>без статов"]:::scene
-D3["<span style='color:#b91c1c;font-weight:700'>«Я ищу Элеона Ара.» (quest_find_priest.keep и не ld.d3)</span><br/>ld.d3 = 1, «А зачем он вам нужен?»"]:::scene
-D3a["«По важному делу.» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (причина «По важному делу ищу Элеона.»)"]:::scene
-D3b["«Его искала его дочь» (leni_luiza)<br/>без статов; <span style='color:#b91c1c;font-weight:700'>Логика ≥ 1</span>: «leni_lie»"]:::scene
-D3c["<span style='color:#b91c1c;font-weight:700'>«Да просто так!» (Безумие ≥ 1 по get_level)</span><br/><span style='background:rgb(254,243,199);color:rgb(180,83,9);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"]:::scene
-D4["<span style='color:#b91c1c;font-weight:700'>«Фенрира ранена.» (quest_find_doc.keep и ...)</span><br/>ld.d4 = 1; Лени не знает аптечки; если Луиза рядом: «у меня дома можно найти»"]:::scene
-D6["<span style='color:#b91c1c;font-weight:700'>«Меня не пропускают.» (диалог со стражей у статуи)</span><br/>Лени даёт пропуск (inv_list[propusk] активен), «отдайте Горран Ар»; quest_statue.diary"]:::scene
-D7["<span style='color:#b91c1c;font-weight:700'>«Мне негде остановиться.» (Луиза не ищет жреца и нет «to_church»)</span><br/><span style='color:#b91c1c;font-weight:700'>Безумие ≥ 1: «уборщицы не нужны? ... кровь»</span> <span style='background:rgb(224,242,254);color:rgb(3,105,161);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><br/>Лени предлагает остановиться, если вступит в служки; «to_church», quest_karralak.keep"]:::scene
-D8["<span style='color:#b91c1c;font-weight:700'>«Я согласна вступить в служки» (to_church и нет to_church2)</span><br/>«war», quest_statue.keep = 1; работа со служкой Лени"]:::scene
-D9["<span style='color:#b91c1c;font-weight:700'>«Я отказываюсь вступать» (to_church, нет to_church2)</span><br/>quest_karralak.done = 1"]:::scene
-END["«Конец» → leni_dialog_end (1168): «и все» → strel"]:::out
-IN --> KN0
-KN0 -- "да" --> OPEN
-OPEN --> LD
-LD --> LDV
-LD --> H
-LDV --> H
-H --> D1
-D1 --> D1a
-D1 --> D1b
-D1b --> D1c
-D1b --> D1d
-D1a --> D1e
-D1d --> D1e
-D1e --> H
-H --> D2
-D2 --> D2a
-D2 --> D2b
-D2a --> H
-D2b --> H
-H --> D5
-D5 --> H
-H --> D3
-D3 --> D3a
-D3 --> D3b
-D3 --> D3c
-D3a --> H
-D3b --> H
-D3c --> H
-H --> D4
-D4 --> H
-H --> D6
-D6 --> H
-H --> D7
-D7 --> H
-H --> D8
-D8 --> H
-H --> D9
-D9 --> H
-H --> END
-classDef scene fill:#E4EEF9,stroke:#7a9cc6
-classDef hub fill:#fff3bf,stroke:#d4a017
-classDef bad fill:#ffd6d6,stroke:#b91c1c
-classDef out fill:#d8f5e0,stroke:#2f9e44
-</div></div>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
+<div class="widechart"><div id="fchart" class="mermaid"></div></div>
 </div>
 <div class="card">
 <h2>Ошибки и особенности кода</h2>
@@ -114,9 +138,10 @@ classDef out fill:#d8f5e0,stroke:#2f9e44
 <li>Если сказать Лени «Да вот, недавно!» (Карралак умер), Лени убегает и leni.lock очищается: в кабинет больше не попасть (дверь «Никого нет дома»).</li>
 <li>Условие «Мне негде остановиться» требует, чтобы Луиза не искала жреца (quest_find_priest.keep == 0).</li>
 <li>Строки 628-630 закомментированы (kar.mood, add_mad).</li>
-</ul>
+<li>Пункт «Фенрира ранена.» (1035) показывается при <code>ld.d4</code> уже истинном, но <code>ld.d4 = 1</code> ставится только внутри этого же пункта (1036). Похоже на опечатку (вероятно, нужно «не ld.d4»): пока ld.d4 нигде не ставится раньше, пункт недоступен. Проверено поиском по присланным файлам.</li></ul>
 </div>
+
 </main>
-<footer>Схемы игры «Вий» · Айрат: коридор и Лени · выверено по коду 20.10.2026</footer>
+<footer>Схемы игры «Вий» · script_4_airat.rpy · выверено по коду 20.10.2026</footer>
 </body>
 </html>
