@@ -260,7 +260,7 @@ function build(){
     E('RS --> RS4["'+mk('«Я хотела узнать о мире...» (nazad:1784, 1789)',[[C_LOG,1]],[[C_TM,1]])+'"]:::h8', c8); E('RS4 --> RS', c8);
     E('RS --> RS5["'+mk('«Я просто попросила. Мне было интересно.» (nazad:1796, 1801)',[[C_MAD,1]],[[C_TM,1]])+'"]:::h8', c8); E('RS5 --> RS', c8);
     E('RS --> RS6["'+mk('«Я... Прости.» (nazad:1815)'+cond('после ровно 1 причины'),[[C_TM,3]])+'"]:::h8', c8); E('RS6 --> S2', c8);
-    E('RS -.->|"после 2 причин: Тм+3 если извинялась, иначе Тм−1 (nazad:1731-1739)"| S2', c8);
+    E('RS -.->|"после 2 причин: Тм <span style='background:rgb(253,240,221);color:rgb(217,119,6);font-weight:700;border-radius:5px;padding:0 3px'>▲+3</span> если извинялась, иначе Тм <span style='background:rgb(253,240,221);color:rgb(217,119,6);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> (nazad:1731-1739)"| S2', c8);
   } else {
     E('H8 --> H7', c8);
     E('H8 --> CR1', c8);
@@ -346,7 +346,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <header class="site"><div class="wrap">
 <h1>Назад — встреча с Таширом (Ташей)</h1>
 <p>script3_nazad.rpy (nazad) · tash_game.rpy · day_1_tash_razg.rpy (razg) · вход стрелкой из сцены <a href="road.html?v=2" style="color:#b9a7ff">«Дорога»</a> или повторным разговором (razg_menu = «tash»)</p>
-<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="road.html?v=2">Дорога</a> · <a href="strel.html?v=20">Экран переходов</a> · <a href="stats.html?v=32">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="road.html?v=2">Дорога</a> · <a href="strel.html?v=23">Экран переходов</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -455,7 +455,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <li>Закомментировано: «Остановиться и нормально поговорить» с <span class="tmood">Тм +1</span> (nazad:429–431); «Летающих городов?» (nazad:1621–1638) — внутри та же опечатка <code>ssanity</code>.</li>
 </ul></div>
 </div>
-<p class="muted">Полный список найденных ошибок — на странице <a href="stats.html?v=32">«Статы»</a>.</p>
+<p class="muted">Полный список найденных ошибок — на странице <a href="stats.html?v=33">«Статы»</a>.</p>
 </div>
 </div>
 <div id="panel-short" style="position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:100%">
@@ -513,7 +513,7 @@ classDef dead fill:#f1f3f5,stroke:#64748b,color:#333a45
 <tr><td>Дорога (перекрёсток)</td><td>0…+1</td><td>0…+1</td><td>0…+3</td><td>0</td><td>—</td></tr>
 <tr><td>Назад (Таша)</td><td>−3…+6</td><td>0…+4</td><td>0</td><td>0</td><td>−25…+26*</td></tr>
 </table>
-<p class="muted">Посчитано по коду 20.10.2026 перебором путей скриптом, смерти учтены. *При ограничении в 2 партии: в коде партии и рематчи не ограничены, реальные пределы Настроения Таши не ограничены. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=32">«Статы»</a>.</p>
+<p class="muted">Посчитано по коду 20.10.2026 перебором путей скриптом, смерти учтены. *При ограничении в 2 партии: в коде партии и рематчи не ограничены, реальные пределы Настроения Таши не ограничены. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=33">«Статы»</a>.</p>
 </div>
 
 </main>
