@@ -42,61 +42,63 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
   L.push('flowchart TD');
   const cG='#9aa3b2', cLK='#be123c', cLL='#0369a1', cLR='#166534', cLB='#475569';
-  L.push('ST["Экран переходов: внутри церкви"]:::ex');
-  L.push('EXS["Экран переходов"]:::ex');
-  L.push('PD["Метка podn (1534): мёртвый код<br/>та же развилка с деньгами Миранды, вызова нет"]:::bad');
+  L.push('ST["<div style=\'width:300px;white-space:normal\'>Экран переходов: внутри церкви</div>"]:::ex');
+  L.push('EXS["<div style=\'width:300px;white-space:normal\'>Экран переходов</div>"]:::ex');
+  L.push('PD["<div style=\'width:300px;white-space:normal\'>Метка podn (1534): мёртвый код<br/>та же развилка с деньгами Миранды, вызова нет</div>"]:::bad');
   L.push(hub('HK','Разговор с Карралаком<br/><small>kar_dialog, строки 1175-1374</small>','hhk',[[C_MOR, '−1…+1']]));
   if(EXP.has('HK')){
-    L.push('KV["Луиза рядом: Карралак узнаёт Луизу<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>Луиза рядом и «dev» ещё не в kar_dialog (1180)</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает kar_priest; при Логике ≥ 2 ещё kar_lie → открывает в доме Луизы пункт «Не хочу тебя расстраивать, но он мог лгать.» (1830-1834)</span>"]:::sc');
-    L.push('KMN["Плата Миранды ещё не отдана<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>quest_money_return.keep (1220)</span>"]:::sc');
-    L.push('KMA["Денег меньше 5: деньги потрачены, выбора нет"]:::sc');
+    L.push('KV["<div style=\'width:300px;white-space:normal\'>Луиза рядом: Карралак узнаёт Луизу<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>Луиза рядом и «dev» ещё не в kar_dialog (1180)</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает kar_priest; при Логике ≥ 2 ещё kar_lie → открывает в доме Луизы пункт «Не хочу тебя расстраивать, но он мог лгать.» (1830-1834)</span></div>"]:::sc');
+    L.push('KMN["<div style=\'width:300px;white-space:normal\'>Плата Миранды ещё не отдана<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>quest_money_return.keep (1220)</span><br/><span style=\'font-size:12px\'>Если Луизы рядом нет или плата уже отдана, этот блок пропускается и сразу идёт меню разговора</span></div>"]:::sc');
+    L.push('KMA["<div style=\'width:300px;white-space:normal\'>Денег меньше 5: деньги потрачены, выбора нет</div>"]:::sc');
     E('HK --> KV', cLK);
     E('KV --> KMN', cLK);
-    E('HK -- "Луизы рядом нет" --> KMN', cLK);
     E('KMN -- "денег < 5" --> KMA', cLK);
     E('KMA --> KMD["'+mk('Мораль меняется сама, без выбора',null,[[C_MOR,1]])+'"]:::sc', cLK); E('KMD --> KH', cLK);
-    E('KMN --> KM2["'+mk('«Оставить себе.»'+cond('если денег ≥ 5')+flag(' записывает quest_money_return.false (деньги оставлены)'),null,[[C_MOR, 1]])+'"]:::hhk', cLK); E('KM2 --> KH', cLK);
-    E('KMN --> KM3["'+mk('«Отдать»'+flag(' записывает quest_money_return.done (деньги отданы)'),[[C_MOR, 1]],null)+'"]:::hhk', cLK); E('KM3 --> KH', cLK);
-    E('KMN -- "плата уже отдана" --> KH', cLK);
-    L.push('KH["<b>Меню разговора с Карралаком <small>(1253)</small><br/><small>пункт исчезает после выбора; выбор возвращает в это же меню</small></b><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Фенрира ранена.»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>если задание врача взято (quest_find_doc.keep) и пункта ещё не было</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает doc → пункт больше не показывается; Карралак: «рана не опасна, приходи завтра утром»</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Меня не пропускают.»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>задание «статуя» взято (quest_statue.keep), пропуск ещё не выдан</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 выдаёт пропуск (inv propusk), дневник статуи: часть 3 → Горран Ар пропускает</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Мне негде остановиться.»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>Луиза не ищет жреца и нет «to_church»</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает to_church, quest_karralak.keep → открывает «Я согласна вступить в служки» и «Я отказываюсь вступать»</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Я согласна вступить в служки»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>есть «to_church», нет «to_church2»</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает to_church2, war (нигде не читается), quest_statue.keep = 1 → открывает «Меня не пропускают.»</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Я отказываюсь вступать»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>есть «to_church», нет «to_church2»</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает to_church2, quest_karralak.done = 1 (задание закрыто)</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Кто вы?»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>нет «kar»</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает kar, имя Карралак Ар</span></div>"]:::sc');
-    E('KH -- "«Закончить диалог.»" --> EXS', cLK);
+    E('KMN --> KM2["<div style=\'width:290px;white-space:normal\'>'+mk('«Оставить себе.»'+cond('если денег ≥ 5')+flag(' записывает quest_money_return.false (деньги оставлены)'),null,[[C_MOR, 1]])+'</div>"]:::hhk', cLK); E('KM2 --> KH', cLK);
+    E('KMN --> KM3["<div style=\'width:290px;white-space:normal\'>'+mk('«Отдать»'+flag(' записывает quest_money_return.done (деньги отданы)'),[[C_MOR, 1]],null)+'</div>"]:::hhk', cLK); E('KM3 --> KH', cLK);
+    L.push('KH["<div style=\'width:400px;white-space:normal\'><b>Меню разговора с Карралаком <small>(1253)</small><br/><small>пункт исчезает после выбора; выбор возвращает в это же меню</small></b><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Фенрира ранена.»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>если задание врача взято (quest_find_doc.keep) и пункта ещё не было</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает doc → пункт больше не показывается; Карралак: «рана не опасна, приходи завтра утром»</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Меня не пропускают.»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>задание «статуя» взято (quest_statue.keep), пропуск ещё не выдан</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 выдаёт пропуск (inv propusk), дневник статуи: часть 3 → Горран Ар пропускает</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Мне негде остановиться.»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>Луиза не ищет жреца и нет «to_church»</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает to_church, quest_karralak.keep → открывает «Я согласна вступить в служки» и «Я отказываюсь вступать»</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Я согласна вступить в служки»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>есть «to_church», нет «to_church2»</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает to_church2, war (нигде не читается), quest_statue.keep = 1 → открывает «Меня не пропускают.»</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Я отказываюсь вступать»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>есть «to_church», нет «to_church2»</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает to_church2, quest_karralak.done = 1 (задание закрыто)</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Кто вы?»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>нет «kar»</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает kar, имя Карралак Ар</span></div></div>"]:::sc');
+    E('KH -- "«Закончить диалог.»" --> KX', cLK);
+    L.push('KX["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
   } else {
     E('HK --> KH', cLK);
   }
   L.push(hub('HL','Левый коридор: лазарет и Феня<br/><small>airat_church_inside_arrows_left, 1377-1449</small>','hhl',[[C_MOR, '−1…+1'], [C_FEN, '−2…+2']]));
   if(EXP.has('HL')){
-    L.push('LC["Дверь с крестом: лазарет закрыт<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>если задание врача уже взято или провалено (quest_find_doc keep/false) → сразу на экран переходов</span>"]:::sc');
-    L.push('LF["Первый раз: у двери ребёнок-оборотень Феня, раненая лапка<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>«lazaret_go» ещё нет (1387)</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает lazaret_go → в «Возвращении к Луизе» героиня говорит про закрытый лазарет (1481)</span>"]:::sc');
-    L.push('LM["Меню помощи Фене"]:::sc');
+    L.push('LC["<div style=\'width:300px;white-space:normal\'>Дверь с крестом: лазарет закрыт<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>если задание врача уже взято или провалено (quest_find_doc keep/false) → сразу на экран переходов</span></div>"]:::sc');
+    L.push('LF["<div style=\'width:300px;white-space:normal\'>Первый раз: у двери ребёнок-оборотень Феня, раненая лапка<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>«lazaret_go» ещё нет (1387)</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает lazaret_go → в «Возвращении к Луизе» героиня говорит про закрытый лазарет (1481)</span></div>"]:::sc');
+    L.push('LM["<div style=\'width:300px;white-space:normal\'>Меню помощи Фене</div>"]:::sc');
     E('HL --> LC', cLL);
     E('LC --> LF', cLL);
     E('LF -- "«Ну и...?» или «Не обращать внимание»" --> LM', cLL);
-    E('LM --> LM1["'+mk('«Я могу помочь найти врача.» / «Мы сейчас как раз ищем врача.»'+cond('первый вариант, если Луиза не ищет жреца; второй, если ищет (quest_find_priest.keep)')+flag(' записывает quest_find_doc.keep = 1, fenya.near = 1 → Феня идёт с героиней (читается в script_4_airat:146, 184, 1522); fenya.zn_name = 1 → Феня называет имя'),[[C_MOR, 1], [C_FEN, 2]],null)+'"]:::hhl', cLL); E('LM1 --> EXS', cLL);
-    E('LM --> LM2["'+mk('«Ничем не могу помочь.»'+flag(' записывает quest_find_doc.false = 1 → лазарет больше не открывается (1380)'),null,[[C_MOR, 1], [C_FEN, 2]])+'"]:::hhl', cLL); E('LM2 --> EXS', cLL);
+    E('LM --> LM1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я могу помочь найти врача.» / «Мы сейчас как раз ищем врача.»'+cond('первый вариант, если Луиза не ищет жреца; второй, если ищет (quest_find_priest.keep)')+flag(' записывает quest_find_doc.keep = 1, fenya.near = 1 → Феня идёт с героиней (читается в script_4_airat:146, 184, 1522); fenya.zn_name = 1 → Феня называет имя'),[[C_MOR, 1], [C_FEN, 2]],null)+'</div>"]:::hhl', cLL); E('LM1 --> LX', cLL);
+    E('LM --> LM2["<div style=\'width:290px;white-space:normal\'>'+mk('«Ничем не могу помочь.»'+flag(' записывает quest_find_doc.false = 1 → лазарет больше не открывается (1380)'),null,[[C_MOR, 1], [C_FEN, 2]])+'</div>"]:::hhl', cLL); E('LM2 --> LX', cLL);
+    L.push('LX["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
   } else {
     E('HL --> EXS', cLL);
   }
   L.push(hub('HR','Возвращение к Луизе<br/><small>airat_church_lazaret_arrows_right, 1450-1533</small>','hhn',[]));
   if(EXP.has('HR')){
-    L.push('R1["Луиза уже ждёт<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>задание «найти жреца» взято, «meet_dev» ещё нет, Луиза не у своего дома (1451)</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает meet_dev, dev.near = 1 → Луиза идёт с героиней</span>"]:::sc');
-    L.push('R2["Если задание врача не провалено: Феня рядом, Луиза: «Мой папа как раз лекарь!»<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает quest_find_doc.keep = 1, fenya.near = 1; «сначала до моего дома, он левее Церкви»</span>"]:::sc');
-    L.push('R3["Итоги разведки: «Слева лазарет...» / «Там сидел служка, Лени...»<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 если Лени передал, что Элеон в порядке (leni_delo): записывает «in_gavan» в заметки поиска жреца → открывает «мог лгать» в доме Луизы (1830)</span>"]:::sc');
+    L.push('R1["<div style=\'width:300px;white-space:normal\'>Луиза уже ждёт<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>задание «найти жреца» взято, «meet_dev» ещё нет, Луиза не у своего дома (1451)</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает meet_dev, dev.near = 1 → Луиза идёт с героиней</span></div>"]:::sc');
+    L.push('R2["<div style=\'width:300px;white-space:normal\'>Если задание врача не провалено: Феня рядом, Луиза: «Мой папа как раз лекарь!»<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает quest_find_doc.keep = 1, fenya.near = 1; «сначала до моего дома, он левее Церкви»</span></div>"]:::sc');
+    L.push('R3["<div style=\'width:300px;white-space:normal\'>Итоги разведки: «Слева лазарет...» / «Там сидел служка, Лени...»<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 если Лени передал, что Элеон в порядке (leni_delo): записывает «in_gavan» в заметки поиска жреца → открывает «мог лгать» в доме Луизы (1830)</span></div>"]:::sc');
     E('HR --> R1', cLR);
     E('R1 --> R2', cLR);
     E('R2 --> R3', cLR);
-    E('R3 --> EXS', cLR);
+    E('R3 --> RX', cLR);
+    L.push('RX["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
   } else {
     E('HR --> R3', cLR);
   }
   L.push(hub('HB','Назад из церкви<br/><small>inside_arrows_bottom, 1563-1597</small>','hhs',[]));
   if(EXP.has('HB')){
-    L.push('B1["Луиза: «Ты куда?»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>задание «найти жреца» взято, «meet_dev» ещё нет (1564)</span>"]:::sc');
-    L.push('B2["Луиза волнуется об отце<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>«razg1_dev» ещё нет, Луиза рядом (1588)</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает razg1_dev → реплика один раз</span>"]:::sc');
+    L.push('B1["<div style=\'width:300px;white-space:normal\'>Луиза: «Ты куда?»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>задание «найти жреца» взято, «meet_dev» ещё нет (1564)</span></div>"]:::sc');
+    L.push('B2["<div style=\'width:300px;white-space:normal\'>Луиза волнуется об отце<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>«razg1_dev» ещё нет, Луиза рядом (1588)</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает razg1_dev → реплика один раз</span></div>"]:::sc');
     E('HB --> B1', cLB);
     E('HB -- "без вопроса Луизы" --> B2', cLB);
-    E('B1 --> B11["'+mk('«Заблудилась.»',null,null)+'"]:::hhs', cLB); E('B11 --> EXS', cLB);
-    E('B1 --> B12["'+mk('«Я передумала.»'+flag(' записывает quest_find_priest.status = false, dev.near = 0 → Луиза остаётся, поиск жреца закрыт'),null,null)+'"]:::hhs', cLB); E('B12 --> EXS', cLB);
-    E('B2 --> EXS', cLB);
+    E('B1 --> B11["<div style=\'width:290px;white-space:normal\'>'+mk('«Заблудилась.»',null,null)+'</div>"]:::hhs', cLB); E('B11 --> BX', cLB);
+    E('B1 --> B12["<div style=\'width:290px;white-space:normal\'>'+mk('«Я передумала.»'+flag(' записывает quest_find_priest.status = false, dev.near = 0 → Луиза остаётся, поиск жреца закрыт'),null,null)+'</div>"]:::hhs', cLB); E('B12 --> BX', cLB);
+    E('B2 --> BX', cLB);
+    L.push('BX["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
   } else {
     E('HB --> B1', cLB);
     E('HB --> B2', cLB);
@@ -163,12 +165,12 @@ render();
 
 <div class="card">
 <h2>Схема</h2>
-<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <span class="warn">Красным</span> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
 <div class="widechart"><div id="fchart" class="mermaid"></div></div>
 </div>
 <div class="card">
 <h2>Схема</h2>
-<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <span class="warn">Красным</span> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
 <div class="widechart"><div id="fchart" class="mermaid"></div></div>
 
 </main>
