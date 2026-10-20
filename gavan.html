@@ -202,14 +202,6 @@ render();
 <p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
 <div class="widechart"><div id="fchart" class="mermaid"></div></div>
 </div>
-<div class="card">
-<h2>Ошибки и особенности кода</h2>
-<ul>
-<li>Переход «Лесс спасает» (212) ведёт на метку <code>nesm</code> в script_1_less_hand.rpy:428.</li>
-<li>Строки 269-273 (после <code>jump</code> в ответе «просто город прикольный») недостижимы: «выбор глубины могилы» и уход Адриана не показываются.</li>
-</ul>
-</div>
-
 </main>
 <footer>Схемы игры «Вий» · script3_tgavan_oh.rpy · выверено по коду 20.10.2026</footer>
 </body>
