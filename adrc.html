@@ -70,7 +70,7 @@ function build(){
     L.push('R5["<div style=\'width:340px;white-space:normal\'>Героиня рассказывает Адриану находки (1361-1565)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 каждый рассказ записывается: яд, дневник, письмо Камилле, чай, бумаги, анализ и т.д. (adrian_dialog)</span></div>"]:::stub');
     E('R0 --> RR1["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адро принял версию «самоубийство» (1319):',null,null)+'</div>"]:::stub', c2); E('RR1 --> R1', c2);
     E('R0 --> RR2["<div style=\'width:290px;white-space:normal\'>'+mk('Если в кабинете не нашли улик (1351):',null,null)+'</div>"]:::stub', c2); E('RR2 --> R4', c2);
-    E('R0 --> RR3["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе:',null,null)+'</div>"]:::stub', c2); E('RR3 --> R5', c2);
+    E('R0 --> RR3["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адро не принял «самоубийство» и в кабинете нашли улики:',null,null)+'</div>"]:::stub', c2); E('RR3 --> R5', c2);
     E('R1 --> RY["<div style=\'width:290px;white-space:normal\'>'+mk('«Да, ему стоит знать.»',[[C_ADR, 1]],null)+'</div>"]:::stub', c2); E('RY --> R2', c2);
     E('R1 --> RN["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет, не стоит»',null,null)+'</div>"]:::stub', c2); E('RN --> R3', c2);
     E('R2 --> END', c2);
@@ -134,7 +134,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Адриан: разговор о деле</h1>
 <p>script3_tgavan_oh.rpy:1281-1576: Адриан у двери после Адро, доклад по расследованию.</p>
-<nav class="crumbs"><a href="index.html?v=67">← Все схемы</a> · <a href="adro2.html?v=5">Адро: кабинет</a> · <a href="stats.html?v=33">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=67">← Все схемы</a> · <a href="adro2.html?v=1">Адро: кабинет</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card" style="border:2px dashed #6b7280;background:#f3f4f6"><b>⚠ Серые пунктирные блоки: пока в заглушке (не достижимо в демо).</b> Весь доклад Адриану (блок «adrian_conv_door_white», строки 1317-1576) в демо не подключён.</div>

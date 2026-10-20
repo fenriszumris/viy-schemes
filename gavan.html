@@ -44,9 +44,9 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#166534', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
-  L.push('ST["<a href=\'tgavan.html?v=4\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Из страницы «Дверь Адриана»: «Взять очень осторожно» (после зелья)<br/><small>script_3_tgavan_adr_after_door</small></div></a>"]:::ex');
+  L.push('ST["<a href=\'tgavan.html?v=70\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Из страницы «Дверь Адриана»: «Взять очень осторожно» (после зелья)<br/><small>script_3_tgavan_adr_after_door</small></div></a>"]:::ex');
   L.push('EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex');
-  L.push('NS["<a href=\'less.html?v=64\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:280px;white-space:normal\'>Лесс спасает героиню: переход на метку nesm (212)</div></a>"]:::ex');
+  L.push('NS["<a href=\'less.html?v=66\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:280px;white-space:normal\'>Лесс спасает героиню: переход на метку nesm (212)</div></a>"]:::ex');
   L.push('BAD["<div style=\'width:280px;white-space:normal\'>Плохая концовка «У самурая нет цели» (214)</div>"]:::bad');
   L.push('AD["<a href=\'adro.html?v=3\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Дальше: страница «Адро» (script_4_tgavan_adro) — Адриан ведёт к зданию эльфов (702-706)</div></a>"]:::ex');
   E('ST --> G1', cG);
@@ -59,10 +59,10 @@ function build(){
     L.push('WA["<div style=\'width:260px;white-space:normal\'>Адриан: «Но вы должны будете меня слушать» (47)</div>"]:::sc');
     E('Q --> Q1["<div style=\'width:290px;white-space:normal\'>'+mk('«Может, мы можем договориться?»',null,null)+'</div>"]:::hhn', c1); E('Q1 --> QC', c1);
     E('QC --> Q1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Адриана не ниже −2 (9):'+flag('если Адриан знает героиню как Вий: добавляет, что прежняя Вий не должна вернуться (12)'),null,null)+'</div>"]:::hhn', c1); E('Q1a --> WA', c1);
-    E('QC --> Q1b["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе (22):',null,null)+'</div>"]:::hhn', c1); E('Q1b --> Q', c1);
+    E('QC --> Q1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Адриана ниже −2 (22):',null,null)+'</div>"]:::hhn', c1); E('Q1b --> Q', c1);
     E('Q --> Q2["<div style=\'width:290px;white-space:normal\'>'+mk('«Эй! Вы же не можете меня просто бросить!»',null,null)+'</div>"]:::hhn', c1); E('Q2 --> QD', c1);
     E('QD --> Q2a["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Адриана ниже 0 (28):',null,null)+'</div>"]:::hhn', c1); E('Q2a --> EXS', c1);
-    E('QD --> Q2b["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе (31):',null,null)+'</div>"]:::hhn', c1); E('Q2b --> WA', c1);
+    E('QD --> Q2b["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Адриана не ниже 0 (31):',null,null)+'</div>"]:::hhn', c1); E('Q2b --> WA', c1);
     E('Q --> Q3["<div style=\'width:290px;white-space:normal\'>'+mk('«Окей, пока!»'+cond('Адриан уходит, героиня остаётся одна (39-44)'),null,null)+'</div>"]:::hhn', c1); E('Q3 --> EXS', c1);
     E('WA --> W1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я согласна.»',[[C_ADR, 1]],[[C_MAD, 2]])+'</div>"]:::hhn', c1); E('W1 --> G3', c1);
     E('WA --> W2["<div style=\'width:290px;white-space:normal\'>'+mk('«Пожалуй все же нет.»',null,null)+'</div>"]:::hhn', c1); E('W2 --> EXS', c1);
@@ -84,9 +84,9 @@ function build(){
     E('FT --> FZ', c8);
     E('FZ --> F1["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адриан знает героиню как Вий (131):'+flag('записывает флаг «Белая Стража — враг» (oh.bad = 1) → Белая Стража больше не друг'),null,null)+'</div>"]:::hhr', c8); E('F1 --> EXS', c8);
     L.push('FD["<div style=\'width:260px;white-space:normal\'>Адриан режет героине горло (153-196)</div>"]:::bad');
-    E('FZ --> F2["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе (137):',null,null)+'</div>"]:::hhr', c8); E('F2 --> FD', c8);
+    E('FZ --> F2["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адриан не знает героиню как Вий (137):',null,null)+'</div>"]:::hhr', c8); E('F2 --> FD', c8);
     E('FD --> F3["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Лесса не ниже 5 (198):',null,null)+'</div>"]:::hhr', c8); E('F3 --> NS', c8);
-    E('FD --> F4["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе:',null,null)+'</div>"]:::hhr', c8); E('F4 --> BAD', c8);
+    E('FD --> F4["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Лесса ниже 5 (198):',null,null)+'</div>"]:::hhr', c8); E('F4 --> BAD', c8);
   } else {
     E('G2 --> EXS', c8);
     E('G2 --> NS', c8);
@@ -103,7 +103,7 @@ function build(){
     E('Y --> D2["<div style=\'width:290px;white-space:normal\'>'+mk('«Мне больше некуда идти...»'+cond('один раз (250)'),null,null)+'</div>"]:::hhl', c2); E('D2 --> G4', c2);
     E('Y --> D3["<div style=\'width:290px;white-space:normal\'>'+mk('«Эм... У меня нет особой причины, просто город прикольный.»',[[C_MAD, 1]],[[C_LOG, 1], [C_ADR, 2]])+'</div>"]:::hhl', c2); E('D3 --> G4', c2);
     E('YA --> D1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адриан знает героиню как Вий (233):',null,null)+'</div>"]:::hhl', c2); E('D1a --> G4', c2);
-    E('YA --> D1b["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе:',null,null)+'</div>"]:::hhl', c2); E('D1b --> M2', c2);
+    E('YA --> D1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адриан не знает героиню как Вий:',null,null)+'</div>"]:::hhl', c2); E('D1b --> M2', c2);
     E('M2 --> E1["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет, я хотя бы знакома с вами, я останусь здесь.»',null,null)+'</div>"]:::hhl', c2); E('E1 --> G4', c2);
     E('M2 --> E2["<div style=\'width:290px;white-space:normal\'>'+mk('«Мне стоит пойти в Айрат.»',null,null)+'</div>"]:::hhl', c2); E('E2 --> AIR', c2);
     E('M2 --> E3["<div style=\'width:290px;white-space:normal\'>'+mk('«Расскажите больше об этом городе, пожалуйста.»'+cond('один раз (291)'),null,null)+'</div>"]:::hhl', c2); E('E3 --> M2', c2);
@@ -187,7 +187,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Тёмная Гавань: Адриан</h1>
 <p>script3_tgavan_oh.rpy, 1-706: Адриан соглашается помочь, расспрашивает, берёт в Белую Стражу, рассказывает про дело посла.</p>
-<nav class="crumbs"><a href="index.html?v=67">← Все схемы</a> · <a href="tgavan.html?v=4">Дверь Адриана</a> · <a href="stats.html?v=33">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=67">← Все схемы</a> · <a href="tgavan.html?v=67">Дверь Адриана</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
