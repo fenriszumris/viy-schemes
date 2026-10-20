@@ -5,23 +5,146 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<title>Айрат: стража и статуя — Схемы игры «Вий»</title>
+<title>Айрат: стража, кошка, статуя — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
+<style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
+const HUBS=["H1", "H2", "H3", "H4"];
+const EXP=new Set();
+const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)';
+const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)';
+function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
+function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
+function mk(text, ups, downs){
+  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
+  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
+    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
+    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
+    +'</div>';
+}
+function badge(ranges){
+  if(!ranges.length) return '';
+  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;margin-left:3px">'+p[1]+'</span>';}).join('');
+  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
+}
+function hub(id,label,cls,ranges){
+  const arrow = EXP.has(id) ? '▾' : '▸';
+  const b=badge(ranges||[]);
+  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
+  return id + '["' + inner + '"]:::' + cls;
+}
+const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>'+t+'</span>';};
+const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>'+t+'</span>';};
+const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
+function build(){
+  const L=[]; const ST=[]; let ei=0;
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
+  L.push('flowchart TD');
+  const cG='#9aa3b2', c1='#166534', c2='#475569', c3='#b45309', c4='#7c3aed';
+  L.push('ST["<div style=\'width:320px;white-space:normal\'>Экран переходов: правый коридор церкви, стража у статуи<br/><small>вход в script_5_airat_guard (2); «meet» сбрасывает стрелку</small></div>"]:::ex');
+  L.push('EXS["<div style=\'width:200px;white-space:normal\'>Экран переходов</div>"]:::ex');
+  L.push(hub('H1','Стража и хаб разговора<br/><small>script_5_airat_guard, 2-385</small>','hhn',[[C_MAD, '0…+1'], [C_LOG, '0…+1']]));
+  if(EXP.has('H1')){
+    L.push('G0["<div style=\'width:300px;white-space:normal\'>Первая встреча со стражей (2): «meet» в quest_statue<br/>Алекс и Горран ругаются про страх и чай</div>"]:::sc');
+    E('H1 --> G0', c1);
+    E('G0 --> G1a["<div style=\'width:290px;white-space:normal\'>'+mk('«Прервать их»',[[C_LOG, 1]],null)+'</div>"]:::hhn', c1); E('G1a --> GH', c1);
+    E('G0 --> G1b["<div style=\'width:290px;white-space:normal\'>'+mk('«Это весело!»',null,null)+'</div>"]:::hhn', c1); E('G1b --> G1M', c1);
+    L.push('G1M["<div style=\'width:200px;white-space:normal\'>Второе меню (71)</div>"]:::sc');
+    E('G1M --> G1c1["<div style=\'width:290px;white-space:normal\'>'+mk('«Хватит!»',null,null)+'</div>"]:::hhn', c1); E('G1c1 --> GH', c1);
+    E('G1M --> G1d["<div style=\'width:290px;white-space:normal\'>'+mk('«Опереться на стену и смотреть»',[[C_MAD, 1]],null)+'</div>"]:::hhn', c1); E('G1d --> GH', c1);
+    L.push('GH["<div style=\'width:400px;white-space:normal\'><b>Хаб разговора со стражей <small>(135)</small><br/><small>пункты «один раз» исчезают после выбора</small></b><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«А что здесь, собственно происходит?»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>один раз («what»)</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 quest_statue.diary</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«А можно посмотреть?»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>после «what», один раз («watch»)</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«В учебнике про Вий?»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>после «drou», один раз</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Разве что чаю!»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>один раз («tea»)</span><br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>чай активен; «Дроу?» / «Не уточнять»</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Я ищу кое-кого. Элеона Ара.»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>quest_find_priest.keep и нет «guards1»</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает guards1</span><br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>при Логике ≥ 1: «Попытаться соврать что-то убедительное.» (guards2, снова хаб) / «Его ищет его дочь.»</span></div></div>"]:::hhn');
+    L.push('GX["<div style=\'width:240px;white-space:normal\'>«Думаю, ничего.» → экран переходов</div>"]:::ex');
+    E('GH --> GX', c1);
+  } else {
+    E('H1 --> EXS', c1);
+  }
+  L.push(hub('H2','Пропуск<br/><small>guard1_propusk, 386-431</small>','hhs',[]));
+  if(EXP.has('H2')){
+    L.push('P["<div style=\'width:320px;white-space:normal\'>guard1_propusk (398): «Держите пропуск!»<br/>Алекс и Горран забирают пропуск<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 inv propusk note = enter</span><br/><small>guard2_propusk / vosp_propusk - пустые метки (386-397)</small> → экран переходов</div>"]:::sc');
+    E('H2 --> P', c2);
+  } else {
+    E('H2 --> EXS', c2);
+  }
+  L.push(hub('H3','Статуя кошки<br/><small>cat_inspect, cat_talk, 432-581</small>','hhk',[[C_MAD, '−2…+2'], [C_LOG, '−2…+1']]));
+  if(EXP.has('H3')){
+    L.push('CI["<div style=\'width:320px;white-space:normal\'>Осмотр статуи кошки без пропуска (432): cat_inspect<br/>diary 2; «Бросить дело» или «Убежать» ранее → экран переходов, иначе my_location = airat_cat</div>"]:::sc');
+    L.push('CT["<div style=\'width:300px;white-space:normal\'>Статуя кошки (454): cat_talk, razg = cat, меню (460)</div>"]:::sc');
+    E('H3 --> CI', c3);
+    E('CI --> CT', c3);
+    E('CT --> CT1["<div style=\'width:290px;white-space:normal\'>'+mk('«Что за идиотизм? Это глупо.»'+note('«Бросить это дело»: quest_statue.false, quest_karralak.false → экран / «Продолжить»'),null,[[C_MAD, 1]])+'</div>"]:::hhk', c3); E('CT1 --> CH', c3);
+    E('CT --> CT2["<div style=\'width:290px;white-space:normal\'>'+mk('«Кошки - страшные создания!»'+note('«Убежать.»: те же квесты false → экран / «Продолжить.»'),[[C_MAD, 1]],[[C_LOG, 1]])+'</div>"]:::hhk', c3); E('CT2 --> CH', c3);
+    E('CT --> CT3["<div style=\'width:290px;white-space:normal\'>'+mk('«Тут что-то не так.»',[[C_LOG, 1]],[[C_MAD, 1]])+'</div>"]:::hhk', c3); E('CT3 --> CH', c3);
+    L.push('CH["<div style=\'width:280px;white-space:normal\'>«Привет?»<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>при Безумии ≥ 1: «Мяу!»; при Логике ≥ 1: «не каменные же!»</span><br/><small>меню (555)</small></div>"]:::sc');
+    E('CH --> CH1["<div style=\'width:290px;white-space:normal\'>'+mk('«Неа!»',[[C_MAD, 1]],[[C_LOG, 1]])+'</div>"]:::hhk', c3); E('CH1 --> X3', c3);
+    E('CH --> CH2["<div style=\'width:290px;white-space:normal\'>'+mk('«Слышу.»',null,[[C_MAD, 1]])+'</div>"]:::hhk', c3); E('CH2 --> X3', c3);
+    L.push('X3["<div style=\'width:200px;white-space:normal\'>→ разговор с Муриссой</div>"]:::ex');
+    E('X3 --> H4', c3);
+  } else {
+    E('H3 --> H4', c3);
+  }
+  L.push(hub('H4','Мурисса Белая и концовки<br/><small>script_5_airat_statue_2, 582-758</small>','hhp',[[C_MAD, '0…+2'], [C_LOG, '−2…+2']]));
+  if(EXP.has('H4')){
+    L.push('S2["<div style=\'width:300px;white-space:normal\'>Разговор с кошкой Муриссой Белой (582)<br/><small>script_5_airat_statue_2</small></div>"]:::sc');
+    E('H4 --> S2', c4);
+    L.push('SM["<div style=\'width:400px;white-space:normal\'><b>Меню статуи <small>(583)</small><br/><small>без «Конец»: выход только концовками «END?»</small></b><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Кто ты?»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>один раз (catd.d2)</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«И чем именно ты занималась?»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>после d2, один раз (d3)</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>↳ «А точнее?» <span style=\'background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>↳ «Вы очень важная кошка!» <span style=\'background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px\'>▼−1</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Лизнуть ее в нос.» <span style=\'background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span><br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>один раз (catd.d1)</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Почему пугаешь паладинов?»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>без гейта, но все исходы ведут к перезапуску</span><br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>Карралак (Жрец?) говорит, kar.zn_name = 1; ниже меню концовок</span></div></div>"]:::hhp');
+    E('S2 --> SM', c4);
+    L.push('E1["<div style=\'width:280px;white-space:normal\'>END? «Забывчивость» (church__memory)<br/>«Вырываться.» <span style=\'background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>Безумие ≥ 1</span><small>renpy.full_restart() (699)</small></div>"]:::bad');
+    L.push('E2["<div style=\'width:280px;white-space:normal\'>END? «Что-то здесь не так.» (church__lie2)<br/>«Сделать вид, что поверила.» <span style=\'background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>Логика ≥ 1</span><small>renpy.full_restart() (712)</small></div>"]:::bad');
+    L.push('E3["<div style=\'width:280px;white-space:normal\'>END? «Лжецы.» (church__lie)<br/>«Вы ведь врете.»<br/><small>renpy.full_restart() (724)</small></div>"]:::bad');
+    L.push('E4["<div style=\'width:280px;white-space:normal\'>END? «Доверие.» (church__trust)<br/>«Это действительно похоже на сломанную статую.» <span style=\'background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px\'>▼−1</span><br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 quest_statue.done = 1</span><small>renpy.full_restart() (740)</small></div>"]:::bad');
+    E('SM --> E1', c4);
+    E('SM --> E2', c4);
+    E('SM --> E3', c4);
+    E('SM --> E4', c4);
+  } else {
+  }
+  E('ST -- "стража у статуи" --> H1', cG);
+  E('ST -- "с пропуском" --> H2', cG);
+  E('ST -- "осмотр статуи" --> H3', cG);
+  L.push('classDef hhk fill:#fde9ee,stroke:#be123c,color:#4d1223');
+  L.push('classDef hhn fill:#e7f4ea,stroke:#166534,color:#14331f');
+  L.push('classDef hhp fill:#f1eafd,stroke:#7c3aed,color:#2f1c5c');
+  L.push('classDef hhs fill:#edf1f6,stroke:#475569,color:#1d2733');
+  L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
+  L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
+  L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
+  return L.concat(ST).join('\n');
+}
+async function render(){
+  const f=document.getElementById('fchart');
+  if(!f) return;
+  f.removeAttribute('data-processed');
+  f.textContent=build();
+  await mermaid.run({nodes:[f]});
+  for(const ss of document.styleSheets){
+    let rules; try{rules=ss.cssRules;}catch(e){continue;}
+    for(let i=rules.length-1;i>=0;i--){
+      const r=rules[i];
+      if(r.selectorText && /\.(hh[a-z0-9]*|sc|ex|dd|ok)( span| > \*)$/.test(r.selectorText)
+         && r.style && r.style.getPropertyPriority('color')==='important'){ r.style.removeProperty('color'); }
+    }
+  }
+  document.querySelectorAll('#fchart g.node').forEach(function(g){
+    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
+    if(m && HUBS.indexOf(m[1])>=0){ g.style.cursor='pointer'; g.addEventListener('click', function(){ window.th(m[1]); }); }
+  });
+}
+window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
+window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
+render();
 </script>
-<style>.warn{color:#b91c1c;font-weight:700}</style>
 </head>
 <body>
 <header class="site"><div class="wrap">
-<h1>Айрат: стража, кошка Мурисса, статуя — script_5_airat.rpy</h1>
-<p>Строки 1-871: Горран и Алекс, пропуск, каменная кошка, четыре концовки «END?»</p>
-<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="airat4.html?v=40">Дом Луизы и концовки</a> · <a href="stats.html?v=32">Статы</a></nav>
+<h1>Айрат: стража, кошка Мурисса, статуя</h1>
+<p>script_5_airat.rpy, строки 1-871: Горран и Алекс, пропуск, каменная кошка, четыре концовки «END?»</p>
+<nav class="crumbs"><a href="index.html?v=41">← Все схемы</a> · <a href="airat4.html?v=43">Дом Луизы</a> · <a href="airat3.html?v=5">Карралак</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
-<h2>Статы (стража, кошка, статуя: script_5_airat.rpy)</h2>
+<h2>Статы сцены (script_5_airat.rpy, строки 1-871)</h2>
 <table class="stats">
 <tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Комментарий</th></tr>
 <tr><td class="mad">Безумие</td><td>−2</td><td>+5</td><td>мин: «Что за идиотизм?» −1 и «Слышу.» −1 (или «Тут что-то не так» −1); макс: «Опереться на стену» +1, «Кошки - страшные создания!» +1, «Неа!» +1, «Лизнуть» +1, «Вырываться.» +1 (завершающий выбор). Пункты с гейтом уровня зависят от стартовых значений</td></tr>
@@ -31,85 +154,15 @@ mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:
 <p class="muted">Экстремумы посчитаны суммой независимых выборов с учётом гейтов; не полным перебором (в отличие от dev.html). add_mad не склеивает одинаковые причины (проверено в script.rpy), add_logic склеивает; здесь все причины разные. mad_l()/logic_l() — lambda get_level (script.rpy:208-211).</p>
 </div>
 <div class="card">
+<h2>Типичный путь (суждение, не измерение)</h2>
+<p><b>Как иду:</b> «Прервать их»; в хабе «А что здесь, собственно происходит?» и «Думаю, ничего.»; у статуи «Тут что-то не так.» → «Слышу.»; у кошки «Кто ты?» → «А точнее?» → «Почему пугаешь паладинов?» → «Вы ведь врете.» (концовка «Лжецы»).</p>
+<p><b>Итог по сцене:</b> Безумие −2 · Логика +3 · Кровь 0.</p>
+</div>
+
+<div class="card">
 <h2>Схема</h2>
-<div class="widechart"><div class="mermaid">
-flowchart TD
-ST["<b>strel: правый коридор церкви, стража у статуи</b><br/>вход в script_5_airat_guard (2); «meet» сбрасывает стрелку airat_church_corridor._arrows._right._next_label"]:::out
-G0["<b>script_5_airat_guard</b> (2): первая встреча «meet» в quest_statue<br/>Алекс (g2) и Горран (g1) ругаются про страх и чай"]:::scene
-G1["меню (50) при первой встрече"]:::hub
-G1a["«Прервать их» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (причина «Прервать стражников сразу.»)"]:::scene
-G1b["«Это весело!» → второе меню (71)"]:::scene
-G1c["«Хватит!» без статов"]:::scene
-G1d["«Опереться на стену и смотреть» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (причина «Не прервать стражников дважды.»)"]:::scene
-GH["<b>Хаб разговора со стражей</b> (135)"]:::hub
-GA["«А что здесь, собственно происходит?» (once «what») → quest_statue.diary"]:::scene
-GB["<span style='color:#b91c1c;font-weight:700'>«А можно посмотреть?» (после «what»)</span> (once «watch»)"]:::scene
-GC["<span style='color:#b91c1c;font-weight:700'>«В учебнике про Вий?» (после «drou»)</span> (once)"]:::scene
-GD["«Разве что чаю!» (once «tea»): tea активен; «Дроу?» / «Не уточнять»"]:::scene
-GE["<span style='color:#b91c1c;font-weight:700'>«Я ищу кое-кого. Элеона Ара.» (quest_find_priest.keep, нет guards1)</span><br/><span style='color:#b91c1c;font-weight:700'>Логика ≥ 1</span>: «Попытаться соврать что-то убедительное.» (guards2, снова хаб) / «Его ищет его дочь.»"]:::scene
-GX["«Думаю, ничего.» → strel"]:::out
-P["<b>guard1_propusk</b> (398): «Держите пропуск!»<br/>Алекс/Горран забирают пропуск, inv propusk note = enter → strel<br/>(guard2_propusk / vosp_propusk — пустые метки, 386-397)"]:::out
-CI["<b>cat_inspect</b> (432): осмотр статуи кошки<br/>без пропуска: diary 2, → strel<br/>если уже «Бросить дело» (5.1) или «Убежать» (5.2): реплика и → strel<br/>иначе my_location = airat_cat"]:::scene
-CT["<b>cat_talk</b> (454): статуя кошки (razg = cat)<br/>меню (460)"]:::hub
-CT1["«Что за идиотизм? Это глупо.» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><br/>«Бросить это дело»: quest_statue.false, quest_karralak.false → strel / «Продолжить»"]:::scene
-CT2["«Кошки - страшные создания!» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><br/>«Убежать.»: те же квесты false → strel / «Продолжить.»"]:::scene
-CT3["«Тут что-то не так.» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
-CH["«Привет?»; <span style='color:#b91c1c;font-weight:700'>Безумие ≥ 1: «Мяу!»</span>; <span style='color:#b91c1c;font-weight:700'>Логика ≥ 1: «не каменные же!»</span><br/>меню (555): «Неа!» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> / «Слышу.» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
-S2["<b>script_5_airat_statue_2</b> (582): разговор с кошкой Муриссой Белой"]:::hub
-S2a["«Кто ты?» (catd.d2, один раз)"]:::scene
-S2b["«И чем именно ты занималась?» (после d2, d3)<br/>«А точнее?» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> / «Вы очень важная кошка!» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
-S2d["«Лизнуть ее в нос.» (catd.d1, один раз) <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"]:::scene
-S2c["«Почему пугаешь паладинов?» (без гейта, можно повторять)<br/>Карралак (Жрец?) говорит, kar.zn_name = 1<br/>меню"]:::hub
-E1["<span style='color:#b91c1c;font-weight:700'>«Вырываться.» (Безумие ≥ 1)</span> <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/><b>END? Забывчивость</b> (church__memory) → renpy.full_restart()"]:::bad
-E2["<span style='color:#b91c1c;font-weight:700'>«Сделать вид, что поверила.» (Логика ≥ 1)</span> <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/><b>END? Что-то здесь не так.</b> (church__lie2) → renpy.full_restart()"]:::bad
-E3["«Вы ведь врете.»<br/><b>END? Лжецы.</b> (church__lie) → renpy.full_restart()"]:::bad
-E4["«Это действительно похоже на сломанную статую.» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><br/>quest_statue.done = 1<br/><b>END? Доверие.</b> (church__trust) → renpy.full_restart()"]:::bad
-ST --> G0
-G0 --> G1
-G1 --> G1a
-G1 --> G1b
-G1b --> G1c
-G1b --> G1d
-G1a --> GH
-G1c --> GH
-G1d --> GH
-GH --> GA
-GA --> GH
-GH --> GB
-GB --> GH
-GH --> GC
-GC --> GH
-GH --> GD
-GD --> GH
-GH --> GE
-GE --> GH
-GH --> GX
-ST -- "с пропуском от Лени/Карралака" --> P
-ST --> CI
-CI --> CT
-CT --> CT1
-CT --> CT2
-CT --> CT3
-CT1 -- "«Продолжить» / дальше" --> CH
-CT2 -- "«Продолжить» / дальше" --> CH
-CT3 -- "«Продолжить» / дальше" --> CH
-CH --> S2
-S2 --> S2a
-S2a --> S2
-S2 --> S2b
-S2b --> S2
-S2 --> S2d
-S2d --> S2
-S2 --> S2c
-S2c --> E1
-S2c --> E2
-S2c --> E3
-S2c --> E4
-classDef scene fill:#E4EEF9,stroke:#7a9cc6
-classDef hub fill:#fff3bf,stroke:#d4a017
-classDef bad fill:#ffd6d6,stroke:#b91c1c
-classDef out fill:#d8f5e0,stroke:#2f9e44
-</div></div>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
+<div class="widechart"><div id="fchart" class="mermaid"></div></div>
 </div>
 <div class="card">
 <h2>Ошибки и особенности кода</h2>
@@ -120,7 +173,8 @@ classDef out fill:#d8f5e0,stroke:#2f9e44
 <li>Условие 240: <code>not tea._active or cap._active</code> без скобок, приоритет операторов даёт «чай не активен или кружка активна».</li>
 </ul>
 </div>
+
 </main>
-<footer>Схемы игры «Вий» · Айрат: стража и статуя · выверено по коду 20.10.2026</footer>
+<footer>Схемы игры «Вий» · script_5_airat.rpy · выверено по коду 20.10.2026</footer>
 </body>
 </html>
