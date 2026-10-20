@@ -46,7 +46,7 @@ function build(){
   const cG='#9aa3b2', c1='#0e7490', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
   L.push('ST["<a href=\'gavan.html?v=4\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Тёмная Гавань: герой идёт к центральному зданию (посольство эльфов)<br/><small>script_4_tgavan_adro</small></div></a>"]:::ex');
   L.push('EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex');
-  L.push('NS["<a href=\'less.html?v=64\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:260px;white-space:normal\'>Лесс вытаскивает героиню: метка nesm (1267)</div></a>"]:::ex');
+  L.push('NS["<a href=\'less.html?v=66\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:260px;white-space:normal\'>Лесс вытаскивает героиню: метка nesm (1267)</div></a>"]:::ex');
   L.push('BAD["<div style=\'width:280px;white-space:normal\'>Плохая концовка «Забытая» (1275-1278, перезапуск игры)</div>"]:::bad');
   L.push('NEXT["<a href=\'adro2.html?v=5\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Дальше: кабинет Лиассона (страница «Адро 2», script_4_tgavan_begin_adro)</div></a>"]:::ex');
   E('ST --> D1', cG);
@@ -76,7 +76,7 @@ function build(){
     E('B0 --> BB2["<div style=\'width:290px;white-space:normal\'>'+mk('Если расследование взято и значок ещё не показывали (1589):',null,null)+'</div>"]:::hhl', c2); E('BB2 --> B1', c2);
     E('B0 --> BB3["<div style=\'width:290px;white-space:normal\'>'+mk('Если после ссоры Адриан дал второй значок (1606):',null,null)+'</div>"]:::hhl', c2); E('BB3 --> B2', c2);
     E('B0 --> BB4["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адро уже ссорился с героиней (1619):',null,null)+'</div>"]:::hhl', c2); E('BB4 --> B3', c2);
-    E('B0 --> BB5["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе:',null,null)+'</div>"]:::hhl', c2); E('BB5 --> B4', c2);
+    E('B0 --> BB5["<div style=\'width:290px;white-space:normal\'>'+mk('Если записи про Адро нет, расследование не взято и ссоры не было:',null,null)+'</div>"]:::hhl', c2); E('BB5 --> B4', c2);
     E('B3 --> EXS', c2);
     E('B4 --> EXS', c2);
     E('B5 --> EXS', c2);
@@ -163,7 +163,7 @@ function build(){
     E('SBK --> NEXT', c5);
     E('SL --> EXS', c5);
     E('SPR --> SC9["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Лесса не ниже 5 (1227):',null,null)+'</div>"]:::hhr', c5); E('SC9 --> NS', c5);
-    E('SPR --> SC10["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе:',null,null)+'</div>"]:::hhr', c5); E('SC10 --> BAD', c5);
+    E('SPR --> SC10["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Лесса ниже 5 (1227):',null,null)+'</div>"]:::hhr', c5); E('SC10 --> BAD', c5);
     E('SG --> NEXT', c5);
     E('SY --> NEXT', c5);
   } else {
@@ -210,7 +210,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Адро: ворота, допрос, контракт</h1>
 <p>script3_tgavan_oh.rpy:709-1278 и 1583-1651: эльф Адро у посольства, значок, допрос, контракт Чёрной Печати.</p>
-<nav class="crumbs"><a href="index.html?v=67">← Все схемы</a> · <a href="nars.html?v=3">Нарси</a> · <a href="stats.html?v=33">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=67">← Все схемы</a> · <a href="nars.html?v=1">Нарси</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
