@@ -70,7 +70,7 @@ function build(){
   if(EXP.has('N2')){
     L.push('NM["<div style=\'width:260px;white-space:normal\'>Нарси ждёт: «Ну? Ещё что-то хочешь?» (131)</div>"]:::sc');
     E('N2 --> NM', c2);
-    L.push('WHO["<div style=\'width:300px;white-space:normal\'>Нарси: «Я — Нарси» (152-175)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Адриан уже назвал героине имя: Нарси отвечает по имени; иначе спрашивает его (экран «Имя»)</span></div>"]:::sc');
+    L.push('WHO["<div style=\'width:300px;white-space:normal\'>Нарси: «Я — Нарси» (152-175)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Адриан уже назвал героине имя: Нарси отвечает по имени; если не назвал - спрашивает его (экран «Имя»)</span></div>"]:::sc');
     L.push('WHO2["<div style=\'width:260px;white-space:normal\'>Нарси: «Лучший Вор, Гильдмастер...» (178)</div>"]:::sc');
     L.push('JB["<div style=\'width:260px;white-space:normal\'>Нарси: «Милочка, ты уверена, что тебе ЭТО нужно?» (206-210)</div>"]:::sc');
     L.push('JB2["<div style=\'width:300px;white-space:normal\'>Нарси: «Мне скучно. Найди что-нибудь интересное» (219-231)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «задание Нарси взято» → в дневнике открыт пункт</span></div>"]:::sc');
@@ -165,7 +165,7 @@ function build(){
     E('IT3 --> K2["<div style=\'width:290px;white-space:normal\'>'+mk('«Промолчать.»',null,null)+'</div>"]:::hhr', c5); E('K2 --> EXS', c5);
     E('KP --> K3["<div style=\'width:290px;white-space:normal\'>'+mk('«Хорошо!»'+flag('записывает «Нарси идёт со мной» (near = 1) → у героини 20 минут игрового времени дойти до Кап и Бара'),[[C_NAR, 1]],null)+'</div>"]:::hhr', c5); E('K3 --> EXS', c5);
     E('KP --> K4["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет.»'+flag('записывает «поход в Кап и Бар провален»'),null,[[C_NAR, 1]])+'</div>"]:::hhr', c5); E('K4 --> EXS', c5);
-    E('IT4 --> T1["<div style=\'width:290px;white-space:normal\'>'+mk('«Она твоя.»'+cond('если задание взято (753): задание выполнено, демоверсия заканчивается; иначе Нарси «должен», табличка уходит к нему (760)'),null,null)+'</div>"]:::hhr', c5); E('T1 --> END', c5);
+    E('IT4 --> T1["<div style=\'width:290px;white-space:normal\'>'+mk('«Она твоя.»'+cond('если задание взято (753): задание выполнено, демоверсия заканчивается; если не взято - Нарси «должен», табличка уходит к нему (760)'),null,null)+'</div>"]:::hhr', c5); E('T1 --> END', c5);
     E('IT4 --> T2["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет.»',null,[[C_NAR, 3]])+'</div>"]:::hhr', c5); E('T2 --> EXS', c5);
     E('IT5 --> E1["<div style=\'width:290px;white-space:normal\'>'+mk('«Конечно!»'+flag('записывает: игла теперь у героини'),null,null)+'</div>"]:::hhr', c5); E('E1 --> EXS', c5);
     E('IT5 --> E2["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет, не стоит»',null,null)+'</div>"]:::hhr', c5); E('E2 --> EXS', c5);
