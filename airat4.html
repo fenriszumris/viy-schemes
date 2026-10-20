@@ -38,23 +38,23 @@ mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:
 <div class="widechart"><div class="mermaid">
 flowchart TD
 ST["<b>strel: левая сторона главной улицы</b>"]:::out
-DD{"<b>dev_door_label</b> (1616): дверь дома Луизы<br/>меню: «Войти» (если Луиза рядом) / «Постучаться» (если нет) / «Конец»"}:::hub
+DD["<b>dev_door_label</b> (1616): дверь дома Луизы<br/>меню: «Войти» (если Луиза рядом) / «Постучаться» (если нет) / «Конец»"]:::hub
 DK["«Постучаться»: <span style='color:#b91c1c;font-weight:700'>dev.lock == дом Луизы</span><br/><span style='color:#b91c1c;font-weight:700'>dev_bad (to_airat_bad / after_airat_bad)</span>: «Уходите! Я занята!»; <span style='color:#b91c1c;font-weight:700'>если Феня ранена и рядом</span>: Луиза пускает только Феню, rana = 1 → strel<br/>иначе → дом<br/>если Луизы в доме нет: «Тишина. И пустота.»"]:::scene
 H["<b>airat_house_luiza</b> (1674): дом Луизы<br/>первый раз «home_luiza»; ночью — «поспи на скамейке», change_day(day, 5), dev.near = 1"]:::scene
 F0["<span style='color:#b91c1c;font-weight:700'>Феня ранена и рядом (fenya_rana)</span>: Луиза просит найти аптечку"]:::scene
 F1["<span style='color:#b91c1c;font-weight:700'>«medicine» в заметках quest_find_doc</span> → <b>airat_house_fenya_bint</b> (1787)<br/>Луиза перевязывает Феню, rana = 1<br/><span style='background:rgb(255,228,230);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▲+1</span><br/>если Луиза ищет жреца → luiza_next, иначе Феня «пойдёмте» → strel"]:::scene
 F2["иначе → strel (осмотр аптечки)"]:::out
-Q{"<span style='color:#b91c1c;font-weight:700'>quest_find_priest.keep</span>: выбор продолжения"}:::hub
+Q["<span style='color:#b91c1c;font-weight:700'>quest_find_priest.keep</span>: выбор продолжения"]:::hub
 Q1["«dev_priest_home2»: «Надо пойти в Церковь» → strel"]:::out
 Q2["повторно, «dev_church» ещё нет: cycle.d1 += 1<br/>на 4-й раз «Да ты издеваешься!» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> (один раз, ==4)"]:::scene
 Q3["<span style='color:#b91c1c;font-weight:700'>«dev_church» есть и «node» (записка) есть, «node2» нет</span> → <b>airat_end_dev</b> (1933)"]:::bad
-LN{"<span style='color:#b91c1c;font-weight:700'>«dev_church» есть, «dev_priest_home4» нет</span> → <b>airat_house_luiza_next</b> (1819)"}:::hub
+LN["<span style='color:#b91c1c;font-weight:700'>«dev_church» есть, «dev_priest_home4» нет</span> → <b>airat_house_luiza_next</b> (1819)"]:::hub
 L1["«Не хочу тебя расстраивать, но он мог лгать.» <span style='color:#b91c1c;font-weight:700'>(если «miranda_dev» в airat_sp и т. п.)</span><br/><span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> заметка priest_lie"]:::scene
 L2["«Не думаю, что он мог лгать...»<br/><span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▲+1</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> заметка not_priest_lie"]:::scene
 L3["«Мне плевать.» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▼−1</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span><br/>«Пожалуй, я остаюсь.» / «Ага. Отличная идея.»"]:::scene
 L3b["«Ага. Отличная идея.»: quest_find_priest, find_doc, know_priest → false; dev.bad = 1 → strel (Луиза ушла)"]:::bad
 L4["«Помоги осмотреть дом» → strel (осмотр дома: airat_house_priest_menu)"]:::out
-PM{"<b>airat_house_priest_menu</b> (1900): лупа в доме<br/>«Осмотреть записку» (node: зашифрованная записка с гербом Церкви) / «Осмотреть медицинские вещи» (medicine) / «Осмотреть странную аптечку» (medicine2) / «Закончить осмотр»"}:::hub
+PM["<b>airat_house_priest_menu</b> (1900): лупа в доме<br/>«Осмотреть записку» (node: зашифрованная записка с гербом Церкви) / «Осмотреть медицинские вещи» (medicine) / «Осмотреть странную аптечку» (medicine2) / «Закончить осмотр»"]:::hub
 E0["<b>КОНЕЦ ДЕМОВЕРСИИ «Без понятия что тут творится»</b><br/><span style='color:#b91c1c;font-weight:700'>мораль &lt; 1 и нет priest_lie и Логика (get_level) &lt; 2</span><br/>airat__dont; затем меню без доступных пунктов и общий <code>renpy.full_restart()</code> (1983)"]:::bad
 E1["<b>КОНЕЦ «Что-то творится в светлом королевстве»</b><br/>«Церковь действительно не так чиста?» <span style='color:#b91c1c;font-weight:700'>(priest_lie)</span> airat__notclean"]:::bad
 E2["<b>КОНЕЦ «Подстава»</b><br/>«Может, ему это подкинули?» <span style='color:#b91c1c;font-weight:700'>(Логика get_level ≥ 2)</span> airat__pods"]:::bad
