@@ -54,11 +54,15 @@ function build(){
   L.push('A0["<b>Сцена 0. Выбор сложности</b> (hard)<br/>обучение, вопрос про HARDMODE<br/>статов нет"]:::ext');
   L.push('A1["<b>Сцена 1. Меню разработчика</b> (start3)<br/>razr = 1 жёстко: меню видит каждый игрок<br/>«Игра» → tash_game (мини-игра, вне схемы)"]:::ext');
   L.push('ST["<b>Экран стрелок</b><br/>conv_0 / conv_1 → call_screen_strel()"]:::term');
+  L.push('PM["prop_memory / prop_memory2 (script_memory:230, 245)<br/>вызывающий не найден в проверенном наборе файлов"]:::ext');
   L.push('L2["<b>Разговор с Лессом</b><br/>прямой вход (conv_2), минуя гляделки"]:::lm');
-  L.push('D1["BAD END<br/>«Вспомнить все...»<br/>death_son"]:::die');
+  L.push('D1["BAD END<br/>«Вспомнить все...»<br/>death_son (script_memory:195)<br/><small>persistent.death +1 · deaths_list[&quot;vosp&quot;][1]=1 · renpy.full_restart (225-228)</small>"]:::die');
   L.push('D2["BAD END<br/>«Подкормка...»<br/>zeml_nothing"]:::die');
+  L.push('D3["BAD END<br/>«Слишком много крови...»<br/>sm_blood (hand:415-420)"]:::die');
+  L.push('INS["<b>Кликабельные осмотры экрана стрелок</b> (стартовая локация)<br/>спальники · табличка · отпечаток · кремень · 5 луп-направлений<br/><span style=\'background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span> <span style=\'background:rgb(243,235,255);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px\'>▼−2</span> (ветка «korn») — список ниже"]:::term');
   E('A0 --> A1', cG);
   E('A1 --> H1', cG);
+  E('ST --> INS', cG);
   // --- H1 ---
   if(EXP.has('H1')){
     E('H1 -.->|"лупа «осмотреться»: <span style=\'background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span> один раз (start_osm1)"| H1', c1);
@@ -72,7 +76,7 @@ function build(){
   }
   // --- СОН ---
   L.push('subgraph DREAM["💤 СОН (c1_sleep → mather_memory → son → head_ache)"]');
-  L.push('DS1["<b style=\'font-size:20px\'>▶ НАЧАЛО СНА</b><br/>c1_sleep (script_1_less_begin:270-286): чёрный экран, «Это... Сон?»<br/>воспоминание о матери mather_memory (script_memory:7-39), без статов"]:::dstart');
+  L.push('DS1["<b style=\'font-size:20px\'>▶ НАЧАЛО СНА</b><br/>c1_sleep (begin:245): чёрный экран и «Это... Сон?» (256-259), call mather_memory (261)<br/>воспоминание о матери mather_memory (script_memory:6-40), без статов"]:::dstart');
   L.push(hub('H2','Хаб 2. Сон<br/>c1_sleep → head_ache','h2',[[C_MAD,'−1…+2'],[C_LOG,'0…+1'],[C_BLD,'0…+1']]));
   E('DS1 --> H2', c2);
   L.push('DE1["<b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0 → экран стрелок"]:::dend');
@@ -80,7 +84,7 @@ function build(){
     L.push('SON["сон (son, script_memory:43)"]:::h2');
     L.push('SUD["воспоминание о суде<br/>(sud_memory)"]:::h2');
     L.push('HA["головная боль, кровь из носа (head_ache)"]:::h2');
-    L.push('DE0["<b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0<br/><small>script_1_less_begin:309</small>"]:::dend');
+    L.push('DE0["<b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0<br/><small>begin:276</small>"]:::dend');
     L.push('DE2["<b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0<br/><small>script_memory:194</small>"]:::dend');
     E('H2 --> C2A["'+mk('«Что это вообще сейчас было?»')+'"]:::h2', c2); E('C2A --> SON', c2);
     E('H2 --> C2B["'+mk('«Пожать плечами и выбросить из головы.»')+'"]:::h2', c2); E('C2B --> DE0', c2);
@@ -108,6 +112,9 @@ function build(){
     L.push('ZR["Бегство в панике<br/><small>zeml_ran</small>"]:::h3');
     E('H3 --> C3A["'+mk('«Хватит экспериментов.»',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h3', c3); E('C3A --> ST', c3);
     E('H3 --> C3B["'+mk('«Укусить еще сильнее. Для верности.»',[[C_MAD,1],[C_BLD,1]])+'"]:::h3', c3); E('C3B --> HN', c3);
+    E('C3B --> BLD3["'+mk('Если Кровь достигла 3 (watcher, script.rpy:250-253) → sm_blood (hand:358)')+'"]:::h3', c3);
+    E('BLD3 --> NESM["'+mk('Лесс спасает (411-414): замок совпал или «Темная Гавань», и (Настроение ≥ 5 или Лесс добрый), и не ld1.d6 → «Ты решила подкормить лес?» (nesm, 421) → jump less_visit (468), см. less.html')+'"]:::h3', c3);
+    E('BLD3 --> D3', c3);
     E('HN --> ZM', c3);
     E('ZM -.->|"лупа «осмотреть ситуацию»: <span style=\'background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span> один раз (zeml_osm)"| ZM', c3);
     E('ZM --> C3C["'+mk('«Бежать.»',[[C_LOG,1]])+'"]:::h3', c3); E('C3C --> ZR', c3);
@@ -124,6 +131,7 @@ function build(){
     E('H3 --> ST', c3);
     E('H3 --> L2', c3);
     E('H3 --> D2', c3);
+    E('H3 --> D3', c3);
   }
   L.push('classDef h1 fill:#e6f4f2,stroke:#0f766e,color:#16302c');
   L.push('classDef h2 fill:#ececfe,stroke:#4f46e5,color:#221f4d');
@@ -173,12 +181,12 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <body>
 <header class="site"><div class="wrap">
 <h1>Сцена «Старт»</h1>
-<p>От начала игры до разговора с Лессом · Локация: <a href="location.html?v=20" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script.rpy, script_1_less_begin.rpy (begin), script_memory.rpy (mem), script_1_less_hand.rpy (hand)</p>
-<nav class="crumbs"><a href="index.html?v=21">← Все схемы</a> · <a href="location.html?v=20">Локация «Место пробуждения»</a> · <a href="strel.html?v=24">Экран переходов</a></nav>
+<p>От начала игры до разговора с Лессом · Локация: <a href="location.html?v=107" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script.rpy, script_1_less_begin.rpy (begin), script_memory.rpy (mem), script_1_less_hand.rpy (hand)</p>
+<nav class="crumbs"><a href="index.html?v=107">← Все схемы</a> · <a href="location.html?v=107">Локация «Место пробуждения»</a> · <a href="strel.html?v=107">Экран переходов</a></nav>
 </div></header>
 <main>
 <div class="card">
-<h2>Статы по сцене (мин/макс, по коду)</h2>
+<h2>Статы по сцене (мин/макс, по коду), первый проход</h2>
 <table class="stats">
 <tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Типичный путь (суждение)*</th></tr>
 <tr><td class="mad">Безумие</td><td>0</td><td>+5</td><td>+2</td></tr>
@@ -186,11 +194,12 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <tr><td class="blood">Кровь</td><td>0</td><td>+1</td><td>+1</td></tr>
 <tr><td class="mood">Настроение</td><td>0</td><td>0</td><td>0</td></tr>
 </table>
+<p class="muted">Повторный визит на локацию после разговора day_1 (флаг «korn», day_1_less_razg:56) открывает ветку наваждения в осмотре спальников: «Бороться с наваждением.» → Безумие −2 (begin:352), «Поддаться потоку.» → Кровь +1 (setblood 412). В таблицу первого прохода эти эффекты не входят.</p>
 <p class="muted">*Типичный путь: один путь из схемы, выбранный по самым вероятным выборам (суждение, не среднее). Путь: «Укусить себя за руку, вдруг все это сон?» → «Укусить еще сильнее. Для верности.» → «Бежать.» → «Пожалуйста! Не трогайте меня!». Мин и макс считаются по всем путям, пути к смертям тоже.</p>
 </div>
 <div class="card">
 <h2>Как читать</h2>
-<p class="muted">«Хаб» — кусок сцены с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение (в этой сцене не меняется). «Экран стрелок» — переход на экран перемещения: дальше игра идёт по экрану, а не по коду метки. Ветка руки и корней входит в разговор с Лессом напрямую (conv_2), минуя гляделки; остальные выходы — через экран стрелок (conv_0/conv_1). Сам разговор — на странице <a href="less.html?v=69">«Разговор с Лессом»</a>.</p>
+<p class="muted">«Хаб» — кусок сцены с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение (в этой сцене не меняется). «Экран стрелок» — переход на экран перемещения: дальше игра идёт по экрану, а не по коду метки. Ветка руки и корней входит в разговор с Лессом напрямую (conv_2), минуя гляделки; остальные выходы — через экран стрелок (conv_0/conv_1). Сам разговор — на странице <a href="less.html?v=107">«Разговор с Лессом»</a>.</p>
 </div>
 <div class="viewtoggle">
 <button id="btn-full" class="active" onclick="toggleView('start',1)">Детальнее</button>
@@ -210,14 +219,14 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <div class="hub"><h3>Сцены 0–1. Вход (hard, start3)</h3>
 <ul>
 <li><code>hard</code> (script.rpy:846): обучение и вопрос про HARDMODE (без отката, автосохранений и истории). На 7-й отказ включается принудительно. Статов нет.</li>
-<li><code>start3</code> (begin:7): меню разработчика. <code>razr = 1</code> стоит жёстко, поэтому меню видит каждый игрок. «Игра» → tash_game (мини-игра, вне схемы), «Обучение» → назад в начало, «Без разработчика» / «Все, кроме Лесса.» → стартовое меню, «С.» → меню локаций (экран стрелок).</li>
+<li><code>start3</code> (begin:6): меню разработчика. <code>razr = 1</code> стоит жёстко, поэтому меню видит каждый игрок. «Игра» → tash_game (мини-игра, вне схемы), «Обучение» → назад в начало, «Без разработчика» / «Все, кроме Лесса.» → стартовое меню, «С.» → меню локаций (экран стрелок).</li>
 </ul></div>
-<div class="hub"><h3>Хаб 1. Стартовое меню (start_menu, begin:175)</h3>
+<div class="hub"><h3>Хаб 1. Стартовое меню (start_menu, begin:152)</h3>
 <ul>
-<li>Лупа «осмотреться» (start_osm1, begin:214): Логика +1 один раз (флаг <code>v1.d1</code>). Причина «Осмотр окружения» — та же строка используется у лупы амулета в разговоре с Лессом: там повторно не начислится.</li>
+<li>Лупа «осмотреться» (start_osm1, begin:190, add_logic 193): Логика +1 один раз (флаг <code>v1.d1</code>). Причина «Осмотр окружения» — та же строка используется у лупы амулета в разговоре с Лессом: там повторно не начислится.</li>
 <li>«Пойти дальше.» → <code>script_2_less_conv_1</code> → экран стрелок.</li>
 </ul></div>
-<div class="hub"><h3>Хаб 2. Сон (c1_sleep → head_ache, begin:270, mem:43-197)</h3>
+<div class="hub"><h3>Хаб 2. Сон (c1_sleep → head_ache, begin:245, mem:41-197)</h3>
 <ul>
 <li>Вход: <code>c1_sleep</code> (Безумие +1 на входе, учтён на карточке выбора в хабе 1). Проигрывается воспоминание о матери (mather_memory, без статов).</li>
 <li><code>son</code> → <code>sud_memory</code> → <code>head_ache</code> (setblood: Кровь +1). «Идти до конца!» → BAD END «Вспомнить все...», перезапуск игры.</li>
@@ -227,9 +236,19 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <ul>
 <li>Вход: <code>c1_hand</code> (Безумие +1 на входе, учтён на карточке выбора в хабе 1). <code>hand_next</code>: setblood Кровь +1.</li>
 <li>Лупа «осмотреть ситуацию» (zeml_osm, hand:150): Логика +1 один раз (флаг <code>vd1.d1</code>).</li>
-<li>«Пожалуйста! Не трогайте меня!» (zeml_ran, hand:206) ставит <code>poter_v_less = True</code>: этот флаг решает, будет ли героиня искать Лесса в конце разговора (ветка «потеряшки»).</li>
+<li>«Пожалуйста! Не трогайте меня!» (zeml_ran, выбор hand:209, флаг 219) ставит <code>poter_v_less = True</code>: этот флаг решает, будет ли героиня искать Лесса в конце разговора (ветка «потеряшки»).</li>
 <li>«Ничего не делать» → BAD END «Подкормка...». Тот же ключ <code>deaths_list["less_eat"]</code>, что у смерти от корней в конце разговора, — две разные смерти пишутся в одну запись.</li>
 <li>Выходы ветки (shh, zeml_ran) → <code>script_2_less_conv_2</code>: разговор начинается сразу, гляделки (start_cycle) пропускаются.</li>
+</ul></div>
+<div class="hub"><h3>Кликабельные осмотры экрана стрелок (стартовая локация)</h3>
+<ul>
+<li>Все входы — <code>clicked Jump</code> в script_npc_items.rpy; выход обратно на экран (<code>call_screen_strel</code>).</li>
+<li><b>Куча корней/спальников</b> (<code>script_1_less_spal</code>, begin:322-429, вход npc_items:494). Если <code>"korn"</code> в <code>vrem_memory["viy_quest"]</code> — наваждение с меню: «Бороться с наваждением.» → <span class="mad">Безумие −2</span> (352); «Поддаться потоку.» → видение (эльфы, Риал, пленница) → <span class="blood">Кровь +1</span> (setblood 412). Без «korn» — короткий осмотр (флаг <code>spal0</code>, 329). Флаг «korn» появляется только в разговоре day_1 (day_1_less_razg:56), то есть ветка наваждения достижима при повторном визите на локацию, не при первом проходе.</li>
+<li><b>Табличка «Территория Лесса»</b> (<code>script_1_less_tabl</code>, begin:286-321, вход npc_items:614). «Взять с собой.» — корешок хлещет (blood_effect, Кровь не меняется); «Оставить на месте» — выход. Статов нет.</li>
+<li><b>Кровавый отпечаток на дереве</b> (<code>script_1_hand_blood</code>, begin:528-552, вход npc_items:557): реплики по уровням Логики/Безумия. Статов нет.</li>
+<li><b>Кремень</b> (<code>kremen_action_osm</code>, begin:553-590, вход npc_items:585): меняет <code>inv_list["kremen"]._text</code> (гравировка «РДС», связка с факелом при <code>facel._active</code>). Статов нет.</li>
+<li><b>Пять луп-направлений</b> (begin:430-527: less_start_left/right_osm_label, less_per_left/right/up_osm_label): метки собираются динамически <code>namee+napr+"_osm_label"</code> (script.rpy:439-443), раскрывают подписи стрелок «???» → имя, доп. реплики по уровням Логики/Безумия. Статов нет.</li>
+<li><code>prop_memory</code> / <code>prop_memory2</code> (script_memory:230, 245): вызывающий не найден в проверенном наборе файлов. Не мёртвый код: вызов может быть в файлах вне набора — не подтверждено.</li>
 </ul></div>
 </div>
 </div>
@@ -269,11 +288,6 @@ classDef less fill:#DDEFD8,stroke:#7cb87c,color:#1f2430
 classDef far fill:#eeeeee,stroke:#aaaaaa,color:#555555
 </div>
 </div>
-</div>
-<div class="card" id="statsum">
-<h2>Статы: минимумы и максимумы</h2>
-<div style="overflow-x:auto"><table class="stats"><tr><th>Сцена</th><th class="mad">Безумие</th><th class="logic">Логика</th><th class="blood">Кровь</th><th class="mood">Настроение Лесса</th><th class="">Настроение Таши</th><th class="">Настроение Адриана</th><th class="">Настроение Луизы</th><th class="">Настроение Адро</th><th class="">Настроение Нарси</th><th class="">Мораль</th><th class="">Настроение Карралака</th><th class="">Настроение Лени</th><th class="">Настроение Фени</th><th class="">Настроение Бонни</th></tr><tr><td><a href="start.html?v=64">Старт: место пробуждения</a></td><td>0…+5</td><td>0…+3</td><td>0…+1</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="less.html?v=68">Разговор с Лессом</a></td><td>−7…+6</td><td>−2…+9</td><td>0…+2</td><td>−7…+15</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="road.html?v=70">Дорога (перекрёсток)</a></td><td>0…+1</td><td>0…+1</td><td>0…+1</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="tasha.html?v=65">Назад: Таша</a></td><td>−3…+6</td><td>0…+4</td><td>0</td><td>0</td><td>−25…+26</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="gubert.html?v=62">Губерт</a></td><td>0</td><td>0</td><td>0</td><td>−2…0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="sova.html?v=62">Сова</a></td><td>0</td><td>0</td><td>−1…+2</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="tgavan.html?v=73">Тёмная Гавань: дверь</a></td><td>−2…+9</td><td>−3…+2</td><td>0</td><td>−1…0</td><td>—</td><td>−24…+14</td><td>−1…0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="gavan.html?v=73">Гавань</a></td><td>−3…+3</td><td>−2…0</td><td>0</td><td>0</td><td>—</td><td>−5…+5</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="adro.html?v=4">Адро</a></td><td>−2…+4</td><td>−4…+3</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>−5…+4</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="adro2.html?v=7">Адро, продолжение</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>−5…+5</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="adrc.html?v=6">Адриан</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="nars.html?v=4">Нарси</a></td><td>−1…+2</td><td>−1…+1</td><td>0…+1</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>−6…+7</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="dev.html?v=70">Девочка (Луиза): начало</a></td><td>−3…+9</td><td>−4…+6</td><td>0</td><td>—</td><td>—</td><td>—</td><td>−21…+8</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="dev2.html?v=68">Девочка (Луиза): продолжение</a></td><td>0</td><td>0…+1</td><td>0</td><td>—</td><td>—</td><td>—</td><td>−2…0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="airat1.html?v=69">Айрат: вход и церковь</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>−1…+1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="airat2.html?v=63">Айрат: дверь коридора и Лени</a></td><td>0…+2</td><td>−3…+3</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>−1…0</td><td>−1…0</td><td>−1…0</td><td>—</td><td>—</td></tr><tr><td><a href="airat3.html?v=62">Айрат: Карралак</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>−1…+1</td><td>—</td><td>—</td><td>−2…+2</td><td>—</td></tr><tr><td><a href="airat4.html?v=70">Айрат: дом Луизы</a></td><td>0…+1</td><td>0…+1</td><td>0</td><td>0</td><td>—</td><td>—</td><td>−3…+1</td><td>—</td><td>—</td><td>−1…+2</td><td>—</td><td>—</td><td>0…+1</td><td>—</td></tr><tr><td><a href="airat5.html?v=62">Айрат: стража и кот</a></td><td>−2…+5</td><td>−4…+4</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="kapibar.html?v=71">Кафе «Кап»: Капибара</a></td><td>0</td><td>0</td><td>−4…0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>−2…+4</td><td>0…+2</td><td>—</td><td>—</td><td>0…+2</td><td>—</td></tr><tr><td><a href="bonny.html?v=1">Бонни</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>−10…+2</td></tr><tr><td><a href="chaos.html?v=1">Вход в хаос</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><b>Итого (все сцены подряд)</b></td><td><b>−23…+53</b></td><td><b>−23…+38</b></td><td><b>−5…+7</b></td><td><b>−10…+15</b></td><td><b>−25…+26</b></td><td><b>−29…+19</b></td><td><b>−28…+10</b></td><td><b>−10…+9</b></td><td><b>−8…+11</b></td><td><b>−3…+5</b></td><td><b>−1…0</b></td><td><b>−1…0</b></td><td><b>−2…+5</b></td><td><b>−10…+2</b></td></tr></table></div>
-<p class="muted">Все сцены в порядке игры. Строка «Итого» посчитана автоматически как сумма строк выше (минимумы к минимумам, максимумы к максимумам), её нельзя задать вручную: числа берутся из таблиц «Итог по сцене» самих страниц и везде совпадают со страницей <a href="stats.html?v=1">«Статы»</a>. Игрок может пройти не все сцены, поэтому итог это границы, а не обязательный путь. Для сцены «Девочка (Луиза): начало» взят вариант «Имя ≠ Вий». Подробности по каждому стату смотри на странице сцены.</p>
 </div>
 </main>
 <footer>Схемы игры «Вий» · сцена «Старт» · выверено по коду 20.10.2026</footer>
