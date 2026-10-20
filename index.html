@@ -79,7 +79,7 @@
 <li><a href="replics.html?v=4">Реплики персонажей</a><br><span class="muted">Все прямые реплики из кода по говорящим, с файлом и строкой.</span></li>
 <li><a href="clickables.html?v=1">Кликабельные объекты</a><br><span class="muted">Все объекты на экранах локаций: что это, где стоит, что запускает клик, осмотр, разговор и «взять», ссылка на историю.</span></li>
 <li><a href="characters.html?v=7">Персонажи</a><br><span class="muted">17 персонажей из кода: имена, пороги настроения, место, меню разговоров.</span></li>
-<li><a href="ends.html?v=1">Концовки и смерти</a><br><span class="muted">10 концовок и 11 смертей из списков дневника: название, подпись, где открывается.</span></li>
+<li><a href="ends.html?v=2">Концовки и смерти</a><br><span class="muted">10 концовок и 11 смертей из списков дневника: название, подпись, где открывается.</span></li>
 </ul>
 </div>
 <div class="card" id="s6">
@@ -87,6 +87,14 @@
 <ul class="pages">
 <li><a href="bugs.html?v=11">Баги и вопросы к коду</a><br><span class="muted">Найденные ошибки: файл и строка, что происходит, предложенное решение, статус.</span></li>
 <li><a href="diary_bugs.html">Баги и тупики дневника</a><br><span class="muted">20 пунктов: недоступные записи, неверные ключи, опечатки, потеря данных.</span></li>
+</ul>
+</div>
+<div class="card" id="s7">
+<h2>Файлы без сюжета: мини-игра уборки</h2>
+<ul class="pages">
+<li><b>script_4_kapibar_glass.rpy</b> (187 строк): исполняемых строк нет, всё закомментировано. Внутри три старых варианта мини-игры (class CleaningManager, 2-25; class CleaningMinigame, 55-100 и 112-167; к каждому экран cleaning_screen и label start_clean).</li>
+<li><b>script_4_kapibar_rast.rpy</b> (254 строки): строки 1-103 закомментированы (старые варианты). Исполняется с 106: init python (class CleaningMinigame, кисть images/my_brush.png, 108-200), screen cleaning_screen (202-238, кнопка «Закончить», внизу kap2d norm), label start_clean (240-244: call screen cleaning_screen("images/bg/airat_big.png", "images/bg/sar_cab.png"), затем jump script4_kapibar_start_menu).</li>
+<li><b>Откуда запускается.</b> Экран cleaning_screen вызывается из label kap_paints (script_4_kapibar.rpy:536, картинки images/bg/rast.png и rast_1.png). В kap_paints ведут два пункта меню Капибара: «Что-то новое!» (если нет «rast» в kap_dialog, 498-499) и «Поиграть с растениями!» (если «rast» есть, 500-501). Метка start_clean нигде не вызывается и не вызывается через jump: единственное упоминание в script_4_kapibar.rpy:238 закомментировано. Пути до самого меню не прослежены.</li>
 </ul>
 </div>
 <!--STATS-->
