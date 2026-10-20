@@ -40,7 +40,7 @@ const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;f
 const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
 function build(){
   const L=[]; const ST=[]; let ei=0;
-  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#166534', c2='#0369a1', c3='#b45309', c4='#7c3aed', c5='#be123c', c6='#475569';
   L.push('ST["<div style=\'width:260px;white-space:normal\'>Экран переходов: город Айрат</div>"]:::ex');
@@ -187,7 +187,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Айрат: вход, церковь снаружи, Миранда</h1>
 <p>script_4_airat.rpy, строки 1-520: белая стена, город, двери церкви, горожанка с просьбой, правый коридор</p>
-<nav class="crumbs"><a href="index.html?v=41">← Все схемы</a> · <a href="airat2.html?v=41">Лени</a> · <a href="airat3.html?v=5">Карралак</a> · <a href="stats.html?v=33">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=41">← Все схемы</a> · <a href="airat2.html?v=60">Лени</a> · <a href="airat3.html?v=60">Карралак</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
