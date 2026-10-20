@@ -47,8 +47,8 @@ function build(){
   L.push('IN["<div style=\'width:260px;white-space:normal\'>Вход с дороги через белую стену<br/><small>script_4_airat_in_wall (1)</small></div>"]:::ex');
   L.push(hub('H1','Вход в Айрат<br/><small>script_4_airat_in_wall, 1-137</small>','hhn',[]));
   if(EXP.has('H1')){
-    L.push('Q0["<div style=\'width:240px;white-space:normal\'>Амулет активен и чёрный? (2)</div>"]:::sc');
-    L.push('TA["<div style=\'width:260px;white-space:normal\'>Если Ташир рядом (4): Ташир кричит «НАЗАД!» (5-22)</div>"]:::sc');
+    L.push('Q0["<div style=\'width:240px;white-space:normal\'>Амулет светится чёрным? (2)</div>"]:::sc');
+    L.push('TA["<div style=\'width:260px;white-space:normal\'>Ташир кричит «НАЗАД!» (5-22)</div>"]:::sc');
     E('H1 --> Q0', c1);
     E('Q0 -- "да, Ташир рядом" --> TA', c1);
     E('TA --> M1["<div style=\'width:290px;white-space:normal\'>'+mk('«Согласиться с ним и сделать шаг назад.»'+note('без изменений'),null,null)+'</div>"]:::hhn', c1); E('M1 --> X1', c1);
@@ -56,43 +56,46 @@ function build(){
     E('Q0 -- "да, Ташира нет" --> DE', c1);
     L.push('DE["<div style=\'width:260px;white-space:normal\'>DEATH END «Ошибка мироздания» (62-66)<br/><small>persistent.death = 1, deaths_list[osh][1]; renpy.full_restart()</small></div>"]:::bad');
     L.push('X1["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
-    L.push('Q1["<div style=\'width:280px;white-space:normal\'>Амулет не чёрный. «airat_go» ещё не в life_quest? (68)<br/><small>первый вход: update_status(life_quest), «Какой светлый город...»</small></div>"]:::sc');
+    L.push('Q1["<div style=\'width:280px;white-space:normal\'>Амулет не чёрный. Первый вход в Айрат? (68)<br/><small>«Какой светлый город...», в список жизненных задач добавляется «Айрат»</small></div>"]:::sc');
     E('Q0 -- "нет" --> Q1', c1);
-    L.push('DV["<div style=\'width:260px;white-space:normal\'>Если Луиза рядом (dev.near, 78): «Вот мы и в городе»</div>"]:::sc');
-    L.push('B1["<div style=\'width:260px;white-space:normal\'>dev_dialog «to_airat_bad» (94): «Все, ты обещала уйти. Прощай!»<br/>dev.near = 0 → экран переходов</div>"]:::bad');
-    L.push('B2["<div style=\'width:260px;white-space:normal\'>dev_dialog «after_airat_bad» (104): Луиза убегает в дом слева<br/>dev.near = 0 → экран переходов</div>"]:::bad');
-    L.push('B3["<div style=\'width:260px;white-space:normal\'>Иначе вместе: «Надо срочно найти папу!»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 quest_find_priest.keep = 1</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>ночью или «sumer» (120) → airat_sleep (1987)</span></div>"]:::sc');
-    L.push('TT["<div style=\'width:260px;white-space:normal\'>Если Ташир рядом (127): убегает в «милое местечко», tash.near = 0</div>"]:::sc');
-    E('Q1 -- "да" --> DV', c1);
-    E('DV --> B1', c1);
-    E('DV --> B2', c1);
-    E('DV --> B3', c1);
-    E('B3 --> TT', c1);
-    E('Q1 -- "уже входили" --> TT', c1);
+    L.push('DV["<div style=\'width:260px;white-space:normal\'>Луиза рядом: «Вот мы и в городе» (78)</div>"]:::sc');
+    L.push('B1["<div style=\'width:260px;white-space:normal\'>Луиза: «Все, ты обещала уйти. Прощай!» (94)<br/>Луиза уходит и больше не рядом → экран переходов</div>"]:::bad');
+    L.push('B2["<div style=\'width:260px;white-space:normal\'>Луиза убегает в дом слева (104)<br/>Луиза больше не рядом → экран переходов</div>"]:::bad');
+    L.push('B3["<div style=\'width:260px;white-space:normal\'>Луиза: «Надо срочно найти папу!»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает задание «найти жреца» (quest_find_priest.keep = 1)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если сейчас ночь или «sumer» (120): вместо этого переход ко сну в Айрате</span></div>"]:::sc');
+    L.push('TT["<div style=\'width:260px;white-space:normal\'>Ташир убегает «в милое местечко» и больше не рядом (127)</div>"]:::sc');
+    E('Q1 -- "да, Луиза рядом" --> DV', c1);
+    E('DV --> CB1["<div style=\'width:290px;white-space:normal\'>'+mk('Если раньше выбрано «Идет.» (идти вместе до ворот и там расстаться):',null,null)+'</div>"]:::hhn', c1); E('CB1 --> B1', c1);
+    E('DV --> CB2["<div style=\'width:290px;white-space:normal\'>'+mk('Если раньше выбрано «Еще чего!»:',null,null)+'</div>"]:::hhn', c1); E('CB2 --> B2', c1);
+    E('DV --> CB3["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе:',null,null)+'</div>"]:::hhn', c1); E('CB3 --> B3', c1);
+    E('B3 --> CT1["<div style=\'width:290px;white-space:normal\'>'+mk('Если Ташир рядом (127):',null,null)+'</div>"]:::hhn', c1); E('CT1 --> TT', c1);
+    E('Q1 --> CT2["<div style=\'width:290px;white-space:normal\'>'+mk('Если уже входили и Ташир рядом (127):',null,null)+'</div>"]:::hhn', c1); E('CT2 --> TT', c1);
     E('TT --> X1', c1);
   } else {
     E('H1 --> EXS', c1);
   }
   L.push(hub('H2','К воротам<br/><small>airat_main_bottom, 138-196</small>','hhl',[]));
   if(EXP.has('H2')){
-    L.push('MBD["<div style=\'width:300px;white-space:normal\'>Стрелка «вниз, к воротам» (138). Если Луиза рядом (140): «за ворота я больше не выйду»<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>Феня рядом и не ранена (146): Феню надо перевязать</span></div>"]:::sc');
+    L.push('MBD["<div style=\'width:300px;white-space:normal\'>Стрелка «вниз, к воротам» (138)</div>"]:::sc');
     E('H2 --> MBD', c2);
-    E('MBD --> MB1["<div style=\'width:290px;white-space:normal\'>'+mk('«Прости, не туда свернула!»'+note('Луиза остаётся'),null,null)+'</div>"]:::hhl', c2); E('MB1 --> X2', c2);
-    E('MBD --> MB2["<div style=\'width:290px;white-space:normal\'>'+mk('«Ну, тогда нам стоит расстаться.»'+flag('dev.near = 0, fenya.near = 0, у обеих lock = дом Луизы')+cond('если Феня рядом: «Я пойду с Луизой», my_location = less_white_wall'),null,null)+'</div>"]:::hhl', c2); E('MB2 --> X2', c2);
+    L.push('MBL["<div style=\'width:300px;white-space:normal\'>Луиза: «За ворота я больше не выйду» (140)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Феня рядом и не ранена (146): Феню надо перевязать</span></div>"]:::sc');
+    E('MBD --> CL1["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза рядом (140):',null,null)+'</div>"]:::hhl', c2); E('CL1 --> MBL', c2);
+    E('MBD -- "Луизы нет" --> X2', c2);
+    E('MBL --> MB1["<div style=\'width:290px;white-space:normal\'>'+mk('«Прости, не туда свернула!»'+note('Луиза остаётся'),null,null)+'</div>"]:::hhl', c2); E('MB1 --> X2', c2);
+    E('MBL --> MB2["<div style=\'width:290px;white-space:normal\'>'+mk('«Ну, тогда нам стоит расстаться.»'+flag('Луиза и Феня больше не рядом и остаются у дома Луизы')+cond('если Феня рядом: «Я пойду с Луизой», действие переносится к белой стене'),null,null)+'</div>"]:::hhl', c2); E('MB2 --> X2', c2);
     L.push('X2["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
   } else {
     E('H2 --> EXS', c2);
   }
   L.push(hub('H3','К церкви<br/><small>airat_main_up, 197-236</small>','hhs',[]));
   if(EXP.has('H3')){
-    L.push('MUN["<div style=\'width:300px;white-space:normal\'>Стрелка «вверх, к церкви» (197)<br/>Луиза рядом и «ara_empty» ещё не в ara_pers (198)</div>"]:::sc');
+    L.push('MUN["<div style=\'width:300px;white-space:normal\'>Стрелка «вверх, к церкви» (197)<br/>Луиза рядом и в церковь ещё не заходили (198)<br/><small>проверка: «ara_empty» ещё нет в ara_pers</small></div>"]:::sc');
     E('H3 --> MUN', c3);
-    L.push('MUN1["<div style=\'width:300px;white-space:normal\'>Ночью или «sumer» (199): «Сейчас не лучшее время идти сюда. Мой дом слева»</div>"]:::sc');
-    E('MUN -- "ночь" --> MUN1', c3);
+    L.push('MUN1["<div style=\'width:300px;white-space:normal\'>Луиза: «Сейчас не лучшее время идти сюда. Мой дом слева» (199)</div>"]:::sc');
+    E('MUN --> CM1["<div style=\'width:290px;white-space:normal\'>'+mk('Если сейчас ночь или «sumer»:',null,null)+'</div>"]:::hhs', c3); E('CM1 --> MUN1', c3);
     E('MUN1 --> MU1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я пойду к тебе.»',null,null)+'</div>"]:::hhs', c3); E('MU1 --> X3', c3);
-    E('MUN1 --> MU2["<div style=\'width:290px;white-space:normal\'>'+mk('«Иди одна.»'+flag('dev.near = 0, dev.lock = дом Луизы'),null,null)+'</div>"]:::hhs', c3); E('MU2 --> X3', c3);
-    L.push('MU3["<div style=\'width:300px;white-space:normal\'>Днём: «Это Церковь... Здесь слишком тихо»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 ara_pers.keep = 1, «ara_empty» в vrem_memory</span></div>"]:::sc');
-    E('MUN -- "день" --> MU3', c3);
+    E('MUN1 --> MU2["<div style=\'width:290px;white-space:normal\'>'+mk('«Иди одна.»'+flag('Луиза больше не рядом и остаётся у дома Луизы'),null,null)+'</div>"]:::hhs', c3); E('MU2 --> X3', c3);
+    L.push('MU3["<div style=\'width:300px;white-space:normal\'>«Это Церковь... Здесь слишком тихо»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «ara_empty» и ara_pers.keep = 1</span></div>"]:::sc');
+    E('MUN --> CM2["<div style=\'width:290px;white-space:normal\'>'+mk('Днём:',null,null)+'</div>"]:::hhs', c3); E('CM2 --> MU3', c3);
     E('MU3 --> X3', c3);
     L.push('X3["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
   } else {
@@ -102,14 +105,17 @@ function build(){
   if(EXP.has('H4')){
     L.push('CE["<div style=\'width:320px;white-space:normal\'>Осмотры снаружи церкви: щит и меч (237), здание в 3 этажа (268), синий витраж (287)<br/><small>реплики по Логике ≥ 1 / Безумию ≥ 3; Луиза рядом рассказывает про Ара. Статов нет</small></div>"]:::sc');
     L.push('CU["<div style=\'width:240px;white-space:normal\'>Двери церкви (307)</div>"]:::sc');
-    L.push('CUD["<div style=\'width:320px;white-space:normal\'>Луиза рядом и «dev_church» не в arrows_per (309): входят вместе, «давай разделимся»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 quest_find_priest.diary</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если girl_air.lock == локация (340): Луиза замечает девушку</span></div>"]:::sc');
-    L.push('CUE["<div style=\'width:260px;white-space:normal\'>Иначе: «miranda_meet0» впервые, мелькает силуэт женщины</div>"]:::sc');
-    L.push('CUF["<div style=\'width:280px;white-space:normal\'>quest_find_priest.keep и Луиза рядом<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 dev.lock = airat_church_inside; dev.near = 0; girl_air добавляется в gametime._vrem</span></div>"]:::sc');
+    L.push('CUD["<div style=\'width:300px;white-space:normal\'>Входят вместе: «Давай разделимся» (309)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает в дневник задания «найти жреца»</span></div>"]:::sc');
+    L.push('CUG["<div style=\'width:260px;white-space:normal\'>Луиза замечает девушку между колоннами (340)</div>"]:::sc');
+    L.push('CUE["<div style=\'width:260px;white-space:normal\'>Мелькает силуэт женщины между колоннами</div>"]:::sc');
+    L.push('CUF["<div style=\'width:300px;white-space:normal\'>Если задание «найти жреца» взято и Луиза рядом: Луиза остаётся внутри церкви и больше не рядом<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Луиза: «внутри церкви»; появление горожанки Миранды запоминается по игровому времени</span></div>"]:::sc');
     E('H4 --> CE', c4);
     E('CE --> CU', c4);
-    E('CU --> CUD', c4);
-    E('CU --> CUE', c4);
+    E('CU --> CC1["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза рядом и в церковь ещё не заходили (309):',null,null)+'</div>"]:::hhp', c4); E('CC1 --> CUD', c4);
+    E('CU --> CC2["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе, если Миранду ещё не видели:',null,null)+'</div>"]:::hhp', c4); E('CC2 --> CUE', c4);
+    E('CUD --> CC3["<div style=\'width:290px;white-space:normal\'>'+mk('Если девушка из церкви уже ждёт здесь (340):',null,null)+'</div>"]:::hhp', c4); E('CC3 --> CUG', c4);
     E('CUD --> CUF', c4);
+    E('CUG --> CUF', c4);
     E('CUE --> CUF', c4);
     E('CUF --> X4', c4);
     E('X4 --> H5', c4);
@@ -119,18 +125,21 @@ function build(){
   }
   L.push(hub('H5','Миранда и плата за лечение<br/><small>script_4_airat_girl_air, 363-500</small>','hhk',[[C_DEV, '−1…+1']]));
   if(EXP.has('H5')){
-    L.push('GA["<div style=\'width:300px;white-space:normal\'>Горожанка Миранда (363)<br/><small>script_4_airat_girl_air; если «miranda_meet» уже есть: «мы уже решили вопросы» и выход</small></div>"]:::sc');
-    L.push('GA1["<div style=\'width:280px;white-space:normal\'>С Луизой (dev.lock == church_inside): диалог про Элеона Ара, «черная мантия?» - «были только белые»</div>"]:::sc');
-    L.push('GA2["<div style=\'width:240px;white-space:normal\'>Без Луизы: «Тут подозрительно пусто»</div>"]:::sc');
+    L.push('GA["<div style=\'width:300px;white-space:normal\'>Горожанка Миранда (363)<br/><small>script_4_airat_girl_air</small></div>"]:::sc');
+    L.push('GA0["<div style=\'width:260px;white-space:normal\'>Миранда: «мы уже решили вопросы» → выход</div>"]:::sc');
+    L.push('GA1["<div style=\'width:280px;white-space:normal\'>Диалог про Элеона Ара, «черная мантия?» - «были только белые»</div>"]:::sc');
+    L.push('GA2["<div style=\'width:240px;white-space:normal\'>«Тут подозрительно пусто»</div>"]:::sc');
     E('H5 --> GA', c5);
-    E('GA --> GA1', c5);
-    E('GA --> GA2', c5);
+    E('GA --> CG0["<div style=\'width:290px;white-space:normal\'>'+mk('Если Миранду уже встречали:',null,null)+'</div>"]:::hhk', c5); E('CG0 --> GA0', c5);
+    E('GA0 --> EXS', c5);
+    E('GA --> CG1["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза внутри церкви:',null,null)+'</div>"]:::hhk', c5); E('CG1 --> GA1', c5);
+    E('GA --> CG2["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе (Луизы нет):',null,null)+'</div>"]:::hhk', c5); E('CG2 --> GA2', c5);
     L.push('GM["<div style=\'width:260px;white-space:normal\'>Просьба: передать плату за лечение, 5 золотых</div>"]:::sc');
     E('GA1 --> GM', c5);
     E('GA2 --> GM', c5);
     E('GM --> GY["<div style=\'width:290px;white-space:normal\'>'+mk('«Да, конечно.»'+flag('+5 золотых, quest_money_return = keep'),[[C_DEV, 1]],null)+'</div>"]:::hhk', c5); E('GY --> GX', c5);
     E('GM --> GN["<div style=\'width:290px;white-space:normal\'>'+mk('«У меня есть другие дела.»'+flag('quest_money_return = false'),null,[[C_DEV, 1]])+'</div>"]:::hhk', c5); E('GN --> GX', c5);
-    L.push('GX["<div style=\'width:300px;white-space:normal\'>С Луизой: «где лазарет?» - налево по коридору; dev.lock очищается → экран переходов</div>"]:::sc');
+    L.push('GX["<div style=\'width:300px;white-space:normal\'>Если Луиза с вами: «где лазарет?» - налево по коридору; Луиза больше не привязана к церкви → экран переходов</div>"]:::sc');
   } else {
     E('H5 --> EXS', c5);
   }
@@ -187,7 +196,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Айрат: вход, церковь снаружи, Миранда</h1>
 <p>script_4_airat.rpy, строки 1-520: белая стена, город, двери церкви, горожанка с просьбой, правый коридор</p>
-<nav class="crumbs"><a href="index.html?v=41">← Все схемы</a> · <a href="airat2.html?v=60">Лени</a> · <a href="airat3.html?v=60">Карралак</a> · <a href="stats.html?v=33">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=41">← Все схемы</a> · <a href="airat2.html?v=41">Лени</a> · <a href="airat3.html?v=5">Карралак</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
