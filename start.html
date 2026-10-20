@@ -62,7 +62,7 @@ function build(){
   E('A1 --> H1', cG);
   // --- H1 ---
   if(EXP.has('H1')){
-    E('H1 -.->|"лупа «осмотреться»: Логика +1, один раз (start_osm1)"| H1', c1);
+    E('H1 -.->|"лупа «осмотреться»: <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> один раз (start_osm1)"| H1', c1);
     E('H1 --> C1A["'+mk('«Может, лечь поспать?»',[[C_MAD,1]])+'"]:::h1', c1); E('C1A --> H2', c1);
     E('H1 --> C1B["'+mk('«Укусить себя за руку, вдруг все это сон?»',[[C_MAD,1]])+'"]:::h1', c1); E('C1B --> H3', c1);
     E('H1 --> C1C["'+mk('«Пойти дальше.»')+'"]:::h1', c1); E('C1C --> ST', c1);
@@ -75,7 +75,7 @@ function build(){
   if(EXP.has('H2')){
     L.push('SON{{"сон (son)"}}:::h2');
     L.push('SUD{{"воспоминание о суде<br/>(sud_memory)"}}:::h2');
-    L.push('HA{{"головная боль (head_ache)<br/>Кровь +1"}}:::h2');
+    L.push('HA{{"головная боль (head_ache)<br/><span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"}}:::h2');
     E('H2 --> C2A["'+mk('«Что это вообще сейчас было?»')+'"]:::h2', c2); E('C2A --> SON', c2);
     E('H2 --> C2B["'+mk('«Пожать плечами и выбросить из головы.»')+'"]:::h2', c2); E('C2B --> ST', c2);
     E('SON --> C2C["'+mk('«Не стоит больше вспоминать...»',[[C_LOG,1]])+'"]:::h2', c2); E('C2C --> ST', c2);
@@ -90,7 +90,7 @@ function build(){
   }
   // --- H3 ---
   if(EXP.has('H3')){
-    L.push('HN{{"hand_next<br/>Кровь +1"}}:::h3');
+    L.push('HN{{"hand_next<br/><span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"}}:::h3');
     L.push('ZM{{"zeml_menu"}}:::h3');
     L.push('ZSH{{"zeml_sh"}}:::h3');
     L.push('SHH{{"shh"}}:::h3');
@@ -98,7 +98,7 @@ function build(){
     E('H3 --> C3A["'+mk('«Хватит экспериментов.»',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h3', c3); E('C3A --> ST', c3);
     E('H3 --> C3B["'+mk('«Укусить еще сильнее. Для верности.»',[[C_MAD,1]])+'"]:::h3', c3); E('C3B --> HN', c3);
     E('HN --> ZM', c3);
-    E('ZM -.->|"лупа «осмотреть ситуацию»: Логика +1, один раз (zeml_osm)"| ZM', c3);
+    E('ZM -.->|"лупа «осмотреть ситуацию»: <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> один раз (zeml_osm)"| ZM', c3);
     E('ZM --> C3C["'+mk('«Бежать.»',[[C_LOG,1]])+'"]:::h3', c3); E('C3C --> ZR', c3);
     E('ZM --> C3D["'+mk('«Зашипеть в ответ.»',[[C_MAD,1]])+'"]:::h3', c3); E('C3D --> ZSH', c3);
     E('ZM --> C3E["'+mk('«Ничего не делать, это же нормально?»',[[C_MAD,1]])+'"]:::h3', c3); E('C3E --> D2', c3);
@@ -163,7 +163,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <header class="site"><div class="wrap">
 <h1>Сцена «Старт»</h1>
 <p>От начала игры до разговора с Лессом · Локация: <a href="location.html?v=20" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script.rpy, script_1_less_begin.rpy (begin), script_memory.rpy (mem), script_1_less_hand.rpy (hand)</p>
-<nav class="crumbs"><a href="index.html?v=21">← Все схемы</a> · <a href="location.html?v=20">Локация «Место пробуждения»</a> · <a href="strel.html?v=20">Экран переходов</a></nav>
+<nav class="crumbs"><a href="index.html?v=21">← Все схемы</a> · <a href="location.html?v=20">Локация «Место пробуждения»</a> · <a href="strel.html?v=23">Экран переходов</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -179,7 +179,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 </div>
 <div class="card">
 <h2>Как читать</h2>
-<p class="muted">«Хаб» — кусок сцены с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение (в этой сцене не меняется). «Экран стрелок» — переход на экран перемещения: дальше игра идёт по экрану, а не по коду метки. Ветка руки и корней входит в разговор с Лессом напрямую (conv_2), минуя гляделки; остальные выходы — через экран стрелок (conv_0/conv_1). Сам разговор — на странице <a href="less.html?v=24">«Разговор с Лессом»</a>.</p>
+<p class="muted">«Хаб» — кусок сцены с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение (в этой сцене не меняется). «Экран стрелок» — переход на экран перемещения: дальше игра идёт по экрану, а не по коду метки. Ветка руки и корней входит в разговор с Лессом напрямую (conv_2), минуя гляделки; остальные выходы — через экран стрелок (conv_0/conv_1). Сам разговор — на странице <a href="less.html?v=25">«Разговор с Лессом»</a>.</p>
 </div>
 <div class="viewtoggle">
 <button id="btn-full" class="active" onclick="toggleView('start',1)">Детальнее</button>
@@ -228,9 +228,9 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 flowchart TB
 S0["<b>Сцена 0. Выбор сложности</b> (hard)"]:::scene
 S1["<b>Сцена 1. Меню разработчика</b> (start3)"]:::scene
-H1["<b>Хаб 1. Стартовое меню</b> (start_menu)<br/>поспать · укусить руку · пойти дальше<br/>лупа: <span style='color:#1c7ed6'>Логика +1</span> один раз"]:::scene
-H2["<b>Хаб 2. Сон</b> (c1_sleep → head_ache)<br/>сон → суд → головная боль<br/><span style='color:#bc1888'>Кровь +1</span>"]:::scene
-H3["<b>Хаб 3. Рука и корни</b> (c1_hand → zeml)<br/>укус → корни: бежать / шипеть<br/><span style='color:#bc1888'>Кровь +1</span>"]:::scene
+H1["<b>Хаб 1. Стартовое меню</b> (start_menu)<br/>поспать · укусить руку · пойти дальше<br/>лупа: <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> один раз"]:::scene
+H2["<b>Хаб 2. Сон</b> (c1_sleep → head_ache)<br/>сон → суд → головная боль<br/><span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"]:::scene
+H3["<b>Хаб 3. Рука и корни</b> (c1_hand → zeml)<br/>укус → корни: бежать / шипеть<br/><span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"]:::scene
 TASH["tash_game (мини-игра, вне схемы)"]:::far
 STREL["<b>Экран переходов</b> (strel)<br/>conv_0 / conv_1"]:::dev
 LESS["<b>Разговор с Лессом</b><br/>прямой вход conv_2 или через стрелки"]:::less
@@ -265,7 +265,7 @@ classDef far fill:#eeeeee,stroke:#aaaaaa,color:#555555
 <tr><td>Сцена «Старт»</td><td>0…+5</td><td>0…+3</td><td>0…+1</td><td>0</td></tr>
 <tr><td>Разговор с Лессом</td><td>−7…+6</td><td>−2…+9</td><td>0…+2</td><td>−7…+15</td></tr>
 </table>
-<p class="muted">Посчитано по коду 20.10.2026 перебором всех путей, включая пути к смертям (без них настроение Лесса −6…+15). Подробности, типичный путь и найденные в коде ошибки — на странице <a href="stats.html?v=22">«Статы»</a>.</p>
+<p class="muted">Посчитано по коду 20.10.2026 перебором всех путей, включая пути к смертям (без них настроение Лесса −6…+15). Подробности, типичный путь и найденные в коде ошибки — на странице <a href="stats.html?v=33">«Статы»</a>.</p>
 </div>
 </main>
 <footer>Схемы игры «Вий» · сцена «Старт» · выверено по коду 20.10.2026</footer>
