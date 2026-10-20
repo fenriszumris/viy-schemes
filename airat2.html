@@ -39,7 +39,7 @@ const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;f
 const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
 function build(){
   const L=[]; const ST=[]; let ei=0;
-  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', cD='#166534', cO='#0369a1', cM='#b45309';
   L.push('ST["<div style=\'width:300px;white-space:normal\'>Экран переходов: правый коридор</div>"]:::ex');
@@ -105,7 +105,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Айрат: дверь коридора и разговор с Лени</h1>
 <p>script_4_airat.rpy, строки 520-1174: дверь, служка Лени, меню разговора</p>
-<nav class="crumbs"><a href="index.html?v=41">← Все схемы</a> · <a href="airat1.html?v=42">Вход и церковь</a> · <a href="airat3.html?v=5">Карралак</a> · <a href="stats.html?v=33">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=41">← Все схемы</a> · <a href="airat1.html?v=60">Вход и церковь</a> · <a href="airat3.html?v=60">Карралак</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">

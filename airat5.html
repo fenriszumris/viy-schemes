@@ -40,7 +40,7 @@ const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;f
 const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
 function build(){
   const L=[]; const ST=[]; let ei=0;
-  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#166534', c2='#475569', c3='#b45309', c4='#7c3aed';
   L.push('ST["<div style=\'width:320px;white-space:normal\'>Экран переходов: правый коридор церкви, стража у статуи<br/><small>вход в script_5_airat_guard (2); «meet» сбрасывает стрелку</small></div>"]:::ex');
@@ -140,7 +140,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Айрат: стража, кошка Мурисса, статуя</h1>
 <p>script_5_airat.rpy, строки 1-871: Горран и Алекс, пропуск, каменная кошка, четыре концовки «END?»</p>
-<nav class="crumbs"><a href="index.html?v=41">← Все схемы</a> · <a href="airat4.html?v=43">Дом Луизы</a> · <a href="airat3.html?v=5">Карралак</a> · <a href="stats.html?v=33">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=41">← Все схемы</a> · <a href="airat4.html?v=60">Дом Луизы</a> · <a href="airat3.html?v=60">Карралак</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
