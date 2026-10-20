@@ -8,24 +8,177 @@
 <title>Сцена «Старт» — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
 <style>.widechart{overflow-x:auto}.widechart svg{max-width:none !important}</style>
-<style>.hub{border:2px solid;border-radius:10px;margin:10px 0;background:#fff}.hub>summary{cursor:pointer;padding:8px 10px;font-size:15px;list-style:none}.hub>summary::before{content:"▸ ";}.hub[open]>summary::before{content:"▾ ";}.hub>div,.hub>.pl,.hub>.ch{margin-left:8px;margin-right:8px}.hub{padding-bottom:6px}
-.pl{border:1px solid #7a9cc6;border-radius:8px;padding:6px 8px;margin:6px 0;font-size:14px;line-height:1.35;overflow-wrap:anywhere}.pl.ex{border-color:#aab2c0;color:#4a5160}.pl.bad{border-color:#b91c1c;color:#4a1414}.pl.stub{border-color:#d97706}
-.ch{border:1.5px solid;border-radius:8px;margin:6px 0 6px 4px;padding:3px 4px;font-size:14px;overflow-wrap:anywhere}.ch .chh{padding-left:6px;font-weight:600}.ch .pl{margin-left:0}.ch .ch{margin-left:3px}
-.ref{font-size:13px;color:#475569;margin:4px 0 4px 6px}.muted{overflow-wrap:anywhere}
-@media(max-width:700px){.card table{display:block;max-width:100%;overflow-x:auto}}
-@media(min-width:700px){.hub{max-width:900px}}</style><script>function openTo(a){var id=a.getAttribute('href').slice(1);var e=document.getElementById(id);var p=e;while(p){if(p.tagName=='DETAILS')p.open=true;p=p.parentElement}setTimeout(function(){e&&e.scrollIntoView({block:'center'})},50)}function allHubs(v){document.querySelectorAll('details.hub').forEach(function(d){d.open=v})}</script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'17px'}});
+
+const HUBS=['H1','H2','H3'];
+const EXP=new Set();
+// цвета веток = цвета хабов
+const c1='#0f766e', c2='#4f46e5', c3='#0369a1', cG='#9aa3b2';
+// цвета статов (как в Miro): mad фиолетовый, logic голубой, blood малиновый, mood красный
+const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)';
+const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)';
+
+function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
+function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
+
+// карточка выбора: плюсы сверху справа, минусы снизу слева
+function mk(text, ups, downs){
+  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
+  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
+    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
+    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
+    +'</div>';
+}
+// плашка хаба: диапазон прямых изменений внутри хаба, справа сверху
+function badge(ranges){
+  if(!ranges.length) return '';
+  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;line-height:1.5;white-space:nowrap">'+p[1]+'</span>';}).join(' ');
+  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
+}
+
+function hub(id,label,cls,ranges){
+  const arrow = EXP.has(id) ? '▾' : '▸';
+  const b=badge(ranges||[]);
+  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
+  return id + '["' + inner + '"]:::' + cls;
+}
+
+function build(){
+  const L=[]; const ST=[]; let ei=0;
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
+  L.push('flowchart TB');
+  L.push(hub('H1','Хаб 1. Стартовое меню<br/>start_menu','h1',[[C_MAD,'0…+1'],[C_LOG,'0…+1']]));
+  L.push(hub('H3','Хаб 3. Рука и корни<br/>c1_hand → zeml','h3',[[C_MAD,'−1…+4'],[C_LOG,'0…+2'],[C_BLD,'0…+1']]));
+  L.push('A0["<b>Сцена 0. Выбор сложности</b> (hard)<br/>обучение, вопрос про HARDMODE<br/>статов нет"]:::ext');
+  L.push('A1["<b>Сцена 1. Меню разработчика</b> (start3)<br/>razr = 1 жёстко: меню видит каждый игрок<br/>«Игра» → tash_game (мини-игра, вне схемы)"]:::ext');
+  L.push('ST["<b>Экран стрелок</b><br/>conv_0 / conv_1 → call_screen_strel()"]:::term');
+  L.push('L2["<b>Разговор с Лессом</b><br/>прямой вход (conv_2), минуя гляделки"]:::lm');
+  L.push('D1["BAD END<br/>«Вспомнить все...»<br/>death_son"]:::die');
+  L.push('D2["BAD END<br/>«Подкормка...»<br/>zeml_nothing"]:::die');
+  E('A0 --> A1', cG);
+  E('A1 --> H1', cG);
+  // --- H1 ---
+  if(EXP.has('H1')){
+    E('H1 -.->|"лупа «осмотреться»: <span style=\'background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span> один раз (start_osm1)"| H1', c1);
+    E('H1 --> C1A["'+mk('«Может, лечь поспать?»',[[C_MAD,1]])+'"]:::h1', c1); E('C1A --> DS1', c1);
+    E('H1 --> C1B["'+mk('«Укусить себя за руку, вдруг все это сон?»',[[C_MAD,1]])+'"]:::h1', c1); E('C1B --> H3', c1);
+    E('H1 --> C1C["'+mk('«Пойти дальше.»')+'"]:::h1', c1); E('C1C --> ST', c1);
+  } else {
+    E('H1 --> DS1', c1);
+    E('H1 --> H3', c1);
+    E('H1 --> ST', c1);
+  }
+  // --- СОН ---
+  L.push('subgraph DREAM["💤 СОН (c1_sleep → mather_memory → son → head_ache)"]');
+  L.push('DS1["<b style=\'font-size:20px\'>▶ НАЧАЛО СНА</b><br/>c1_sleep (script_1_less_begin:270-286): чёрный экран, «Это... Сон?»<br/>воспоминание о матери mather_memory (script_memory:7-39), без статов"]:::dstart');
+  L.push(hub('H2','Хаб 2. Сон<br/>c1_sleep → head_ache','h2',[[C_MAD,'−1…+2'],[C_LOG,'0…+1'],[C_BLD,'0…+1']]));
+  E('DS1 --> H2', c2);
+  L.push('DE1["<b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0 → экран стрелок"]:::dend');
+  if(EXP.has('H2')){
+    L.push('SON["сон (son, script_memory:43)"]:::h2');
+    L.push('SUD["воспоминание о суде<br/>(sud_memory)"]:::h2');
+    L.push('HA["головная боль, кровь из носа (head_ache)"]:::h2');
+    L.push('DE0["<b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0<br/><small>script_1_less_begin:309</small>"]:::dend');
+    L.push('DE2["<b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0<br/><small>script_memory:194</small>"]:::dend');
+    E('H2 --> C2A["'+mk('«Что это вообще сейчас было?»')+'"]:::h2', c2); E('C2A --> SON', c2);
+    E('H2 --> C2B["'+mk('«Пожать плечами и выбросить из головы.»')+'"]:::h2', c2); E('C2B --> DE0', c2);
+    E('SON --> C2C["'+mk('«Не стоит больше вспоминать...»',[[C_LOG,1]])+'"]:::h2', c2); E('C2C --> DE1', c2);
+    E('SON --> C2D["'+mk('«Пытаться вспомнить дальше.»')+'"]:::h2', c2); E('C2D --> SUD', c2);
+    E('SUD --> C2E["'+mk('«Что за чертовщина там произошла?!»',[[C_BLD,1]],[[C_MAD,1]])+'"]:::h2', c2); E('C2E --> HA', c2);
+    E('SUD --> C2F["'+mk('«Да бросьте, все в полном порядке!»',[[C_MAD,1],[C_BLD,1]])+'"]:::h2', c2); E('C2F --> HA', c2);
+    E('HA --> C2G["'+mk('«Х-хватит...»',[[C_LOG,1]])+'"]:::h2', c2); E('C2G --> DE2', c2);
+    E('HA --> C2H["'+mk('«Идти до конца!»',[[C_MAD,1]])+'"]:::h2', c2); E('C2H --> D1', c2);
+  } else {
+    E('H2 --> DE1', c2);
+    E('H2 --> D1', c2);
+  }
+  L.push('end');
+  L.push('style DREAM fill:#fffbe6,stroke:#d97706,stroke-width:4px');
+  L.push('classDef dstart fill:#fde047,stroke:#a16207,stroke-width:4px,color:#1f2430');
+  L.push('classDef dend fill:#fef3c7,stroke:#a16207,stroke-width:3px,color:#1f2430');
+
+  // --- H3 ---
+  if(EXP.has('H3')){
+    L.push('HN["Рука: продолжение<br/><small>hand_next</small>"]:::h3');
+    L.push('ZM["Меню корней<br/><small>zeml_menu</small>"]:::h3');
+    L.push('ZSH["Попытка шикнуть: «Шшшшш!»<br/><small>zeml_sh</small>"]:::h3');
+    L.push('SHH["Шипеть изо всех сил: «Шшш!»<br/><small>shh</small>"]:::h3');
+    L.push('ZR["Бегство в панике<br/><small>zeml_ran</small>"]:::h3');
+    E('H3 --> C3A["'+mk('«Хватит экспериментов.»',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h3', c3); E('C3A --> ST', c3);
+    E('H3 --> C3B["'+mk('«Укусить еще сильнее. Для верности.»',[[C_MAD,1],[C_BLD,1]])+'"]:::h3', c3); E('C3B --> HN', c3);
+    E('HN --> ZM', c3);
+    E('ZM -.->|"лупа «осмотреть ситуацию»: <span style=\'background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span> один раз (zeml_osm)"| ZM', c3);
+    E('ZM --> C3C["'+mk('«Бежать.»',[[C_LOG,1]])+'"]:::h3', c3); E('C3C --> ZR', c3);
+    E('ZM --> C3D["'+mk('«Зашипеть в ответ.»',[[C_MAD,1]])+'"]:::h3', c3); E('C3D --> ZSH', c3);
+    E('ZM --> C3E["'+mk('«Ничего не делать, это же нормально?»',[[C_MAD,1]])+'"]:::h3', c3); E('C3E --> D2', c3);
+    E('ZSH --> C3F["'+mk('«Продолжать шипеть до победного.»',[[C_MAD,1]])+'"]:::h3', c3); E('C3F --> SHH', c3);
+    E('ZSH --> C3G["'+mk('«Бежать.»')+'"]:::h3', c3); E('C3G --> ZR', c3);
+    E('SHH --> C3H["'+mk('«П-помогите!»')+'"]:::h3', c3); E('C3H --> L2', c3);
+    E('SHH --> C3I["'+mk('«Замереть на месте.»')+'"]:::h3', c3); E('C3I --> L2', c3);
+    E('SHH --> C3J["'+mk('«Вот, шиплю-шиплю, а меня схватило!»',[[C_MAD,1]])+'"]:::h3', c3); E('C3J --> L2', c3);
+    E('ZR --> C3K["'+mk('«Пожалуйста! Не трогайте меня!»<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">открывает флаг poter_v_less</span>')+'"]:::h3', c3); E('C3K --> L2', c3);
+    E('ZR --> C3L["'+mk('«Ничего не делать, все же в порядке?»',[[C_MAD,1]])+'"]:::h3', c3); E('C3L --> D2', c3);
+  } else {
+    E('H3 --> ST', c3);
+    E('H3 --> L2', c3);
+    E('H3 --> D2', c3);
+  }
+  L.push('classDef h1 fill:#e6f4f2,stroke:#0f766e,color:#16302c');
+  L.push('classDef h2 fill:#ececfe,stroke:#4f46e5,color:#221f4d');
+  L.push('classDef h3 fill:#e5f2fa,stroke:#0369a1,color:#123043');
+  L.push('classDef term fill:#DDEFD8,stroke:#7cb87c,color:#1f2430');
+  L.push('classDef die fill:#222,stroke:#000,color:#fff');
+  L.push('classDef lm fill:#f0eafc,stroke:#6d28d9,color:#2b1557');
+  L.push('classDef ext fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
+  return L.concat(ST).join('\n');
+}
+
+async function render(){
+  const f=document.getElementById('fchart');
+  if(!f) return;
+  f.removeAttribute('data-processed');
+  f.textContent=build();
+  await mermaid.run({nodes:[f]});
+  // mermaid turns classDef color: into ".hX span {color:... !important}" which kills
+  // every inline stat colour inside node labels; strip those rules after each render
+  for(const ss of document.styleSheets){
+    let rules; try{rules=ss.cssRules;}catch(e){continue;}
+    for(let i=rules.length-1;i>=0;i--){
+      const r=rules[i];
+      if(r.selectorText && /\.(h1|h2|h3)( span| > \*)$/.test(r.selectorText)
+         && r.style && r.style.getPropertyPriority('color')==='important'){
+        r.style.removeProperty('color');
+      }
+    }
+  }
+  document.querySelectorAll('#fchart g.node').forEach(function(g){
+    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
+    if(m && HUBS.indexOf(m[1])>=0){
+      g.style.cursor='pointer';
+      g.addEventListener('click', function(){ window.th(m[1]); });
+    }
+  });
+}
+window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
+window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
+
+render();
+const o=document.getElementById('ovchart');
+if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
+</script>
 <script src="site9.js"></script>
 </head>
 <body>
 <header class="site"><div class="wrap">
 <h1>Сцена «Старт»</h1>
-<p>От начала игры до разговора с Лессом · Локация: <a href="location.html?v=23" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script.rpy, script_1_less_begin.rpy (begin), script_memory.rpy (mem), script_1_less_hand.rpy (hand)</p>
-<nav class="crumbs"><a href="index.html?v=72">← Все схемы</a> · <a href="location.html?v=23">Локация «Место пробуждения»</a> · <a href="strel.html?v=29">Экран переходов</a></nav>
+<p>От начала игры до разговора с Лессом · Локация: <a href="location.html?v=20" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script.rpy, script_1_less_begin.rpy (begin), script_memory.rpy (mem), script_1_less_hand.rpy (hand)</p>
+<nav class="crumbs"><a href="index.html?v=21">← Все схемы</a> · <a href="location.html?v=20">Локация «Место пробуждения»</a> · <a href="strel.html?v=24">Экран переходов</a></nav>
 </div></header>
 <main>
 <div class="card">
-<h2>Статы по сцене (мин/макс, значения унаследованы)</h2>
-<div style="border:2px solid #b45309;background:#fff7ed;border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14px;line-height:1.4"><b>⚠ Не подтверждено.</b> Числа в таблице и диапазоны групп унаследованы из прежней версии схемы; сверка с текущим кодом ветки не завершена. Итоговые диапазоны не подтверждены.</div>
+<h2>Статы по сцене (мин/макс, по коду)</h2>
 <table class="stats">
 <tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Типичный путь (суждение)*</th></tr>
 <tr><td class="mad">Безумие</td><td>0</td><td>+5</td><td>+2</td></tr>
@@ -48,17 +201,9 @@
 <div id="panel-full">
 <h2>Полная схема: все хабы и все выборы</h2>
 <p class="muted">Плашки на хабе: минимум и максимум по всем путям внутри хаба от входа до выхода (со вложенными меню и циклами, с учётом разовых флагов и повторов причин); включая пути к смертям, как в таблицах статов ниже.</p>
-<p class="muted">Вертикальные плашки: нажмите на группу, чтобы раскрыть. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> Плашка группы: диапазон, унаследованный из прежней версии (не перепроверен). У выбора ▲ прибавка, ▼ убавка. <b style="color:#b91c1c">Красным</b> условие, 🚩 что выбор записывает. «↩» ведёт к плашке выше, если путь сходится.</p>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его ветки, повторный клик сворачивает. У каждого хаба свой цвет ветки. <button class="mini" onclick="allHubs(true)">Развернуть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button></p><p class="muted" style="font-size:13px">Значки на выборах: <span style="color:#e41a1c;font-weight:700">▲/▼ Настроение</span> · <span style="color:#bc1888;font-weight:700">▲/▼ Кровь</span> · <span style="color:#7048e8;font-weight:700">▲/▼ Безумие</span> · <span style="color:#1c7ed6;font-weight:700">▲/▼ Логика</span>. Плюсы — вверху справа карточки, минусы — внизу слева. Плашка на хабе — диапазон прямых изменений статов внутри хаба (по коду).</p>
 <style>button.mini{font-size:13px;padding:3px 10px;border-radius:8px;border:1px solid #c6ccd6;background:#fff;cursor:pointer}</style>
-<div class="pl ex"><b>Экран стрелок</b><br/>conv_0 / conv_1 → call_screen_strel()</div>
-<details class="hub" id="h_H1" style="border-color:#475569"><summary style="color:#475569"><b>Хаб 1. Стартовое меню<br/>start_menu</b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(237,231,251);border:1.4px solid rgb(112,72,232);color:rgb(112,72,232);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>0…+1</span> <span style='display:inline-block;background:rgb(227,242,250);border:1.4px solid rgb(28,126,214);color:rgb(28,126,214);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>0…+1</span></div></summary><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Может, лечь поспать?» <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl dstart" id="n_DS1" style="background:#E4EEF9"><b style='font-size:20px'>▶ НАЧАЛО СНА</b><br/>c1_sleep (script_1_less_begin:270-286): чёрный экран, «Это... Сон?»<br/>воспоминание о матери mather_memory (script_memory:7-39), без статов</div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Укусить себя за руку, вдруг все это сон?» <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Пойти дальше.» </div><div class="pl ex" id="n_ST" style="background:#eef0f4"><b>Экран стрелок</b><br/>conv_0 / conv_1 → call_screen_strel()</div></div></details>
-<details class="hub" id="h_H2" style="border-color:#475569"><summary style="color:#475569"><b>Хаб 2. Сон<br/>c1_sleep → head_ache</b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(237,231,251);border:1.4px solid rgb(112,72,232);color:rgb(112,72,232);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−1…+2</span> <span style='display:inline-block;background:rgb(227,242,250);border:1.4px solid rgb(28,126,214);color:rgb(28,126,214);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>0…+1</span> <span style='display:inline-block;background:rgb(252,228,245);border:1.4px solid rgb(188,24,136);color:rgb(188,24,136);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>0…+1</span></div></summary><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Что это вообще сейчас было?» </div><div class="pl h2" id="n_SON" style="background:#E4EEF9">сон (son, script_memory:43)</div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Не стоит больше вспоминать...» <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl bad" id="n_DE1" style="background:#ffd6d6"><b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0 → экран стрелок</div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Пытаться вспомнить дальше.» </div><div class="pl h2" id="n_SUD" style="background:#E4EEF9">воспоминание о суде<br/>(sud_memory)</div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Что за чертовщина там произошла?!» <span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></div><div class="pl h2" id="n_HA" style="background:#E4EEF9">головная боль, кровь из носа (head_ache)</div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Х-хватит...» <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl bad" id="n_DE2" style="background:#ffd6d6"><b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0<br/><small>script_memory:194</small></div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Идти до конца!» <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl bad" id="n_D1" style="background:#ffd6d6">BAD END<br/>«Вспомнить все...»<br/>death_son</div></div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Да бросьте, все в полном порядке!» <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="ref">↩ продолжение выше: <a href="#n_HA" onclick="openTo(this)">головная боль, кровь из носа (head_ache)…</a></div></div></div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Пожать плечами и выбросить из головы.» </div><div class="pl bad" id="n_DE0" style="background:#ffd6d6"><b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0<br/><small>script_1_less_begin:309</small></div></div></details>
-<details class="hub" id="h_H3" style="border-color:#475569"><summary style="color:#475569"><b>Хаб 3. Рука и корни<br/>c1_hand → zeml</b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(237,231,251);border:1.4px solid rgb(112,72,232);color:rgb(112,72,232);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−1…+4</span> <span style='display:inline-block;background:rgb(227,242,250);border:1.4px solid rgb(28,126,214);color:rgb(28,126,214);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>0…+2</span> <span style='display:inline-block;background:rgb(252,228,245);border:1.4px solid rgb(188,24,136);color:rgb(188,24,136);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>0…+1</span></div></summary><div class="muted">Вход: продолжение после группы «Хаб 1. Стартовое меню»</div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Хватит экспериментов.» <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></div><div class="pl ex" id="n_ST" style="background:#eef0f4"><b>Экран стрелок</b><br/>conv_0 / conv_1 → call_screen_strel()</div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Укусить еще сильнее. Для верности.» <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl h3" id="n_HN" style="background:#E4EEF9">Рука: продолжение<br/><small>hand_next</small></div><div class="pl h3" id="n_ZM" style="background:#E4EEF9">Меню корней<br/><small>zeml_menu</small></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Бежать.» <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl h3" id="n_ZR" style="background:#E4EEF9">Бегство в панике<br/><small>zeml_ran</small></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Пожалуйста! Не трогайте меня!»<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">открывает флаг poter_v_less</span> </div><div class="pl lm" id="n_L2" style="background:#E4EEF9"><b>Разговор с Лессом</b><br/>прямой вход (conv_2), минуя гляделки</div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Ничего не делать, все же в порядке?» <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl bad" id="n_D2" style="background:#ffd6d6">BAD END<br/>«Подкормка...»<br/>zeml_nothing</div></div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Зашипеть в ответ.» <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl h3" id="n_ZSH" style="background:#E4EEF9">Попытка шикнуть: «Шшшшш!»<br/><small>zeml_sh</small></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Продолжать шипеть до победного.» <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl h3" id="n_SHH" style="background:#E4EEF9">Шипеть изо всех сил: «Шшш!»<br/><small>shh</small></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«П-помогите!» </div><div class="ref">↩ продолжение выше: <a href="#n_L2" onclick="openTo(this)">Разговор с Лессомпрямой вход (conv_2), минуя гляделки…</a></div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Замереть на месте.» </div><div class="ref">↩ продолжение выше: <a href="#n_L2" onclick="openTo(this)">Разговор с Лессомпрямой вход (conv_2), минуя гляделки…</a></div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Вот, шиплю-шиплю, а меня схватило!» <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="ref">↩ продолжение выше: <a href="#n_L2" onclick="openTo(this)">Разговор с Лессомпрямой вход (conv_2), минуя гляделки…</a></div></div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Бежать.» </div><div class="ref">↩ продолжение выше: <a href="#n_ZR" onclick="openTo(this)">Бегство в паникеzeml_ran…</a></div></div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Ничего не делать, это же нормально?» <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl bad" id="n_D2" style="background:#ffd6d6">BAD END<br/>«Подкормка...»<br/>zeml_nothing</div></div></div></details>
-<div class="muted" style="margin:10px 0 4px">Узлы вне групп (отдельные сцены, переходы между группами и концовки из прежней схемы)</div><div class="pl ex" id="n_A0" style="background:#eef0f4"><b>Сцена 0. Выбор сложности</b> (hard)<br/>обучение, вопрос про HARDMODE<br/>статов нет</div>
-<div class="pl ex" id="n_A1" style="background:#eef0f4"><b>Сцена 1. Меню разработчика</b> (start3)<br/>razr = 1 жёстко: меню видит каждый игрок<br/>«Игра» → tash_game (мини-игра, вне схемы)</div>
-<div class="pl bad" id="n_D1" style="background:#ffd6d6">BAD END<br/>«Вспомнить все...»<br/>death_son</div>
-<div class="pl bad" id="n_D2" style="background:#ffd6d6">BAD END<br/>«Подкормка...»<br/>zeml_nothing</div>
-<div class="pl bad" id="n_DE1" style="background:#ffd6d6"><b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0 → экран стрелок</div>
+<div class="widechart"><pre class="mermaid" id="fchart"></pre></div>
 <div id="start-details">
 <div class="card">
 <h2>Детали по хабам</h2>
@@ -91,24 +236,46 @@
 </div>
 <div id="panel-short" style="position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:100%">
 <h2>Обзор хабов</h2>
-<div class="pl" style="background:#E4EEF9"><b>Сцена 0. Выбор сложности</b> (hard)<div class="ref">→ Сцена 1. Меню разработчика (start3)</div></div>
-<div class="pl" style="background:#E4EEF9"><b>Сцена 1. Меню разработчика</b> (start3)<div class="ref">→ ««Обучение» → назад в начало»: Сцена 0. Выбор сложности (hard)</div><div class="ref">→ ««Игра»»: tash_game (мини-игра, вне схемы)</div><div class="ref">→ Хаб 1. Стартовое меню (start_menu)</div><div class="ref">→ «меню локаций (razr = 1)»: Экран переходов (strel)</div></div>
-<div class="pl" style="background:#E4EEF9"><b>Хаб 1. Стартовое меню</b> (start_menu)<br>поспать · укусить руку · пойти дальше<br>лупа: <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> один раз<div class="ref">→ Хаб 2. Сон (c1_sleep → head_ache)</div><div class="ref">→ Хаб 3. Рука и корни (c1_hand → zeml)</div><div class="ref">→ ««Пойти дальше.»»: Экран переходов (strel)</div></div>
-<div class="pl" style="background:#E4EEF9"><b>Хаб 2. Сон</b> (c1_sleep → head_ache)<br>сон → суд → головная боль<br><span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><div class="ref">→ Экран переходов (strel)</div><div class="ref">→ ««Идти до конца!»»: BAD END «Вспомнить все...»</div></div>
-<div class="pl" style="background:#E4EEF9"><b>Хаб 3. Рука и корни</b> (c1_hand → zeml)<br>укус → корни: бежать / шипеть<br><span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><div class="ref">→ «прямой вход»: Разговор с Лессом</div><div class="ref">→ ««Хватит экспериментов.»»: Экран переходов (strel)</div><div class="ref">→ ««Ничего не делать»»: BAD END «Подкормка...»</div></div>
-<div class="pl" style="background:#E4EEF9">tash_game (мини-игра, вне схемы)</div>
-<div class="pl" style="background:#E4EEF9"><b>Экран переходов</b> (strel)<br>conv_0 / conv_1<div class="ref">→ «стрелки: первый раз → разговор»: Разговор с Лессом</div></div>
-<div class="pl" style="background:#E4EEF9"><b>Разговор с Лессом</b><br>прямой вход conv_2 или через стрелки</div>
-<div class="pl" style="background:#E4EEF9"><b>BAD END «Подкормка...»</b><br></div>
-<div class="pl" style="background:#E4EEF9"><b>BAD END «Вспомнить все...»</b><br></div>
+<div class="mermaid" id="ovchart">
+flowchart TB
+S0["<b>Сцена 0. Выбор сложности</b> (hard)"]:::scene
+S1["<b>Сцена 1. Меню разработчика</b> (start3)"]:::scene
+H1["<b>Хаб 1. Стартовое меню</b> (start_menu)<br/>поспать · укусить руку · пойти дальше<br/>лупа: <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> один раз"]:::scene
+H2["<b>Хаб 2. Сон</b> (c1_sleep → head_ache)<br/>сон → суд → головная боль<br/><span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"]:::scene
+H3["<b>Хаб 3. Рука и корни</b> (c1_hand → zeml)<br/>укус → корни: бежать / шипеть<br/><span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"]:::scene
+TASH["tash_game (мини-игра, вне схемы)"]:::far
+STREL["<b>Экран переходов</b> (strel)<br/>conv_0 / conv_1"]:::dev
+LESS["<b>Разговор с Лессом</b><br/>прямой вход conv_2 или через стрелки"]:::less
+BAD["<b>BAD END «Подкормка...»</b><br/>"]:::death
+BADS["<b>BAD END «Вспомнить все...»</b><br/>"]:::death
+S0 --> S1
+S1 -- "«Обучение» → назад в начало" --> S0
+S1 -- "«Игра»" --> TASH
+S1 --> H1
+S1 -- "меню локаций (razr = 1)" --> STREL
+H1 --> H2
+H1 --> H3
+H1 -- "«Пойти дальше.»" --> STREL
+H2 --> STREL
+H2 -- "«Идти до конца!»" --> BADS
+H3 -- "прямой вход" --> LESS
+H3 -- "«Хватит экспериментов.»" --> STREL
+H3 -- "«Ничего не делать»" --> BAD
+STREL -- "стрелки: первый раз → разговор" --> LESS
+classDef scene fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430
+classDef dev fill:#FFF4D6,stroke:#d9b45b,color:#1f2430
+classDef death fill:#222222,stroke:#000000,color:#ffffff
+classDef less fill:#DDEFD8,stroke:#7cb87c,color:#1f2430
+classDef far fill:#eeeeee,stroke:#aaaaaa,color:#555555
+</div>
 </div>
 </div>
 <div class="card" id="statsum">
 <h2>Статы: минимумы и максимумы</h2>
-<div style="overflow-x:auto"><table class="stats"><tr><th>Сцена</th><th class="mad">Безумие</th><th class="logic">Логика</th><th class="blood">Кровь</th><th class="mood">Настроение Лесса</th><th class="">Настроение Таши</th><th class="">Настроение Адриана</th><th class="">Настроение Луизы</th><th class="">Настроение Адро</th><th class="">Настроение Нарси</th><th class="">Мораль</th><th class="">Настроение Карралака</th><th class="">Настроение Лени</th><th class="">Настроение Фени</th><th class="">Настроение Бонни</th></tr><tr><td><a href="start.html?v=82">Старт: место пробуждения</a></td><td>0…+5</td><td>0…+3</td><td>0…+1</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="less.html?v=90">Разговор с Лессом</a></td><td>−7…+6</td><td>−2…+9</td><td>0…+2</td><td>−7…+15</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="road.html?v=74">Дорога (перекрёсток)</a></td><td>0…+1</td><td>0…+1</td><td>0…+1</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="tasha.html?v=94">Назад: Таша</a></td><td>−3…+6</td><td>0…+4</td><td>0</td><td>0</td><td>−25…+26</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="gubert.html?v=79">Губерт</a></td><td>0</td><td>0</td><td>0</td><td>−2…0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="sova.html?v=77">Сова</a></td><td>0</td><td>0</td><td>−1…+2</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="tgavan.html?v=77">Тёмная Гавань: дверь</a></td><td>−2…+9</td><td>−3…+2</td><td>0</td><td>−1…0</td><td>—</td><td>−24…+14</td><td>−1…0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="gavan.html?v=77">Гавань</a></td><td>−3…+3</td><td>−2…0</td><td>0</td><td>0</td><td>—</td><td>−5…+5</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="adro.html?v=77">Адро</a></td><td>−2…+4</td><td>−4…+3</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>−5…+4</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="adro2.html?v=77">Адро, продолжение</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>−5…+5</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="adrc.html?v=78">Адриан</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="nars.html?v=75">Нарси</a></td><td>−1…+2</td><td>−1…+1</td><td>0…+1</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>−6…+8</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="dev.html?v=79">Девочка (Луиза): начало</a></td><td>−3…+9</td><td>−4…+6</td><td>0</td><td>—</td><td>—</td><td>—</td><td>−21…+8</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="dev2.html?v=72">Девочка (Луиза): продолжение</a></td><td>0</td><td>0…+1</td><td>0</td><td>0</td><td>—</td><td>—</td><td>−1…0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="airat1.html?v=73">Айрат: вход и церковь</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>−1…+1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="airat2.html?v=73">Айрат: дверь коридора и Лени</a></td><td>0…+2</td><td>−3…+3</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>−1…0</td><td>−1…0</td><td>−1…0</td><td>—</td><td>—</td></tr><tr><td><a href="airat3.html?v=66">Айрат: Карралак</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>−1…+1</td><td>—</td><td>—</td><td>−2…+2</td><td>—</td></tr><tr><td><a href="airat4.html?v=74">Айрат: дом Луизы</a></td><td>0…+1</td><td>0…+1</td><td>0</td><td>0</td><td>—</td><td>—</td><td>−3…+1</td><td>—</td><td>—</td><td>−1…+2</td><td>—</td><td>—</td><td>0…+1</td><td>—</td></tr><tr><td><a href="airat5.html?v=67">Айрат: стража и кот</a></td><td>−2…+5</td><td>−4…+4</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="kapibar.html?v=74">Кафе «Кап»: Капибара</a></td><td>0</td><td>0</td><td>−4…0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>−2…+4</td><td>0…+2</td><td>—</td><td>—</td><td>0…+2</td><td>—</td></tr><tr><td><a href="bonny.html?v=77">Бонни</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>−10…+2</td></tr><tr><td><a href="chaos.html?v=77">Вход в хаос</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><b>Итого (все сцены подряд)</b></td><td><b>−23…+53</b></td><td><b>−23…+38</b></td><td><b>−5…+7</b></td><td><b>−10…+15</b></td><td><b>−25…+26</b></td><td><b>−29…+19</b></td><td><b>−27…+10</b></td><td><b>−10…+9</b></td><td><b>−8…+12</b></td><td><b>−3…+5</b></td><td><b>−1…0</b></td><td><b>−1…0</b></td><td><b>−2…+5</b></td><td><b>−10…+2</b></td></tr></table></div>
-<p class="muted">Оговорка: диапазон настроения Луизы на странице «Луиза: разговоры по кнопке» (−1…0) посчитан для одного прохода меню; можно ли открыть меню до и после изменения d5 (script3_airat.rpy:1028), не проверялось, поэтому итог по Луизе условный.</p><p class="muted">Все сцены в порядке игры. Строка «Итого» посчитана автоматически как сумма строк выше (минимумы к минимумам, максимумы к максимумам), её нельзя задать вручную: числа берутся из таблиц «Итог по сцене» самих страниц и везде совпадают со страницей <a href="stats.html?v=1">«Статы»</a>. Игрок может пройти не все сцены, поэтому итог это границы, а не обязательный путь. Для сцены «Девочка (Луиза): начало» взят вариант «Имя ≠ Вий». Подробности по каждому стату смотри на странице сцены.</p>
+<div style="overflow-x:auto"><table class="stats"><tr><th>Сцена</th><th class="mad">Безумие</th><th class="logic">Логика</th><th class="blood">Кровь</th><th class="mood">Настроение Лесса</th><th class="">Настроение Таши</th><th class="">Настроение Адриана</th><th class="">Настроение Луизы</th><th class="">Настроение Адро</th><th class="">Настроение Нарси</th><th class="">Мораль</th><th class="">Настроение Карралака</th><th class="">Настроение Лени</th><th class="">Настроение Фени</th><th class="">Настроение Бонни</th></tr><tr><td><a href="start.html?v=64">Старт: место пробуждения</a></td><td>0…+5</td><td>0…+3</td><td>0…+1</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="less.html?v=68">Разговор с Лессом</a></td><td>−7…+6</td><td>−2…+9</td><td>0…+2</td><td>−7…+15</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="road.html?v=70">Дорога (перекрёсток)</a></td><td>0…+1</td><td>0…+1</td><td>0…+1</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="tasha.html?v=65">Назад: Таша</a></td><td>−3…+6</td><td>0…+4</td><td>0</td><td>0</td><td>−25…+26</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="gubert.html?v=62">Губерт</a></td><td>0</td><td>0</td><td>0</td><td>−2…0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="sova.html?v=62">Сова</a></td><td>0</td><td>0</td><td>−1…+2</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="tgavan.html?v=73">Тёмная Гавань: дверь</a></td><td>−2…+9</td><td>−3…+2</td><td>0</td><td>−1…0</td><td>—</td><td>−24…+14</td><td>−1…0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="gavan.html?v=73">Гавань</a></td><td>−3…+3</td><td>−2…0</td><td>0</td><td>0</td><td>—</td><td>−5…+5</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="adro.html?v=4">Адро</a></td><td>−2…+4</td><td>−4…+3</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>−5…+4</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="adro2.html?v=7">Адро, продолжение</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>−5…+5</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="adrc.html?v=6">Адриан</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="nars.html?v=4">Нарси</a></td><td>−1…+2</td><td>−1…+1</td><td>0…+1</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>−6…+7</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="dev.html?v=70">Девочка (Луиза): начало</a></td><td>−3…+9</td><td>−4…+6</td><td>0</td><td>—</td><td>—</td><td>—</td><td>−21…+8</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="dev2.html?v=68">Девочка (Луиза): продолжение</a></td><td>0</td><td>0…+1</td><td>0</td><td>—</td><td>—</td><td>—</td><td>−2…0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="airat1.html?v=69">Айрат: вход и церковь</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>−1…+1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="airat2.html?v=63">Айрат: дверь коридора и Лени</a></td><td>0…+2</td><td>−3…+3</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>−1…0</td><td>−1…0</td><td>−1…0</td><td>—</td><td>—</td></tr><tr><td><a href="airat3.html?v=62">Айрат: Карралак</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>−1…+1</td><td>—</td><td>—</td><td>−2…+2</td><td>—</td></tr><tr><td><a href="airat4.html?v=70">Айрат: дом Луизы</a></td><td>0…+1</td><td>0…+1</td><td>0</td><td>0</td><td>—</td><td>—</td><td>−3…+1</td><td>—</td><td>—</td><td>−1…+2</td><td>—</td><td>—</td><td>0…+1</td><td>—</td></tr><tr><td><a href="airat5.html?v=62">Айрат: стража и кот</a></td><td>−2…+5</td><td>−4…+4</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><a href="kapibar.html?v=71">Кафе «Кап»: Капибара</a></td><td>0</td><td>0</td><td>−4…0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>−2…+4</td><td>0…+2</td><td>—</td><td>—</td><td>0…+2</td><td>—</td></tr><tr><td><a href="bonny.html?v=1">Бонни</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>−10…+2</td></tr><tr><td><a href="chaos.html?v=1">Вход в хаос</a></td><td>0</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td><b>Итого (все сцены подряд)</b></td><td><b>−23…+53</b></td><td><b>−23…+38</b></td><td><b>−5…+7</b></td><td><b>−10…+15</b></td><td><b>−25…+26</b></td><td><b>−29…+19</b></td><td><b>−28…+10</b></td><td><b>−10…+9</b></td><td><b>−8…+11</b></td><td><b>−3…+5</b></td><td><b>−1…0</b></td><td><b>−1…0</b></td><td><b>−2…+5</b></td><td><b>−10…+2</b></td></tr></table></div>
+<p class="muted">Все сцены в порядке игры. Строка «Итого» посчитана автоматически как сумма строк выше (минимумы к минимумам, максимумы к максимумам), её нельзя задать вручную: числа берутся из таблиц «Итог по сцене» самих страниц и везде совпадают со страницей <a href="stats.html?v=1">«Статы»</a>. Игрок может пройти не все сцены, поэтому итог это границы, а не обязательный путь. Для сцены «Девочка (Луиза): начало» взят вариант «Имя ≠ Вий». Подробности по каждому стату смотри на странице сцены.</p>
 </div>
 </main>
-<footer>Схемы игры «Вий» · сцена «Старт» · числа унаследованы из версии от 20.10.2026, сверка с текущей веткой не завершена</footer>
+<footer>Схемы игры «Вий» · сцена «Старт» · выверено по коду 20.10.2026</footer>
 </body>
 </html>
