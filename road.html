@@ -215,7 +215,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <ul>
 <li>Условие: круг ≥ 4 и <code>script3_road_less_meet_kr == 0</code>. Статов не меняет.</li>
 <li>При <code>less_delo</code>: меню «Да, есть кое-что» / «Нет, ничего» — без эффектов, встреча повторяется на следующих кругах.</li>
-<li>Иначе: Лесс уходит (<code>set_less("None")</code>), <code>meet_kr = 1</code> — больше не появляется.</li>
+<li>Если у героини нет дела к Лессу (<code>less_delo</code> не стоит): Лесс уходит (<code>set_less("None")</code>), <code>meet_kr = 1</code> — больше не появляется.</li>
 <li>Условные реплики: <span class="logic">logic ≥ 3</span> (уровень Логики 1) — «Почему мышка?» (при <span class="mood">mood &gt; 4</span> — доп. ответ); <span class="mad">mad ≥ 3</span> — «Пи?»; при <code>less.zn_name</code> — приветствие по имени.</li>
 </ul></div>
 <div class="hub"><h3>Мёртвый код: бурундук и doroga3 (road:240–245, 252–330)</h3>

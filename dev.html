@@ -129,7 +129,7 @@ function build(){
     E('MS --> SB["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет конечно! Меня зовут [v].»',null,[[C_DEV, 1]])+'</div>"]:::hhp', c4); E('SB --> MY', c4);
     E('MS --> SC["<div style=\'width:290px;white-space:normal\'>'+mk('«Конечно!! Меня зовут Сапуля! Это что, преступление?!»',null,null)+'</div>"]:::hhp', c4); E('SC --> ME', c4);
     L.push('ME["<div style=\'width:300px;white-space:normal\'>Если рядом Ташир: он представляется; Луиза идёт рядом → экран переходов (1216-1240)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Луиза идёт рядом</span></div>"]:::sc');
-    E('MY --> SM2["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе:',null,null)+'</div>"]:::hhp', c4); E('SM2 --> ME', c4);
+    E('MY --> SM2["<div style=\'width:290px;white-space:normal\'>'+mk('Если выбрано другое имя (не «Сапуля» и не «Вий»):',null,null)+'</div>"]:::hhp', c4); E('SM2 --> ME', c4);
     E('MY --> SM3["<div style=\'width:290px;white-space:normal\'>'+mk('Если имя героини «Вий» (1165):',null,[[C_DEV, 2]])+'</div>"]:::hhp', c4); E('SM3 --> VN', c4);
     E('VN --> V1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я не шучу. Я – Вий.»',null,[[C_DEV, 20]])+'</div>"]:::hhp', c4); E('V1 --> RN', c4);
     E('VN --> V2["<div style=\'width:290px;white-space:normal\'>'+mk('«Э... Шутка.»',null,null)+'</div>"]:::hhp', c4); E('V2 --> MY', c4);
@@ -152,7 +152,7 @@ function build(){
     L.push('AMM["<div style=\'width:260px;white-space:normal\'>Луиза в ужасе от вашей беззаботности (673)</div>"]:::sc');
     E('AM0 --> AA["<div style=\'width:290px;white-space:normal\'>'+mk('Если доля Логики не выше 0,5 (Безумия не меньше):',null,[[C_DEV, 1]])+'</div>"]:::hhk', c5); E('AA --> AMM', c5);
     E('AM0 --> AB["<div style=\'width:290px;white-space:normal\'>'+mk('Если доля Логики не ниже 0,7:',[[C_DEV, 1]],null)+'</div>"]:::hhk', c5); E('AB --> AL', c5);
-    E('AM0 --> AC["<div style=\'width:290px;white-space:normal\'>'+mk('Иначе (0,5-0,7):',null,null)+'</div>"]:::hhk', c5); E('AC --> AL', c5);
+    E('AM0 --> AC["<div style=\'width:290px;white-space:normal\'>'+mk('Если доля Логики между 0,5 и 0,7:',null,null)+'</div>"]:::hhk', c5); E('AC --> AL', c5);
     E('AMM --> A1["<div style=\'width:290px;white-space:normal\'>'+mk('«Конечно! Разве тут не весело?!»',[[C_MAD, 1]],[[C_DEV, 2]])+'</div>"]:::hhk', c5); E('A1 --> AL', c5);
     E('AMM --> A2["<div style=\'width:290px;white-space:normal\'>'+mk('«Ээ... Это сарказм.»'+note('логика даётся один раз («Паршивая ситуация.»)'),[[C_LOG, 1]],[[C_DEV, 1]])+'</div>"]:::hhk', c5); E('A2 --> AL', c5);
     L.push('M3["<div style=\'width:300px;white-space:normal\'>Луиза: «Это Бог... Очень плохой Бог» (762-782). Что скажешь?</div>"]:::sc');
