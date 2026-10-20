@@ -8,247 +8,11 @@
 <title>Айрат: дом Луизы — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
-<script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
-const HUBS=["A", "B", "C", "D", "E", "F", "G"];
-const EXP=new Set();
-const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)', C_ADR='rgb(13,148,136)', C_NAR='rgb(101,163,13)', C_ADO='rgb(79,70,229)', C_BON='rgb(219,39,119)';
-const CHIP_BG2=1;
-const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)'; CHIP_BG[C_ADR]='rgb(204,244,240)'; CHIP_BG[C_NAR]='rgb(236,252,203)'; CHIP_BG[C_ADO]='rgb(224,231,255)'; CHIP_BG[C_BON]='rgb(252,231,243)';
-function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
-function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
-function mk(text, ups, downs){
-  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
-  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
-    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
-    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
-    +'</div>';
-}
-function badge(ranges){
-  if(!ranges.length) return '';
-  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;margin-left:3px">'+p[1]+'</span>';}).join('');
-  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
-}
-function hub(id,label,cls,ranges){
-  const arrow = EXP.has(id) ? '▾' : '▸';
-  const b=badge(ranges||[]);
-  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
-  return id + '["' + inner + '"]:::' + cls;
-}
-const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>'+t+'</span>';};
-const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>'+t+'</span>';};
-const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
-function build(){
-  const L=[]; const ST=[]; let ei=0;
-  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
-  L.push('flowchart TD');
-  const cG='#9aa3b2', c1='#166534', c2='#0369a1', c3='#b45309', c4='#7c3aed', c5='#be123c', c6='#475569', c7='#b91c1c';
-  L.push('ST["<div style=\'width:300px;white-space:normal\'>Экран переходов: левая улица, дверь дома Луизы</div>"]:::ex');
-  L.push('EXS["<div style=\'width:200px;white-space:normal\'>Экран переходов</div>"]:::ex');
-  L.push('END["<div style=\'width:280px;white-space:normal\'>Перезапуск игры после «КОНЕЦ ДЕМОВЕРСИИ»</div>"]:::bad');
-  E('ST --> A', c1);
-  L.push(hub('A','Дверь дома Луизы<br/><small>dev_door_label, 1616-1662</small>','hhn',[]));
-  if(EXP.has('A')){
-    L.push('A0["<div style=\'width:320px;white-space:normal\'>Героиня у двери: «Эт дверь.» «Ладно.» «И что мне с ней делать?» (1616-1620)</div>"]:::sc');
-    E('A --> A0', c1);
-    L.push('AK["<div style=\'width:280px;white-space:normal\'>Героиня стучит: «Я решила постучаться.» (1626-1627)</div>"]:::sc');
-    L.push('AB["<div style=\'width:320px;white-space:normal\'>Героиня отходит влево. Голос Луизы: «Уходите! Я занята!» (1631-1635)</div>"]:::sc');
-    L.push('AF["<div style=\'width:360px;white-space:normal\'>Феня: «Я ранена. Можете помочь.» Луиза: «Боги, ребенок. Хорошо. Но заходи только ты.» Через несколько минут Феня выходит: «Меня перевязали! Спасибо!» (1636-1651)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Феня перевязана</span></div>"]:::sc');
-    L.push('AE["<div style=\'width:300px;white-space:normal\'>Героиня: «Тишина.» «И пустота.» «Бесполезное занятие.» (1654-1657)</div>"]:::sc');
-    L.push('AH["<div style=\'width:220px;white-space:normal\'>Героиня входит в дом</div>"]:::sc');
-    E('A0 --> A1["<div style=\'width:290px;white-space:normal\'>'+mk('«Войти»'+cond('если Луиза рядом (1622)'),null,null)+'</div>"]:::hhn', c1); E('A1 --> AH', c1);
-    E('A0 --> A2["<div style=\'width:290px;white-space:normal\'>'+mk('«Постучаться»'+cond('если Луизы нет рядом (1625)'),null,null)+'</div>"]:::hhn', c1); E('A2 --> AK', c1);
-    E('A0 --> A3["<div style=\'width:290px;white-space:normal\'>'+mk('«Конец»',null,null)+'</div>"]:::hhn', c1); E('A3 --> EXS', c1);
-    E('AK --> A4["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза дома и в прошлый раз поссорились (1630):',null,null)+'</div>"]:::hhn', c1); E('A4 --> AB', c1);
-    E('AK --> A5["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза дома и ссоры не было (1653):',null,null)+'</div>"]:::hhn', c1); E('A5 --> AH', c1);
-    E('AK --> A6["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луизы дома нет (1654):',null,null)+'</div>"]:::hhn', c1); E('A6 --> AE', c1);
-    E('AB --> A7["<div style=\'width:290px;white-space:normal\'>'+mk('Если Феня ранена и рядом (1636):',null,null)+'</div>"]:::hhn', c1); E('A7 --> AF', c1);
-    E('AB --> A8["<div style=\'width:290px;white-space:normal\'>'+mk('Если Фени нет или она не ранена:',null,null)+'</div>"]:::hhn', c1); E('A8 --> EXS', c1);
-    E('AF --> EXS', c1);
-    E('AE --> EXS', c1);
-  } else {
-    E('A --> EXS', c1);
-    E('A --> B', c1);
-  }
-  L.push(hub('B','Вход в дом Луизы<br/><small>airat_house_luiza, 1674-1786</small>','hhl',[[C_DEV, '−1…0']]));
-  if(EXP.has('B')){
-    L.push('B0["<div style=\'width:260px;white-space:normal\'>Героиня в доме Луизы (1674-1681)</div>"]:::sc');
-    E('B --> B0', c2);
-    L.push('B1["<div style=\'width:300px;white-space:normal\'>Луиза: «Все же решила вернуться?» «Заходи.» (1683-1685)</div>"]:::sc');
-    L.push('B2["<div style=\'width:340px;white-space:normal\'>Луиза: «Вот мы и дома.» «Ау! Папа?» «Ты еще не вернлуся?» «Тишина.» «Жаль, что его нет.» (1689-1701)</div>"]:::sc');
-    L.push('B2n["<div style=\'width:340px;white-space:normal\'>Луиза ночью: «Интересно, где он посередине ночи.» «Может стоит проверить лазарет?» «Хотя нет. Все же ночь.» (1703-1710)</div>"]:::sc');
-    L.push('B3["<div style=\'width:360px;white-space:normal\'>Луиза: «Заходите-заходите обе.» «Подойди ко мне, Фень.» «Дай посмотрю.» Просит героиню найти аптечку в комнате папы (1723-1730)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 разговор о ране Фени прошёл</span></div>"]:::sc');
-    L.push('B3l["<div style=\'width:340px;white-space:normal\'>Героиня про себя: «Не похоже на это.» «Да и рана совершенно другого толка.» «Но зачем ей врать?» (1735-1738)</div>"]:::sc');
-    L.push('B4["<div style=\'width:340px;white-space:normal\'>Луиза: «Заходи.» «Надо поспать.» «Поспишь вот здесь, на скамейке.» Затемнение, наступает день; Луиза рядом с героиней (1744-1758)</div>"]:::sc');
-    L.push('B5["<div style=\'width:320px;white-space:normal\'>Луиза: «Раз папы тут нет, надо пойти в Церковь.» «Пошли» (1762-1768)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Луиза позвала в церковь</span></div>"]:::sc');
-    L.push('B6["<div style=\'width:320px;white-space:normal\'>Луиза: «Эй! Мы уже там смотрели. Пошли в Церковь. Она прямо по дороге.» (1780-1781)</div>"]:::sc');
-    L.push('B7["<div style=\'width:320px;white-space:normal\'>Луиза: «Да ты издеваешься!» «Сколько можно сюда тыкаться!» «Нет там никого! Все» (1772-1776)</div>"]:::sc');
-    L.push('B8["<div style=\'width:200px;white-space:normal\'>Луиза молчит: «...» (1778)</div>"]:::sc');
-    L.push('BQ["<div style=\'width:220px;white-space:normal\'>Феня ранена и рядом?</div>"]:::sc');
-    L.push('BN["<div style=\'width:160px;white-space:normal\'>Ночь?</div>"]:::sc');
-    L.push('BK["<div style=\'width:240px;white-space:normal\'>Задание «Где жрец?» взято?</div>"]:::sc');
-    L.push('BV["<div style=\'width:240px;white-space:normal\'>Была ли героиня в церкви?</div>"]:::sc');
-    E('B0 --> BQ', c2);
-    E('BQ --> Bc0["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза ждала у двери и героиня вернулась (1683):',null,null)+'</div>"]:::hhl', c2); E('Bc0 --> B1', c2);
-    E('BQ --> Bc0b["<div style=\'width:290px;white-space:normal\'>'+mk('Если нет:',null,null)+'</div>"]:::hhl', c2); E('Bc0b --> B2', c2);
-    E('B1 --> B2', c2);
-    E('B2 --> B2n', c2);
-    E('B2n --> Bc3["<div style=\'width:290px;white-space:normal\'>'+mk('Если сейчас ночь или сумерки (1703):',null,null)+'</div>"]:::hhl', c2); E('Bc3 --> BQ2', c2);
-    L.push('BQ2["<div style=\'width:220px;white-space:normal\'>Феня ранена и рядом?</div>"]:::sc');
-    E('B2n --> Bc3b["<div style=\'width:290px;white-space:normal\'>'+mk('Если сейчас день:',null,null)+'</div>"]:::hhl', c2); E('Bc3b --> BQ2', c2);
-    E('BQ2 --> Bc4["<div style=\'width:290px;white-space:normal\'>'+mk('Если Феня ранена и рядом, аптечку уже осматривали (1714):',null,null)+'</div>"]:::hhl', c2); E('Bc4 --> C', c2);
-    E('BQ2 --> Bc5["<div style=\'width:290px;white-space:normal\'>'+mk('Если Феня ранена и рядом, аптечку не осматривали, разговор о ране ещё не было (1716):',null,null)+'</div>"]:::hhl', c2); E('Bc5 --> B3', c2);
-    E('BQ2 --> Bc6["<div style=\'width:290px;white-space:normal\'>'+mk('Если Феня ранена и рядом, разговор о ране уже был:',null,null)+'</div>"]:::hhl', c2); E('Bc6 --> EXS', c2);
-    E('BQ2 --> Bc7["<div style=\'width:290px;white-space:normal\'>'+mk('Если Феня не ранена или её нет рядом:',null,null)+'</div>"]:::hhl', c2); E('Bc7 --> BN', c2);
-    E('B3 --> Bl1["<div style=\'width:290px;white-space:normal\'>'+mk('Если Логика ≥ 1 (1735):',null,null)+'</div>"]:::hhl', c2); E('Bl1 --> B3l', c2);
-    E('B3 --> Bl2["<div style=\'width:290px;white-space:normal\'>'+mk('Если Логика меньше 1:',null,null)+'</div>"]:::hhl', c2); E('Bl2 --> EXS', c2);
-    E('B3l --> EXS', c2);
-    E('BN --> Bn1["<div style=\'width:290px;white-space:normal\'>'+mk('Если ночь или сумерки (1743):',null,null)+'</div>"]:::hhl', c2); E('Bn1 --> B4', c2);
-    E('BN --> Bn2["<div style=\'width:290px;white-space:normal\'>'+mk('Если день:',null,null)+'</div>"]:::hhl', c2); E('Bn2 --> BK', c2);
-    E('B4 --> BK', c2);
-    E('BK --> Bk1["<div style=\'width:290px;white-space:normal\'>'+mk('Если задание не взято (1760):',null,null)+'</div>"]:::hhl', c2); E('Bk1 --> EXS', c2);
-    E('BK --> Bk2["<div style=\'width:290px;white-space:normal\'>'+mk('Если задание взято:',null,null)+'</div>"]:::hhl', c2); E('Bk2 --> BV', c2);
-    E('BV --> Bv1["<div style=\'width:290px;white-space:normal\'>'+mk('Если в церкви не были, Луиза ещё не звала (1761):',null,null)+'</div>"]:::hhl', c2); E('Bv1 --> B5', c2);
-    E('BV --> Bv2["<div style=\'width:290px;white-space:normal\'>'+mk('Если в церкви не были, Луиза уже звала (1769):',null,null)+'</div>"]:::hhl', c2); E('Bv2 --> B6', c2);
-    E('BV --> Bv3["<div style=\'width:290px;white-space:normal\'>'+mk('Если в церкви были, записку нашли, но не прочитали (1782):',null,null)+'</div>"]:::hhl', c2); E('Bv3 --> F', c2);
-    E('BV --> Bv4["<div style=\'width:290px;white-space:normal\'>'+mk('Если в церкви были, записки нет, выбор об отце ещё не звучал (1784):',null,null)+'</div>"]:::hhl', c2); E('Bv4 --> D', c2);
-    E('BV --> Bv5["<div style=\'width:290px;white-space:normal\'>'+mk('Если в церкви были и всё это уже обсуждали:',null,null)+'</div>"]:::hhl', c2); E('Bv5 --> EXS', c2);
-    E('B6 --> Bw1["<div style=\'width:290px;white-space:normal\'>'+mk('Если это 4-й заход (1771):',null,null)+'</div>"]:::hhl', c2); E('Bw1 --> B7', c2);
-    E('B6 --> Bw2["<div style=\'width:290px;white-space:normal\'>'+mk('Если заходов меньше 4 (1779):',null,null)+'</div>"]:::hhl', c2); E('Bw2 --> EXS', c2);
-    E('B6 --> Bw3["<div style=\'width:290px;white-space:normal\'>'+mk('Если заходов больше 4 (1777):',null,null)+'</div>"]:::hhl', c2); E('Bw3 --> B8', c2);
-    E('B7 --> EXS', c2);
-    E('B8 --> EXS', c2);
-    E('B5 --> EXS', c2);
-  } else {
-    E('B --> EXS', c2);
-    E('B --> C', c2);
-    E('B --> D', c2);
-    E('B --> F', c2);
-  }
-  L.push(hub('C','Феня и бинты<br/><small>airat_house_fenya_bint, 1787-1818</small>','hhk',[[C_FEN, '+1'], [C_MOR, '+1']]));
-  if(EXP.has('C')){
-    L.push('C0["<div style=\'width:340px;white-space:normal\'>Героиня: «Я нашла бинты.» Луиза: «Отлично! Неси сюда!» Феня: «А ты... Умеешь?» (1789-1792)</div>"]:::sc');
-    E('C --> C0', c3);
-    L.push('C1["<div style=\'width:380px;white-space:normal\'>Луиза: «Папа показывал, как перевязывать экстренные раны.» «Зелья я использовать не рискну.» «Давай лапку...» Перевязывает Феню: «Ну вот! Теперь можно и лекарей дождаться.» (1793-1801)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Феня перевязана</span></div>"]:::sc');
-    L.push('C2["<div style=\'width:340px;white-space:normal\'>Феня: «Мне все еще нужен лекарь. Так что я с вами... Если можно.» Луиза: «Хорошо! Конечно!» (1805-1810)</div>"]:::sc');
-    L.push('C3["<div style=\'width:340px;white-space:normal\'>Феня: «Не знаю. Я пойду его искать. Ты ведь обещала мне помочь...» Героиня: «Да.» Феня: «Тогда пойдем.» (1813-1817)</div>"]:::sc');
-    E('C0 --> C1', c3);
-    E('C1 --> Cc1["<div style=\'width:290px;white-space:normal\'>'+mk('Если задание «Где жрец?» взято (1807):',null,null)+'</div>"]:::hhk', c3); E('Cc1 --> C2', c3);
-    E('C1 --> Cc2["<div style=\'width:290px;white-space:normal\'>'+mk('Если задание не взято (1812):',null,null)+'</div>"]:::hhk', c3); E('Cc2 --> C3', c3);
-    E('C2 --> D', c3);
-    E('C3 --> EXS', c3);
-  } else {
-    E('C --> EXS', c3);
-    E('C --> D', c3);
-  }
-  L.push(hub('D','Выбор об отце<br/><small>airat_house_luiza_next, 1819-1896</small>','hhp',[[C_MAD, '0…+1'], [C_LOG, '0…+1'], [C_DEV, '−2…+1'], [C_MOR, '−1…+1']]));
-  if(EXP.has('D')){
-    L.push('D0["<div style=\'width:380px;white-space:normal\'>Луиза: «Знаешь, папа мне мало что говорил о своей работе.» «Только то, что лечит людей.» «Не хочу думать о плохом.» «А ты что думаешь?» (1822-1828)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 разговор об отце начат</span></div>"]:::sc');
-    E('D --> D0', c4);
-    L.push('D1["<div style=\'width:400px;white-space:normal\'>Героиня: «Не хочу тебя расстраивать, но он мог лгать.» Далее доводы: девушка в церкви, Военник, Глава военного (1831-1839). Луиза: «Я думаю, он правда врал, если честно.» (1842-1843)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 жрец лгал</span></div>"]:::sc');
-    L.push('D2["<div style=\'width:400px;white-space:normal\'>Героиня: «Не думаю, что он мог лгать.» Луиза: «Очень на это надеюсь.» «Я боюсь за него.» Героиня: «Он не мог лгать дочери.» Луиза: «Точно...» «Спасибо!» (1846-1861)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 жрец не лгал</span></div>"]:::sc');
-    L.push('D3["<div style=\'width:380px;white-space:normal\'>Героиня: «Мне плевать.» «Мне все равно.» «Я вообще не уверена что тут делаю.» Луиза: «Ты можешь вообще уйти.» (1865-1873)</div>"]:::sc');
-    L.push('D3a["<div style=\'width:280px;white-space:normal\'>Героиня: «Я останусь.» Луиза: «Л-ладно?» (1876-1877)</div>"]:::sc');
-    L.push('D3b["<div style=\'width:380px;white-space:normal\'>Героиня: «Ага, пока.» Луиза: «Пока.» Задания «Где жрец?», «Найти врача» и «узнать о жреце» провалены, Луиза переходит на главную улицу (1880-1890)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 отношения с Луизой испорчены</span></div>"]:::sc');
-    L.push('D4["<div style=\'width:360px;white-space:normal\'>Луиза: «В любом случае. Я... Я должна знать, понимаешь? Он мой отец.» «Поможешь мне осмотреть дом? Пожалуйста.» (1891-1896)</div>"]:::sc');
-    E('D0 --> Dm1["<div style=\'width:290px;white-space:normal\'>'+mk('«Не хочу тебя расстраивать, но он мог лгать.»'+cond('если есть повод усомниться: девушка в церкви, Военник или Тёмная Гавань (1830)'),null,null)+'</div>"]:::hhp', c4); E('Dm1 --> D1', c4);
-    E('D0 --> Dm2["<div style=\'width:290px;white-space:normal\'>'+mk('«Не думаю, что он мог лгать. Может мы как-то не так поняли»',null,null)+'</div>"]:::hhp', c4); E('Dm2 --> D2', c4);
-    E('D0 --> Dm3["<div style=\'width:290px;white-space:normal\'>'+mk('«Мне плевать.»',null,null)+'</div>"]:::hhp', c4); E('Dm3 --> D3', c4);
-    E('D3 --> Dm4["<div style=\'width:290px;white-space:normal\'>'+mk('«Пожалуй, я остаюсь.»',null,null)+'</div>"]:::hhp', c4); E('Dm4 --> D3a', c4);
-    E('D3 --> Dm5["<div style=\'width:290px;white-space:normal\'>'+mk('«Ага. Отличная идея.»',null,null)+'</div>"]:::hhp', c4); E('Dm5 --> D3b', c4);
-    E('D1 --> D4', c4);
-    E('D2 --> D4', c4);
-    E('D3a --> D4', c4);
-    E('D3b --> EXS', c4);
-    E('D4 --> E', c4);
-  } else {
-    E('D --> EXS', c4);
-    E('D --> E', c4);
-  }
-  L.push(hub('E','Осмотр дома<br/><small>airat_house_priest_menu, 1900-1927</small>','hhr',[]));
-  if(EXP.has('E')){
-    L.push('E0["<div style=\'width:240px;white-space:normal\'>Меню осмотра дома (1901)</div>"]:::sc');
-    E('E --> E0', c5);
-    L.push('E1["<div style=\'width:400px;white-space:normal\'>Героиня: «Когда я осматривала вещи жреца, то заметила небольшую записку.» «Она была зашифрована.» «Судя по гербовой бумаге - Церковью.» (1923-1925)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записка найдена: после выхода из дома открывает концовки</span></div>"]:::sc');
-    L.push('E2["<div style=\'width:360px;white-space:normal\'>В комнате небольшая аптечка: пластыри, лекарства, зелье лечения, простые бинты, обезболивающее (1906-1908)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 аптечка осмотрена: открывает бинты для Фени</span></div>"]:::sc');
-    L.push('E3["<div style=\'width:380px;white-space:normal\'>Чёрная аптечка: жгут, бинты, бандажи, несколько бутыльков, свитки защиты. «И откуда я это помню?» (1911-1918)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 чёрная аптечка осмотрена: открывает бинты для Фени</span></div>"]:::sc');
-    E('E0 --> Em1["<div style=\'width:290px;white-space:normal\'>'+mk('«Осмотреть записку»',null,null)+'</div>"]:::hhr', c5); E('Em1 --> E1', c5);
-    E('E0 --> Em2["<div style=\'width:290px;white-space:normal\'>'+mk('«Осмотреть медицинские вещи»',null,null)+'</div>"]:::hhr', c5); E('Em2 --> E2', c5);
-    E('E0 --> Em3["<div style=\'width:290px;white-space:normal\'>'+mk('«Осмотреть странную аптечку»',null,null)+'</div>"]:::hhr', c5); E('Em3 --> E3', c5);
-    E('E0 --> Em4["<div style=\'width:290px;white-space:normal\'>'+mk('«Закончить осмотр»',null,null)+'</div>"]:::hhr', c5); E('Em4 --> EXS', c5);
-    E('E1 --> E0', c5);
-    E('E2 --> E0', c5);
-    E('E3 --> E0', c5);
-  } else {
-    E('E --> EXS', c5);
-  }
-  L.push(hub('F','Концовки демоверсии<br/><small>airat_end_dev, 1933-1984</small>','hhk',[]));
-  if(EXP.has('F')){
-    L.push('F0["<div style=\'width:380px;white-space:normal\'>Луиза читает записку: «Подожди-подожди.» «Что это?» «Что за записи? КОД?» «Это странно. Действительно странно.» (1936-1940)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записка прочитана</span></div>"]:::sc');
-    E('F --> F0', c7);
-    L.push('F1["<div style=\'width:340px;white-space:normal\'>Героиня: «Я тоже». «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Без понятия что тут творится.» (1942-1944)</div>"]:::bad');
-    L.push('F2["<div style=\'width:380px;white-space:normal\'>Героиня: «Церковь действительно не так чиста?» «Они точно не невинные овечки.» Луиза: «Я уже ни в чем не уверена.» «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Что-то творится в светлом королевстве.» (1948-1961)</div>"]:::bad');
-    L.push('F3["<div style=\'width:360px;white-space:normal\'>Героиня: «Может, ему это подкинули?» «Подорвать доверие.» «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Подстава» (1963-1973)</div>"]:::bad');
-    L.push('F4["<div style=\'width:360px;white-space:normal\'>Героиня: «Может это было для блага?» Луиза: «Я хочу ему верить.» «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Высокая цена.» (1975-1982)</div>"]:::bad');
-    L.push('FM["<div style=\'width:160px;white-space:normal\'>Меню (1946)</div>"]:::sc');
-    E('F0 --> Fc1["<div style=\'width:290px;white-space:normal\'>'+mk('Если Мораль ниже 1, жрец не лгал не записан и Логика ниже 2 (1941):',null,null)+'</div>"]:::hhk', c7); E('Fc1 --> F1', c7);
-    E('F0 --> Fc2["<div style=\'width:290px;white-space:normal\'>'+mk('Если хотя бы одно из этих условий не выполнено:',null,null)+'</div>"]:::hhk', c7); E('Fc2 --> FM', c7);
-    E('FM --> Fm1["<div style=\'width:290px;white-space:normal\'>'+mk('«Церковь действительно не так чиста?»'+cond('если героиня решила, что жрец лгал (1947)'),null,null)+'</div>"]:::hhk', c7); E('Fm1 --> F2', c7);
-    E('FM --> Fm2["<div style=\'width:290px;white-space:normal\'>'+mk('«Может, ему это подкинули?»'+cond('если Логика ≥ 2 (1962)'),null,null)+'</div>"]:::hhk', c7); E('Fm2 --> F3', c7);
-    E('FM --> Fm3["<div style=\'width:290px;white-space:normal\'>'+mk('«Может быть, так было лучше?»'+cond('если Мораль ≥ 1 (1974)'),null,null)+'</div>"]:::hhk', c7); E('Fm3 --> F4', c7);
-    E('F1 --> END', c7);
-    E('F2 --> END', c7);
-    E('F3 --> END', c7);
-    E('F4 --> END', c7);
-  } else {
-    E('F --> END', c7);
-  }
-  L.push(hub('G','Сон в доме<br/><small>airat_sleep, 1988-1992</small>','hhs',[]));
-  if(EXP.has('G')){
-    L.push('G0["<div style=\'width:340px;white-space:normal\'>Луиза: «Сейчас глубокая ночь.» «Стоит поспать, да и отец должен быть дома.» (1989-1990)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 задание «Где жрец?» взято</span></div>"]:::sc');
-    E('G --> G0', c6);
-    E('G0 --> EXS', c6);
-  } else {
-    E('G --> EXS', c6);
-  }
-  E('ST --> B', c2);
-  E('ST --> G', c6);
-  E('ST --> E', c5);
-  L.push('classDef hhk fill:#fde9ee,stroke:#be123c,color:#4d1223');
-  L.push('classDef hhl fill:#e5f2fa,stroke:#0369a1,color:#123043');
-  L.push('classDef hhn fill:#e7f4ea,stroke:#166534,color:#14331f');
-  L.push('classDef hhp fill:#f1eafd,stroke:#7c3aed,color:#2f1c5c');
-  L.push('classDef hhr fill:#fce9e9,stroke:#b91c1c,color:#4a1414');
-  L.push('classDef hhs fill:#edf1f6,stroke:#475569,color:#1d2733');
-  L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
-  L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
-  L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
-  return L.concat(ST).join('\n');
-}
-async function render(){
-  const f=document.getElementById('fchart');
-  if(!f) return;
-  f.removeAttribute('data-processed');
-  f.textContent=build();
-  await mermaid.run({nodes:[f]});
-  for(const ss of document.styleSheets){
-    let rules; try{rules=ss.cssRules;}catch(e){continue;}
-    for(let i=rules.length-1;i>=0;i--){
-      const r=rules[i];
-      if(r.selectorText && /\.(hh[a-z0-9]*|sc|ex|dd|ok)( span| > \*)$/.test(r.selectorText)
-         && r.style && r.style.getPropertyPriority('color')==='important'){ r.style.removeProperty('color'); }
-    }
-  }
-  document.querySelectorAll('#fchart g.node').forEach(function(g){
-    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
-    if(m && HUBS.indexOf(m[1])>=0){ g.style.cursor='pointer'; g.addEventListener('click', function(){ window.th(m[1]); }); }
-  });
-}
-window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
-window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
-render();
-</script>
+<style>.hub{border:2px solid;border-radius:10px;margin:10px 0;background:#fff}.hub>summary{cursor:pointer;padding:8px 10px;font-size:15px;list-style:none}.hub>summary::before{content:"▸ ";}.hub[open]>summary::before{content:"▾ ";}.hub>div,.hub>.pl,.hub>.ch{margin-left:8px;margin-right:8px}.hub{padding-bottom:6px}
+.pl{border:1px solid #7a9cc6;border-radius:8px;padding:6px 8px;margin:6px 0;font-size:14px;line-height:1.35;overflow-wrap:anywhere}.pl.ex{border-color:#aab2c0;color:#4a5160}.pl.bad{border-color:#b91c1c;color:#4a1414}.pl.stub{border-color:#d97706}
+.ch{border:1.5px solid;border-radius:8px;margin:6px 0 6px 4px;padding:3px 4px;font-size:14px;overflow-wrap:anywhere}.ch .chh{padding-left:6px;font-weight:600}.ch .pl{margin-left:0}.ch .ch{margin-left:3px}
+.ref{font-size:13px;color:#475569;margin:4px 0 4px 6px}.muted{overflow-wrap:anywhere}
+@media(min-width:700px){.hub{max-width:900px}}</style><script>function openTo(a){var id=a.getAttribute('href').slice(1);var e=document.getElementById(id);var p=e;while(p){if(p.tagName=='DETAILS')p.open=true;p=p.parentElement}setTimeout(function(){e&&e.scrollIntoView({block:'center'})},50)}function allHubs(v){document.querySelectorAll('details.hub').forEach(function(d){d.open=v})}</script>
 </head>
 <body>
 <header class="site"><div class="wrap">
@@ -266,8 +30,15 @@ render();
 
 <div class="card">
 <h2>Схема</h2>
-<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
-<div class="widechart"><div id="fchart" class="mermaid"></div></div>
+<p class="muted">Вертикальные плашки: нажмите на группу, чтобы раскрыть. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке группы: минимум и максимум по всем путям внутри группы. У выбора ▲ прибавка, ▼ убавка. <b style="color:#b91c1c">Красным</b> условие, 🚩 что выбор записывает. Выборы вложены под плашкой, к которой они относятся; «↩» ведёт к плашке выше, если путь сходится.</p>
+<div class="pl ex">Экран переходов: левая улица, дверь дома Луизы</div>
+<details class="hub" id="h_A" style="border-color:#166534"><summary style="color:#166534"><b>Дверь дома Луизы<br/><br><small style="font-weight:400">dev_door_label, 1616-1662</small></b></summary><div class="muted">Вход: клик по двери дома Луизы (script_npc_items.rpy:737)</div><div class="pl sc" id="n_A0" style="background:#E4EEF9">Героиня у двери: «Эт дверь.» «Ладно.» «И что мне с ней делать?» (1616-1620)</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Войти» <div style="font-size:12px;color:#b91c1c;font-weight:700">если Луиза рядом (1622)</div></div><div class="pl sc" id="n_AH" style="background:#E4EEF9">Героиня входит в дом</div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Постучаться» <div style="font-size:12px;color:#b91c1c;font-weight:700">если Луизы нет рядом (1625)</div></div><div class="pl sc" id="n_AK" style="background:#E4EEF9">Героиня стучит: «Я решила постучаться.» (1626-1627)</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если Луиза дома и в прошлый раз поссорились (1630): </div><div class="pl sc" id="n_AB" style="background:#E4EEF9">Героиня отходит влево. Голос Луизы: «Уходите! Я занята!» (1631-1635)</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если Феня ранена и рядом (1636): </div><div class="pl sc" id="n_AF" style="background:#E4EEF9">Феня: «Я ранена. Можете помочь.» Луиза: «Боги, ребенок. Хорошо. Но заходи только ты.» Через несколько минут Феня выходит: «Меня перевязали! Спасибо!» (1636-1651)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 Феня перевязана</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если Фени нет или она не ранена: </div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если Луиза дома и ссоры не было (1653): </div><div class="ref">↩ продолжение выше: <a href="#n_AH" onclick="openTo(this)">Героиня входит в дом…</a></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если Луизы дома нет (1654): </div><div class="pl sc" id="n_AE" style="background:#E4EEF9">Героиня: «Тишина.» «И пустота.» «Бесполезное занятие.» (1654-1657)</div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Конец» </div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div></details>
+<details class="hub" id="h_B" style="border-color:#0369a1"><summary style="color:#0369a1"><b>Вход в дом Луизы<br/><br><small style="font-weight:400">airat_house_luiza, 1674-1786</small></b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(220,252,231);border:1.4px solid rgb(22,163,74);color:rgb(22,163,74);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−1…0</span></div></summary><div class="muted">Вход: продолжение после группы «Дверь дома Луизы»</div><div class="pl sc" id="n_B0" style="background:#E4EEF9">Героиня в доме Луизы (1674-1681)</div><div class="pl sc" id="n_BQ" style="background:#E4EEF9">Феня ранена и рядом?</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если Луиза ждала у двери и героиня вернулась (1683): </div><div class="pl sc" id="n_B1" style="background:#E4EEF9">Луиза: «Все же решила вернуться?» «Заходи.» (1683-1685)</div><div class="pl sc" id="n_B2" style="background:#E4EEF9">Луиза: «Вот мы и дома.» «Ау! Папа?» «Ты еще не вернлуся?» «Тишина.» «Жаль, что его нет.» (1689-1701)</div><div class="pl sc" id="n_B2n" style="background:#E4EEF9">Луиза ночью: «Интересно, где он посередине ночи.» «Может стоит проверить лазарет?» «Хотя нет. Все же ночь.» (1703-1710)</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если сейчас ночь или сумерки (1703): </div><div class="pl sc" id="n_BQ2" style="background:#E4EEF9">Феня ранена и рядом?</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если Феня ранена и рядом, аптечку уже осматривали (1714): </div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если Феня ранена и рядом, аптечку не осматривали, разговор о ране ещё не было (1716): </div><div class="pl sc" id="n_B3" style="background:#E4EEF9">Луиза: «Заходите-заходите обе.» «Подойди ко мне, Фень.» «Дай посмотрю.» Просит героиню найти аптечку в комнате папы (1723-1730)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 разговор о ране Фени прошёл</span></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если Логика ≥ 1 (1735): </div><div class="pl sc" id="n_B3l" style="background:#E4EEF9">Героиня про себя: «Не похоже на это.» «Да и рана совершенно другого толка.» «Но зачем ей врать?» (1735-1738)</div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если Логика меньше 1: </div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если Феня ранена и рядом, разговор о ране уже был: </div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если Феня не ранена или её нет рядом: </div><div class="pl sc" id="n_BN" style="background:#E4EEF9">Ночь?</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если ночь или сумерки (1743): </div><div class="pl sc" id="n_B4" style="background:#E4EEF9">Луиза: «Заходи.» «Надо поспать.» «Поспишь вот здесь, на скамейке.» Затемнение, наступает день; Луиза рядом с героиней (1744-1758)</div><div class="pl sc" id="n_BK" style="background:#E4EEF9">Задание «Где жрец?» взято?</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если задание не взято (1760): </div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если задание взято: </div><div class="pl sc" id="n_BV" style="background:#E4EEF9">Была ли героиня в церкви?</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если в церкви не были, Луиза ещё не звала (1761): </div><div class="pl sc" id="n_B5" style="background:#E4EEF9">Луиза: «Раз папы тут нет, надо пойти в Церковь.» «Пошли» (1762-1768)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 Луиза позвала в церковь</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если в церкви не были, Луиза уже звала (1769): </div><div class="pl sc" id="n_B6" style="background:#E4EEF9">Луиза: «Эй! Мы уже там смотрели. Пошли в Церковь. Она прямо по дороге.» (1780-1781)</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если это 4-й заход (1771): </div><div class="pl sc" id="n_B7" style="background:#E4EEF9">Луиза: «Да ты издеваешься!» «Сколько можно сюда тыкаться!» «Нет там никого! Все» (1772-1776) <span style='background:rgb(220,252,231);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если заходов меньше 4 (1779): </div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если заходов больше 4 (1777): </div><div class="pl sc" id="n_B8" style="background:#E4EEF9">Луиза молчит: «...» (1778)</div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если в церкви были, записку нашли, но не прочитали (1782): </div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если в церкви были, записки нет, выбор об отце ещё не звучал (1784): </div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если в церкви были и всё это уже обсуждали: </div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если день: </div><div class="ref">↩ продолжение выше: <a href="#n_BK" onclick="openTo(this)">Задание «Где жрец?» взято?…</a></div></div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если сейчас день: </div><div class="ref">↩ продолжение выше: <a href="#n_BQ2" onclick="openTo(this)">Феня ранена и рядом?…</a></div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если нет: </div><div class="ref">↩ продолжение выше: <a href="#n_B2" onclick="openTo(this)">Луиза: «Вот мы и дома.» «Ау! Папа?» «Ты еще не вернлуся?» «Т…</a></div></div></details>
+<details class="hub" id="h_C" style="border-color:#be123c"><summary style="color:#be123c"><b>Феня и бинты<br/><br><small style="font-weight:400">airat_house_fenya_bint, 1787-1818</small></b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(254,226,232);border:1.4px solid rgb(190,18,60);color:rgb(190,18,60);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>+1</span> <span style='display:inline-block;background:rgb(241,245,249);border:1.4px solid rgb(71,85,105);color:rgb(71,85,105);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>+1</span></div></summary><div class="muted">Вход: продолжение после группы «Вход в дом Луизы»</div><div class="pl sc" id="n_C0" style="background:#E4EEF9">Героиня: «Я нашла бинты.» Луиза: «Отлично! Неси сюда!» Феня: «А ты... Умеешь?» (1789-1792)</div><div class="pl sc" id="n_C1" style="background:#E4EEF9">Луиза: «Папа показывал, как перевязывать экстренные раны.» «Зелья я использовать не рискну.» «Давай лапку...» Перевязывает Феню: «Ну вот! Теперь можно и лекарей дождаться.» (1793-1801)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 Феня перевязана</span> <span style='background:rgb(254,226,232);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">Если задание «Где жрец?» взято (1807): </div><div class="pl sc" id="n_C2" style="background:#E4EEF9">Феня: «Мне все еще нужен лекарь. Так что я с вами... Если можно.» Луиза: «Хорошо! Конечно!» (1805-1810)</div></div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">Если задание не взято (1812): </div><div class="pl sc" id="n_C3" style="background:#E4EEF9">Феня: «Не знаю. Я пойду его искать. Ты ведь обещала мне помочь...» Героиня: «Да.» Феня: «Тогда пойдем.» (1813-1817)</div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div></details>
+<details class="hub" id="h_D" style="border-color:#7c3aed"><summary style="color:#7c3aed"><b>Выбор об отце<br/><br><small style="font-weight:400">airat_house_luiza_next, 1819-1896</small></b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(237,231,251);border:1.4px solid rgb(112,72,232);color:rgb(112,72,232);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>0…+1</span> <span style='display:inline-block;background:rgb(227,242,250);border:1.4px solid rgb(28,126,214);color:rgb(28,126,214);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>0…+1</span> <span style='display:inline-block;background:rgb(220,252,231);border:1.4px solid rgb(22,163,74);color:rgb(22,163,74);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−2…+1</span> <span style='display:inline-block;background:rgb(241,245,249);border:1.4px solid rgb(71,85,105);color:rgb(71,85,105);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−1…+1</span></div></summary><div class="muted">Вход: продолжение после группы «Вход в дом Луизы» или «Феня и бинты»</div><div class="pl sc" id="n_D0" style="background:#E4EEF9">Луиза: «Знаешь, папа мне мало что говорил о своей работе.» «Только то, что лечит людей.» «Не хочу думать о плохом.» «А ты что думаешь?» (1822-1828)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 разговор об отце начат</span></div><div class="ch" style="border-color:#7c3aed;background:#fff"><div class="chh" style="border-left:4px solid #7c3aed">«Не хочу тебя расстраивать, но он мог лгать.» <div style="font-size:12px;color:#b91c1c;font-weight:700">если есть повод усомниться: девушка в церкви, Военник или Тёмная Гавань (1830)</div></div><div class="pl sc" id="n_D1" style="background:#E4EEF9">Героиня: «Не хочу тебя расстраивать, но он мог лгать.» Далее доводы: девушка в церкви, Военник, Глава военного (1831-1839). Луиза: «Я думаю, он правда врал, если честно.» (1842-1843)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 жрец лгал</span> <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl sc" id="n_D4" style="background:#E4EEF9">Луиза: «В любом случае. Я... Я должна знать, понимаешь? Он мой отец.» «Поможешь мне осмотреть дом? Пожалуйста.» (1891-1896)</div></div><div class="ch" style="border-color:#7c3aed;background:#fff"><div class="chh" style="border-left:4px solid #7c3aed">«Не думаю, что он мог лгать. Может мы как-то не так поняли» </div><div class="pl sc" id="n_D2" style="background:#E4EEF9">Героиня: «Не думаю, что он мог лгать.» Луиза: «Очень на это надеюсь.» «Я боюсь за него.» Героиня: «Он не мог лгать дочери.» Луиза: «Точно...» «Спасибо!» (1846-1861)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 жрец не лгал</span> <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(220,252,231);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="ref">↩ продолжение выше: <a href="#n_D4" onclick="openTo(this)">Луиза: «В любом случае. Я... Я должна знать, понимаешь? Он м…</a></div></div><div class="ch" style="border-color:#7c3aed;background:#fff"><div class="chh" style="border-left:4px solid #7c3aed">«Мне плевать.» </div><div class="pl sc" id="n_D3" style="background:#E4EEF9">Героиня: «Мне плевать.» «Мне все равно.» «Я вообще не уверена что тут делаю.» Луиза: «Ты можешь вообще уйти.» (1865-1873) <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> <span style='background:rgb(220,252,231);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span></div><div class="ch" style="border-color:#7c3aed;background:#fff"><div class="chh" style="border-left:4px solid #7c3aed">«Пожалуй, я остаюсь.» </div><div class="pl sc" id="n_D3a" style="background:#E4EEF9">Героиня: «Я останусь.» Луиза: «Л-ладно?» (1876-1877)</div><div class="ref">↩ продолжение выше: <a href="#n_D4" onclick="openTo(this)">Луиза: «В любом случае. Я... Я должна знать, понимаешь? Он м…</a></div></div><div class="ch" style="border-color:#7c3aed;background:#fff"><div class="chh" style="border-left:4px solid #7c3aed">«Ага. Отличная идея.» </div><div class="pl sc" id="n_D3b" style="background:#E4EEF9">Героиня: «Ага, пока.» Луиза: «Пока.» Задания «Где жрец?», «Найти врача» и «узнать о жреце» провалены, Луиза переходит на главную улицу (1880-1890)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 отношения с Луизой испорчены</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div></div></details>
+<details class="hub" id="h_E" style="border-color:#b45309"><summary style="color:#b45309"><b>Осмотр дома<br/><br><small style="font-weight:400">airat_house_priest_menu, 1900-1927</small></b></summary><div class="muted">Вход: лупа в доме Луизы (script_newscreens.rpy:1158) или продолжение разговора (script_4_airat.rpy:1921, 1927)</div><div class="pl sc" id="n_E0" style="background:#E4EEF9">Меню осмотра дома (1901)</div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Осмотреть записку» </div><div class="pl sc" id="n_E1" style="background:#E4EEF9">Героиня: «Когда я осматривала вещи жреца, то заметила небольшую записку.» «Она была зашифрована.» «Судя по гербовой бумаге - Церковью.» (1923-1925)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записка найдена: после выхода из дома открывает концовки</span></div><div class="ref">↩ продолжение выше: <a href="#n_E0" onclick="openTo(this)">Меню осмотра дома (1901)…</a></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Осмотреть медицинские вещи» </div><div class="pl sc" id="n_E2" style="background:#E4EEF9">В комнате небольшая аптечка: пластыри, лекарства, зелье лечения, простые бинты, обезболивающее (1906-1908)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 аптечка осмотрена: открывает бинты для Фени</span></div><div class="ref">↩ продолжение выше: <a href="#n_E0" onclick="openTo(this)">Меню осмотра дома (1901)…</a></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Осмотреть странную аптечку» </div><div class="pl sc" id="n_E3" style="background:#E4EEF9">Чёрная аптечка: жгут, бинты, бандажи, несколько бутыльков, свитки защиты. «И откуда я это помню?» (1911-1918)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 чёрная аптечка осмотрена: открывает бинты для Фени</span></div><div class="ref">↩ продолжение выше: <a href="#n_E0" onclick="openTo(this)">Меню осмотра дома (1901)…</a></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Закончить осмотр» </div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></div></details>
+<details class="hub" id="h_F" style="border-color:#be123c"><summary style="color:#be123c"><b>Концовки демоверсии<br/><br><small style="font-weight:400">airat_end_dev, 1933-1984</small></b></summary><div class="muted">Вход: продолжение после группы «Вход в дом Луизы»</div><div class="pl sc" id="n_F0" style="background:#E4EEF9">Луиза читает записку: «Подожди-подожди.» «Что это?» «Что за записи? КОД?» «Это странно. Действительно странно.» (1936-1940)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записка прочитана</span></div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">Если Мораль ниже 1, жрец не лгал не записан и Логика ниже 2 (1941): </div><div class="pl bad" id="n_F1" style="background:#ffd6d6">Героиня: «Я тоже». «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Без понятия что тут творится.» (1942-1944)</div></div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">Если хотя бы одно из этих условий не выполнено: </div><div class="pl sc" id="n_FM" style="background:#E4EEF9">Меню (1946)</div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">«Церковь действительно не так чиста?» <div style="font-size:12px;color:#b91c1c;font-weight:700">если героиня решила, что жрец лгал (1947)</div></div><div class="pl bad" id="n_F2" style="background:#ffd6d6">Героиня: «Церковь действительно не так чиста?» «Они точно не невинные овечки.» Луиза: «Я уже ни в чем не уверена.» «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Что-то творится в светлом королевстве.» (1948-1961)</div></div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">«Может, ему это подкинули?» <div style="font-size:12px;color:#b91c1c;font-weight:700">если Логика ≥ 2 (1962)</div></div><div class="pl bad" id="n_F3" style="background:#ffd6d6">Героиня: «Может, ему это подкинули?» «Подорвать доверие.» «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Подстава» (1963-1973)</div></div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">«Может быть, так было лучше?» <div style="font-size:12px;color:#b91c1c;font-weight:700">если Мораль ≥ 1 (1974)</div></div><div class="pl bad" id="n_F4" style="background:#ffd6d6">Героиня: «Может это было для блага?» Луиза: «Я хочу ему верить.» «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Высокая цена.» (1975-1982)</div></div></div></details>
+<details class="hub" id="h_G" style="border-color:#475569"><summary style="color:#475569"><b>Сон в доме<br/><br><small style="font-weight:400">airat_sleep, 1988-1992</small></b></summary><div class="muted">Вход: прыжок из страницы «Айрат: вход и церковь» (script_4_airat.rpy:121)</div><div class="pl sc" id="n_G0" style="background:#E4EEF9">Луиза: «Сейчас глубокая ночь.» «Стоит поспать, да и отец должен быть дома.» (1989-1990)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 задание «Где жрец?» взято</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов</div></details>
 </div>
 
 </main>
