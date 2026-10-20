@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<title>Айрат: вход и церковь — Схемы игры «Вий»</title>
+<link rel="stylesheet" href="style7.css?v=22">
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
+</script>
+<style>.warn{color:#b91c1c;font-weight:700}</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>Айрат: вход, церковь снаружи, Миранда — script_4_airat.rpy</h1>
+<p>Строки 1-520: стена, город, двери церкви, горожанка с просьбой, правый коридор</p>
+<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="dev.html?v=1">Луиза на дороге</a> · <a href="stats.html?v=32">Статы</a></nav>
+</div></header>
+<main>
+<div class="card">
+<h2>Статы (части 1: вход в Айрат → церковь, 1-520)</h2>
+<table class="stats">
+<tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Комментарий</th></tr>
+<tr><td class="mad">Безумие</td><td>0</td><td>0</td><td>не меняется</td></tr>
+<tr><td class="logic">Логика</td><td>0</td><td>0</td><td>не меняется</td></tr>
+<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>не меняется</td></tr>
+<tr><td style="color:#16a34a">Настроение Луизы</td><td>−1</td><td>+1</td><td>только «передать плату Миранды»: «Да, конечно.» +1 / «У меня есть другие дела.» −1 (445, 450); разовая встреча</td></tr>
+</table>
+<p class="muted"><span class="warn">Допущение:</span> mad_l()/logic_l() приняты = get_level ≥ 1; в коде они иногда написаны без скобок (<code>logic_l &gt;= 1</code>, 257, 261, 303): это сравнение функции с числом, в Python 3 — ошибка (TypeError) при Луизе рядом. Ориентир: DEATH END в стене при чёрном активном амулете — отдельная плашка.</p>
+</div>
+<div class="card">
+<h2>Схема</h2>
+<div class="widechart"><div class="mermaid">
+flowchart TD
+IN["<b>Вход</b> script_4_airat_in_wall (1)<br/>с дороги через белую стену (экран переходов)"]:::scene
+Q0{"<b>Амулет активен и чёрный?</b> (2)"}:::hub
+TA["<span style='color:#b91c1c;font-weight:700'>если Ташир рядом (4)</span><br/>Ташир: «НАЗАД!» (5-22)"]:::scene
+M0{"меню (24)"}:::hub
+BK["«Согласиться с ним и сделать шаг назад.» → strel<br/>без изменений"]:::out
+DE["<b>DEATH END «Ошибка мироздания»</b> (62-66), затем <code>renpy.full_restart()</code> (66)<br/>«Уперто сделать шаг вперед» или (без Ташира) шаг вперёд<br/>persistent.death = 1, deaths_list[osh][1]"]:::bad
+Q1{"<b>«airat_go» ещё не в life_quest?</b> (68)<br/>первый вход: update_status(life_quest), «Какой светлый город...»"}:::hub
+DV["<span style='color:#b91c1c;font-weight:700'>если Луиза рядом (dev.near, 78)</span><br/>Луиза: «Вот мы и в городе»"]:::scene
+B1["<span style='color:#b91c1c;font-weight:700'>dev_dialog «to_airat_bad» (94)</span><br/>Луиза: «Все, ты обещала уйти. Прощай!» dev.near = 0 → strel"]:::out
+B2["<span style='color:#b91c1c;font-weight:700'>dev_dialog «after_airat_bad» (104)</span><br/>Луиза убегает в дом слева, dev.near = 0 → strel"]:::out
+B3["иначе (вместе): «Надо срочно найти папу!»<br/>quest_find_priest.keep = 1<br/><span style='color:#b91c1c;font-weight:700'>ночь/«sumer» (120) → airat_sleep (1987)</span>"]:::scene
+TT["<span style='color:#b91c1c;font-weight:700'>если Ташир рядом (127)</span><br/>Ташир убегает в «милое местечко», tash.near = 0"]:::scene
+ST["<b>strel: город Айрат</b>"]:::out
+MB["<b>airat_main_bottom</b> (138): стрелка «вниз, к воротам»"]:::scene
+MBD["<span style='color:#b91c1c;font-weight:700'>если Луиза рядом (140)</span><br/>«за ворота я больше не выйду»<br/><span style='color:#b91c1c;font-weight:700'>если Феня рядом и не ранена (fenya.near и не rana, 146)</span>: Феню надо перевязать"]:::scene
+MM{"меню (160)"}:::hub
+MB1["«Прости, не туда свернула!» → strel, Луиза остаётся"]:::out
+MB2["«Ну, тогда нам стоит расстаться.»<br/>Луиза и Феня остаются в городе: dev.near = 0, fenya.near = 0, обе lock = дом Луизы<br/><span style='color:#b91c1c;font-weight:700'>если Феня рядом</span>: «Я пойду с Луизой»<br/>my_location = less_white_wall"]:::scene
+MU["<b>airat_main_up</b> (197): стрелка «вверх, к церкви»"]:::scene
+MUN{"<span style='color:#b91c1c;font-weight:700'>Луиза рядом и «ara_empty» ещё не в ara_pers (198)</span>"}:::hub
+MUN1["<span style='color:#b91c1c;font-weight:700'>ночь/sumer (199)</span>: «Сейчас не лучшее время идти сюда. Мой дом слева»"]:::scene
+MUM{"меню (206)"}:::hub
+MU1["«Я пойду к тебе.» → strel"]:::out
+MU2["«Иди одна.» dev.near = 0, dev.lock = дом Луизы → strel"]:::out
+MU3["днём: «Это Церковь... Здесь слишком тихо»<br/>ara_pers.keep = 1, «ara_empty» в vrem_memory → strel"]:::out
+CE["<b>Осмотры снаружи церкви</b><br/>church_shield (237): меч и щит над входом; church_osm (268): здание 3 этажа (osm_d += airat_church); church_windows (287): синий витраж<br/>реплики по Логике ≥ 1 / Безумию ≥ 3; Луиза рядом: рассказывает про Ара. Статов нет."]:::scene
+CU["<b>airat_church_up</b> (307): двери церкви"]:::scene
+CUD["<span style='color:#b91c1c;font-weight:700'>Луиза рядом и «dev_church» не в arrows_per (309)</span><br/>входят вместе, «давай разделимся», quest_find_priest.diary<br/><span style='color:#b91c1c;font-weight:700'>если girl_air.lock == локация (340)</span>: Луиза замечает девушку"]:::scene
+CUE["иначе: «miranda_meet0» впервые — мелькает силуэт женщины"]:::scene
+CUF["quest_find_priest.keep и Луиза рядом → dev.lock = airat_church_inside; dev.near = 0<br/>girl_air добавляется в gametime._vrem"]:::scene
+GA{"<b>script_4_airat_girl_air</b> (363): горожанка Миранда (d_air)<br/>если «miranda_meet» уже есть: «мы уже решили вопросы» и выход"}:::hub
+GA1["С Луизой (dev.lock == church_inside): диалог про Элеона Ара, «черная мантия?» — «были только белые»"]:::scene
+GA2["Без Луизы: «Тут подозрительно пусто»"]:::scene
+GM{"Просьба: передать плату за лечение, 5 золотых<br/>меню"}:::hub
+GY["«Да, конечно.» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/>+5 золотых, quest_money_return = keep"]:::scene
+GN["«У меня есть другие дела.» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><br/>quest_money_return = false"]:::scene
+GX["С Луизой: «где лазарет?» — налево по коридору; dev.lock очищается<br/>→ strel"]:::out
+RT["<b>script_4_airat_right</b> (501): коридор направо<br/>впервые: quest_find_priest.diary, «ни украшений, ничего»; Безумие ≥ 3: «наверное, съели»<br/>впереди деревянная дверь → strel (corridor_door, 520)"]:::out
+IN --> Q0
+Q0 -- "да" --> TA
+TA --> M0
+M0 --> BK
+M0 -- "«Уперто сделать шаг вперед»" --> DE
+Q0 -- "да, Ташира нет" --> DE
+Q0 -- "нет (амулет не чёрный/не активен)" --> Q1
+Q1 -- "да" --> DV
+DV --> B1
+DV --> B2
+DV --> B3
+Q1 --> TT
+B3 --> TT
+TT --> ST
+Q1 -- "уже входили" --> ST
+ST --> MB
+MB --> MBD
+MBD --> MM
+MM --> MB1
+MM --> MB2
+ST --> MU
+MU --> MUN
+MUN --> MUN1
+MUN1 --> MUM
+MUM --> MU1
+MUM --> MU2
+MUN -- "день" --> MU3
+ST --> CE
+ST --> CU
+CU --> CUD
+CU --> CUE
+CUD --> CUF
+CUE --> CUF
+CUF --> GA
+GA --> GA1
+GA --> GA2
+GA1 --> GM
+GA2 --> GM
+GM --> GY
+GM --> GN
+GY --> GX
+GN --> GX
+ST --> RT
+classDef scene fill:#E4EEF9,stroke:#7a9cc6
+classDef hub fill:#fff3bf,stroke:#d4a017
+classDef bad fill:#ffd6d6,stroke:#b91c1c
+classDef out fill:#d8f5e0,stroke:#2f9e44
+</div></div>
+</div>
+<div class="card">
+<h2>Ошибки и особенности кода</h2>
+<ul>
+<li><b>Падение:</b> <code>logic_l &gt;= 1</code> без скобок (airat:257, 261) и <code>mad_l &gt;= 1</code> (303) — сравнение функции с числом; срабатывает только когда рядом Луиза (в церкви «щит»/«окна»).</li>
+<li>Без Луизы и без Ташира статов в этой части нет: она состоит из реплик и состояния (dev.near, dev.lock, fenya.near, quest_find_priest).</li>
+<li>В <code>airat_main_up</code> и <code>airat_main_bottom</code> Луиза с Феней остаются в городе (lock = дом Луизы).</li>
+</ul>
+</div>
+</main>
+<footer>Схемы игры «Вий» · Айрат: вход и церковь · выверено по коду 20.10.2026</footer>
+</body>
+</html>

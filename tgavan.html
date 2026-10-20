@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<title>Дверь Адриана (Тёмная Гавань) — Схемы игры «Вий»</title>
+<link rel="stylesheet" href="style7.css?v=22">
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
+</script>
+<style>.omood{color:#0d9488}.tmood{color:#D97706}.warn{color:#b91c1c;font-weight:700}.chip{display:inline-block;border-radius:6px;padding:0 6px;font-weight:700;color:#fff}</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>Дверь Адриана (Тёмная Гавань) — script3_tgavan_begin.rpy</h1>
+<p>Лес у двери, разговор с Адрианом, правила города, зелье · script3_tgavan_begin.rpy (1107 строк)</p>
+<nav class="crumbs"><a href="index.html?v=22">← Все схемы</a> · <a href="sova.html?v=1">Сова</a> · <a href="strel.html?v=21">Экран переходов</a></nav>
+</div></header>
+<main>
+<div class="card">
+<h2>Статы по сцене (мин/макс по всем вариантам, по коду)</h2>
+<table class="stats">
+<tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Типичный путь*</th></tr>
+<tr><td class="mad">Безумие</td><td>−2</td><td>+6</td><td>+0.35</td></tr>
+<tr><td class="logic">Логика</td><td>−1</td><td>+2</td><td>0.00</td></tr>
+<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td class="mood">Настроение Лесса</td><td>−1</td><td>0</td><td>0 (−1 только за «Постучать», 113)</td></tr>
+<tr><td class="omood">Настроение Адриана (oh.mood)</td><td>−18</td><td>+13</td><td>−0.91</td></tr>
+</table>
+<p class="muted">*Оценка: перебор всех путей по коду скриптом, выборы равновероятны. «Типичный путь» = базовый сценарий: безумие 0, логика 0, нет чёрного амулета, viy.zn_name = False, persistent.memory = False (4 599 путей). Мин/макс взяты по всем 24 сценариям (3 стартовых уровня × амулет × viy.zn_name × persistent.memory). Пути, возвращающиеся в уже пройденное состояние, не считаются (меню можно листать бесконечно).</p>
+<p class="muted">«Настроение Адриана» (<code>oh.mood</code>) — новый стат этой сцены. Цвет <span class="omood">бирюзовый</span> выбран мной: у Кати его нет в палитре.</p>
+<p class="muted"><span style="color:#b91c1c;font-weight:700">Начальные значения безумия и логики зависят от пройденных сцен</span>: от них зависят уровни (get_level: безумие ≥ 3 = уровень 1, ≥ 6 = 2, ≥ 9 = 3; логика ≥ 2 = уровень 1, ≥ 4 = 2, ≥ 6 = 3), а от уровней — доступные пункты и тексты. <span style="color:#b91c1c;font-weight:700">Определения mad_l() и logic_l() определены в script.rpy:208-211 как lambda: sanity.get_level, т.е. mad_l() ≥ 1 равно Безумие ≥ 3, logic_l() ≥ 1 равно Логика ≥ 2 (проверено по коду).</span></p>
+</div>
+<div class="card">
+<h2>Варианты по входным условиям</h2>
+<table class="stats">
+<tr><th>Сценарий</th><th>Путей</th><th class="mad">Безумие</th><th class="logic">Логика</th><th class="omood">Адриан</th></tr>
+<tr><td>Безумие 0, логика 0, без амулета (база)</td><td>4 599</td><td>−1…+1 (+0.35)</td><td>−1…+1 (0.00)</td><td>−7…+3 (−0.91)</td></tr>
+<tr><td>Безумие 3 (level 1), логика 0</td><td>27 069</td><td>−1…+2 (+0.52)</td><td>−1…+1 (0.00)</td><td>−11…+3 (−1.24)</td></tr>
+<tr><td>Безумие 0, логика 2 (level 1)</td><td>31 433</td><td>−1…+1 (+0.36)</td><td>−1…+1 (0.00)</td><td>−5…+9 (−0.18)</td></tr>
+<tr><td>База + чёрный амулет (amulet() = 2)</td><td>4 527</td><td>−1…+2 (+0.36)</td><td>−1…+1 (0.00)</td><td>−7…+3 (−0.83)</td></tr>
+<tr><td>База + viy.zn_name = True (пункт «Вий.»)</td><td>18 459</td><td>−1…+1 (+0.36)</td><td>−1…+1 (0.00)</td><td>−14…+4 (−1.10)</td></tr>
+<tr><td>База + viy.zn_name + persistent.memory</td><td>399 369</td><td>−2…+3 (+0.37)</td><td>−1…+2 (0.00)</td><td>−14…+12 (−1.00)</td></tr>
+<tr><td>Безумие 3 + амулет + Вий + memory</td><td>1 668 293</td><td>−2…+6 (+0.55)</td><td>−1…+2 (0.00)</td><td>−17…+11 (−1.19)</td></tr>
+</table>
+<p class="muted">В базовом сценарии 524 из 4 599 путей заканчиваются падением (см. «Ошибки в коде»); с амулетом доля выше.</p>
+</div>
+<div class="card">
+<h2>Схема сцены</h2>
+<p class="muted">Числа в скобках — строки script3_tgavan_begin.rpy. Чипы: ▲ — прибавка, ▼ — убыль, цвет = стат (бирюзовый = настроение Адриана). Красным — условия из кода. Показан первый визит; повторные входы (o1.d2, od3.d12) попадают сразу в меню 2door и vhoddorr.</p>
+<div class="widechart"><div class="mermaid">
+flowchart TD
+IN["<b>Вход</b> script_3_tgavan_door (1)<br/>первый визит: нет razr, dev.near, o1.d2, od3.d12"]:::hub
+K1["<div style='position:relative;display:inline-block;padding:3px 10px 16px 10px'>«Постучать.» (101)<span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> <span style='background:rgb(255,235,235);color:rgb(228,26,28);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></span></div>"]:::choice
+K2["«Окликнуть.» (117)"]:::choice
+K3["<div style='position:relative;display:inline-block;padding:16px 10px 3px 10px'>«Развернуться и уйти.» (122)<span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span></div>"]:::choice
+X1["→ strel (на карту)"]:::out
+D1["<b>1door_menu</b> (134)<br/>Адриан: «Стойте и не двигайтесь»"]:::hub
+A1["<div style='position:relative;display:inline-block;padding:16px 10px 3px 10px'>«Замереть.»<span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span></div>"]:::choice
+A2["<div style='position:relative;display:inline-block;padding:16px 10px 16px 10px'>«Эй, не приказывай мне!»<br/><span style='color:#b91c1c;font-weight:700'>если безумие ≥ 3 (level ≥ 1), один раз (141)</span><span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span><span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></span></div>"]:::choice
+A3["«Осторожно спросить.» (151)"]:::choice
+A4["<div style='position:relative;display:inline-block;padding:16px 10px 3px 10px'>«Можете объяснить, где я?»<br/><span style='color:#b91c1c;font-weight:700'>если логика ≥ 2 (level ≥ 1) (178)</span><br/><br/><span style="color:#b91c1c;font-weight:700">logic +=1 (181) — голая переменная, sanity не меняет</span><span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span></div>"]:::choice
+A5["«Уйти обратно.» (187)"]:::choice
+D2["<b>2door_menu</b> (200)<br/>«Будете слушать?»"]:::hub
+B1["<div style='position:relative;display:inline-block;padding:16px 10px 16px 10px'>«Я послушаю!» (203)<br/><span style='color:#b91c1c;font-weight:700'>Адр +1 только если логика ≥ 2</span><span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span><span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></span></div>"]:::choice
+B2["<div style='position:relative;display:inline-block;padding:16px 10px 16px 10px'>«Неа, я сама.» (214)<span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span><span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></span></div>"]:::choice
+B3["«Я, пожалуй, уберусь отсюда.» (221)<br/>o1.d2 = 1"]:::choice
+R["<div style='position:relative;display:inline-block;padding:16px 10px 16px 10px'><b>rools</b> (231): Адриан представляется<br/><span style='color:#b91c1c;font-weight:700'>Адр: ▼ если безумие ≥ 3 (mad_l), иначе ▲</span><span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span><span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></span></div>"]:::scene
+NM["<b>name_menu</b> (271)"]:::hub
+C1["«Меня зовут [v].» → adr_razg"]:::choice
+C2["<div style='position:relative;display:inline-block;padding:3px 10px 16px 10px'>«Я... Миранда.» (286)<br/><span style='color:#b91c1c;font-weight:700'>один раз (od1.d2)</span><span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></span></div>"]:::choice
+C3["<div style='position:relative;display:inline-block;padding:16px 10px 3px 10px'>«Сапуля Те Ля Камоле Каптуче Холе.» (296)<br/><span style='color:#b91c1c;font-weight:700'>если mad_l(), один раз (od1.d1)</span><span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span></div>"]:::choice
+C3a["<div style='position:relative;display:inline-block;padding:16px 10px 16px 10px'>«Прошу прощения.» (306)<span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span><span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></span></div>"]:::choice
+C3b["<div style='position:relative;display:inline-block;padding:16px 10px 16px 10px'>«Но это правда мое имя!!» (317)<span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span><span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> <span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span></span></div>"]:::choice
+C3c["«Ладно, ладно! Это шутка!» (354)"]:::choice
+C4["«Вий.» (362)<br/><span style='color:#b91c1c;font-weight:700'>если viy.zn_name = True и имя не «Вий»</span>"]:::choice
+C5["<div style='position:relative;display:inline-block;padding:16px 10px 3px 10px'>«Я хочу оставаться анонимной.» (366)<br/><span style='color:#b91c1c;font-weight:700'>Адр +1 только при логике ≥ 2</span><span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span></div>"]:::choice
+NA["<div style='position:relative;display:inline-block;padding:3px 10px 16px 10px'><b>noadr</b> (395): Адриан открывает дверь<span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−3</span></span></div>"]:::bad
+ND["<b>noadr_door</b> (409)<br/>«Пройти внутрь» / «Уйти назад» / «Почему там так темно?» / «Мы можем еще поговорить?»"]:::hub
+AR["<div style='position:relative;display:inline-block;padding:16px 10px 16px 10px'><b>adr_razg</b> (458): правила города<br/><span style='color:#b91c1c;font-weight:700'>только без чёрного амулета: ▲ если логика ≥ 2, ▼ если безумие ≥ 3 и логика &lt; 2</span><span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span><span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></span></div>"]:::scene
+M["<b>Меню Адриана</b> (500)"]:::hub
+M1["<div style='position:relative;display:inline-block;padding:16px 10px 16px 10px'>«Что такое Белая Стража?» (502)<br/><span style='color:#b91c1c;font-weight:700'>один раз (tg_know_mad)</span><br/><br/>при безумии ≥ 6 (level ≥ 2) итог 0<span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span><span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></span></div>"]:::choice
+M2["«Вы упоминали Мастера.» (547)<br/>один раз"]:::choice
+M3["«Здесь совсем нет запретов...» (580)<br/>если tg_know_mad или od3.d4; один раз"]:::choice
+M4["«Спросить о нем самом» (592)"]:::choice
+M5["«Вы можете больше рассказать мне обо мне?» (595)<br/>если oh.znv (после ветки Вия), один раз"]:::choice
+M6["<div style='position:relative;display:inline-block;padding:16px 10px 3px 10px'>«Я все узнала что хотела.» (608)<br/>если oh.mood ≥ 0 или есть амулет; при логике ≥ 2 и безумии &lt; 3: ▲<span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span></div>"]:::choice
+M7["«Я все узнала...» при oh.mood &lt; 0 без амулета (610)<br/><span style='color:#b91c1c;font-weight:700'>Адриан гасит свет → noadr</span>"]:::bad
+AB["<b>about_adr_menu</b> (657)"]:::hub
+AB1["<div style='position:relative;display:inline-block;padding:16px 10px 3px 10px'>«Вы... Не кажетесь мне преступником.» (659)<br/><span style='color:#b91c1c;font-weight:700'>логика ≥ 2, один раз</span><span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span></div>"]:::choice
+AB2["<div style='position:relative;display:inline-block;padding:16px 10px 3px 10px'>«Вы бы хотели отсюда уйти?» (675)<br/><span style='color:#b91c1c;font-weight:700'>после AB1, один раз; +1 только если oh.mood &gt; 0</span><span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span></div>"]:::choice
+AB3["<div style='position:relative;display:inline-block;padding:3px 10px 16px 10px'>«Вы тоже темный маг?» (691)<br/><span style='color:#b91c1c;font-weight:700'>один раз</span><span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span></span></div>"]:::choice
+OV["<b>o_viy_zn</b> (638)"]:::hub
+OV1["<div style='position:relative;display:inline-block;padding:3px 10px 16px 10px'>«Звучит прекрасно!»<span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−5</span></span></div>"]:::choice
+OV2["<div style='position:relative;display:inline-block;padding:16px 10px 3px 10px'>«Это нехорошо. Мне не нравится.»<span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+3</span></span></div>"]:::choice
+VH["<b>vhoddorr_menu</b> (703)"]:::hub
+V1["«Пожалуй... Я вернусь назад.» (706)<br/>od3.d12 = 1"]:::choice
+V2["«Я... Хочу войти.» (734)"]:::choice
+PM["<b>potion_menu</b> (790)<br/>Адриан протягивает фиал"]:::hub
+P1["«Взять очень осторожно.» (792)<br/><span style='color:#b91c1c;font-weight:700'>jump script_3_tgavan_adr_after_door (837) — метки нет в доступных файлах</span>"]:::bad
+P2["<div style='position:relative;display:inline-block;padding:16px 10px 16px 10px'>«Наплевать на предупреждение.» (838)<br/><span style='color:#b91c1c;font-weight:700'>ещё один фиал: без амулета 1 раз, с амулетом 2 раза, потом конец</span><span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span><span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></span></div>"]:::choice
+P3["«Я не буду это пить!» (881)"]:::choice
+CR["CRASH: метка script_3_tgavan_adr_after_door не найдена"]:::bad
+VR["<div style='position:relative;display:inline-block;padding:3px 10px 16px 10px'><b>viy_razg</b> (892): Адриан о Вие<span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−4</span></span></div>"]:::scene
+VM["<b>viy_menu</b> (907)"]:::hub
+W1["<div style='position:relative;display:inline-block;padding:16px 10px 16px 10px'>«Я потеряла память, но кое-что помню... Мне это не нравится.» (909)<br/><span style='color:#b91c1c;font-weight:700'>если persistent.memory или pd_tgavan</span><span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+3</span> <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span><span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></span></div>"]:::choice
+W2["<div style='position:relative;display:inline-block;padding:16px 10px 16px 10px'>«Я потеряла память, но... интересным человеком.» (929)<br/><span style='color:#b91c1c;font-weight:700'>если persistent.memory или pd_tgavan</span><span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span><span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></span></div>"]:::choice
+W3["<div style='position:relative;display:inline-block;padding:16px 10px 3px 10px'>«Я не знаю кто я.» (940)<br/><span style='color:#b91c1c;font-weight:700'>один раз (od3.d9)</span><span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+3</span></span></div>"]:::choice
+W4["«Я... Ага. Скрыть потерю памяти» (953)<br/>один раз (od3.d9)"]:::choice
+SN["<b>viy_sm_name</b> (961)"]:::hub
+SN1["<div style='position:relative;display:inline-block;padding:16px 10px 3px 10px'>«Нет. Мое имя - это Вий!» (963)<span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span></div>"]:::choice
+SN2["«Хорошо...» (976): ввод имени (986)"]:::choice
+VP["<b>viy_please</b> (1014)"]:::hub
+VP1["<div style='position:relative;display:inline-block;padding:16px 10px 16px 10px'>«Ха! Не приказывай мне!» (1016)<span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></span><span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></span></div>"]:::choice
+VP2["<div style='position:relative;display:inline-block;padding:16px 10px 3px 10px'>«Хорошо, я попробую!» (1038)<span style='position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span></span></div>"]:::choice
+DV["<div style='position:relative;display:inline-block;padding:3px 10px 16px 10px'><b>tg_dv_amul</b> (1049): вход с амулетом<br/>Адриан: «ряды сторонников Мастера» <br/>входящих переходов в доступном коде нет → меню Адриана<span style='position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap'><span style='background:rgb(204,244,238);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−5</span></span></div>"]:::scene
+EN["<b>script_3_tgavan_enter</b> (1089)<br/>→ strel (вход в Гавань)"]:::out
+IN --> K1
+IN --> K2
+IN --> K3
+K3 --> X1
+K1 --> D1
+K2 --> D1
+D1 --> A1
+D1 --> A2
+A2 --> D1
+D1 --> A3
+D1 --> A4
+D1 --> A5
+A5 --> X1
+A1 --> D2
+A3 --> D2
+A4 --> D2
+D2 --> B1
+D2 --> B2
+D2 --> B3
+B3 --> X1
+B1 --> R
+R --> NM
+NM --> C1
+NM --> C2
+C2 --> NM
+NM --> C3
+C3 --> C3a
+C3 --> C3b
+C3 --> C3c
+C3a --> NM
+C3c --> NM
+NM --> C4
+NM --> C5
+B2 --> NA
+C3b --> NA
+NA --> ND
+ND --> X1
+C1 --> AR
+C5 --> AR
+AR --> M
+M --> M1
+M1 --> M
+M --> M2
+M2 --> M
+M --> M3
+M3 --> M
+M --> M4
+M --> M5
+M --> M6
+M --> M7
+M7 --> NA
+M4 --> AB
+AB --> AB1
+AB --> AB2
+AB --> AB3
+AB1 --> AB
+AB2 --> AB
+AB3 --> AB
+AB --> M
+M5 --> OV
+OV --> OV1
+OV --> OV2
+OV1 --> M
+OV2 --> M
+M6 --> VH
+VH --> V1
+VH --> V2
+V1 --> X1
+V2 --> PM
+PM --> P1
+PM --> P2
+P2 --> PM
+PM --> P3
+P2 -- "конец" --> X1
+P3 --> X1
+P1 --> CR
+C4 --> VR
+C1 -- "если имя уже «Вий»" --> VR
+VR --> VM
+VM --> W1
+VM --> W2
+VM --> W3
+VM --> W4
+W1 --> AR
+W3 --> SN
+SN --> SN1
+SN --> SN2
+SN1 --> VM
+SN2 --> VM
+W2 --> VP
+W4 --> VP
+VP --> VP1
+VP --> VP2
+VP1 --> NA
+VP2 --> AR
+DV --> M
+ND -- "«Пройти внутрь»" --> EN
+classDef scene fill:#E4EEF9,stroke:#7a9cc6
+classDef hub fill:#fff3bf,stroke:#d4a017
+classDef choice fill:#ffffff,stroke:#888
+classDef bad fill:#ffd6d6,stroke:#b91c1c
+classDef out fill:#d8f5e0,stroke:#2f9e44
+</div></div>
+</div>
+<div class="card">
+<h2>Что важно</h2>
+<ul>
+<li>Единственная проверка oh.mood, меняющая ход сцены: «Я все узнала что хотела» при <code>oh.mood &lt; 0</code> без амулета (610): Адриан гасит свет и ведёт в noadr. Остальные проверки (434, 537, 663, 679) меняют только текст.</li>
+<li>«Эй, не приказывай мне!» (141) доступен при безумии ≥ 3; «Можете объяснить, где я?» (178) при логике ≥ 2.</li>
+<li>Ветка Вия (viy_razg и ниже) открывается пунктом «Вий.» при <code>viy.zn_name == True</code> (имя узнано в сцене Таши, nazad:810, 1152) или если имя героини уже «Вий».</li>
+<li>Не смоделировано: ветка dev.near (18-67), razr (13-17), повторные визиты, amulet() = 1 (активен, но не «keep»), ввод имени в ne_viy5 (986).</li>
+</ul>
+</div>
+<div class="card">
+<h2>Ошибки и особенности кода</h2>
+<ul>
+<li><span style="color:#b91c1c;font-weight:700">«Взять очень осторожно.» (792) → jump script_3_tgavan_adr_after_door (837)</span>: метки нет в доступных файлах игры, похоже на падение. Стоит проверить, не лежит ли она в другом файле.</li>
+<li><span style="color:#b91c1c;font-weight:700">Флаги без присваивания</span>: <code>od4.d1</code> (741, 761, 776), <code>od3.d4</code> (580) и <code>pd_tgavan</code> (909, 929) только читаются, нигде не присваиваются в доступных файлах. Ветка «Она снова здесь» (776-778) недостижима.</li>
+<li><code>$ script_3_tgavan_begin_adr_door_razg</code> (992) — имя метки как выражение, без jump: ничего не делает.</li>
+<li><code>$ logic +=1</code> (181) — голая переменная, не <code>sanity.add_logic</code>: логика не меняется.</li>
+<li>Метки <code>tg_dv_amul</code> (1049, вход «с амулетом») и <code>tgavan_exit</code> (1102) без входящих переходов в доступных файлах.</li>
+<li>«Наплевать на предупреждение» (838) можно повторять: без амулета ещё один фиал, с амулетом два; безумие +1 за каждый заход.</li>
+</ul>
+</div>
+</main>
+<footer>Схемы игры «Вий» · Дверь Адриана · выверено по коду 20.10.2026</footer>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<title>Луиза (девочка на дороге) — Схемы игры «Вий»</title>
+<link rel="stylesheet" href="style7.css?v=22">
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
+</script>
+<style>.warn{color:#b91c1c;font-weight:700}.dmood{color:#16a34a}</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>Луиза на дороге — script3_airat.rpy (часть 1)</h1>
+<p>Девочка в белом платье, «Дальше по дороге» · script3_airat.rpy, строки 1-1381 · script_4_airat.rpy — отдельной страницей позже</p>
+<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="dev2.html?v=1">Луиза: разговоры по кнопке</a> · <a href="tgavan.html?v=2">Дверь Адриана</a> · <a href="stats.html?v=32">Статы</a></nav>
+</div></header>
+<main>
+<div class="card">
+<h2>Статы по сцене (мин/макс, перебор всех путей)</h2>
+<table class="stats">
+<tr><th>Стат</th><th>Имя ≠ Вий</th><th>Имя = Вий</th><th>Комментарий</th></tr>
+<tr><td class="mad">Безумие</td><td>−3…+9</td><td>−1…+3</td><td>типичный путь (база 0/0): +2.5 / +0.2</td></tr>
+<tr><td class="logic">Логика</td><td>−4…+6</td><td>0…+4</td><td>типичный: +0.6 / +1.7 (дедуп. по причине только у «Паршивая ситуация.»)</td></tr>
+<tr><td class="blood">Кровь</td><td>0</td><td>0…+1</td><td>+1 только «Пытаться догнать изо всех сил» (1305)</td></tr>
+<tr><td class="dmood">Настроение Луизы (dev.mood)</td><td>−21…+8</td><td>−29…+4</td><td>НОВЫЙ стат, зелёный rgb(22,163,74) — мой цвет, не Катин. Типичный: −5.3 / −20.5. Границ в доступном коде не найдено</td></tr>
+</table>
+<p class="muted">Перебор: 64 стартовых набора (Безумие 0/3/6/9 × Логика 0/2/4/6 × Лесс назвал имя места да/нет × имя Вий да/нет), равновероятные выборы, ~40-53 тыс. путей на набор (базовый 3/2, имя не Вий: 53 241 путь). Ветки ratio() считаются по абсолютным значениям Безумия/Логики. Доли исходов (база 3/2): перезапуск игры без концовки 35%, вместе идут 46%, разошлись (не по пути / оставить) 19%.</p>
+<p class="muted"><span class="warn">Проверено:</span> <code>mad_l()</code> и <code>logic_l()</code> определены в script.rpy:208-211 как lambda: sanity.get_level, т.е. mad_l() ≥ 1 равно Безумие ≥ 3, logic_l() ≥ 1 равно Логика ≥ 2 (проверено по коду). Условия «Безумие ≥ 3 и Лесс не назвал имя места» (736) учитываются в mood. Цикл «Шутка» (имя Вий) считан один раз; каждый лишний круг даёт ещё dev.mood −2 без границы. Начальное значение dev.mood в коде не найдено — принято 0. Вход «Девочка спит на траве» (girl_osm, 65) даёт отдельно Логику <span style="background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px">▲+1</span> и ведёт в strel (в схему не входит).</p>
+</div>
+<div class="card">
+<h2>Схема сцены</h2>
+<div class="widechart"><div class="mermaid">
+flowchart TD
+IN["<b>Вход</b> (script3_airat.rpy 91-257)<br/>из road «Дальше по дороге»: день → begin_day (200), иначе dev_airat2 (109)<br/>девочка Луиза (Дев) спит на дороге"]:::scene
+M0{"меню (126 / 210)"}:::hub
+IGN["<b>Игнорировать</b> → ign_dev (258) → strel<br/>без изменений статов"]:::out
+CV["<b>conv_dev</b> (275): разговор<br/>«Разбудить» / «Пойти на голос»"]:::scene
+M1{"меню (332)"}:::hub
+AG["«Еще чего! Хочу побыть здесь»<br/><span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−3</span>"]:::scene
+OK["«Абсолютно согласна»<br/><span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"]:::scene
+SH["«Безразлично пожать плечами»<br/><span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"]:::scene
+P1["<b>1menu</b> (935)<br/>«Ловушку?» / «Кто ты?» (один раз, devd1.d1) / «Молча идти дальше»→name<br/>Луиза представляется (имя, Новый Айрат)"]:::scene
+P2["(961-963) <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/>devd.d2 = 1"]:::scene
+M2{"меню (988)"}:::hub
+Q{"<b>Хаб вопросов</b> menu_question (389)<br/>пункты по одному разу, «Конец» (или авто-выход, когда остальных нет)"}:::hub
+NM{"<b>name_conv</b> (594): выбор имени"}:::hub
+NOTI["«Это абсолютно не важно»<br/><span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"]:::scene
+Q1["«Почему ты сбежала из дома?» (devd2.d5, один раз)<br/>без статов"]:::scene
+Q3["«Церковь Ара?» (devd2.d3, один раз)<br/>arawhat (558) → <b>whoisara</b> (1107)"]:::scene
+W{"<b>whoisara</b>: реплика о церкви"}:::hub
+W1["<span style='color:#b91c1c;font-weight:700'>если Логика ≥ 1</span><br/>«Не может быть все так хорошо.»<br/><span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
+W2["«Кажется они хорошие ребята.»<br/><span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span>"]:::scene
+W3["«Скука смертная...»<br/><span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−4</span>"]:::scene
+Q10["«Стена? Ловушка?» (devd2.d10, один раз)<br/>без статов"]:::scene
+Q9["«Он объяснил почему?» <span style='color:#b91c1c;font-weight:700'>(только после «Почему сбежала», devd2.d9)</span><br/>подменю 1: «Понятно...» / «Тебе стоит послушать его» / «Думай своей головой» без статов; «Сначала стоит понять почему...» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"]:::scene
+Q9b["подменю 2: «Хорошо, я помогу.» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> / «Нет, у меня свои дела.» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
+NMA["<b>Не Вий:</b> «Я не помню... называй меня [v]» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/>→ amnez (655)"]:::scene
+NMB["«Я – [v]» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/>«Миранда» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/>«Сапуля Те Ля Камоле Каптуче Холе» (без статов)<br/>→ myname"]:::scene
+NV["<b>Имя = Вий</b>: «не помню... называй [v]» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> / «Я – [v]» без статов<br/>→ viyname (1242)"]:::scene
+AM["<b>amnez</b> (655): «Ох... Потерять память?»<br/><span style='color:#b91c1c;font-weight:700'>ratio ≤ 0.5</span>: <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>; «Конечно! Разве тут не весело?!» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> или «Ээ... Это сарказм.» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (один раз, причина «Паршивая ситуация.») <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><br/><span style='color:#b91c1c;font-weight:700'>ratio ≥ 0.7</span>: <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/>между 0.5 и 0.7: без статов<br/><span style='color:#b91c1c;font-weight:700'>Лесс не называл имя места (less.zn_name ложно) и Безумие ≥ 3</span>: <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> (736)"]:::scene
+M3{"меню (784)"}:::hub
+X1["«Это... и правда нехорошо.»<br/><span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
+X2["«Пожать плечами.» без статов"]:::scene
+X3["«Это весело!»<br/><span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span> <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−3</span>"]:::scene
+CH{"<b>inless_conv_chaos</b> (883)"}:::hub
+C1["«Хм,.. Звучит хорошо!»<br/><span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span> <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−3</span>"]:::scene
+C2["«Нет. Это звучит плохо.»<br/><span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"]:::scene
+C3["«А кто это?» (один раз, devd2.d2)<br/><span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"]:::scene
+MEM["<b>inless_conv_memory</b> (838)<br/>«Хорошо...» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span><br/>«Со мной все в порядке – нет» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
+MQ["<span style='color:#b91c1c;font-weight:700'>devd2.d3 == 0 (про Ара не спрашивали) и Логика ≥ 1</span><br/>whoisara (те же варианты) → myname"]:::scene
+CR["<b>Перезапуск игры без текста концовки</b><br/>иначе метка кончается на <code>renpy.full_restart()</code> (882)"]:::bad
+IL["<b>inless_conv</b> (1009): девочка убегает<br/><span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−4</span>"]:::scene
+IL1["«Увязаться за ней» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (devd.d5 +1)"]:::scene
+IL0["«Оставить в покое» → strel"]:::out
+IL2["«Стоило ей сделать шаг...» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
+M4{"меню (1053)"}:::hub
+NP["«Что ж... Нам не по пути.» → strel"]:::out
+OK2["«Окей.» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
+M5{"меню (1083)"}:::hub
+Y1["«Идет.» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/>dev_dialog: to_airat_bad"]:::scene
+Y2["«Еще чего!» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><br/>dev_dialog: after_airat_bad"]:::scene
+E1["<b>КОНЕЦ:</b> dev.near = 1 → strel<br/>(Луиза идёт рядом)"]:::out
+MY["<b>myname</b> (1164)<br/>Сапуля: «Шутка! Меня зовут Миранда!» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> / «Нет конечно! Меня зовут [v].» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> / «Конечно!! Меня зовут Сапуля!»<br/>если Ташир рядом — представляется<br/>dev.near = 1 → strel"]:::out
+VN{"<b>viyname</b> (1242)"}:::hub
+V1["«Я не шучу. Я – Вий.» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−20</span><br/>Луиза убегает"]:::scene
+V2["«Э... Шутка.» → myname (dv остаётся «Вий»)<br/><span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> и снова viyname (цикл, пока не выбрать «Я – Вий»)"]:::bad
+RN{"<b>run</b> (1276)"}:::hub
+R1["«Пытаться догнать» → второе меню"]:::scene
+R2["«Игнорировать» → runaway (1356)"]:::out
+R3["«Пытаться догнать изо всех сил»<br/><span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (setblood(blood+1); при Крови ≥ 3 → sm_blood)<br/>теряет сознание"]:::scene
+R4["«Отставить попытки»"]:::scene
+RA["<b>runaway</b> (1356): «От меня нередко убегали» → strel"]:::out
+IN --> M0
+M0 -- "«Игнорировать»" --> IGN
+M0 -- "«Разбудить» / «Пойти на голос»" --> CV
+CV --> M1
+M1 --> AG
+M1 --> OK
+M1 --> SH
+OK --> P1
+SH --> P1
+P1 -- "«Ловушку?» или «Кто ты?»" --> P2
+P2 --> M2
+M2 -- "«Стоп... Объясни толком»" --> Q
+M2 -- "«Я все поняла!»" --> NM
+P1 -- "«Молча идти дальше»" --> NM
+M2 --> NOTI
+NOTI --> NM
+Q -- "«Конец»" --> NM
+Q --> Q1
+Q1 --> Q
+Q --> Q3
+Q3 --> W
+W --> W1
+W --> W2
+W --> W3
+W1 --> Q
+W2 --> Q
+W3 --> Q
+Q --> Q10
+Q10 --> Q
+Q --> Q9
+Q9 --> Q9b
+Q9b --> Q
+NM -- "<span style='color:#b91c1c;font-weight:700'>имя ≠ Вий</span>" --> NMA
+NM --> NMB
+NM -- "<span style='color:#b91c1c;font-weight:700'>v.name == Вий</span>" --> NV
+NMA --> AM
+AM --> M3
+M3 --> X1
+M3 --> X2
+M3 --> X3
+X3 --> CH
+CH --> C1
+CH --> C2
+CH --> C3
+C3 --> CH
+X1 --> MEM
+X2 --> MEM
+C2 --> MEM
+MEM -- "да" --> MQ
+MEM -- "нет" --> CR
+MQ --> MY
+AG --> IL
+C1 --> IL
+IL --> IL1
+IL --> IL0
+IL1 --> IL2
+IL2 --> M4
+M4 --> NP
+M4 --> OK2
+OK2 --> M5
+M5 --> Y1
+M5 --> Y2
+Y1 --> E1
+Y2 --> E1
+NMB --> MY
+NV --> VN
+MY -- "<span style='color:#b91c1c;font-weight:700'>dv == Вий: </span><span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span>" --> VN
+VN --> V1
+VN --> V2
+V2 --> VN
+V1 --> RN
+RN --> R1
+RN --> R2
+R1 --> R3
+R1 --> R4
+R3 --> RA
+R4 --> RA
+R2 --> RA
+classDef scene fill:#E4EEF9,stroke:#7a9cc6
+classDef hub fill:#fff3bf,stroke:#d4a017
+classDef bad fill:#ffd6d6,stroke:#b91c1c
+classDef out fill:#d8f5e0,stroke:#2f9e44
+</div></div>
+</div>
+<div class="card">
+<h2>Что это значит</h2>
+<ul>
+<li>Единственный выход «вместе» с Луизой (dev.near = 1): через разговор об имени (myname) или через «Увязаться» и «Идет./Еще чего!».</li>
+<li>Если выбрано имя «Вий» — путь только к viyname и забегу: Луиза убегает, dev.mood −20, Безумие и Логика почти не меняются.</li>
+<li>Меню вопросов (389) кастомное: когда остаётся один пункт («Конец»), оно само прыгает на выход (menu_jump → name_conv).</li>
+</ul>
+</div>
+<div class="card">
+<h2>Ошибки и особенности кода</h2>
+<ul>
+<li><b>Неожиданный перезапуск:</b> в <code>inless_conv_memory</code> (838-882) без условия «про церковь Ара не спрашивали и Логика ≥ 1» метка кончается на <code>renpy.full_restart()</code> — игра перезапускается. Достижимо при «Это... и правда нехорошо.» / «Пожать плечами.» / «Нет. Это звучит плохо.».</li>
+<li>После <code>call_screen_strel()</code> (1059) стоит недостижимый <code>jump script_3_road_nodev_airat</code>; такой метки в доступных файлах нет.</li>
+<li><code>devd2.d1</code> нигде не присваивается (всегда 0), поэтому блок 707-760 идёт всегда.</li>
+<li>Мёртвый код: закомментированный блок dev.mood (290-299), закомментированная сова (1365-1372).</li>
+<li>«Шутка» при имени «Вий» (1267-1274) возвращает в myname, где dv всё ещё «Вий» → снова viyname и ещё −2 dev.mood.</li>
+</ul>
+</div>
+</main>
+<footer>Схемы игры «Вий» · Луиза · выверено по коду 20.10.2026</footer>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<title>Губерт (слизень) — Схемы игры «Вий»</title>
+<link rel="stylesheet" href="style7.css?v=22">
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
+</script>
+<style>.tmood{color:#D97706}.warn{color:#b91c1c;font-weight:700}.chip{display:inline-block;border-radius:6px;padding:0 6px;font-weight:700;color:#fff}</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+<h1>Губерт (слизень) — script3_gubert.rpy</h1>
+<p>Сцена «Еще глубже» на дороге к Таше · script3_gubert.rpy (459 строк), script.rpy:274 (amulet)</p>
+<nav class="crumbs"><a href="index.html?v=22">← Все схемы</a> · <a href="tasha.html?v=3">Таша (nazad)</a> · <a href="strel.html?v=21">Экран переходов</a></nav>
+</div></header>
+<main>
+<div class="card">
+<h2>Статы по сцене (мин/макс, по коду)</h2>
+<table class="stats">
+<tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Комментарий</th></tr>
+<tr><td class="mad">Безумие</td><td>0</td><td>0</td><td>не меняется</td></tr>
+<tr><td class="logic">Логика</td><td>0</td><td>0</td><td>не меняется</td></tr>
+<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>не меняется</td></tr>
+<tr><td class="mood">Настроение Лесса</td><td>без нижней границы</td><td>0</td><td>−2 за каждый осмотр поджога веток (gubert:455), без гейта</td></tr>
+</table>
+<p class="muted">Единственное изменение стата в файле: <code>less.mood -= 2</code> в <code>gub_osm_facel_fire</code> (gubert:455); сюда же ведёт <code>gub_osm_kremen</code> (gubert:447-448). Условия и счётчика нет, поэтому каждый осмотр снова даёт −2. Типичный путь по выбору в меню: статы не меняются (0).</p>
+<p class="muted"><span class="warn">Две смерти (BAD END):</span> «Главное блюдо» (deaths_list["meal"]) и «Часть чего-то большего» (deaths_list["eat_him"]).</p>
+</div>
+<div class="card">
+<h2>Схема сцены</h2>
+<p class="muted">Красные пометки — условия из кода. Номера — строки script3_gubert.rpy.</p>
+<div class="widechart"><div class="mermaid">
+flowchart TD
+IN["<b>Вход</b> script3_nazad_gubert (11)<br/>rand.d1: первый раз / повторный текст"]:::scene
+RD["<span style='color:#b91c1c;font-weight:700'>если Таша не встречена (нет tash_meet) и tash.helpp не False</span><br/>→ redirect на script3_nazad_tash_go (nazad:247)"]:::red
+IN --> RD
+IN --> P1{"tash.helpp? (73)"}:::scene
+P1 -- "да" --> ST["slime_tash (78)<br/>Таша спасает героиню, уходит;<br/>путь вправо открыт"]:::out
+P1 -- "нет" --> P2{"amulet()? (75)<br/>чёрный амулет: keep/active"}:::scene
+P2 -- "да" --> SA["slim_amul (116)<br/>Губерт убегает"]:::out
+P2 -- "нет" --> M["<b>slime_menu</b> (151)"]:::hub
+M --> C1["«По поводу шляпки...»<br/><span style='color:#b91c1c;font-weight:700'>если quests[quest_kap].keep</span> (153)"]:::choice
+C1 --> C1a["«Боюсь, нет...» (166) → обратно в меню"]:::choice
+C1 --> C1b["«А как насчет... Сливочной Капибары?»<br/><span style='color:#b91c1c;font-weight:700'>если kap_sliv в инвентаре</span> (170)<br/>обмен: шляпа получена"]:::choice
+C1a --> M
+C1b --> HAT["Губерт уходит, шляпа у героини;<br/>стрелка влево открыта (200)"]:::out
+M --> C2["«Давай, но учти, я ядовитая!» (206)"]:::bad
+C2 --> D1["<b>BAD END «Главное блюдо»</b><br/>persistent.death +1, deaths_list[meal] (218-)"]:::bad
+D1 --> D1a["rand.d1 == 0 → rand.d1 = 1, Губерт тает → strel"]:::out
+D1 --> D1b["иначе → rand.d1 = 2, назад в меню"]:::scene
+D1b --> M
+M --> C3["«Я... Боюсь сегодня меня нет в меню. Простите.»<br/><span style='color:#b91c1c;font-weight:700'>если rand.d1 ≠ 2</span> (240)"]:::choice
+C3 --> C3a["rand.d1 == 0 → Губерт тает → strel (243)"]:::out
+C3 --> C3b["иначе rand.d1 = 2 → назад в меню; пункт пропадает (264)"]:::scene
+C3b --> M
+M --> C4["«Воткнуть в его иглу»<br/><span style='color:#b91c1c;font-weight:700'>если игла в инвентаре</span> (267)"]:::choice
+C4 --> IG["игла использована (igla._active = 0),<br/>Губерт убегает, путь вправо открыт (283)"]:::out
+M --> C5["«Боюсь, я вынуждена отказаться!» (293)"]:::bad
+C5 --> D1
+M --> C6["«Съесть его!»<br/><span style='color:#b91c1c;font-weight:700'>если безумие ≥ 3 (get_level(mad) ≥ 1)</span> (322)"]:::bad
+C6 --> D2["<b>BAD END «Часть чего-то большего»</b><br/>deaths_list[eat_him], renpy.full_restart() (345)"]:::bad
+SIDE["<b>Боковые метки</b><br/>chaos_enter_down (346): Таша возвращает<br/>osm_chaos_table (371): табличка «закрыто в демо»<br/>chaos_enter_up (390): разлом<br/>script_3_nazad_hat (412): шляпа взять/оставить<br/>start_gub_osm (430): стена веток<br/>gub_osm_facel_fire (450): осмотр поджога"]:::scene
+SIDE --> FF["gub_osm_facel_fire (450)"]:::scene
+FF --> MD["less.mood <span style='background:rgb(255,235,235);color:rgb(228,26,28);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> (455)"]:::scene
+AF["afterser (5) → script3_nazad_tash_end (nazad:1370)<br/>возврат в меню конца Таши"]:::scene
+classDef scene fill:#E4EEF9,stroke:#7a9cc6
+classDef hub fill:#fff3bf,stroke:#d4a017
+classDef choice fill:#ffffff,stroke:#888
+classDef bad fill:#ffd6d6,stroke:#b91c1c
+classDef out fill:#d8f5e0,stroke:#2f9e44
+classDef red fill:#fff0f0,stroke:#b91c1c
+</div></div>
+</div>
+<div class="card">
+<h2>Что это значит</h2>
+<ul>
+<li>Осмотр поджога веток: настроение Лесса <span style="background:rgb(255,235,235);color:rgb(228,26,28);font-weight:700;border-radius:5px;padding:0 3px">▼−2</span> за каждый осмотр (gubert:455), счётчика нет: можно уходить в минус неограниченно.</li>
+<li>Если Таша помогала раньше (<code>tash.helpp</code>), сцена обходится без меню (slime_tash).</li>
+<li>Чёрный амулет (<code>amulet()</code>, script.rpy:274) тоже обходит меню: Губерт убегает.</li>
+<li>Отказ («ядовитая» или «вынуждена отказаться») = смерть «Главное блюдо». Если rand.d1 был 0, герой возвращается на карту (Губерт тает), иначе — в меню, а пункт «меня нет в меню» исчезает.</li>
+</ul>
+</div>
+<div class="card">
+<h2>Ошибки в коде (для списка ошибок)</h2>
+<ul>
+<li><span class="warn">gubert:60</span> — <code>s.nmae = "Слизень"</code>: опечатка (nmae вместо name), строка ничего не делает; имя задаёт следующая строка (61).</li>
+<li><span class="warn">gubert:455</span> — <code>less.mood -= 2</code> без гейта: неограниченное падение настроения.</li>
+<li><code>start_gub_osm</code> (430): ветка mad закомментирована — мёртвый код.</li>
+<li><code>afterser</code> лежит в gubert.rpy, но прыгает в меню конца Таши (nazad:1370), а не в сцену Губерта.</li>
+</ul>
+</div>
+</main>
+<footer>Схемы игры «Вий» · Губерт · выверено по коду 20.10.2026</footer>
+</body>
+</html>
