@@ -45,9 +45,9 @@ function build(){
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#475569', c2='#be123c', c3='#7c3aed', c4='#b45309', c5='#0f766e', c6='#0369a1', c7='#475569', c8='#b91c1c';
   L.push('ST["<div style=\'width:300px;white-space:normal\'>Вход: героиня с Таширом доходит до разлома (script3_nazad.rpy:1085), локация становится «Вход в хаос»<br/><a href=\'tasha.html?v=65\'>← страница «Назад: Таша»</a></div>"]:::ex');
-  L.push('EXS["<div style=\'width:300px;white-space:normal\'>Экран «Вход в хаос»: табличка, стрелка вверх «В разлом?», стрелка вниз<br/><small>x_script__define.rpy:561-574, x_script_newscreens.rpy:343-344</small></div>"]:::ex');
+  L.push('EXS["<div style=\'width:300px;white-space:normal\'>Экран «Вход в хаос»: табличка, стрелка вверх «В разлом?», стрелка вниз<br/><small>script _define.rpy:561-574, script_newscreens.rpy:343-344</small></div>"]:::ex');
   L.push('RET["<div style=\'width:260px;white-space:normal\'>Дорога к Таше (локация): стрелка вниз «Назад»</div>"]:::ex');
-  L.push('RZ["<div style=\'width:280px;white-space:normal\'>Разлом (локация «Вход в хаос», дальше): единственная стрелка вниз возвращает ко входу<br/><small>x_script__define.rpy:574</small></div>"]:::ex');
+  L.push('RZ["<div style=\'width:280px;white-space:normal\'>Разлом (локация «Вход в хаос», дальше): единственная стрелка вниз возвращает ко входу<br/><small>script _define.rpy:574</small></div>"]:::ex');
   E('ST --> EXS', cG);
   L.push(hub('H1','Что можно делать на входе в хаос<br/><small>script3_gubert.rpy:346-411</small>','hhn',[]));
   if(EXP.has('H1')){
@@ -62,7 +62,7 @@ function build(){
     L.push('D1["<div style=\'width:300px;white-space:normal\'>Таша рядом и помогает: спрашивает «Ты куда?» (346-355)</div>"]:::sc');
     L.push('D2["<div style=\'width:280px;white-space:normal\'>«Я передумала.»: Таша уходит (356-363)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Таша больше не рядом и не помогает</span></div>"]:::sc');
     L.push('D3["<div style=\'width:280px;white-space:normal\'>«Ой. Не в ту сторону»: Таша: «Нам вперед!» (364-368)</div>"]:::sc');
-    E('L0 --> K1["<div style=\'width:290px;white-space:normal\'>'+mk('Клик по табличке (x_script_newscreens.rpy:398-422)'+cond('пока таблички нет в инвентаре'),null,null)+'</div>"]:::hhn', c3); E('K1 --> TB', c3);
+    E('L0 --> K1["<div style=\'width:290px;white-space:normal\'>'+mk('Клик по табличке (script_newscreens.rpy:398-422)'+cond('пока таблички нет в инвентаре'),null,null)+'</div>"]:::hhn', c3); E('K1 --> TB', c3);
     E('TB --> K1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если таблички ещё нет в инвентаре:',null,null)+'</div>"]:::hhn', c3); E('K1a --> TM', c3);
     E('TM --> K1b["<div style=\'width:290px;white-space:normal\'>'+mk('«Можно.»',null,null)+'</div>"]:::hhn', c3); E('K1b --> TY', c3);
     E('TM --> K1c["<div style=\'width:290px;white-space:normal\'>'+mk('«Но зачем?»',null,null)+'</div>"]:::hhn', c3); E('K1c --> TN', c3);

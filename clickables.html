@@ -13,7 +13,7 @@
 <body>
 <header class="site"><div class="wrap">
 <h1>Кликабельные объекты: что нажимать и куда ведёт</h1>
-<p>Все объекты на экранах локаций из script_npc_items.rpy и x_script_newscreens.rpy: что это, на какой локации, что запускает клик, осмотр, разговор или «взять», и ссылка на историю. Собрано по коду.</p>
+<p>Все объекты на экранах локаций из script_npc_items.rpy и script_newscreens.rpy: что это, на какой локации, что запускает клик, осмотр, разговор или «взять», и ссылка на историю. Собрано по коду.</p>
 <nav class="crumbs"><a href="index.html">← Все схемы</a> · <a href="inventory.html">Инвентарь</a></nav>
 </div></header>
 <main>
@@ -41,12 +41,12 @@
 <tr><td><code>cat</code><br><span class="muted">строка 832</span></td><td>cat_screen</td><td>airat_cat (:70)</td><td>клик: <code>cat_talk</code> <span class="muted">(script_5_airat.rpy:454)</span></td></tr>
 <tr><td><code>leni</code><br><span class="muted">строка 864</span></td><td>leni_air_screen</td><td>локация, где стоит Лени (:51)</td><td>клик: <a href="airat1.html?v=69"><code>script_4_airat_leni_dialog</code></a> <span class="muted">(script_4_airat.rpy:658)</span></td></tr>
 <tr><td><code>kar_air</code><br><span class="muted">строка 896</span></td><td>kar_door_screen</td><td>airat_church_corridor (:53)</td><td>клик: <a href="airat1.html?v=69"><code>airat_church_corridor_door</code></a> <span class="muted">(script_4_airat.rpy:520)</span></td></tr>
-<tr><td><code>nars</code><br><span class="muted">строка 992</span></td><td>nar_screen</td><td>bar_nar (x_script_newscreens.rpy:345)</td><td><span class="muted">нет действия по клику в коде (можно только перетащить предмет)</span></td></tr>
+<tr><td><code>nars</code><br><span class="muted">строка 992</span></td><td>nar_screen</td><td>bar_nar (script_newscreens.rpy:345)</td><td><span class="muted">нет действия по клику в коде (можно только перетащить предмет)</span></td></tr>
 <tr><td><code>guard1</code><br><span class="muted">строка 1037</span></td><td>airat_guards_drag</td><td>airat_guards (script_npc_items.rpy:45)</td><td>клик: <code>script_5_airat_guard</code> <span class="muted">(script_5_airat.rpy:2)</span></td></tr>
 <tr><td><code>guard2</code><br><span class="muted">строка 1067</span></td><td>airat_guards_drag</td><td>airat_guards (script_npc_items.rpy:45)</td><td>клик: <code>script_5_airat_guard</code> <span class="muted">(script_5_airat.rpy:2)</span></td></tr>
 <tr><td><code>cap_ch</code><br><span class="muted">строка 1097</span></td><td>airat_guards_drag</td><td>airat_guards (script_npc_items.rpy:45)</td><td>клик: <code>look_cap</code> <span class="muted">(script_5_airat.rpy:759)</span><br>осмотреть: <code>look_cap</code> <span class="muted">(script_5_airat.rpy:759)</span><br>взять: <code>keep_cap</code> <span class="muted">(script_5_airat.rpy:782)</span></td></tr>
-<tr><td><code>kap</code><br><span class="muted">строка 1145</span></td><td>airat_kap_drag</td><td>airat_kap (x_script_newscreens.rpy:341)</td><td><span class="muted">нет действия по клику в коде (можно только перетащить предмет)</span></td></tr>
-<tr><td><code>kap</code><br><span class="muted">строка 1159</span></td><td>airat_kap_drag</td><td>airat_kap (x_script_newscreens.rpy:341)</td><td><span class="muted">нет действия по клику в коде (можно только перетащить предмет)</span></td></tr>
+<tr><td><code>kap</code><br><span class="muted">строка 1145</span></td><td>airat_kap_drag</td><td>airat_kap (script_newscreens.rpy:341)</td><td><span class="muted">нет действия по клику в коде (можно только перетащить предмет)</span></td></tr>
+<tr><td><code>kap</code><br><span class="muted">строка 1159</span></td><td>airat_kap_drag</td><td>airat_kap (script_newscreens.rpy:341)</td><td><span class="muted">нет действия по клику в коде (можно только перетащить предмет)</span></td></tr>
 <tr><td><code>gub_osm</code><br><span class="muted">строка 1253</span></td><td>gubert_screen</td><td>less_slime (:1152)</td><td>клик: <a href="gubert.html?v=62"><code>start_gub_osm</code></a> <span class="muted">(script3_gubert.rpy:430)</span><br>осмотреть: <a href="gubert.html?v=62"><code>start_gub_osm</code></a> <span class="muted">(script3_gubert.rpy:430)</span></td></tr>
 <tr><td><code>bonny_x</code><br><span class="muted">строка 1462</span></td><td>bonny_screen_drag</td><td>less_bonny (:64)</td><td>клик: <code>osm_bonny_x</code> <span class="muted">(script_npc_items.rpy:1420)</span></td></tr>
 <tr><td><code>full_bones</code><br><span class="muted">строка 1489</span></td><td>bonny_screen</td><td>less_bonny (:1159)</td><td>клик: <code>osm_bonny</code> <span class="muted">(script_npc_items.rpy:1406)</span></td></tr>
@@ -55,9 +55,9 @@
 <tr><td><code>head</code><br><span class="muted">строка 1556</span></td><td>bonny_screen</td><td>less_bonny (:1159)</td><td>клик: <code>osm_head</code> <span class="muted">(script_npc_items.rpy:1427)</span></td></tr>
 <tr><td><code>bone_strange</code><br><span class="muted">строка 1583</span></td><td>bonny_screen</td><td>less_bonny (:1159)</td><td><span class="muted">нет действия по клику в коде (можно только перетащить предмет)</span></td></tr>
 <tr><td><code>fon_vn</code><br><span class="muted">строка 1603</span></td><td>bonny_screen</td><td>less_bonny (:1159)</td><td><span class="muted">нет действия по клику в коде (можно только перетащить предмет)</span></td></tr>
-<tr><td><code>lupa_button</code></td><td>bg_screen</td><td>airat_luiza_house (x_script_newscreens.rpy:1157)</td><td>кнопка-лупа: осмотр дома: <a href="airat1.html?v=69"><code>airat_house_priest_menu</code></a> <span class="muted">(script_4_airat.rpy:1900)</span></td></tr>
+<tr><td><code>lupa_button</code></td><td>bg_screen</td><td>airat_luiza_house (script_newscreens.rpy:1157)</td><td>кнопка-лупа: осмотр дома: <a href="airat1.html?v=69"><code>airat_house_priest_menu</code></a> <span class="muted">(script_4_airat.rpy:1900)</span></td></tr>
 <tr><td><code>adro_screen</code></td><td>adro_screen</td><td>показывается из script.rpy:546 и script_4_tgavan_adro.rpy:89, 704</td><td>кнопка: <a href="adro2.html?v=7"><code>script_4_tgavan_to_adro</code></a> <span class="muted">(script_4_tgavan_adro.rpy:49)</span></td></tr>
-<tr><td><code>blu</code></td><td>blu</td><td>показывается из script3_gubert.rpy:393</td><td>кнопка: <code>blu_label</code> <span class="muted">(x_script_av.rpy:2)</span></td></tr>
+<tr><td><code>blu</code></td><td>blu</td><td>показывается из script3_gubert.rpy:393</td><td>кнопка: <code>blu_label</code> <span class="muted">(script_av.rpy:2)</span></td></tr>
 </table></div><p class="muted">Объекты Капибара (airat_kap_drag) и nars (nar_screen): у них в коде нет действия по клику, только перетаскивание предметов. Метки со ссылкой ведут на страницу сцены, где эта история лежит.</p></div>
 </main>
 </body>
