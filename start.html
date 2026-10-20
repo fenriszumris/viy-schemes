@@ -101,11 +101,11 @@ function build(){
 
   // --- H3 ---
   if(EXP.has('H3')){
-    L.push('HN["hand_next"]:::h3');
-    L.push('ZM["zeml_menu"]:::h3');
-    L.push('ZSH["zeml_sh"]:::h3');
-    L.push('SHH["shh"]:::h3');
-    L.push('ZR["zeml_ran"]:::h3');
+    L.push('HN["Рука: продолжение<br/><small>hand_next</small>"]:::h3');
+    L.push('ZM["Меню корней<br/><small>zeml_menu</small>"]:::h3');
+    L.push('ZSH["Попытка шикнуть: «Шшшшш!»<br/><small>zeml_sh</small>"]:::h3');
+    L.push('SHH["Шипеть изо всех сил: «Шшш!»<br/><small>shh</small>"]:::h3');
+    L.push('ZR["Бегство в панике<br/><small>zeml_ran</small>"]:::h3');
     E('H3 --> C3A["'+mk('«Хватит экспериментов.»',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h3', c3); E('C3A --> ST', c3);
     E('H3 --> C3B["'+mk('«Укусить еще сильнее. Для верности.»',[[C_MAD,1],[C_BLD,1]])+'"]:::h3', c3); E('C3B --> HN', c3);
     E('HN --> ZM', c3);
@@ -190,7 +190,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 </div>
 <div class="card">
 <h2>Как читать</h2>
-<p class="muted">«Хаб» — кусок сцены с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение (в этой сцене не меняется). «Экран стрелок» — переход на экран перемещения: дальше игра идёт по экрану, а не по коду метки. Ветка руки и корней входит в разговор с Лессом напрямую (conv_2), минуя гляделки; остальные выходы — через экран стрелок (conv_0/conv_1). Сам разговор — на странице <a href="less.html?v=60">«Разговор с Лессом»</a>.</p>
+<p class="muted">«Хаб» — кусок сцены с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение (в этой сцене не меняется). «Экран стрелок» — переход на экран перемещения: дальше игра идёт по экрану, а не по коду метки. Ветка руки и корней входит в разговор с Лессом напрямую (conv_2), минуя гляделки; остальные выходы — через экран стрелок (conv_0/conv_1). Сам разговор — на странице <a href="less.html?v=62">«Разговор с Лессом»</a>.</p>
 </div>
 <div class="viewtoggle">
 <button id="btn-full" class="active" onclick="toggleView('start',1)">Детальнее</button>
