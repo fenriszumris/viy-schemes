@@ -59,7 +59,7 @@ function build(){
   L.push(hub('H7','Хаб 7. Прощание<br/>less_end','h7',[[C_MAD,'−1…0'],[C_LOG,'0…+1'],[C_MOO,'−2…+2']]));
   L.push(hub('H8','Хаб 8. Хватание<br/>less_hand','h8',[[C_MAD,'−2…+2'],[C_LOG,'−1…+1'],[C_BLD,'0…+1'],[C_MOO,'−3…−2']]));
   L.push(hub('H9','Хаб 9. Уход Лесса<br/>script_3_less_go','h9',[[C_MAD,'−1…+3'],[C_LOG,'−1…+1'],[C_MOO,'−2…0']]));
-  L.push(hub('MEM','Воспоминание<br/>сон → суд','hm',[[C_MAD,'−1…+1'],[C_LOG,'0…+1'],[C_BLD,'0…+1']]));
+  L.push(hub('MEM','Воспоминание<br/>сон → суд','hm',[[C_MAD,'−1…+2'],[C_LOG,'0…+1'],[C_BLD,'0…+1']]));
   L.push('VH["Вход: стрелки<br/>script3_road / script3_nazad"]:::ext');
   L.push('RUKA["Сцена руки<br/>script_1_less_hand"]:::ext');
   L.push('RZG["Дневник razg:<br/>входы в Хабы 4, 5, 7"]:::ext');
@@ -213,8 +213,14 @@ function build(){
   }
   // --- MEM ---
   if(EXP.has('MEM')){
-    E('MEM --> CM1["'+mk('«Х-хватит...»',[[C_LOG,1]])+'"]:::hm', cm); E('CM1 --> RB', cm);
-    E('MEM --> CM2["'+mk('«Идти до конца!»',[[C_MAD,1]])+'"]:::hm', cm); E('CM2 --> D3', cm);
+    L.push('SUD["воспоминание о суде<br/>(суды, цепи, семейные драмы)"]:::hm');
+    L.push('HA{{"головная боль, кровь из носа"}}:::hm');
+    E('MEM --> CM0["'+mk('«Не стоит больше вспоминать...»',[[C_LOG,1]])+'"]:::hm', cm); E('CM0 --> RB', cm);
+    E('MEM --> CM3["'+mk('«Пытаться вспомнить дальше.»')+'"]:::hm', cm); E('CM3 --> SUD', cm);
+    E('SUD --> CM4["'+mk('«Что за чертовщина там вообще произошла?!»',[[C_BLD,1]],[[C_MAD,1]])+'"]:::hm', cm); E('CM4 --> HA', cm);
+    E('SUD --> CM5["'+mk('«Хм? Да бросьте, все в полном порядке!»',[[C_MAD,1],[C_BLD,1]])+'"]:::hm', cm); E('CM5 --> HA', cm);
+    E('HA --> CM1["'+mk('«Х-хватит...»',[[C_LOG,1]])+'"]:::hm', cm); E('CM1 --> RB', cm);
+    E('HA --> CM2["'+mk('«Идти до конца!»',[[C_MAD,1]])+'"]:::hm', cm); E('CM2 --> D3', cm);
   } else {
     E('MEM --> RB', cm);
     E('MEM --> D3', cm);
@@ -303,7 +309,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <div class="panel-rel">
 <div id="panel-full">
 <h2>Полная схема: все хабы и все выборы</h2>
-<p class="muted">Плашки на хабе: минимум и максимум по всем путям внутри хаба от входа до выхода (со вложенными меню и циклами, с учётом разовых флагов и повторов причин); пути к смертям не считаются.</p>
+<p class="muted">Плашки на хабе: минимум и максимум по всем путям внутри хаба от входа до выхода (со вложенными меню и циклами, с учётом разовых флагов и повторов причин), включая пути к смертям, как в таблицах статов ниже.</p>
 <p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его ветки, повторный клик сворачивает. У каждого хаба свой цвет ветки. <button class="mini" onclick="allHubs(true)">Развернуть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button></p><p class="muted" style="font-size:13px">Значки на выборах: <span style="color:#e41a1c;font-weight:700">▲/▼ Настроение</span> · <span style="color:#bc1888;font-weight:700">▲/▼ Кровь</span> · <span style="color:#7048e8;font-weight:700">▲/▼ Безумие</span> · <span style="color:#1c7ed6;font-weight:700">▲/▼ Логика</span>. Плюсы — вверху справа карточки, минусы — внизу слева. Плашка на хабе — диапазон прямых изменений статов внутри хаба (по коду).</p>
 <style>button.mini{font-size:13px;padding:3px 10px;border-radius:8px;border:1px solid #c6ccd6;background:#fff;cursor:pointer}</style>
 <div class="widechart"><pre class="mermaid" id="fchart"></pre></div>
@@ -378,7 +384,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 </ul></div>
 <div class="hub"><h3>Воспоминания (mem) и повторный разговор (razg)</h3>
 <ul>
-<li>son → sud_memory → head_ache (<span class="blood">blood +1</span>): «Х-хватит...» <span class="logic">logic +1</span> → экран strel; «Идти до конца!» <span class="mad">mad +1</span> → смерть (death_son).</li>
+<li>сон → воспоминание о суде → головная боль (<span class="blood">кровь +1</span>, script_memory.rpy:183; «Что за чертовщина...?!» безумие −1, «Да бросьте...» безумие +1): «Х-хватит...» <span class="logic">logic +1</span> → экран strel; «Идти до конца!» <span class="mad">mad +1</span> → смерть во сне (death_son).</li>
 <li>less_razg_menu (повторные разговоры): вопросы-ветки назад в Хабы 4/7/5; «Конец» перезапускает меню, выход автоматический, когда остаётся один пункт → экран strel.</li>
 </ul></div>
 </div>
