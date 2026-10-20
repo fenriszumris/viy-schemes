@@ -62,8 +62,8 @@ function build(){
   L.push('VH["Вход: стрелки<br/>script3_road / script3_nazad"]:::ext');
   L.push('RUKA["Сцена руки<br/>script_1_less_hand"]:::ext');
   L.push('RZG["Дневник razg:<br/>входы в Хабы 4, 5, 7"]:::ext');
-  L.push('RB["road_begin<br/>→ экран strel"]:::term');
-  L.push('GN["script_3_less_gone"]:::term');
+  L.push('RB["Дальше: дорога<br/><small>road_begin → экран переходов (strel)</small>"]:::term');
+  L.push('GN["Лесс ушёл<br/><small>script_3_less_gone</small>"]:::term');
   L.push('SLC["sluc (script3_road)<br/>вне сцены"]:::ext');
   L.push('D1["BAD END<br/>«Тщетная борьба...»"]:::die');
   L.push('D1A["BAD END<br/>«Шутка...»"]:::die');
@@ -102,13 +102,13 @@ function build(){
   }
   // --- H2A ---
   if(EXP.has('H2A')){
-    E('H2A --> CA1["'+mk('«Безразлично улыбнуться.»',[[C_MAD,2]])+'"]:::h2a', c2a); E('CA1 --> SAM["samsp"]:::h2a', c2a);
+    E('H2A --> CA1["'+mk('«Безразлично улыбнуться.»',[[C_MAD,2]])+'"]:::h2a', c2a); E('CA1 --> SAM["Новый выбор после улыбки<br/><small>samsp</small>"]:::h2a', c2a);
     E('SAM --> CA2["'+mk('«А почему нет? Ты же надо мной шутишь.»')+'"]:::h2a', c2a); E('CA2 --> D1A', c2a);
     E('SAM --> CA3["'+mk('«Ээм... Нет?»')+'"]:::h2a', c2a); E('CA3 --> H9', c2a);
     E('H2A --> CA4["'+mk('«Это случайность! Я просто угадала!»<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">метка less_amul · с лупой ещё логика +1</span>',[[C_MOO,5]])+'"]:::h2a', c2a); E('CA4 --> AM["amulmenu"]:::h2a', c2a);
     E('AM --> CA5["'+mk('«Н-нет. Не брать.»',[[C_MOO,1]])+'"]:::h2a', c2a); E('CA5 --> H3', c2a);
     E('AM --> CA6["'+mk('«Без лишних слов надеть.»',[[C_MAD,1]],[[C_MOO,1]])+'"]:::h2a', c2a); E('CA6 --> H3', c2a);
-    E('AM --> CA7["'+mk('«Спасибо... Взять амулет.»')+'"]:::h2a', c2a); E('CA7 --> TK["take"]:::h2a', c2a);
+    E('AM --> CA7["'+mk('«Спасибо... Взять амулет.»')+'"]:::h2a', c2a); E('CA7 --> TK["Амулет взят: надеть сразу или убрать<br/><small>take</small>"]:::h2a', c2a);
     E('TK --> CA8["'+mk('«Надеть сразу»')+'"]:::h2a', c2a); E('CA8 --> H3', c2a);
     E('TK --> CA9["'+mk('«Убрать в карман.»',[[C_LOG,1],[C_MOO,1]],[[C_MAD,1]])+'"]:::h2a', c2a); E('CA9 --> H3', c2a);
     E('AM --> CA10["'+mk('«Ч-что это?»',[[C_LOG,1],[C_MOO,1]],[[C_MAD,1]])+'"]:::h2a', c2a); E('CA10 --> WII["what_is_it<br/>«Это всё?» ещё логика +1, безумие −1"]:::h2a', c2a);
@@ -207,9 +207,6 @@ function build(){
     E('H9 --> RB', c9);
     E('H9 --> SLC', c9);
   }
-  // --- СОН: разобран на странице «Старт» ---
-  L.push('SONV["💤 СОН разобран на странице «Старт» (Хаб 2)<br/>вход: start_menu «Может, лечь поспать?»<br/>выход из сна → script_2_less_conv_0"]:::ext');
-  E('SONV --> RB', cG);
 
   L.push('classDef h1 fill:#e6f4f2,stroke:#0f766e,color:#16302c');
   L.push('classDef h2 fill:#ececfe,stroke:#4f46e5,color:#221f4d');
@@ -267,7 +264,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <body>
 <header class="site"><div class="wrap">
 <h1>Разговор с Лессом</h1>
-<p>Локация: <a href="location.html?v=20" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script_2_less_conv.rpy (conv) · script_2_less_conv_amul.rpy (amul) · script_3_less_end.rpy (end) · script_memory.rpy (mem) · day_1_less_razg.rpy (razg)</p>
+<p>Локация: <a href="location.html?v=20" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script_2_less_conv.rpy (conv) · script_2_less_conv_amul.rpy (amul) · script_3_less_end.rpy (end) · day_1_less_razg.rpy (razg)</p>
 <nav class="crumbs"><a href="index.html?v=21">← Все схемы</a> · <a href="location.html?v=20">Локация «Место пробуждения»</a> · <a href="strel.html?v=23">Экран переходов</a></nav>
 </div></header>
 <main>
@@ -368,9 +365,8 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <li>«Чертовски опасно...» (blood &gt; 0) / «Что произошло?» (blood == 0) <span class="logic">logic +1</span>, <span class="mad">mad −1</span> → ushel → road_begin (экран strel).</li>
 <li>«Броситься за ним.» <span class="mad">mad +1</span> → ввод имени → sluc (script3_road, вне сцены).</li>
 </ul></div>
-<div class="hub"><h3>Воспоминания (mem) и повторный разговор (razg)</h3>
+<div class="hub"><h3>Повторный разговор (razg)</h3>
 <ul>
-<li>Сон (start_menu «Может, лечь поспать?» → c1_sleep → son → головная боль) разобран на странице «Старт», Хаб 2; выход из сна ведёт в script_2_less_conv_0.</li>
 <li>less_razg_menu (повторные разговоры): вопросы-ветки назад в Хабы 4/7/5; «Конец» перезапускает меню, выход автоматический, когда остаётся один пункт → экран strel.</li>
 </ul></div>
 </div>
