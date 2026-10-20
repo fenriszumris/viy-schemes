@@ -47,7 +47,7 @@ function hub(id,label,cls,ranges){
 
 function build(){
   const L=[]; const ST=[]; let ei=0;
-  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TB');
   L.push(hub('H1','Хаб 1. Гляделки<br/>start_cycle','h1',[[C_MOO,'−2…+1']]));
   L.push(hub('H2','Хаб 2. «Его имя?»<br/>conv_2','h2',[[C_MAD,'0…+1'],[C_BLD,'0…+1'],[C_MOO,'−1…+1']]));
