@@ -80,7 +80,7 @@ function build(){
 
   // --- H1 ---
   if(EXP.has('H1')){
-    E('H1 -.->|"цикл «Пялиться дальше»: на 4-й раз настроение <span style='background:rgb(255,235,235);color:rgb(228,26,28);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"| H1', c1);
+    E('H1 -.->|"цикл «Пялиться дальше»: на 4-й раз настроение <span style=\'background:rgb(255,235,235);color:rgb(228,26,28);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span>"| H1', c1);
     E('H1 --> C1A["'+mk('«НАДОЕЛО.»')+'"]:::h1', c1); E('C1A --> H2', c1);
     E('H1 --> C1B["'+mk('«Бочком-бочком отсюда.»',null,[[C_MOO,2]])+'"]:::h1', c1); E('C1B --> RB', c1);
   } else {
@@ -166,7 +166,7 @@ function build(){
   }
   // --- H7 ---
   if(EXP.has('H7')){
-    E('H7 -.->|"перед меню: mood &gt; 0 и безумие ≤ 2 → настроение <span style='background:rgb(255,235,235);color:rgb(228,26,28);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>, метка урзы (urza_less)"| H7', c7);
+    E('H7 -.->|"перед меню: mood &gt; 0 и безумие ≤ 2 → настроение <span style=\'background:rgb(255,235,235);color:rgb(228,26,28);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span>, метка урзы (urza_less)"| H7', c7);
     E('H7 -.->|"перед меню: иначе — без изменений"| H7', c7);
     E('H7 --> C7A["'+mk('«Оставить в покое.»')+'"]:::h7', c7); E('C7A --> GN', c7);
     E('H7 --> C7B["'+mk('«Остановить.»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: mood &lt; 0</span>')+'"]:::h7', c7); E('C7B --> GN', c7);
