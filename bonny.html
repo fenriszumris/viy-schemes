@@ -8,17 +8,134 @@
 <title>Бонни — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
-<style>.hub{border:2px solid;border-radius:10px;margin:10px 0;background:#fff}.hub>summary{cursor:pointer;padding:8px 10px;font-size:15px;list-style:none}.hub>summary::before{content:"▸ ";}.hub[open]>summary::before{content:"▾ ";}.hub>div,.hub>.pl,.hub>.ch{margin-left:8px;margin-right:8px}.hub{padding-bottom:6px}
-.pl{border:1px solid #7a9cc6;border-radius:8px;padding:6px 8px;margin:6px 0;font-size:14px;line-height:1.35;overflow-wrap:anywhere}.pl.ex{border-color:#aab2c0;color:#4a5160}.pl.bad{border-color:#b91c1c;color:#4a1414}.pl.stub{border-color:#d97706}
-.ch{border:1.5px solid;border-radius:8px;margin:6px 0 6px 4px;padding:3px 4px;font-size:14px;overflow-wrap:anywhere}.ch .chh{padding-left:6px;font-weight:600}.ch .pl{margin-left:0}.ch .ch{margin-left:3px}
-.ref{font-size:13px;color:#475569;margin:4px 0 4px 6px}.muted{overflow-wrap:anywhere}
-@media(min-width:700px){.hub{max-width:900px}}</style><script>function openTo(a){var id=a.getAttribute('href').slice(1);var e=document.getElementById(id);var p=e;while(p){if(p.tagName=='DETAILS')p.open=true;p=p.parentElement}setTimeout(function(){e&&e.scrollIntoView({block:'center'})},50)}function allHubs(v){document.querySelectorAll('details.hub').forEach(function(d){d.open=v})}</script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
+const HUBS=["B1", "B2", "B3"];
+const EXP=new Set();
+const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)', C_ADR='rgb(13,148,136)', C_NAR='rgb(101,163,13)', C_ADO='rgb(79,70,229)', C_BON='rgb(219,39,119)';
+const CHIP_BG2=1;
+const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)'; CHIP_BG[C_ADR]='rgb(204,244,240)'; CHIP_BG[C_NAR]='rgb(236,252,203)'; CHIP_BG[C_ADO]='rgb(224,231,255)'; CHIP_BG[C_BON]='rgb(252,231,243)';
+function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
+function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
+function mk(text, ups, downs){
+  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
+  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
+    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
+    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
+    +'</div>';
+}
+function badge(ranges){
+  if(!ranges.length) return '';
+  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;margin-left:3px">'+p[1]+'</span>';}).join('');
+  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
+}
+function hub(id,label,cls,ranges){
+  const arrow = EXP.has(id) ? '▾' : '▸';
+  const b=badge(ranges||[]);
+  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
+  return id + '["' + inner + '"]:::' + cls;
+}
+const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>'+t+'</span>';};
+const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>'+t+'</span>';};
+const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
+function build(){
+  const L=[]; const ST=[]; let ei=0;
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
+  L.push('flowchart TD');
+  const cG='#9aa3b2', c1='#be185d', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
+  L.push('ST["<div style=\'width:320px;white-space:normal\'>Из экрана локации: клик по Бонни (посох с черепом) или «Осмотреть» в круговом меню<br/><small>script_npc_items.rpy:260-290, пока Бонни не взят в инвентарь</small></div>"]:::ex');
+  L.push('EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (локация)</div>"]:::ex');
+  E('ST --> B1', cG);
+  E('ST --> B3', cG);
+  L.push(hub('B1','Осмотр Бонни<br/><small>bonny_action_osm, 135-170</small>','hhn',[]));
+  if(EXP.has('B1')){
+    L.push('O1["<div style=\'width:340px;white-space:normal\'>Первый осмотр: Бонни оказывается говорящим черепом, называет себя «Бонни» (нет, но пока так зовите), просит о просьбе (137-170)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает флаг «осмотрено» (osm) → в следующие клики сразу открывается меню разговора</span></div>"]:::sc');
+    E('B1 --> O1', c1);
+  } else {
+    E('B1 --> B2', c1);
+  }
+  L.push(hub('B2','Разговор с Бонни<br/><small>bonny_razg_menu, 1-104</small>','hhl',[[C_BON, '−10…+2']]));
+  if(EXP.has('B2')){
+    L.push('M0["<div style=\'width:280px;white-space:normal\'>Меню разговора с Бонни: темы показываются по одному разу</div>"]:::sc');
+    E('B2 --> M0', c2);
+    L.push('T1["<div style=\'width:300px;white-space:normal\'>Бонни: чудовище превратило меня в скелета (13-30)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает флаг «чудовище» (monstr)</span></div>"]:::sc');
+    L.push('T1a["<div style=\'width:280px;white-space:normal\'>Героиня: «Ну, зато не жарко»; Бонни не советует (если высокий уровень Безумия)</div>"]:::sc');
+    L.push('T1b["<div style=\'width:240px;white-space:normal\'>Героиня: «Да уж, не завидую.»</div>"]:::sc');
+    L.push('T2["<div style=\'width:300px;white-space:normal\'>Бонни просит отнести его к телу (31-44)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает флаг «просьба» (ask)</span></div>"]:::sc');
+    L.push('T2a["<div style=\'width:300px;white-space:normal\'>Согласие помочь: квест Бонни получает статус «взят» (67)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: квест Бонни взят</span></div>"]:::sc');
+    L.push('T2b["<div style=\'width:280px;white-space:normal\'>Героиня отказывается: Бонни просит передумать (48-57)</div>"]:::sc');
+    L.push('T2c["<div style=\'width:300px;white-space:normal\'>Отказ окончательный (58-64): квест Бонни провален<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: квест Бонни провален</span></div>"]:::bad');
+    L.push('T3["<div style=\'width:300px;white-space:normal\'>Бонни: имя ненастоящее, жил, работал, «от небл...» (79-90)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает флаг «кто» (who)</span></div>"]:::sc');
+    L.push('FIN["<div style=\'width:280px;white-space:normal\'>Бонни: «Только не бросай меня тут!»; Бонни исчезает вниз (96-104)</div>"]:::sc');
+    E('M0 --> Q1["<div style=\'width:290px;white-space:normal\'>'+mk('«Чудовище?»'+cond('один раз (13)'),null,null)+'</div>"]:::hhl', c2); E('Q1 --> T1', c2);
+    E('T1 --> Q1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если уровень Безумия не ниже 1:',null,null)+'</div>"]:::hhl', c2); E('Q1a --> T1a', c2);
+    E('T1 --> Q1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если уровень Безумия ниже 1:',null,null)+'</div>"]:::hhl', c2); E('Q1b --> T1b', c2);
+    E('T1a --> Q1c["<div style=\'width:290px;white-space:normal\'>'+mk('Назад в меню',null,null)+'</div>"]:::hhl', c2); E('Q1c --> M0', c2);
+    E('T1b --> Q1d["<div style=\'width:290px;white-space:normal\'>'+mk('Назад в меню',null,null)+'</div>"]:::hhl', c2); E('Q1d --> M0', c2);
+    E('M0 --> Q2["<div style=\'width:290px;white-space:normal\'>'+mk('«О какой просьбе вы говорили?»'+cond('один раз (31)'),null,null)+'</div>"]:::hhl', c2); E('Q2 --> T2', c2);
+    E('T2 --> Q2a["<div style=\'width:290px;white-space:normal\'>'+mk('«Окей, экспресс вас ждет.»',[[C_BON, 1]],null)+'</div>"]:::hhl', c2); E('Q2a --> T2a', c2);
+    E('T2 --> Q2b["<div style=\'width:290px;white-space:normal\'>'+mk('«У меня своих дел по горло.»',null,null)+'</div>"]:::hhl', c2); E('Q2b --> T2b', c2);
+    E('T2b --> Q2c["<div style=\'width:290px;white-space:normal\'>'+mk('«Ладно-ладно.»',null,null)+'</div>"]:::hhl', c2); E('Q2c --> T2a', c2);
+    E('T2b --> Q2d["<div style=\'width:290px;white-space:normal\'>'+mk('«Точно нет.»',null,[[C_BON, 10]])+'</div>"]:::hhl', c2); E('Q2d --> T2c', c2);
+    E('T2c --> Q2e["<div style=\'width:290px;white-space:normal\'>'+mk('Назад в меню',null,null)+'</div>"]:::hhl', c2); E('Q2e --> M0', c2);
+    E('T2a --> Q2f["<div style=\'width:290px;white-space:normal\'>'+mk('Бонни: «Не показывай меня никому» (74-78)',[[C_BON, 1]],null)+'</div>"]:::hhl', c2); E('Q2f --> M0', c2);
+    E('M0 --> Q3["<div style=\'width:290px;white-space:normal\'>'+mk('«А вы, собственно, кто?»'+cond('один раз (79)'),null,null)+'</div>"]:::hhl', c2); E('Q3 --> T3', c2);
+    E('T3 --> Q3a["<div style=\'width:290px;white-space:normal\'>'+mk('Назад в меню',null,null)+'</div>"]:::hhl', c2); E('Q3a --> M0', c2);
+    E('M0 --> Q4["<div style=\'width:290px;white-space:normal\'>'+mk('«Конец»',null,null)+'</div>"]:::hhl', c2); E('Q4 --> FIN', c2);
+    E('FIN --> EXS', c2);
+  } else {
+    E('B2 --> EXS', c2);
+  }
+  L.push(hub('B3','Взять Бонни<br/><small>bonny_action_keep, 105-134</small>','hhn',[]));
+  if(EXP.has('B3')){
+    L.push('K0["<div style=\'width:240px;white-space:normal\'>Клик «взять» по посоху (105)</div>"]:::sc');
+    E('B3 --> K0', c3);
+    L.push('K1["<div style=\'width:300px;white-space:normal\'>Если квест Бонни не взят: героиня «промахивается мимо» (106-113)</div>"]:::sc');
+    L.push('K2["<div style=\'width:320px;white-space:normal\'>Если квест Бонни взят: Бонни сжимает посох, героиня кладёт его в сумку (115-133)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: посох Бонни теперь в инвентаре, запись дневника обновлена</span></div>"]:::sc');
+    E('K0 --> R1["<div style=\'width:290px;white-space:normal\'>'+mk('Если квест Бонни не взят:',null,null)+'</div>"]:::hhn', c3); E('R1 --> K1', c3);
+    E('K0 --> R2["<div style=\'width:290px;white-space:normal\'>'+mk('Если квест Бонни взят:',null,null)+'</div>"]:::hhn', c3); E('R2 --> K2', c3);
+    E('K1 --> EXS', c3);
+    E('K2 --> EXS', c3);
+  } else {
+    E('B3 --> EXS', c3);
+  }
+  L.push('classDef hhl fill:#e5f2fa,stroke:#0369a1,color:#123043');
+  L.push('classDef hhn fill:#e7f4ea,stroke:#166534,color:#14331f');
+  L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
+  L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
+  L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
+  return L.concat(ST).join('\n');
+}
+async function render(){
+  const f=document.getElementById('fchart');
+  if(!f) return;
+  f.removeAttribute('data-processed');
+  f.textContent=build();
+  await mermaid.run({nodes:[f]});
+  for(const ss of document.styleSheets){
+    let rules; try{rules=ss.cssRules;}catch(e){continue;}
+    for(let i=rules.length-1;i>=0;i--){
+      const r=rules[i];
+      if(r.selectorText && /\.(hh[a-z0-9]*|sc|ex|dd|ok)( span| > \*)$/.test(r.selectorText)
+         && r.style && r.style.getPropertyPriority('color')==='important'){ r.style.removeProperty('color'); }
+    }
+  }
+  document.querySelectorAll('#fchart g.node').forEach(function(g){
+    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
+    if(m && HUBS.indexOf(m[1])>=0){ g.style.cursor='pointer'; g.addEventListener('click', function(){ window.th(m[1]); }); }
+  });
+}
+window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
+window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
+render();
+</script>
 </head>
 <body>
 <header class="site"><div class="wrap">
 <h1>Бонни (посох с черепом)</h1>
 <p>day_1_bonny_razg.rpy, 1-169; клик: script_npc_items.rpy:260-290. Локация: less_up_barier.</p>
-<nav class="crumbs"><a href="index.html?v=72">← Все схемы</a> · <a href="clickables.html?v=2">Кликабельные</a> · <a href="stats.html?v=37">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=105">← Все схемы</a> · <a href="clickables.html?v=105">Кликабельные</a> · <a href="stats.html?v=105">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -30,14 +147,10 @@
 
 <div class="card">
 <h2>Схема</h2>
-<p class="muted">Вертикальные плашки: нажмите на группу, чтобы раскрыть. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке группы: минимум и максимум по всем путям внутри группы. У выбора ▲ прибавка, ▼ убавка. <b style="color:#b91c1c">Красным</b> условие, 🚩 что выбор записывает. Выборы вложены под плашкой, к которой они относятся; «↩» ведёт к плашке выше, если путь сходится.</p>
-<div class="pl ex">Из экрана локации: клик по предмету «bonny» (script_npc_items.rpy:290) или пункт look радиального меню (:282-283)<br/><small>script_npc_items.rpy:260-290: предмет доступен, пока Бонни не в инвентаре и razg не равно «bonny» (:260)</small></div>
-<details class="hub" id="h_B1" style="border-color:#166534"><summary style="color:#166534"><b>Осмотр Бонни<br/><br><small style="font-weight:400">bonny_action_osm, 135-170</small></b></summary><div class="pl sc" id="n_O1" style="background:#E4EEF9">Первый осмотр: Бонни оказывается говорящим черепом, называет себя «Бонни» (нет, но пока так зовите), просит о просьбе (137-170)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает флаг «осмотрено» (osm) → в следующие клики сразу открывается меню разговора</span></div></details>
-<details class="hub" id="h_B2" style="border-color:#0369a1"><summary style="color:#0369a1"><b>Разговор с Бонни<br/><br><small style="font-weight:400">bonny_razg_menu, 1-104</small></b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(252,231,243);border:1.4px solid rgb(219,39,119);color:rgb(219,39,119);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−10…+2</span></div></summary><div class="muted">Вход: продолжение после группы «Осмотр Бонни»</div><div class="pl sc" id="n_M0" style="background:#E4EEF9">Меню разговора с Бонни: темы показываются по одному разу</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Чудовище?» <div style="font-size:12px;color:#b91c1c;font-weight:700">один раз (13)</div></div><div class="pl sc" id="n_T1" style="background:#E4EEF9">Бонни: чудовище превратило меня в скелета (13-30)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает флаг «чудовище» (monstr)</span></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если уровень Безумия не ниже 1: </div><div class="pl sc" id="n_T1a" style="background:#E4EEF9">Героиня: «Ну, зато не жарко»; Бонни не советует (если высокий уровень Безумия)</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Назад в меню </div><div class="ref">↩ продолжение выше: <a href="#n_M0" onclick="openTo(this)">Меню разговора с Бонни: темы показываются по одному разу…</a></div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если уровень Безумия ниже 1: </div><div class="pl sc" id="n_T1b" style="background:#E4EEF9">Героиня: «Да уж, не завидую.»</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Назад в меню </div><div class="ref">↩ продолжение выше: <a href="#n_M0" onclick="openTo(this)">Меню разговора с Бонни: темы показываются по одному разу…</a></div></div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«О какой просьбе вы говорили?» <div style="font-size:12px;color:#b91c1c;font-weight:700">один раз (31)</div></div><div class="pl sc" id="n_T2" style="background:#E4EEF9">Бонни просит отнести его к телу (31-44)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает флаг «просьба» (ask)</span></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Окей, экспресс вас ждет.» <span style='background:rgb(252,231,243);color:rgb(219,39,119);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl sc" id="n_T2a" style="background:#E4EEF9">Согласие помочь: квест Бонни получает статус «взят» (67)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает: квест Бонни взят</span></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Бонни: «Не показывай меня никому» (74-78) <span style='background:rgb(252,231,243);color:rgb(219,39,119);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="ref">↩ продолжение выше: <a href="#n_M0" onclick="openTo(this)">Меню разговора с Бонни: темы показываются по одному разу…</a></div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«У меня своих дел по горло.» </div><div class="pl sc" id="n_T2b" style="background:#E4EEF9">Героиня отказывается: Бонни просит передумать (48-57)</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Ладно-ладно.» </div><div class="ref">↩ продолжение выше: <a href="#n_T2a" onclick="openTo(this)">Согласие помочь: квест Бонни получает статус «взят» (67)…</a></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Точно нет.» <span style='background:rgb(252,231,243);color:rgb(219,39,119);font-weight:700;border-radius:5px;padding:0 3px'>▼−10</span></div><div class="pl bad" id="n_T2c" style="background:#ffd6d6">Отказ окончательный (58-64): квест Бонни провален<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает: квест Бонни провален</span></div></div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«А вы, собственно, кто?» <div style="font-size:12px;color:#b91c1c;font-weight:700">один раз (79)</div></div><div class="pl sc" id="n_T3" style="background:#E4EEF9">Бонни: имя ненастоящее, жил, работал, «от небл...» (79-90)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает флаг «кто» (who)</span></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Назад в меню </div><div class="ref">↩ продолжение выше: <a href="#n_M0" onclick="openTo(this)">Меню разговора с Бонни: темы показываются по одному разу…</a></div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Конец» </div><div class="pl sc" id="n_FIN" style="background:#E4EEF9">Бонни: «Только не бросай меня тут!»; Бонни исчезает вниз (96-104)</div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (локация)</div></div></details>
-<details class="hub" id="h_B3" style="border-color:#166534"><summary style="color:#166534"><b>Взять Бонни<br/><br><small style="font-weight:400">bonny_action_keep, 105-134</small></b></summary><div class="pl sc" id="n_K0" style="background:#E4EEF9">Клик «взять» по посоху (105)</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если квест Бонни не взят: </div><div class="pl sc" id="n_K1" style="background:#E4EEF9">Если квест Бонни не взят: героиня «промахивается мимо» (106-113)</div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (локация)</div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если квест Бонни взят: </div><div class="pl sc" id="n_K2" style="background:#E4EEF9">Если квест Бонни взят: Бонни сжимает посох, героиня кладёт его в сумку (115-133)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает: посох Бонни теперь в инвентаре, запись дневника обновлена</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (локация)</div></div></details>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
+<div class="widechart"><div id="fchart" class="mermaid"></div></div>
 </div>
-
 </main>
-<footer>Схемы игры «Вий» · day_1_bonny_razg.rpy · сверка с кодом (20.10.2026) частичная. Подтверждённые участки и оставшиеся ограничения указаны на странице.</footer>
+<footer>Схемы игры «Вий» · day_1_bonny_razg.rpy · выверено по коду 20.10.2026</footer>
 </body>
 </html>

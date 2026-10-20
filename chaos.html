@@ -8,17 +8,116 @@
 <title>Вход в хаос — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
-<style>.hub{border:2px solid;border-radius:10px;margin:10px 0;background:#fff}.hub>summary{cursor:pointer;padding:8px 10px;font-size:15px;list-style:none}.hub>summary::before{content:"▸ ";}.hub[open]>summary::before{content:"▾ ";}.hub>div,.hub>.pl,.hub>.ch{margin-left:8px;margin-right:8px}.hub{padding-bottom:6px}
-.pl{border:1px solid #7a9cc6;border-radius:8px;padding:6px 8px;margin:6px 0;font-size:14px;line-height:1.35;overflow-wrap:anywhere}.pl.ex{border-color:#aab2c0;color:#4a5160}.pl.bad{border-color:#b91c1c;color:#4a1414}.pl.stub{border-color:#d97706}
-.ch{border:1.5px solid;border-radius:8px;margin:6px 0 6px 4px;padding:3px 4px;font-size:14px;overflow-wrap:anywhere}.ch .chh{padding-left:6px;font-weight:600}.ch .pl{margin-left:0}.ch .ch{margin-left:3px}
-.ref{font-size:13px;color:#475569;margin:4px 0 4px 6px}.muted{overflow-wrap:anywhere}
-@media(min-width:700px){.hub{max-width:900px}}</style><script>function openTo(a){var id=a.getAttribute('href').slice(1);var e=document.getElementById(id);var p=e;while(p){if(p.tagName=='DETAILS')p.open=true;p=p.parentElement}setTimeout(function(){e&&e.scrollIntoView({block:'center'})},50)}function allHubs(v){document.querySelectorAll('details.hub').forEach(function(d){d.open=v})}</script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
+const HUBS=["H1"];
+const EXP=new Set();
+const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)', C_ADR='rgb(13,148,136)', C_NAR='rgb(101,163,13)', C_ADO='rgb(79,70,229)', C_BON='rgb(219,39,119)';
+const CHIP_BG2=1;
+const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)'; CHIP_BG[C_ADR]='rgb(204,244,240)'; CHIP_BG[C_NAR]='rgb(236,252,203)'; CHIP_BG[C_ADO]='rgb(224,231,255)'; CHIP_BG[C_BON]='rgb(252,231,243)';
+function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
+function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
+function mk(text, ups, downs){
+  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
+  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
+    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
+    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
+    +'</div>';
+}
+function badge(ranges){
+  if(!ranges.length) return '';
+  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;margin-left:3px">'+p[1]+'</span>';}).join('');
+  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
+}
+function hub(id,label,cls,ranges){
+  const arrow = EXP.has(id) ? '▾' : '▸';
+  const b=badge(ranges||[]);
+  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
+  return id + '["' + inner + '"]:::' + cls;
+}
+const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>'+t+'</span>';};
+const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>'+t+'</span>';};
+const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
+function build(){
+  const L=[]; const ST=[]; let ei=0;
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
+  L.push('flowchart TD');
+  const cG='#9aa3b2', c1='#475569', c2='#be123c', c3='#7c3aed', c4='#b45309', c5='#0f766e', c6='#0369a1', c7='#475569', c8='#b91c1c';
+  L.push('ST["<div style=\'width:300px;white-space:normal\'>Вход: героиня с Таширом доходит до разлома (script3_nazad.rpy:1085), локация становится «Вход в хаос»<br/><a href=\'tasha.html?v=105\'>← страница «Назад: Таша»</a></div>"]:::ex');
+  L.push('EXS["<div style=\'width:300px;white-space:normal\'>Экран «Вход в хаос»: табличка, стрелка вверх «В разлом?», стрелка вниз<br/><small>script _define.rpy:561-574, script_newscreens.rpy:343-344</small></div>"]:::ex');
+  L.push('RET["<div style=\'width:260px;white-space:normal\'>Дорога к Таше (локация): стрелка вниз «Назад»</div>"]:::ex');
+  L.push('RZ["<div style=\'width:280px;white-space:normal\'>Разлом (локация «Вход в хаос», дальше): единственная стрелка вниз возвращает ко входу<br/><small>script _define.rpy:574</small></div>"]:::ex');
+  E('ST --> EXS', cG);
+  L.push(hub('H1','Что можно делать на входе в хаос<br/><small>script3_gubert.rpy:346-411</small>','hhn',[]));
+  if(EXP.has('H1')){
+    L.push('L0["<div style=\'width:260px;white-space:normal\'>Героиня на экране «Вход в хаос»</div>"]:::sc');
+    E('H1 --> L0', c3);
+    L.push('TB["<div style=\'width:320px;white-space:normal\'>Табличка: старая, подгнившая. «Закрыто в... Демо версии?» Героиня ничего не понимает (371-381)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: табличка осмотрена; повторно текст не повторяется</span></div>"]:::sc');
+    L.push('TM["<div style=\'width:280px;white-space:normal\'>Табличка предлагает забрать её с собой (382-389)</div>"]:::sc');
+    L.push('TY["<div style=\'width:260px;white-space:normal\'>Героиня берёт табличку (383-386)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 табличка теперь в инвентаре, исчезает с экрана</span></div>"]:::sc');
+    L.push('TN["<div style=\'width:260px;white-space:normal\'>Героиня не берёт табличку (387-388)</div>"]:::sc');
+    L.push('U1["<div style=\'width:320px;white-space:normal\'>Блу: если Блу ещё не встречена, героиня видит её, место кажется странным, экран темнеет (390-401)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: вход в разлом посещён</span></div>"]:::sc');
+    L.push('U2["<div style=\'width:300px;white-space:normal\'>Если Блу уже встречена: разлом «заколочен намертво», героиня удивлена (402-410)</div>"]:::sc');
+    L.push('D1["<div style=\'width:300px;white-space:normal\'>Таша рядом и помогает: спрашивает «Ты куда?» (346-355)</div>"]:::sc');
+    L.push('D2["<div style=\'width:280px;white-space:normal\'>«Я передумала.»: Таша уходит (356-363)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Таша больше не рядом и не помогает</span></div>"]:::sc');
+    L.push('D3["<div style=\'width:280px;white-space:normal\'>«Ой. Не в ту сторону»: Таша: «Нам вперед!» (364-368)</div>"]:::sc');
+    E('L0 --> K1["<div style=\'width:290px;white-space:normal\'>'+mk('Клик по табличке (script_newscreens.rpy:398-422)'+cond('пока таблички нет в инвентаре'),null,null)+'</div>"]:::hhn', c3); E('K1 --> TB', c3);
+    E('TB --> K1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если таблички ещё нет в инвентаре:',null,null)+'</div>"]:::hhn', c3); E('K1a --> TM', c3);
+    E('TM --> K1b["<div style=\'width:290px;white-space:normal\'>'+mk('«Можно.»',null,null)+'</div>"]:::hhn', c3); E('K1b --> TY', c3);
+    E('TM --> K1c["<div style=\'width:290px;white-space:normal\'>'+mk('«Но зачем?»',null,null)+'</div>"]:::hhn', c3); E('K1c --> TN', c3);
+    E('L0 --> K2["<div style=\'width:290px;white-space:normal\'>'+mk('Стрелка вверх «В разлом?»'+cond('если Блу ещё не встречена (метка в списке аватаров)'),null,null)+'</div>"]:::hhn', c3); E('K2 --> U1', c3);
+    E('L0 --> K2b["<div style=\'width:290px;white-space:normal\'>'+mk('Стрелка вверх «В разлом?» (Блу уже встречена)',null,null)+'</div>"]:::hhn', c3); E('K2b --> U2', c3);
+    E('L0 --> K3["<div style=\'width:290px;white-space:normal\'>'+mk('Стрелка вниз'+cond('если Таша рядом и помогает; иначе героиня сразу уходит на дорогу к Таше'),null,null)+'</div>"]:::hhn', c3); E('K3 --> D1', c3);
+    E('D1 --> K3a["<div style=\'width:290px;white-space:normal\'>'+mk('«Я передумала.»',null,null)+'</div>"]:::hhn', c3); E('K3a --> D2', c3);
+    E('D1 --> K3b["<div style=\'width:290px;white-space:normal\'>'+mk('«Ой. Не в ту сторону»',null,null)+'</div>"]:::hhn', c3); E('K3b --> D3', c3);
+    E('TY --> EXS', c3);
+    E('TN --> EXS', c3);
+    E('TB --> EXS', c3);
+    E('U1 --> RZ', c3);
+    E('U2 --> EXS', c3);
+    E('D2 --> RET', c3);
+    E('D3 --> RET', c3);
+  } else {
+    E('H1 --> EXS', c3);
+    E('H1 --> RZ', c3);
+    E('H1 --> RET', c3);
+  }
+  E('EXS --> H1', cG);
+  L.push('classDef hhn fill:#e7f4ea,stroke:#166534,color:#14331f');
+  L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
+  L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
+  return L.concat(ST).join('\n');
+}
+async function render(){
+  const f=document.getElementById('fchart');
+  if(!f) return;
+  f.removeAttribute('data-processed');
+  f.textContent=build();
+  await mermaid.run({nodes:[f]});
+  for(const ss of document.styleSheets){
+    let rules; try{rules=ss.cssRules;}catch(e){continue;}
+    for(let i=rules.length-1;i>=0;i--){
+      const r=rules[i];
+      if(r.selectorText && /\.(hh[a-z0-9]*|sc|ex|dd|ok)( span| > \*)$/.test(r.selectorText)
+         && r.style && r.style.getPropertyPriority('color')==='important'){ r.style.removeProperty('color'); }
+    }
+  }
+  document.querySelectorAll('#fchart g.node').forEach(function(g){
+    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
+    if(m && HUBS.indexOf(m[1])>=0){ g.style.cursor='pointer'; g.addEventListener('click', function(){ window.th(m[1]); }); }
+  });
+}
+window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
+window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
+render();
+</script>
 </head>
 <body>
 <header class="site"><div class="wrap">
 <h1>Вход в хаос (разлом)</h1>
 <p>Локация chaos_enter: табличка, разлом, возврат на дорогу к Таше. Код: script3_gubert.rpy:346-411.</p>
-<nav class="crumbs"><a href="index.html?v=72">← Все схемы</a> · <a href="tasha.html?v=94">Назад: Таша</a> · <a href="stats.html?v=37">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=105">← Все схемы</a> · <a href="tasha.html?v=105">Назад: Таша</a> · <a href="stats.html?v=105">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -30,12 +129,11 @@
 
 <div class="card">
 <h2>Схема</h2>
-<p class="muted">Вертикальные плашки: нажмите на группу, чтобы раскрыть. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке группы: минимум и максимум по всем путям внутри группы. У выбора ▲ прибавка, ▼ убавка. <b style="color:#b91c1c">Красным</b> условие, 🚩 что выбор записывает. Выборы вложены под плашкой, к которой они относятся; «↩» ведёт к плашке выше, если путь сходится.</p>
-<div class="pl ex">Вход: героиня с Таширом доходит до разлома (script3_nazad.rpy:1085), локация становится «Вход в хаос»<br/><a href='tasha.html?v=94'>← страница «Назад: Таша»</a></div>
-<details class="hub" id="h_H1" style="border-color:#166534"><summary style="color:#166534"><b>Что можно делать на входе в хаос<br/><br><small style="font-weight:400">script3_gubert.rpy:346-411</small></b></summary><div class="pl sc" id="n_L0" style="background:#E4EEF9">Героиня на экране «Вход в хаос»</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Клик по табличке (script_newscreens.rpy:398-422) <div style="font-size:12px;color:#b91c1c;font-weight:700">пока таблички нет в инвентаре</div></div><div class="pl sc" id="n_TB" style="background:#E4EEF9">Табличка: старая, подгнившая. «Закрыто в... Демо версии?» Героиня ничего не понимает (371-381)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает: табличка осмотрена; повторно текст не повторяется</span></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если таблички ещё нет в инвентаре: </div><div class="pl sc" id="n_TM" style="background:#E4EEF9">Табличка предлагает забрать её с собой (382-389)</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Можно.» </div><div class="pl sc" id="n_TY" style="background:#E4EEF9">Героиня берёт табличку (383-386)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 табличка теперь в инвентаре, исчезает с экрана</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран «Вход в хаос»: табличка, стрелка вверх «В разлом?», стрелка вниз<br/><small>script _define.rpy:561-574, script_newscreens.rpy:343-344</small></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Но зачем?» </div><div class="pl sc" id="n_TN" style="background:#E4EEF9">Героиня не берёт табличку (387-388)</div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран «Вход в хаос»: табличка, стрелка вверх «В разлом?», стрелка вниз<br/><small>script _define.rpy:561-574, script_newscreens.rpy:343-344</small></div></div></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Стрелка вверх «В разлом?» <div style="font-size:12px;color:#b91c1c;font-weight:700">если Блу ещё не встречена (метка в списке аватаров)</div></div><div class="pl sc" id="n_U1" style="background:#E4EEF9">Блу: если Блу ещё не встречена, героиня видит её, место кажется странным, экран темнеет (390-401)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает: вход в разлом посещён</span></div><div class="pl ex" id="n_RZ" style="background:#eef0f4">Разлом (локация «Вход в хаос», дальше): единственная стрелка вниз возвращает ко входу<br/><small>script _define.rpy:574</small></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Стрелка вверх «В разлом?» (Блу уже встречена) </div><div class="pl sc" id="n_U2" style="background:#E4EEF9">Если Блу уже встречена: разлом «заколочен намертво», героиня удивлена (402-410)</div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран «Вход в хаос»: табличка, стрелка вверх «В разлом?», стрелка вниз<br/><small>script _define.rpy:561-574, script_newscreens.rpy:343-344</small></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Стрелка вниз <div style="font-size:12px;color:#b91c1c;font-weight:700">если Таша рядом и помогает; иначе героиня сразу уходит на дорогу к Таше</div></div><div class="pl sc" id="n_D1" style="background:#E4EEF9">Таша рядом и помогает: спрашивает «Ты куда?» (346-355)</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Я передумала.» </div><div class="pl sc" id="n_D2" style="background:#E4EEF9">«Я передумала.»: Таша уходит (356-363)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 Таша больше не рядом и не помогает</span></div><div class="pl ex" id="n_RET" style="background:#eef0f4">Дорога к Таше (локация): стрелка вниз «Назад»</div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Ой. Не в ту сторону» </div><div class="pl sc" id="n_D3" style="background:#E4EEF9">«Ой. Не в ту сторону»: Таша: «Нам вперед!» (364-368)</div><div class="pl ex" id="n_RET" style="background:#eef0f4">Дорога к Таше (локация): стрелка вниз «Назад»</div></div></div></details>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
+<div class="widechart"><div id="fchart" class="mermaid"></div></div>
 </div>
 
 </main>
-<footer>Схемы игры «Вий» · script3_gubert.rpy · сверка с кодом (20.10.2026) частичная. Подтверждённые участки и оставшиеся ограничения указаны на странице.</footer>
+<footer>Схемы игры «Вий» · script3_gubert.rpy · выверено по коду 20.10.2026</footer>
 </body>
 </html>
