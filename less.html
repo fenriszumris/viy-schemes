@@ -64,7 +64,7 @@ function build(){
   L.push('RZG["Дневник razg:<br/>входы в Хабы 4, 5, 7"]:::ext');
   L.push('RB["Дальше: дорога<br/><small>road_begin → экран переходов (strel)</small>"]:::term');
   L.push('GN["Лесс ушёл<br/><small>script_3_less_gone</small>"]:::term');
-  L.push('SLC["sluc (script3_road)<br/>вне сцены"]:::ext');
+  L.push('SLC["Переход на страницу «Дорога»: Лесс убежал, Алиса идёт наугад<br/><small>sluc: случайно или снова перекрёсток, или назад к Таше</small>"]:::ext');
   L.push('D1["BAD END<br/>«Тщетная борьба...»"]:::die');
   L.push('D1A["BAD END<br/>«Шутка...»"]:::die');
   L.push('D2["BAD END<br/>«Подкормка...»"]:::die');
@@ -363,7 +363,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <ul>
 <li>«Ударить дерево» <span class="logic">logic −1</span>, <span class="mad">mad +1</span>, <span class="mood">mood −2</span> → корни (less_korn_menu): «Не шевелиться» <span class="mad">mad +1</span> (цикл); «Обмякнуть» <span class="mad">mad −1</span>, <span class="logic">logic +1</span>, <span class="mood">mood +1</span> → ushel; «Поспать» <span class="mad">mad +1</span>, <span class="mood">mood +2</span> → <span class="end">END? «Мирный сон...»</span>; «Бороться до конца» → <span class="death">BAD END «Подкормка...»</span>; «Вырваться» <span class="logic">logic +1</span>, <span class="mood">mood −1</span> (цикл); «Извиниться» (если знает имя) <span class="logic">logic +1</span>, <span class="mood">mood +2</span> → ushel.</li>
 <li>«Чертовски опасно...» (blood &gt; 0) / «Что произошло?» (blood == 0) <span class="logic">logic +1</span>, <span class="mad">mad −1</span> → ushel → road_begin (экран strel).</li>
-<li>«Броситься за ним.» <span class="mad">mad +1</span> → ввод имени → sluc (script3_road, вне сцены).</li>
+<li>«Броситься за ним.» <span class="mad">mad +1</span> → ввод имени → страница «Дорога» (случайный выбор: перекрёсток или назад к Таше).</li>
 </ul></div>
 <div class="hub"><h3>Повторный разговор (razg)</h3>
 <ul>
@@ -394,7 +394,7 @@ D1["<b>BAD END «Тщетная борьба...»</b>"]:::death
 D2["<b>BAD END «Подкормка...»</b>"]:::death
 D3["<b>BAD END «Шутка...»</b>"]:::death
 E1["<b>END? «Мирный сон...»</b>"]:::endd
-SLUC["«Броситься за ним» → sluc<br/>(script3_road, вне сцены)"]:::less
+SLUC["«Броситься за ним» → страница «Дорога»<br/>(случайно: перекрёсток или назад к Таше)"]:::less
 H0 --> H1 --> H2
 H2 -- "верное имя" --> H2A
 H2A -- "смертельная<br/>шутка" --> D3
