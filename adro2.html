@@ -11,7 +11,7 @@
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
-const HUBS=["K1", "K2", "K3", "K4", "K5", "K6", "K7"];
+const HUBS=["K1", "K2", "K3", "K4", "K5", "K6", "K7", "K8"];
 const EXP=new Set();
 const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)', C_ADR='rgb(13,148,136)', C_NAR='rgb(101,163,13)', C_ADO='rgb(79,70,229)';
 const CHIP_BG2=1;
@@ -171,6 +171,16 @@ function build(){
   } else {
     E('K7 --> END', c7);
   }
+  L.push(hub('K8','Пока в заглушке (не достижимо в демо)<br/><small>после «КОНЕЦ ДЕМОВЕРСИИ»</small>','stub',[]));
+  if(EXP.has('K8')){
+    L.push('X1["<div style=\'width:340px;white-space:normal\'>Заглушка 1 (87-93): после «Сыщик-самоучка»: Адро «Свободны, можете возвращаться к Адриану»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «нет улик» (no_evid) и «осмотр завершён» (osm_end) → переход на карту</span></div>"]:::stub');
+    E('K8 --> X1', cG);
+    L.push('X2["<div style=\'width:340px;white-space:normal\'>Заглушка 2 (533-535): после «Расследование. Самоубийство?»: Адро «Свободны, можете возвращаться» → переход на карту</div>"]:::stub');
+    L.push('X3["<div style=\'width:340px;white-space:normal\'>Заглушка 3 (557-561): после «Не самоубийство?»: героиня «Но...», Адро «Можешь идти»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «самоубийство» (yes_suicide) → переход на карту</span></div>"]:::stub');
+    L.push('X4["<div style=\'width:340px;white-space:normal\'>Заглушка 4 (701-705): после меню «Что делать дальше»: Адро «До свидания»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «конец разговора» (end1) → переход на карту</span></div>"]:::stub');
+    L.push('X5["<div style=\'width:340px;white-space:normal\'>Закомментированные строки (603-621, 634-650, 682-699): старые реплики Раэллоса, если героиня заблудилась (не код)</div>"]:::stub');
+  } else {
+  }
   L.push('classDef hhg fill:#e6f4f2,stroke:#0f766e,color:#16302c');
   L.push('classDef hhk fill:#fde9ee,stroke:#be123c,color:#4d1223');
   L.push('classDef hhl fill:#e5f2fa,stroke:#0369a1,color:#123043');
@@ -181,6 +191,7 @@ function build(){
   L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
   L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
   L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
+  L.push('classDef stub fill:#f3f4f6,stroke:#6b7280,stroke-dasharray:5 4,color:#6b7280');
   return L.concat(ST).join('\n');
 }
 async function render(){
@@ -214,6 +225,7 @@ render();
 <nav class="crumbs"><a href="index.html?v=67">← Все схемы</a> · <a href="adro.html?v=1">Адро: ворота</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
+<div class="card" style="border:2px dashed #6b7280;background:#f3f4f6"><b>⚠ Серые пунктирные блоки: пока в заглушке (не достижимо в демо).</b> Блок «Заглушка демо» внизу схемы: код после «КОНЕЦ ДЕМОВЕРСИИ» (87-93, 533-535, 557-561, 701-705).</div>
 <div class="card">
 <h2>Типичный путь (суждение, не измерение)</h2>
 <p><b>Как иду:</b> осматриваю все вещи; «Яд» → «Сказать о яде на полке», «Мог ли Нарси удержать часть яда?», «Я хочу взять флакон с собой»; «Женщина» → «Кто такая К.Р?», «Показать письмо Камилле»; «Нет, это не мог быть суицид.»; «На этом все»; «Он в последние дни общался с неким Нарси.» (конец демоверсии).</p>
