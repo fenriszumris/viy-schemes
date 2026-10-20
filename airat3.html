@@ -36,6 +36,7 @@ function hub(id,label,cls,ranges){
   return id + '["' + inner + '"]:::' + cls;
 }
 const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>'+t+'</span>';};
+const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>'+t+'</span>';};
 const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
 function build(){
   const L=[]; const ST=[]; let ei=0;
@@ -60,18 +61,22 @@ function build(){
     E('KH -- "«Закончить диалог.»" --> KX', cLK);
     L.push('KX["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
   } else {
-    E('HK --> KH', cLK);
+    E('HK --> EXS', cLK);
   }
   L.push(hub('HL','Левый коридор: лазарет и Феня<br/><small>airat_church_inside_arrows_left, 1377-1449</small>','hhl',[[C_MOR, '−1…+1'], [C_FEN, '−2…+2']]));
   if(EXP.has('HL')){
     L.push('LC["<div style=\'width:300px;white-space:normal\'>Дверь с крестом: лазарет закрыт<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>если задание врача уже взято или провалено (quest_find_doc keep/false) → сразу на экран переходов</span></div>"]:::sc');
     L.push('LF["<div style=\'width:300px;white-space:normal\'>Первый раз: у двери ребёнок-оборотень Феня, раненая лапка<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>«lazaret_go» ещё нет (1387)</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает lazaret_go → в «Возвращении к Луизе» героиня говорит про закрытый лазарет (1481)</span></div>"]:::sc');
-    L.push('LM["<div style=\'width:300px;white-space:normal\'>Меню помощи Фене</div>"]:::sc');
+    L.push('LM1N["<div style=\'width:300px;white-space:normal\'>Феня говорит, что поранилась, и просит не обращать внимания. Героиня может расспросить дальше или пройти мимо</div>"]:::sc');
+    L.push('LM["<div style=\'width:300px;white-space:normal\'>Феня переживает: церковь почти закрыта, врача нет. Героиня решает, помогать ли</div>"]:::sc');
     E('HL --> LC', cLL);
     E('LC --> LF', cLL);
-    E('LF -- "«Ну и...?» или «Не обращать внимание»" --> LM', cLL);
-    E('LM --> LM1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я могу помочь найти врача.» / «Мы сейчас как раз ищем врача.»'+cond('первый вариант, если Луиза не ищет жреца; второй, если ищет (quest_find_priest.keep)')+flag(' записывает quest_find_doc.keep = 1, fenya.near = 1 → Феня идёт с героиней (читается в script_4_airat:146, 184, 1522); fenya.zn_name = 1 → Феня называет имя'),[[C_MOR, 1], [C_FEN, 2]],null)+'</div>"]:::hhl', cLL); E('LM1 --> LX', cLL);
-    E('LM --> LM2["<div style=\'width:290px;white-space:normal\'>'+mk('«Ничем не могу помочь.»'+flag(' записывает quest_find_doc.false = 1 → лазарет больше не открывается (1380)'),null,[[C_MOR, 1], [C_FEN, 2]])+'</div>"]:::hhl', cLL); E('LM2 --> LX', cLL);
+    E('LF --> LM1N', cLL);
+    E('LM1N --> LQ1["<div style=\'width:290px;white-space:normal\'>'+mk('«Ну и...?»'+flag('Феня рассказывает про друга, который болеет, и что ищет хорошего врача: записывает «friend» в fen_d'),null,null)+'</div>"]:::hhl', cLL); E('LQ1 --> LM', cLL);
+    E('LM1N --> LQ2["<div style=\'width:290px;white-space:normal\'>'+mk('«Не обращать внимание»'+note('ничего не записывается, разговор идёт дальше'),null,null)+'</div>"]:::hhl', cLL); E('LQ2 --> LM', cLL);
+    E('LM --> LM1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я могу помочь найти врача.»'+cond('появляется, если Луиза не ищет жреца (quest_find_priest.keep нет)')+flag('задание «найти врача» взято (quest_find_doc.keep = 1): Феня идёт с героиней (fenya.near = 1, читается в script_4_airat:146, 184, 1522) и называет своё имя (fenya.zn_name = 1)'),[[C_MOR, 1], [C_FEN, 2]],null)+'</div>"]:::hhl', cLL); E('LM1 --> LX', cLL);
+    E('LM --> LM3["<div style=\'width:290px;white-space:normal\'>'+mk('«Мы сейчас как раз ищем врача.»'+cond('появляется, если Луиза уже ищет жреца (quest_find_priest.keep)')+flag('те же записи, что и выше: quest_find_doc.keep = 1, fenya.near = 1, fenya.zn_name = 1'),[[C_MOR, 1], [C_FEN, 2]],null)+'</div>"]:::hhl', cLL); E('LM3 --> LX', cLL);
+    E('LM --> LM2["<div style=\'width:290px;white-space:normal\'>'+mk('«Ничем не могу помочь.»'+flag('задание провалено (quest_find_doc.false = 1): лазарет больше не открывается (1380); героиня остаётся с закрытой дверью'),null,[[C_MOR, 1], [C_FEN, 2]])+'</div>"]:::hhl', cLL); E('LM2 --> LX', cLL);
     L.push('LX["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
   } else {
     E('HL --> EXS', cLL);
@@ -87,7 +92,7 @@ function build(){
     E('R3 --> RX', cLR);
     L.push('RX["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
   } else {
-    E('HR --> R3', cLR);
+    E('HR --> EXS', cLR);
   }
   L.push(hub('HB','Назад из церкви<br/><small>inside_arrows_bottom, 1563-1597</small>','hhs',[]));
   if(EXP.has('HB')){
@@ -100,8 +105,7 @@ function build(){
     E('B2 --> BX', cLB);
     L.push('BX["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
   } else {
-    E('HB --> B1', cLB);
-    E('HB --> B2', cLB);
+    E('HB --> EXS', cLB);
   }
   E('ST -- "«постучаться» к Карралаку" --> HK', cG);
   E('ST -- "налево" --> HL', cG);
@@ -144,7 +148,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Айрат: Карралак, лазарет, Феня</h1>
 <p>script_4_airat.rpy, строки 1175-1615: разговор с главой военного отдела, закрытый лазарет, девочка-оборотень Феня</p>
-<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="airat2.html?v=41">Лени</a> · <a href="airat4.html?v=43">Дом Луизы</a> · <a href="stats.html?v=33">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="airat2.html?v=2">Лени</a> · <a href="airat4.html?v=2">Дом Луизы</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">

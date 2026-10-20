@@ -50,7 +50,6 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
   L.push('flowchart TB');
   L.push(hub('H1','Хаб 1. Стартовое меню<br/>start_menu','h1',[[C_MAD,'0…+1'],[C_LOG,'0…+1']]));
-  L.push(hub('H2','Хаб 2. Сон<br/>c1_sleep → head_ache','h2',[[C_MAD,'−1…+2'],[C_LOG,'0…+1'],[C_BLD,'0…+1']]));
   L.push(hub('H3','Хаб 3. Рука и корни<br/>c1_hand → zeml','h3',[[C_MAD,'−1…+4'],[C_LOG,'0…+2'],[C_BLD,'0…+1']]));
   L.push('A0["<b>Сцена 0. Выбор сложности</b> (hard)<br/>обучение, вопрос про HARDMODE<br/>статов нет"]:::ext');
   L.push('A1["<b>Сцена 1. Меню разработчика</b> (start3)<br/>razr = 1 жёстко: меню видит каждый игрок<br/>«Игра» → tash_game (мини-игра, вне схемы)"]:::ext');
@@ -63,31 +62,43 @@ function build(){
   // --- H1 ---
   if(EXP.has('H1')){
     E('H1 -.->|"лупа «осмотреться»: <span style=\'background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span> один раз (start_osm1)"| H1', c1);
-    E('H1 --> C1A["'+mk('«Может, лечь поспать?»',[[C_MAD,1]])+'"]:::h1', c1); E('C1A --> H2', c1);
+    E('H1 --> C1A["'+mk('«Может, лечь поспать?»',[[C_MAD,1]])+'"]:::h1', c1); E('C1A --> DS1', c1);
     E('H1 --> C1B["'+mk('«Укусить себя за руку, вдруг все это сон?»',[[C_MAD,1]])+'"]:::h1', c1); E('C1B --> H3', c1);
     E('H1 --> C1C["'+mk('«Пойти дальше.»')+'"]:::h1', c1); E('C1C --> ST', c1);
   } else {
-    E('H1 --> H2', c1);
+    E('H1 --> DS1', c1);
     E('H1 --> H3', c1);
     E('H1 --> ST', c1);
   }
-  // --- H2 ---
+  // --- СОН ---
+  L.push('subgraph DREAM["💤 СОН (c1_sleep → mather_memory → son → head_ache)"]');
+  L.push('DS1["<b style=\'font-size:20px\'>▶ НАЧАЛО СНА</b><br/>c1_sleep (script_1_less_begin:270-286): чёрный экран, «Это... Сон?»<br/>воспоминание о матери mather_memory (script_memory:7-39), без статов"]:::dstart');
+  L.push(hub('H2','Хаб 2. Сон<br/>c1_sleep → head_ache','h2',[[C_MAD,'−1…+2'],[C_LOG,'0…+1'],[C_BLD,'0…+1']]));
+  E('DS1 --> H2', c2);
+  L.push('DE1["<b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0 → экран стрелок"]:::dend');
   if(EXP.has('H2')){
-    L.push('SON["сон (son)"]:::h2');
+    L.push('SON["сон (son, script_memory:43)"]:::h2');
     L.push('SUD["воспоминание о суде<br/>(sud_memory)"]:::h2');
-    L.push('HA["головная боль (head_ache)"]:::h2');
+    L.push('HA["головная боль, кровь из носа (head_ache)"]:::h2');
+    L.push('DE0["<b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0<br/><small>script_1_less_begin:309</small>"]:::dend');
+    L.push('DE2["<b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0<br/><small>script_memory:194</small>"]:::dend');
     E('H2 --> C2A["'+mk('«Что это вообще сейчас было?»')+'"]:::h2', c2); E('C2A --> SON', c2);
-    E('H2 --> C2B["'+mk('«Пожать плечами и выбросить из головы.»')+'"]:::h2', c2); E('C2B --> ST', c2);
-    E('SON --> C2C["'+mk('«Не стоит больше вспоминать...»',[[C_LOG,1]])+'"]:::h2', c2); E('C2C --> ST', c2);
+    E('H2 --> C2B["'+mk('«Пожать плечами и выбросить из головы.»')+'"]:::h2', c2); E('C2B --> DE0', c2);
+    E('SON --> C2C["'+mk('«Не стоит больше вспоминать...»',[[C_LOG,1]])+'"]:::h2', c2); E('C2C --> DE1', c2);
     E('SON --> C2D["'+mk('«Пытаться вспомнить дальше.»')+'"]:::h2', c2); E('C2D --> SUD', c2);
     E('SUD --> C2E["'+mk('«Что за чертовщина там произошла?!»',[[C_BLD,1]],[[C_MAD,1]])+'"]:::h2', c2); E('C2E --> HA', c2);
     E('SUD --> C2F["'+mk('«Да бросьте, все в полном порядке!»',[[C_MAD,1],[C_BLD,1]])+'"]:::h2', c2); E('C2F --> HA', c2);
-    E('HA --> C2G["'+mk('«Х-хватит...»',[[C_LOG,1]])+'"]:::h2', c2); E('C2G --> ST', c2);
+    E('HA --> C2G["'+mk('«Х-хватит...»',[[C_LOG,1]])+'"]:::h2', c2); E('C2G --> DE2', c2);
     E('HA --> C2H["'+mk('«Идти до конца!»',[[C_MAD,1]])+'"]:::h2', c2); E('C2H --> D1', c2);
   } else {
-    E('H2 --> ST', c2);
+    E('H2 --> DE1', c2);
     E('H2 --> D1', c2);
   }
+  L.push('end');
+  L.push('style DREAM fill:#fffbe6,stroke:#d97706,stroke-width:4px');
+  L.push('classDef dstart fill:#fde047,stroke:#a16207,stroke-width:4px,color:#1f2430');
+  L.push('classDef dend fill:#fef3c7,stroke:#a16207,stroke-width:3px,color:#1f2430');
+
   // --- H3 ---
   if(EXP.has('H3')){
     L.push('HN["hand_next"]:::h3');
@@ -179,7 +190,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 </div>
 <div class="card">
 <h2>Как читать</h2>
-<p class="muted">«Хаб» — кусок сцены с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение (в этой сцене не меняется). «Экран стрелок» — переход на экран перемещения: дальше игра идёт по экрану, а не по коду метки. Ветка руки и корней входит в разговор с Лессом напрямую (conv_2), минуя гляделки; остальные выходы — через экран стрелок (conv_0/conv_1). Сам разговор — на странице <a href="less.html?v=41">«Разговор с Лессом»</a>.</p>
+<p class="muted">«Хаб» — кусок сцены с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение (в этой сцене не меняется). «Экран стрелок» — переход на экран перемещения: дальше игра идёт по экрану, а не по коду метки. Ветка руки и корней входит в разговор с Лессом напрямую (conv_2), минуя гляделки; остальные выходы — через экран стрелок (conv_0/conv_1). Сам разговор — на странице <a href="less.html?v=49">«Разговор с Лессом»</a>.</p>
 </div>
 <div class="viewtoggle">
 <button id="btn-full" class="active" onclick="toggleView('start',1)">Детальнее</button>
