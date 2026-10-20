@@ -7,21 +7,152 @@
 <meta http-equiv="Pragma" content="no-cache">
 <title>Айрат: Карралак и лазарет — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
+<style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
+const HUBS=["HK", "HL", "HR", "HB"];
+const EXP=new Set();
+const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)';
+const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)';
+function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
+function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
+function mk(text, ups, downs){
+  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
+  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
+    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
+    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
+    +'</div>';
+}
+function badge(ranges){
+  if(!ranges.length) return '';
+  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;margin-left:3px">'+p[1]+'</span>';}).join('');
+  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
+}
+function hub(id,label,cls,ranges){
+  const arrow = EXP.has(id) ? '▾' : '▸';
+  const b=badge(ranges||[]);
+  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
+  return id + '["' + inner + '"]:::' + cls;
+}
+const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>'+t+'</span>';};
+const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
+function build(){
+  const L=[]; const ST=[]; let ei=0;
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
+  L.push('flowchart TD');
+  const cG='#9aa3b2', cLK='#be123c', cLL='#0369a1', cLR='#166534', cLB='#475569';
+  L.push('ST["Экран переходов: внутри церкви"]:::ex');
+  L.push('EXS["Экран переходов"]:::ex');
+  L.push('PD["Метка podn (1534): мёртвый код<br/>та же развилка с деньгами Миранды, вызова нет"]:::bad');
+  L.push(hub('HK','Разговор с Карралаком<br/><small>kar_dialog, строки 1175-1374</small>','hhk',[[C_MOR, '−1…+1']]));
+  if(EXP.has('HK')){
+    L.push('KV["Луиза рядом: Карралак узнаёт Луизу<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>Луиза рядом и «dev» ещё не в kar_dialog (1180)</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает kar_priest; при Логике ≥ 2 ещё kar_lie → открывает в доме Луизы пункт «Не хочу тебя расстраивать, но он мог лгать.» (1830-1834)</span>"]:::sc');
+    L.push('KMN["Плата Миранды ещё не отдана<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>quest_money_return.keep (1220)</span>"]:::sc');
+    L.push('KMA["Денег меньше 5: деньги потрачены, выбора нет"]:::sc');
+    L.push('KH["Меню разговора с Карралаком (1253)<br/>пункты исчезают после выбора; когда пунктов не осталось, выход на экран переходов"]:::sc');
+    E('HK --> KV', cLK);
+    E('KV --> KMN', cLK);
+    E('HK -- "Луизы рядом нет" --> KMN', cLK);
+    E('KMN -- "денег < 5" --> KMA', cLK);
+    E('KMA --> KMD["'+mk('Мораль меняется сама, без выбора',null,[[C_MOR,1]])+'"]:::sc', cLK); E('KMD --> KH', cLK);
+    E('KMN --> KM2["'+mk('«Оставить себе.»'+cond('если денег ≥ 5')+flag(' записывает quest_money_return.false (деньги оставлены)'),null,[[C_MOR, 1]])+'"]:::hhk', cLK); E('KM2 --> KH', cLK);
+    E('KMN --> KM3["'+mk('«Отдать»'+flag(' записывает quest_money_return.done (деньги отданы)'),[[C_MOR, 1]],null)+'"]:::hhk', cLK); E('KM3 --> KH', cLK);
+    E('KMN -- "плата уже отдана" --> KH', cLK);
+    E('KH --> K1["'+mk('«Фенрира ранена.»'+cond('если задание врача взято (quest_find_doc.keep) и пункта ещё не было')+flag(' записывает doc → пункт больше не показывается; Карралак: «рана не опасна, приходи завтра утром»'),null,null)+'"]:::hhk', cLK); E('K1 --> KH', cLK);
+    E('KH --> K2["'+mk('«Меня не пропускают.»'+cond('задание «статуя» взято (quest_statue.keep), пропуск ещё не выдан')+flag(' выдаёт пропуск (inv propusk), дневник статуи: часть 3 → Горран Ар пропускает'),null,null)+'"]:::hhk', cLK); E('K2 --> KH', cLK);
+    E('KH --> K3["'+mk('«Мне негде остановиться.»'+cond('Луиза не ищет жреца и нет «to_church»')+flag(' записывает to_church, quest_karralak.keep → открывает «Я согласна вступить в служки» и «Я отказываюсь вступать»'),null,null)+'"]:::hhk', cLK); E('K3 --> KH', cLK);
+    E('KH --> K4["'+mk('«Я согласна вступить в служки»'+cond('есть «to_church», нет «to_church2»')+flag(' записывает to_church2, war (нигде не читается), quest_statue.keep = 1 → открывает «Меня не пропускают.»'),null,null)+'"]:::hhk', cLK); E('K4 --> KH', cLK);
+    E('KH --> K5["'+mk('«Я отказываюсь вступать»'+cond('есть «to_church», нет «to_church2»')+flag(' записывает to_church2, quest_karralak.done = 1 (задание закрыто)'),null,null)+'"]:::hhk', cLK); E('K5 --> KH', cLK);
+    E('KH --> K6["'+mk('«Кто вы?»'+cond('нет «kar»')+flag(' записывает kar, имя Карралак Ар'),null,null)+'"]:::hhk', cLK); E('K6 --> KH', cLK);
+    E('KH -- "«Закончить диалог.»" --> EXS', cLK);
+  } else {
+    E('HK --> KH', cLK);
+  }
+  L.push(hub('HL','Левый коридор: лазарет и Феня<br/><small>airat_church_inside_arrows_left, 1377-1449</small>','hhl',[[C_MOR, '−1…+1'], [C_FEN, '−2…+2']]));
+  if(EXP.has('HL')){
+    L.push('LC["Дверь с крестом: лазарет закрыт<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>если задание врача уже взято или провалено (quest_find_doc keep/false) → сразу на экран переходов</span>"]:::sc');
+    L.push('LF["Первый раз: у двери ребёнок-оборотень Феня, раненая лапка<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>«lazaret_go» ещё нет (1387)</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает lazaret_go → в «Возвращении к Луизе» героиня говорит про закрытый лазарет (1481)</span>"]:::sc');
+    L.push('LM["Меню помощи Фене"]:::sc');
+    E('HL --> LC', cLL);
+    E('LC --> LF', cLL);
+    E('LF -- "«Ну и...?» или «Не обращать внимание»" --> LM', cLL);
+    E('LM --> LM1["'+mk('«Я могу помочь найти врача.» / «Мы сейчас как раз ищем врача.»'+cond('первый вариант, если Луиза не ищет жреца; второй, если ищет (quest_find_priest.keep)')+flag(' записывает quest_find_doc.keep = 1, fenya.near = 1 → Феня идёт с героиней (читается в script_4_airat:146, 184, 1522); fenya.zn_name = 1 → Феня называет имя'),[[C_MOR, 1], [C_FEN, 2]],null)+'"]:::hhl', cLL); E('LM1 --> EXS', cLL);
+    E('LM --> LM2["'+mk('«Ничем не могу помочь.»'+flag(' записывает quest_find_doc.false = 1 → лазарет больше не открывается (1380)'),null,[[C_MOR, 1], [C_FEN, 2]])+'"]:::hhl', cLL); E('LM2 --> EXS', cLL);
+  } else {
+    E('HL --> EXS', cLL);
+  }
+  L.push(hub('HR','Возвращение к Луизе<br/><small>airat_church_lazaret_arrows_right, 1450-1533</small>','hhn',[]));
+  if(EXP.has('HR')){
+    L.push('R1["Луиза уже ждёт<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>задание «найти жреца» взято, «meet_dev» ещё нет, Луиза не у своего дома (1451)</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает meet_dev, dev.near = 1 → Луиза идёт с героиней</span>"]:::sc');
+    L.push('R2["Если задание врача не провалено: Феня рядом, Луиза: «Мой папа как раз лекарь!»<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает quest_find_doc.keep = 1, fenya.near = 1; «сначала до моего дома, он левее Церкви»</span>"]:::sc');
+    L.push('R3["Итоги разведки: «Слева лазарет...» / «Там сидел служка, Лени...»<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 если Лени передал, что Элеон в порядке (leni_delo): записывает «in_gavan» в заметки поиска жреца → открывает «мог лгать» в доме Луизы (1830)</span>"]:::sc');
+    E('HR --> R1', cLR);
+    E('R1 --> R2', cLR);
+    E('R2 --> R3', cLR);
+    E('R3 --> EXS', cLR);
+  } else {
+    E('HR --> R3', cLR);
+  }
+  L.push(hub('HB','Назад из церкви<br/><small>inside_arrows_bottom, 1563-1597</small>','hhs',[]));
+  if(EXP.has('HB')){
+    L.push('B1["Луиза: «Ты куда?»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>задание «найти жреца» взято, «meet_dev» ещё нет (1564)</span>"]:::sc');
+    L.push('B2["Луиза волнуется об отце<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>«razg1_dev» ещё нет, Луиза рядом (1588)</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 записывает razg1_dev → реплика один раз</span>"]:::sc');
+    E('HB --> B1', cLB);
+    E('HB -- "без вопроса Луизы" --> B2', cLB);
+    E('B1 --> B11["'+mk('«Заблудилась.»',null,null)+'"]:::hhs', cLB); E('B11 --> EXS', cLB);
+    E('B1 --> B12["'+mk('«Я передумала.»'+flag(' записывает quest_find_priest.status = false, dev.near = 0 → Луиза остаётся, поиск жреца закрыт'),null,null)+'"]:::hhs', cLB); E('B12 --> EXS', cLB);
+    E('B2 --> EXS', cLB);
+  } else {
+    E('HB --> B1', cLB);
+    E('HB --> B2', cLB);
+  }
+  E('ST -- "«постучаться» к Карралаку" --> HK', cG);
+  E('ST -- "налево" --> HL', cG);
+  E('ST -- "вернуться направо" --> HR', cG);
+  E('ST -- "назад" --> HB', cG);
+  L.push('classDef hhk fill:#fde9ee,stroke:#be123c,color:#4d1223');
+  L.push('classDef hhl fill:#e5f2fa,stroke:#0369a1,color:#123043');
+  L.push('classDef hhn fill:#e7f4ea,stroke:#166534,color:#14331f');
+  L.push('classDef hhs fill:#edf1f6,stroke:#475569,color:#1d2733');
+  L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
+  L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
+  L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
+  return L.concat(ST).join('\n');
+}
+async function render(){
+  const f=document.getElementById('fchart');
+  if(!f) return;
+  f.removeAttribute('data-processed');
+  f.textContent=build();
+  await mermaid.run({nodes:[f]});
+  for(const ss of document.styleSheets){
+    let rules; try{rules=ss.cssRules;}catch(e){continue;}
+    for(let i=rules.length-1;i>=0;i--){
+      const r=rules[i];
+      if(r.selectorText && /\.(hh[a-z0-9]*|sc|ex|dd|ok)( span| > \*)$/.test(r.selectorText)
+         && r.style && r.style.getPropertyPriority('color')==='important'){ r.style.removeProperty('color'); }
+    }
+  }
+  document.querySelectorAll('#fchart g.node').forEach(function(g){
+    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
+    if(m && HUBS.indexOf(m[1])>=0){ g.style.cursor='pointer'; g.addEventListener('click', function(){ window.th(m[1]); }); }
+  });
+}
+window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
+window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
+render();
 </script>
-<style>.warn{color:#b91c1c;font-weight:700}</style>
 </head>
 <body>
 <header class="site"><div class="wrap">
-<h1>Айрат: Карралак, лазарет, Феня — script_4_airat.rpy</h1>
-<p>Строки 1175-1615: разговор с главой военного отдела, закрытый лазарет, девочка-оборотень Феня</p>
-<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="airat2.html?v=2">Лени</a> · <a href="stats.html?v=32">Статы</a></nav>
+<h1>Айрат: Карралак, лазарет, Феня</h1>
+<p>script_4_airat.rpy, строки 1175-1615: разговор с главой военного отдела, закрытый лазарет, девочка-оборотень Феня</p>
+<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="airat2.html?v=2">Лени</a> · <a href="airat4.html?v=2">Дом Луизы</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
-<h2>Статы (Карралак, лазарет: script_4_airat.rpy 1175-1615)</h2>
+<h2>Статы сцены (строки 1175-1615)</h2>
 <table class="stats">
 <tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Комментарий</th></tr>
 <tr><td class="mad">Безумие / <span class="logic">Логика</span> / <span class="blood">Кровь</span></td><td>0</td><td>0</td><td>не меняются</td></tr>
@@ -31,78 +162,21 @@ mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:
 <p class="muted">mad_l()/logic_l() определены в script.rpy:208-211 как lambda: sanity.get_level, т.е. mad_l() ≥ 1 равно Безумие ≥ 3, logic_l() ≥ 1 равно Логика ≥ 2 (проверено по коду). Куда ведёт «Закончить диалог»: strel (аналогично хабу Лени).</p>
 </div>
 <div class="card">
+<h2>Типичный путь (суждение, не измерение)</h2>
+<p><b>Как иду:</b> у Карралака «Кто вы?» → «Закончить диалог.»; налево к лазарету: «Ну и...?» → «Мы сейчас как раз ищем врача.»; направо к Луизе; назад из церкви не возвращаюсь. Выбор по тому, что ближе обычному игроку, который ищет отца Луизы и помогает Фене.</p>
+<p><b>Итог по сцене:</b> Безумие 0 · Логика 0 · Кровь 0 · Мораль <span style="background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px">▲+1</span> · Настроение Фени <span style="background:rgb(254,226,232);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px">▲+2</span></p>
+</div>
+
+<div class="card">
 <h2>Схема</h2>
-<div class="widechart"><div class="mermaid">
-flowchart TD
-ST["<b>strel: внутри церкви</b>"]:::out
-KD["<b>script_4_airat_kar_dialog</b> (1175): разговор с Карралаком (razg = 1)"]:::scene
-KDV["<span style='color:#b91c1c;font-weight:700'>Луиза рядом и «dev» не в kar_dialog (1180)</span><br/>Карралак узнаёт Луизу; «kar_priest» (штатный лекарь, секретное задание); <span style='color:#b91c1c;font-weight:700'>Логика ≥ 1</span>: «kar_lie»"]:::scene
-KM{"<span style='color:#b91c1c;font-weight:700'>quest_money_return.keep (плата Миранды не отдана, 1220)</span>"}:::hub
-KM1["<span style='color:#b91c1c;font-weight:700'>money < 5</span>: деньги потрачены, «оставлю себе» <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▼−1</span><br/>quest_money_return.false"]:::scene
-KM2["«Оставить себе.» <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▼−1</span>"]:::scene
-KM3["«Отдать» <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▲+1</span><br/>монеты на столе, quest_money_return.done"]:::scene
-KH{"<b>Хаб разговора с Карралаком</b> (1253)<br/>«Закончить диалог.» → strel; авто-выход → kar_dialog_end (1374)"}:::hub
-K1["<span style='color:#b91c1c;font-weight:700'>«Фенрира ранена.» (quest_find_doc.keep, нет «doc»)</span><br/>«рана не опасна, приходи завтра утром»; kar_dialog += doc"]:::scene
-K2["<span style='color:#b91c1c;font-weight:700'>«Меня не пропускают.»</span><br/>пропуск → Горран Ар; те же пункты, что у Лени"]:::scene
-K3["<span style='color:#b91c1c;font-weight:700'>«Мне негде остановиться.» (Луиза не ищет жреца, нет to_church)</span><br/>Карралак представляется; «to_church», quest_karralak.keep"]:::scene
-K4["<span style='color:#b91c1c;font-weight:700'>«Я согласна вступить в служки» / «Я отказываюсь вступать» (to_church, нет to_church2)</span><br/>«war», quest_statue.keep / quest_karralak.done"]:::scene
-K5["<span style='color:#b91c1c;font-weight:700'>«Кто вы?» (нет «kar»)</span><br/>Карралак Ар, глава военного отдела"]:::scene
-KE["«Закончить диалог.» → strel"]:::out
-LL["<b>airat_church_inside_arrows_left_next_label</b> (1377): левый коридор, дверь с крестом (лазарет закрыт)<br/>если quest_find_doc уже keep/false → strel"]:::scene
-LL1["<span style='color:#b91c1c;font-weight:700'>первый раз («lazaret_go», 1388)</span>: у двери ребёнок-оборотень Феня, раненая лапка<br/>меню: «Ну и...?» (fen_d += friend) / «Не обращать внимание»"]:::scene
-LM{"меню помощи Фене"}:::hub
-LM1["<span style='color:#b91c1c;font-weight:700'>«Я могу помочь найти врача.» (если Луиза не ищет жреца)</span> / <span style='color:#b91c1c;font-weight:700'>«Мы сейчас как раз ищем врача.» (если ищет)</span><br/>quest_find_doc.keep = 1 <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▲+1</span> <span style='background:rgb(255,228,230);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span><br/>fenya.near = 1, Феня называет имя"]:::scene
-LM2["«Ничем не могу помочь.»<br/>quest_find_doc.false = 1 <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▼−1</span> <span style='background:rgb(255,228,230);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> → strel"]:::scene
-LR["<b>airat_church_lazaret_arrows_right_next_label</b> (1450): возвращение к Луизе<br/><span style='color:#b91c1c;font-weight:700'>quest_find_priest.keep, нет «meet_dev», dev.lock не дом Луизы</span>"]:::scene
-LR1["Луиза: «Мой папа лекарь!», если Феня согласна: fenya.near = 1; «сначала до моего дома»<br/>итоги разведки: правый коридор / Лени (leni_luiza, leni_delo → «in_gavan» в заметках)"]:::scene
-PD["<b>podn</b> (1534): та же развилка с деньгами Миранды (money &lt; 5: <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▼−1</span>; «Оставить себе.» <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▼−1</span>; «Отдать» <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▲+1</span>)<br/>вызов метки в доступных файлах не найден"]:::bad
-LB["<b>inside_arrows_bottom</b> (1563): стрелка назад из церкви<br/><span style='color:#b91c1c;font-weight:700'>quest_find_priest.keep и нет «meet_dev»</span>: Луиза «Ты куда?»<br/>«Заблудилась.» (идите налево/направо) / «Я передумала.» (quest_find_priest = false, dev.near = 0)"]:::scene
-LB2["<span style='color:#b91c1c;font-weight:700'>«razg1_dev»</span>: Луиза волнуется об отце"]:::scene
-KD --> KDV
-KD --> KM
-KDV --> KM
-KM --> KM1
-KM --> KM2
-KM --> KM3
-KM1 --> KH
-KM2 --> KH
-KM3 --> KH
-KM -- "иначе" --> KH
-KH --> K1
-K1 --> KH
-KH --> K2
-K2 --> KH
-KH --> K3
-K3 --> KH
-KH --> K4
-K4 --> KH
-KH --> K5
-K5 --> KH
-KH --> KE
-LL --> LL1
-LL1 --> LM
-LM --> LM1
-LM --> LM2
-LR --> LR1
-ST -- "«постучаться» к Карралаку" --> KD
-ST -- "налево" --> LL
-ST -- "вернуться направо" --> LR
-ST -- "назад" --> LB
-LB --> LB2
-classDef scene fill:#E4EEF9,stroke:#7a9cc6
-classDef hub fill:#fff3bf,stroke:#d4a017
-classDef bad fill:#ffd6d6,stroke:#b91c1c
-classDef out fill:#d8f5e0,stroke:#2f9e44
-</div></div>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <span class="warn">Красным</span> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
+<div class="widechart"><div id="fchart" class="mermaid"></div></div>
 </div>
 <div class="card">
-<h2>Ошибки и особенности кода</h2>
-<ul>
-<li>Метка <code>podn</code> (1534) нигде не вызывается в доступных файлах (мёртвый код; дублирует развилку денег из kar_dialog).</li>
-<li>Опечатка в имени: Феня в коде то «Фенира» (1440), то «Фенрира» (пункты «Фенрира ранена.» в хабах Лени и Карралака).</li>
-<li>В kar_dialog и leni_dialog одни и те же пункты «вступить в служки / отказаться» дублируются.</li>
-</ul>
-</div>
+<h2>Схема</h2>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <span class="warn">Красным</span> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
+<div class="widechart"><div id="fchart" class="mermaid"></div></div>
+
 </main>
 <footer>Схемы игры «Вий» · Айрат: Карралак и лазарет · выверено по коду 20.10.2026</footer>
 </body>
