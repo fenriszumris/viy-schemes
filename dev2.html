@@ -5,23 +5,121 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<title>Луиза: разговоры по кнопке — Схемы игры «Вий»</title>
+<title>Луиза: повторные разговоры — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
+<style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
+const HUBS=["H1", "H2", "H3"];
+const EXP=new Set();
+const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)';
+const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)';
+function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
+function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
+function mk(text, ups, downs){
+  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
+  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
+    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
+    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
+    +'</div>';
+}
+function badge(ranges){
+  if(!ranges.length) return '';
+  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;margin-left:3px">'+p[1]+'</span>';}).join('');
+  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
+}
+function hub(id,label,cls,ranges){
+  const arrow = EXP.has(id) ? '▾' : '▸';
+  const b=badge(ranges||[]);
+  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
+  return id + '["' + inner + '"]:::' + cls;
+}
+const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>'+t+'</span>';};
+const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>'+t+'</span>';};
+const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
+function build(){
+  const L=[]; const ST=[]; let ei=0;
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
+  L.push('flowchart TD');
+  const cG='#9aa3b2', c1='#be123c', c2='#166534', c3='#b45309';
+  L.push('ST["<div style=\'width:300px;white-space:normal\'>Кнопка «Поговорить» с Луизой<br/><small>dev_razg_menu (1): razg_menu = dev, razg = dev</small></div>"]:::ex');
+  L.push('EXS["<div style=\'width:240px;white-space:normal\'>Выход на экран переходов</div>"]:::ex');
+  L.push(hub('H1','Луиза обижена<br/><small>devd.d5, строки 1-60</small>','hhk',[[C_DEV, '−1…0']]));
+  if(EXP.has('H1')){
+    L.push('A["<div style=\'width:280px;white-space:normal\'>Луиза обижена: devd.d5 («Увязаться за ней»)<br/><small>единственный пункт меню</small></div>"]:::sc');
+    E('H1 --> A', c1);
+    E('A --> A1["<div style=\'width:290px;white-space:normal\'>'+mk('«Что ты так на меня взъелась?»'+cond('один раз (devd.d6, строка 32)'),null,[[C_DEV, 1]])+'</div>"]:::hhk', c1); E('A1 --> AX', c1);
+    E('A --> A2["<div style=\'width:290px;white-space:normal\'>'+mk('«Конец»'+note('dev_razg_menu_end: «она более и слова не скажет»'),null,null)+'</div>"]:::hhk', c1); E('A2 --> AX', c1);
+    L.push('AX["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
+  } else {
+    E('H1 --> EXS', c1);
+  }
+  L.push(hub('H2','Обычный разговор<br/><small>dev_razg_menu, 1-70</small>','hhn',[[C_LOG, '0…+1']]));
+  if(EXP.has('H2')){
+    L.push('B["<div style=\'width:260px;white-space:normal\'>Нормальные отношения: меню разговора</div>"]:::sc');
+    E('H2 --> B', c2);
+    L.push('BM["<div style=\'width:400px;white-space:normal\'><b>Меню разговора с Луизой</b><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«А где твой дом?»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>airat_go есть, нет dev_home1, не d10</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 devd.d10 = 1</span><br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>самое левое здание, табличка «Элеон Ар»; потом возврат в меню</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Я тогда не спросила как ты вообще в лесу оказалась...» <span style=\'background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span><br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>нет devd.d2</span><br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>меню из dev.html (961-963): «Что за ловушки?», рассказ про побег; единственный раз</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Я бы хотела уточнить пару моментов о твоем побеге.»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>devd.d2 и devd.d4 < 4</span><br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>хаб вопросов dev.html; все выходы возвращают в это меню</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«По поводу всей этой истории с твоим отцом...»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>quest_find_priest.keep и (leni_per_dev_razg или Луиза рядом)</span><br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>→ dev_father</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«На сегодня хватит разговоров!»<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 razg_menu = 0 → экран переходов</span></div></div>"]:::hhn');
+    E('B --> BM', c2);
+    L.push('BX["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
+    E('BM --> BX', c2);
+  } else {
+    E('H2 --> EXS', c2);
+  }
+  L.push(hub('H3','Разговор об отце<br/><small>dev_father, 71-180</small>','hhs',[[C_DEV, '−1…0']]));
+  if(EXP.has('H3')){
+    L.push('F["<div style=\'width:260px;white-space:normal\'>О папе и о Лени (dev_father, 71)</div>"]:::sc');
+    E('H3 --> F', c3);
+    L.push('FM["<div style=\'width:400px;white-space:normal\'><b>Меню dev_father</b><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Знаешь, мне сейчас не до тебя. Справляйся без меня.» <span style=\'background:rgb(220,252,231);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px\'>▼−1</span><br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>Луиза рядом (dev.near)</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 quest_find_priest и quest_know_priest = false; dev.near = 0 → экран переходов (73-82)</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Этот Лени...»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>leni_per_dev_razg</span><br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>Луиза о Лени (сирота из Церкви)</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>↳ «Знаешь, что-то тут не чисто.»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>Логика (get_level) ≥ 2, нет devd.d8</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 devd.d8 = 1; без статов</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>↳ «Думаю, ты ему просто нравишься.»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>Логика ≥ 1, нет devd.d9</span><br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>подменю: «Это не мое дело» / «Вряд ли он тебе подходит» / «Может, тебе стоит к нему подойти?»</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 при quest_find_priest.keep: quest_dev_leni.keep = 1; без статов</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>↳ «Какой-то он был нервный.»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>нет dev_leni2</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Конец»<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>возврат в dev_razg_menu / dev_father_end</span></div></div>"]:::hhs');
+    E('F --> FM', c3);
+  } else {
+    E('H3 --> EXS', c3);
+  }
+  L.push('W["<div style=\'width:340px;white-space:normal\'>Белая стена впереди: label_wall (181)<br/><small>less_left_dev_road → label_wall; Луиза рядом и нет devd.d7: «или спасены, или умрем» → экран переходов</small></div>"]:::sc');
+  E('ST -- "Луиза обижена" --> H1', cG);
+  E('ST -- "нормальные отношения" --> H2', cG);
+  E('H2 -- "про отца" --> H3', cG);
+  E('ST -- "дорога: белая стена" --> W', cG);
+  L.push('classDef hhk fill:#fde9ee,stroke:#be123c,color:#4d1223');
+  L.push('classDef hhn fill:#e7f4ea,stroke:#166534,color:#14331f');
+  L.push('classDef hhs fill:#edf1f6,stroke:#475569,color:#1d2733');
+  L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
+  L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
+  return L.concat(ST).join('\n');
+}
+async function render(){
+  const f=document.getElementById('fchart');
+  if(!f) return;
+  f.removeAttribute('data-processed');
+  f.textContent=build();
+  await mermaid.run({nodes:[f]});
+  for(const ss of document.styleSheets){
+    let rules; try{rules=ss.cssRules;}catch(e){continue;}
+    for(let i=rules.length-1;i>=0;i--){
+      const r=rules[i];
+      if(r.selectorText && /\.(hh[a-z0-9]*|sc|ex|dd|ok)( span| > \*)$/.test(r.selectorText)
+         && r.style && r.style.getPropertyPriority('color')==='important'){ r.style.removeProperty('color'); }
+    }
+  }
+  document.querySelectorAll('#fchart g.node').forEach(function(g){
+    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
+    if(m && HUBS.indexOf(m[1])>=0){ g.style.cursor='pointer'; g.addEventListener('click', function(){ window.th(m[1]); }); }
+  });
+}
+window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
+window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
+render();
 </script>
-<style>.warn{color:#b91c1c;font-weight:700}</style>
 </head>
 <body>
 <header class="site"><div class="wrap">
-<h1>Луиза: повторные разговоры — day_1_dev_razg.rpy</h1>
-<p>dev_razg_menu, dev_father, белая стена (label_wall). Файл 208 строк</p>
-<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="dev.html?v=40">Луиза на дороге</a> · <a href="stats.html?v=32">Статы</a></nav>
+<h1>Луиза: повторные разговоры</h1>
+<p>day_1_dev_razg.rpy: dev_razg_menu, dev_father, белая стена (label_wall). Файл 208 строк</p>
+<nav class="crumbs"><a href="index.html?v=41">← Все схемы</a> · <a href="dev.html?v=40">Луиза на дороге</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
-<h2>Статы (разговор с Луизой по кнопке: day_1_dev_razg.rpy)</h2>
+<h2>Статы сцены (day_1_dev_razg.rpy, 208 строк)</h2>
 <table class="stats">
 <tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Комментарий</th></tr>
 <tr><td class="mad">Безумие</td><td>0</td><td>0</td><td>не меняется напрямую; через переходы в хаб вопросов dev.html</td></tr>
@@ -32,47 +130,15 @@ mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:
 <p class="muted">В этом файле logic_l() используется как уровень: <code>logic_l()&gt;=2</code>, <code>if logic_l():</code> — это lambda: sanity.get_level(«logic») (script.rpy:211). Ссылки: <a href="dev.html?v=40">Луиза на дороге</a>.</p>
 </div>
 <div class="card">
+<h2>Типичный путь (суждение, не измерение)</h2>
+<p><b>Как иду:</b> нормальные отношения; «А где твой дом?»; «По поводу всей этой истории с твоим отцом...» → «Этот Лени...» → «Какой-то он был нервный.» → «Конец»; «На сегодня хватит разговоров!».</p>
+<p><b>Итог по сцене:</b> Безумие 0 · Логика 0 · Кровь 0 · Настроение Луизы 0.</p>
+</div>
+
+<div class="card">
 <h2>Схема</h2>
-<div class="widechart"><div class="mermaid">
-flowchart TD
-IN["<b>dev_razg_menu</b> (day_1_dev_razg.rpy 1): «Поговорить» с Луизой по кнопке<br/>razg_menu = dev, razg = dev"]:::hub
-A["<span style='color:#b91c1c;font-weight:700'>devd.d5 (Увязаться за ней: она на вас обижена)</span><br/>единственный пункт «Что ты так на меня взъелась?» (devd.d6, один раз) <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><br/>«Конец» → dev_razg_menu_end: «она более и слова не скажет»"]:::scene
-B["<span style='color:#b91c1c;font-weight:700'>иначе (нормальные отношения)</span>: меню разговора"]:::hub
-B1["<span style='color:#b91c1c;font-weight:700'>«А где твой дом?» (airat_go и нет dev_home1 и не d10)</span><br/>самое левое здание, табличка «Элеон Ар»; devd.d10 = 1"]:::scene
-B2["<span style='color:#b91c1c;font-weight:700'>«Я тогда не спросила как ты вообще в лесу оказалась...» (нет devd.d2)</span><br/>→ 1menu из dev.html: <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (961-963), «Что за ловушки?», рассказ про побег"]:::scene
-B3["<span style='color:#b91c1c;font-weight:700'>«Я бы хотела уточнить пару моментов о твоем побеге.» (devd.d2 и devd.d4 &lt; 4)</span><br/>→ хаб вопросов dev.html; все его выходы возвращают в dev_razg_menu (menu_jump)"]:::scene
-B4["<span style='color:#b91c1c;font-weight:700'>«По поводу всей этой истории с твоим отцом...» (quest_find_priest.keep и (leni_per_dev_razg или Луиза рядом))</span><br/>→ dev_father"]:::scene
-B5["«На сегодня хватит разговоров!» → razg_menu = 0 → strel"]:::out
-F["<b>dev_father</b> (day_1_dev_razg 71): о папе, о Лени"]:::hub
-F1["<span style='color:#b91c1c;font-weight:700'>«Знаешь, мне сейчас не до тебя. Справляйся без меня.» (dev.near)</span><br/><span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>; quest_find_priest и quest_know_priest = false; dev.near = 0 → strel"]:::bad
-F2["<span style='color:#b91c1c;font-weight:700'>«Этот Лени...» (leni_per_dev_razg)</span>: Луиза о Лени (сирота из Церкви)"]:::scene
-F2a["<span style='color:#b91c1c;font-weight:700'>«Знаешь, что-то тут не чисто.» (Логика get_level ≥ 2, нет devd.d8)</span><br/>без статов; devd.d8 = 1"]:::scene
-F2b["<span style='color:#b91c1c;font-weight:700'>«Думаю, ты ему просто нравишься.» (Логика ≥ 1, нет devd.d9)</span><br/>подменю: «Это не мое дело» / «Вряд ли он тебе подходит» / «Может, тебе стоит к нему подойти?» (при quest_find_priest.keep: quest_dev_leni.keep = 1); без статов"]:::scene
-F2c["«Какой-то он был нервный.» (нет dev_leni2)"]:::scene
-F3["«Конец» → вернуться в dev_razg_menu / dev_father_end"]:::out
-W["<b>label_wall</b> (181): белая стена впереди (less_left_dev_road → label_wall)<br/><span style='color:#b91c1c;font-weight:700'>Луиза рядом и нет devd.d7</span>: «или спасены, или умрем» → strel"]:::out
-IN --> A
-IN -- "нет d5" --> B
-B --> B1
-B1 --> B
-B --> B2
-B --> B3
-B --> B4
-B --> B5
-B2 -- "возврат в меню" --> IN
-B3 -- "возврат в меню" --> IN
-B4 --> F
-F --> F1
-F --> F2
-F2 --> F2a
-F2 --> F2b
-F2 --> F2c
-F --> F3
-classDef scene fill:#E4EEF9,stroke:#7a9cc6
-classDef hub fill:#fff3bf,stroke:#d4a017
-classDef bad fill:#ffd6d6,stroke:#b91c1c
-classDef out fill:#d8f5e0,stroke:#2f9e44
-</div></div>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
+<div class="widechart"><div id="fchart" class="mermaid"></div></div>
 </div>
 <div class="card">
 <h2>Ошибки и особенности кода</h2>
@@ -81,7 +147,8 @@ classDef out fill:#d8f5e0,stroke:#2f9e44
 <li>При razg_menu = dev выходы хаба вопросов и меню «Все поняла / Не важно» возвращают в dev_razg_menu, а не в выбор имени (dev.html, 391/992/1006).</li>
 </ul>
 </div>
+
 </main>
-<footer>Схемы игры «Вий» · Луиза: разговоры по кнопке · выверено по коду 20.10.2026</footer>
+<footer>Схемы игры «Вий» · day_1_dev_razg.rpy · выверено по коду 20.10.2026</footer>
 </body>
 </html>
