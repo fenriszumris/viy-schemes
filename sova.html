@@ -7,14 +7,15 @@
 <meta http-equiv="Pragma" content="no-cache">
 <title>Сова и сны — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
-<style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}</style>
+<style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
-const HUBS=["H1", "H2", "H3"];
+const HUBS=["S1", "S2", "S3"];
 const EXP=new Set();
-const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)';
-const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)';
+const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)', C_ADR='rgb(13,148,136)', C_NAR='rgb(101,163,13)', C_ADO='rgb(79,70,229)', C_BON='rgb(219,39,119)';
+const CHIP_BG2=1;
+const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)'; CHIP_BG[C_ADR]='rgb(204,244,240)'; CHIP_BG[C_NAR]='rgb(236,252,203)'; CHIP_BG[C_ADO]='rgb(224,231,255)'; CHIP_BG[C_BON]='rgb(252,231,243)';
 function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
 function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
 function mk(text, ups, downs){
@@ -42,62 +43,67 @@ function build(){
   const L=[]; const ST=[]; let ei=0;
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
-  const cG='#9aa3b2', c1='#4f46e5', c2='#be123c', c3='#0f766e';
-  L.push('ST["<a href=\'road.html?v=64\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:320px;white-space:normal\'>Вход script3_sova_begin (1) от road: «Стоит переждать»<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Логика > 0 - описание леса; если Безумие ≥ 3 и madlogic < 3 - реплики «уютно»</span></div></a>"]:::ex');
-  L.push('RD["<a href=\'road.html?v=64\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:260px;white-space:normal\'>script3_sova_road (275) → script_3_roadway (дорога)</div></a>"]:::ex');
-  L.push(hub('H1','Сон 1: кора<br/><small>son_less1, 1-108</small>','hhs',[[C_BLD, '−1…0']]));
-  if(EXP.has('H1')){
-    L.push('B0["<div style=\'width:240px;white-space:normal\'>Кровь > 0 на входе (23-24)<br/><span style=\'background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px\'>▼−1</span></div>"]:::sc');
-    L.push('D1["<div style=\'width:260px;white-space:normal\'>Сон 1: son_less1 (27)<br/>кора, Лесс забирает кору</div>"]:::sc');
-    L.push('E1["<div style=\'width:280px;white-space:normal\'>son_less_end (87): просыпается<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 sova_meet = 1, день 5</span><br/><small>дальше меню (109): начинает болеть голова</small></div>"]:::sc');
-    E('H1 -- "Кровь > 0" --> B0', c1);
-    E('H1 -- "Кровь 0" --> D1', c1);
-    E('B0 --> D1', c1);
-    E('D1 --> E1', c1);
-    E('E1 --> H2', c1);
+  const cG='#9aa3b2', c1='#475569', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
+  L.push('ST["<div style=\'width:320px;white-space:normal\'>Вход: на дороге выбор «Стоит переждать.» (Логика +1; Таша, если рядом, уходит) (script3_road.rpy:44-58)<br/><a href=\'road.html?v=70\'>← страница «Дорога»</a></div>"]:::ex');
+  L.push('RD["<div style=\'width:280px;white-space:normal\'>Дальше: дорога<br/><small>script3_sova_road, 275: «Пора в путь...»</small><br/><a href=\'road.html?v=70\'>страница «Дорога»</a></div>"]:::ex');
+  L.push('DIE["<div style=\'width:280px;white-space:normal\'>Плохая концовка «Вспомнить все...»<br/><small>сцена смерти script_memory.rpy:199-230, перезапуск</small></div>"]:::bad');
+  E('ST --> S1', cG);
+  L.push(hub('S1','Ночь и первый сон<br/><small>script3_sova_begin, 1-86</small>','hhn',[[C_BLD, '−1…0']]));
+  if(EXP.has('S1')){
+    L.push('N0["<div style=\'width:340px;white-space:normal\'>Героиня решает дождаться утра у дерева, закрывает глаза и засыпает (3-22)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если уровень Логики выше 0: подробно замечает, что в лесу нет ветра, птиц и даже насекомых (3-10)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если уровень Безумия не ниже 1 и «безумная логика» меньше 3: говорит, что здесь уютно и хочется есть (11-13)</span></div>"]:::sc');
+    E('S1 --> N0', c1);
+    L.push('B1["<div style=\'width:280px;white-space:normal\'>Если у героини есть Кровь: она убывает перед сном (23-24)</div>"]:::sc');
+    L.push('D1["<div style=\'width:340px;white-space:normal\'>Первый сон: героиня идёт на уханье совы, срывает кору с дерева, из-под коры течёт красное; появляется Лесс, требует кору обратно и прикладывает к дереву (27-85)</div>"]:::sc');
+    E('N0 --> X1["<div style=\'width:290px;white-space:normal\'>'+mk('Если Кровь больше 0:',null,[[C_BLD, 1]])+'</div>"]:::hhn', c1); E('X1 --> B1', c1);
+    E('N0 --> X2["<div style=\'width:290px;white-space:normal\'>'+mk('Если Крови нет:',null,null)+'</div>"]:::hhn', c1); E('X2 --> D1', c1);
+    E('B1 --> D1', c1);
   } else {
-    E('H1 --> H2', c1);
+    E('S1 --> S2', c1);
   }
-  L.push(hub('H2','Головная боль и сон 2<br/><small>меню 109 и 170, 109-176</small>','hhk',[[C_BLD, '0…+1']]));
-  if(EXP.has('H2')){
-    L.push('M1["<div style=\'width:260px;white-space:normal\'>Меню (109): начинает болеть голова</div>"]:::sc');
-    E('H2 --> M1', c2);
-    E('M1 --> M1a["<div style=\'width:290px;white-space:normal\'>'+mk('«Думаю хватит.»',null,null)+'</div>"]:::hhk', c2); E('M1a --> SX', c2);
-    E('M1 --> M1b["<div style=\'width:290px;white-space:normal\'>'+mk('«Пытаться вспомнить.»',null,null)+'</div>"]:::hhk', c2); E('M1b --> D2', c2);
-    L.push('D2["<div style=\'width:300px;white-space:normal\'>Сон 2: son_less2 (122): Лесс кусает, «Лес Смерти»<br/>son_less2_end (157)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 less.zn_name = 1</span><br/><small>из носа кровь</small><br/><span style=\'background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span> (168)</div>"]:::sc');
-    L.push('M2["<div style=\'width:160px;white-space:normal\'>Меню (170)</div>"]:::sc');
-    E('D2 --> M2', c2);
-    E('M2 --> M2a["<div style=\'width:290px;white-space:normal\'>'+mk('«Х-хватит...»',null,null)+'</div>"]:::hhk', c2); E('M2a --> SX', c2);
-    E('M2 --> M2b["<div style=\'width:290px;white-space:normal\'>'+mk('«Идти до конца!»',null,null)+'</div>"]:::hhk', c2); E('M2b --> DS', c2);
-    L.push('DS["<div style=\'width:240px;white-space:normal\'>Смерть во сне: death_son (176)<br/><small>см. start.html</small></div>"]:::bad');
-    L.push('SX["<div style=\'width:220px;white-space:normal\'>→ script_3_sova_stop (177)</div>"]:::ex');
-    E('SX --> H3', c2);
+  L.push(hub('S2','Пробуждение и воспоминания<br/><small>son_less_end, 87-176</small>','hhl',[[C_BLD, '0…+1']]));
+  if(EXP.has('S2')){
+    L.push('W0["<div style=\'width:340px;white-space:normal\'>Героиня просыпается: она «и правда знакома» с Лессом, но не помнит почему (87-108)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: сова встречена</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если уровень Безумия не ниже 1: «какое это имеет значение?!» (101-102)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если уровень Безумия ниже 1, но Логики не ниже 1: ей важно, но неясно, стоит ли вспоминать (103-107)</span></div>"]:::sc');
+    E('S2 --> W0', c2);
+    L.push('D2["<div style=\'width:340px;white-space:normal\'>Второй сон: героиня находит Лесса, он называет себя Лесом Смерти и кусает в шею; героиня просит проводить до границы леса (122-156)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: героиня знает имя Лесса</span></div>"]:::sc');
+    L.push('HD["<div style=\'width:300px;white-space:normal\'>Голова болит всё сильнее, из носа идёт кровь (157-169)</div>"]:::sc');
+    E('W0 --> Y1["<div style=\'width:290px;white-space:normal\'>'+mk('«Думаю хватит.» (110-112)',null,null)+'</div>"]:::hhl', c2); E('Y1 --> S3', c2);
+    E('W0 --> Y2["<div style=\'width:290px;white-space:normal\'>'+mk('«Пытаться вспомнить.» (114)'+flag('Кровь +1 в конце воспоминания: из носа идёт кровь (168)'),[[C_BLD, 1]],null)+'</div>"]:::hhl', c2); E('Y2 --> D2', c2);
+    E('D2 --> HD', c2);
+    E('HD --> Y3["<div style=\'width:290px;white-space:normal\'>'+mk('«Х-хватит...» (171-174)',null,null)+'</div>"]:::hhl', c2); E('Y3 --> S3', c2);
+    E('HD --> Y4["<div style=\'width:290px;white-space:normal\'>'+mk('«Идти до конца!» (175-176)',null,null)+'</div>"]:::hhr', c8); E('Y4 --> DIE', c8);
   } else {
-    E('H2 --> H3', c2);
+    E('S2 --> S3', c2);
+    E('S2 --> DIE', c2);
   }
-  L.push(hub('H3','Сова<br/><small>script3_sova_stop … sova_mad, 177-335</small>','hhn',[[C_BLD, '0…+1']]));
-  if(EXP.has('H3')){
-    L.push('S0["<div style=\'width:300px;white-space:normal\'>script3_sova_stop (177): реплики по статам (180-193)<br/><small>Логика ≥ 1 / Безумие ≤ 1 / ratio < 0.5</small></div>"]:::sc');
-    L.push('SV["<div style=\'width:260px;white-space:normal\'>script3_sova_sova (196)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 sova_meet = 1, sova.lock = less_per</span></div>"]:::sc');
-    E('H3 --> S0', c3);
-    E('S0 --> SV', c3);
-    E('SV --> M3a["<div style=\'width:290px;white-space:normal\'>'+mk('«Игнорировать.»',null,null)+'</div>"]:::hhn', c3); E('M3a --> RDX', c3);
-    E('SV --> M3b["<div style=\'width:290px;white-space:normal\'>'+mk('«Посмотреть ближе.»',null,null)+'</div>"]:::hhn', c3); E('M3b --> TN', c3);
-    L.push('TN["<div style=\'width:300px;white-space:normal\'>Если tash.near: Таша «она в моем вкусе... мертва» (210-223)<br/>ratio > 0.7? (225)</div>"]:::sc');
-    L.push('PL["<div style=\'width:200px;white-space:normal\'>нет: сова улетает (236)</div>"]:::sc');
-    L.push('MAD["<div style=\'width:340px;white-space:normal\'>да: script3_sova_mad (287)<br/>less.mood ≥ 3 (297)? гладит сову, просит с собой (300-305); script3_sova_2mad (328): сова улетает<br/>иначе, less.mood < 0 (311): сова клюёт руку<br/><span style=\'background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span> (319)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>при Крови ≥ 3 → sm_blood</span></div>"]:::sc');
-    E('TN --> PL', c3);
-    E('TN --> MAD', c3);
-    E('PL --> RDX', c3);
-    E('MAD --> RDX', c3);
-    L.push('RDX["<div style=\'width:220px;white-space:normal\'>→ дорога (script_3_roadway)</div>"]:::ex');
+  L.push(hub('S3','Сова<br/><small>script_3_sova_stop, script3_sova_sova, script3_sova_mad, 177-335</small>','hhl',[[C_BLD, '0…+1']]));
+  if(EXP.has('S3')){
+    L.push('A0["<div style=\'width:340px;white-space:normal\'>Героиня приходит в себя, голова болит (177-195)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если уровень Логики не ниже 1: это не похоже на простую амнезию (180-183)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если уровень Безумия не выше 1: ей кажется, что она вела себя странно (184-188)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если доля Логики от суммы Логики и Безумия ниже 0,5: воспоминания кажутся забавными (189-194)</span></div>"]:::sc');
+    E('S3 --> A0', c4);
+    L.push('SV["<div style=\'width:300px;white-space:normal\'>Слышно уханье совы (196-201)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: сова встречена; сова появляется на локации «Перекрёсток»</span></div>"]:::sc');
+    L.push('LK["<div style=\'width:320px;white-space:normal\'>Героиня смотрит на сову ближе (209-224)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Таша рядом: Таша узнаёт сову («в моём вкусе: мертва»), героиня удивлена, что сова дышит (210-223)</span></div>"]:::sc');
+    L.push('LM["<div style=\'width:320px;white-space:normal\'>Героиня смотрит на сову и тянет к ней руку; сова улетает: «Кажется она не в настроении» (229-239)</div>"]:::sc');
+    L.push('MD["<div style=\'width:300px;white-space:normal\'>«Интересненько!» Героиня здоровается с совой (287-296)</div>"]:::sc');
+    L.push('M1["<div style=\'width:320px;white-space:normal\'>Сова: «Ух!» Героиня гладит сову, просит идти с ней; сова улетает (297-335)</div>"]:::sc');
+    L.push('M2["<div style=\'width:320px;white-space:normal\'>Сова молчит; героиня тянется к ней, сова улетает (306-326)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Настроение Лесса ниже 0: сова клюёт руку, течёт кровь (311-319)</span></div>"]:::sc');
+    L.push('M3["<div style=\'width:280px;white-space:normal\'>Сова клюёт руку героини (311-319)</div>"]:::sc');
+    E('A0 --> SV', c4);
+    E('SV --> Z1["<div style=\'width:290px;white-space:normal\'>'+mk('«Посмотреть ближе.» (203-204)',null,null)+'</div>"]:::hhl', c4); E('Z1 --> LK', c4);
+    E('SV --> Z2["<div style=\'width:290px;white-space:normal\'>'+mk('«Игнорировать.» (206-207)',null,null)+'</div>"]:::hhl', c4); E('Z2 --> RD', c4);
+    E('LK --> Z3["<div style=\'width:290px;white-space:normal\'>'+mk('Если доля Логики от суммы Логики и Безумия выше 0,7 (225):',null,null)+'</div>"]:::hhl', c4); E('Z3 --> MD', c4);
+    E('LK --> Z4["<div style=\'width:290px;white-space:normal\'>'+mk('Если доля Логики не выше 0,7:',null,null)+'</div>"]:::hhl', c4); E('Z4 --> LM', c4);
+    E('LM --> RD', c4);
+    E('MD --> Z5["<div style=\'width:290px;white-space:normal\'>'+mk('Если Настроение Лесса не ниже 3 (297):',null,null)+'</div>"]:::hhl', c4); E('Z5 --> M1', c4);
+    E('MD --> Z6["<div style=\'width:290px;white-space:normal\'>'+mk('Если Настроение Лесса ниже 3:',null,null)+'</div>"]:::hhl', c4); E('Z6 --> M2', c4);
+    E('M2 --> Z7["<div style=\'width:290px;white-space:normal\'>'+mk('Если Настроение Лесса ниже 0 (311):',[[C_BLD, 1]],null)+'</div>"]:::hhl', c4); E('Z7 --> M3', c4);
+    E('M1 --> RD', c4);
+    E('M2 --> RD', c4);
+    E('M3 --> RD', c4);
   } else {
-    E('H3 --> RD', c3);
+    E('S3 --> RD', c4);
   }
-  E('ST --> H1', cG);
-  L.push('classDef hhk fill:#fde9ee,stroke:#be123c,color:#4d1223');
+  L.push('classDef hhl fill:#e5f2fa,stroke:#0369a1,color:#123043');
   L.push('classDef hhn fill:#e7f4ea,stroke:#166534,color:#14331f');
-  L.push('classDef hhs fill:#edf1f6,stroke:#475569,color:#1d2733');
+  L.push('classDef hhr fill:#fce9e9,stroke:#b91c1c,color:#4a1414');
   L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
   L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
   L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
@@ -129,42 +135,22 @@ render();
 </head>
 <body>
 <header class="site"><div class="wrap">
-<h1>Сова и сны - script3_sova.rpy</h1>
-<p>Ночёвка в лесу: сон про кору, воспоминание о Лессе, сова · script3_sova.rpy (359 строк)</p>
-<nav class="crumbs"><a href="index.html?v=22">← Все схемы</a> · <a href="road.html?v=64">Дорога (road)</a> · <a href="gubert.html?v=61">Губерт</a></nav>
+<h1>Сова и сны: ночёвка в лесу</h1>
+<p>script3_sova.rpy: первый сон о Лессе, пробуждение, выбор вспоминать (возможная смерть), сова на перекрёстке.</p>
+<nav class="crumbs"><a href="index.html?v=1">← Все схемы</a> · <a href="road.html?v=70">Дорога</a> · <a href="stats.html?v=37">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
-<h2>Статы по сцене (мин/макс, по коду)</h2>
-<table class="stats">
-<tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Комментарий</th></tr>
-<tr><td class="mad">Безумие</td><td>0</td><td>0</td><td>не меняется (только читается в условиях)</td></tr>
-<tr><td class="logic">Логика</td><td>0</td><td>0</td><td>не меняется</td></tr>
-<tr><td class="blood">Кровь</td><td>−1</td><td>+2</td><td>−1 на входе, если Кровь &gt; 0 (23-24); +1 «Пытаться вспомнить» (168); +1 клевок совы (319). При Крови ≥ 3 setblood ведёт в sm_blood. Минимум −1 только при начальной Крови &gt; 0; при Крови 0 диапазон 0…+2.</td></tr>
-<tr><td class="mood">Настроение Лесса</td><td>0</td><td>0</td><td>не меняется; только условия: ≥ 3 и &lt; 0 (297, 311)</td></tr>
-</table>
-<p class="muted">Вход: road, «Стоит переждать» (Логика +1 даёт road, не эта сцена). Смерть во сне: «Идти до конца!» → <code>death_son</code> (сцена смерти из цепочки сна, см. start.html). Типичный путь: Кровь около 0 (−1…+1 по выборам).</p>
-<p class="muted"><span class="warn">Мёртвый код:</span> <code>script3_sova_logic</code> (241-274, флаг mag = True) недостижим: переход в него закомментирован (227-228); весь блок «Сова-питомец» 336-359 закомментирован.</p>
-</div>
-<div class="card">
 <h2>Типичный путь (суждение, не измерение)</h2>
 <p><b>Как иду:</b> «Думаю хватит.»; «Игнорировать.» (сову не трогаю).</p>
+<p class="muted">Все числа взяты из присваиваний в script3_sova.rpy. Кровь −1 в начале только если у героини уже есть Кровь. Недостижимая ветка и закомментированный код: страница «Баги и вопросы к коду».</p>
 </div>
-<div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Логика</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Кровь</td><td>от <span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> до <span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span></td><td><b>0</b></td></tr><tr><td>Настроение Лесса</td><td>не меняется (0)</td><td><b>0</b></td></tr></table><p class="muted">Диапазон взят из таблицы «Статы сцены» выше (по всем путям). Типичный путь: один путь из карточки выше, суждение, не среднее. Кровь −1 в минимуме только при входе с Кровью больше 0.</p></div>
-
+<div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Логика</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Кровь</td><td>от <span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> до <span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span></td><td><b>0</b></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше.</p></div>
 
 <div class="card">
 <h2>Схема</h2>
 <p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
 <div class="widechart"><div id="fchart" class="mermaid"></div></div>
-</div>
-<div class="card">
-<h2>Ошибки и особенности кода</h2>
-<ul>
-<li>Недостижимая ветка <code>script3_sova_logic</code> (mag = True) — мёртвый код (переход закомментирован в 227-228).</li>
-<li>Ветка <code>sov</code> «сова-питомец» (336-359) закомментирована целиком.</li>
-<li><code>sova_meet</code> задаётся дважды (88 и 200), второй раз безусловно.</li>
-</ul>
 </div>
 
 </main>
