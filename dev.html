@@ -43,9 +43,9 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#166534', c2='#0369a1', c3='#b45309', c4='#7c3aed', c5='#be123c', c6='#475569', c7='#b91c1c';
-  L.push('ST["<a href=\'road.html?v=66\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:260px;white-space:normal\'>Дорога: «Дальше по дороге»<br/><small>script_3_road_dev_airat, 91</small></div></a>"]:::ex');
+  L.push('ST["<a href=\'road.html?v=66\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:260px;white-space:normal\'>Дорога: «Дальше по дороге»<br/><small>строки 91</small></div></a>"]:::ex');
   L.push('EXS["<div style=\'width:200px;white-space:normal\'>Экран переходов</div>"]:::ex');
-  L.push(hub('H1','Встреча с Луизой<br/><small>script_3_road_dev_airat, 91-257</small>','hhn',[]));
+  L.push(hub('H1','Встреча с Луизой<br/><small>строки 91-257</small>','hhn',[]));
   if(EXP.has('H1')){
     L.push('A0["<div style=\'width:260px;white-space:normal\'>Луиза на дороге (91-257)</div>"]:::sc');
     L.push('AN["<div style=\'width:300px;white-space:normal\'>Ночь или вечер: на дороге спит девочка в белом платье (109)</div>"]:::sc');
@@ -62,7 +62,7 @@ function build(){
   } else {
     E('H1 --> H2', c1);
   }
-  L.push(hub('H2','Идти ли с Луизой<br/><small>script_3_road_conv_dev_airat, 275-374</small>','hhl',[[C_MAD, '0…+1'], [C_LOG, '0…+1'], [C_DEV, '−3…+1']]));
+  L.push(hub('H2','Идти ли с Луизой<br/><small>строки 275-374</small>','hhl',[[C_MAD, '0…+1'], [C_LOG, '0…+1'], [C_DEV, '−3…+1']]));
   if(EXP.has('H2')){
     L.push('M2A["<div style=\'width:260px;white-space:normal\'>Луиза: «Пойдём со мной!» (329)</div>"]:::sc');
     E('H2 --> M2A', c2);
@@ -73,7 +73,7 @@ function build(){
     E('H2 --> P1', c2);
     E('H2 --> IL', c2);
   }
-  L.push(hub('H3','Ловушка, побег и вопросы<br/><small>script_3_road_1menu…menu_question, 377-588, 935-1006</small>','hhs',[[C_MAD, '−1…+1'], [C_LOG, '0…+3'], [C_DEV, '−5…+3']]));
+  L.push(hub('H3','Ловушка, побег и вопросы<br/><small>строки 377-588, 935-1006</small>','hhs',[[C_MAD, '−1…+1'], [C_LOG, '0…+3'], [C_DEV, '−5…+3']]));
   if(EXP.has('H3')){
     L.push('P1["<div style=\'width:280px;white-space:normal\'>Луиза боится: «Здесь ловушка...» (935)</div>"]:::sc');
     L.push('P2["<div style=\'width:280px;white-space:normal\'>Луиза рассказывает про ловушки и побег из дома</div>"]:::sc');
@@ -111,7 +111,7 @@ function build(){
   } else {
     E('H3 --> NM', c3);
   }
-  L.push(hub('H4','Имя и реакция Луизы<br/><small>594-650, 1164-1370; «Э... Шутка.» по кругу: каждый круг −2</small>','hhp',[[C_BLD, '0…+1'], [C_DEV, '−22…+1']]));
+  L.push(hub('H4','Имя и реакция Луизы<br/><small>строки 1164-1370; «Э... Шутка.» по кругу: каждый круг −2</small>','hhp',[[C_BLD, '0…+1'], [C_DEV, '−22…+1']]));
   if(EXP.has('H4')){
     L.push('NM["<div style=\'width:260px;white-space:normal\'>Луиза: «А тебя как зовут?» (594)</div>"]:::sc');
     L.push('AMX["<div style=\'width:260px;white-space:normal\'>Луиза: «Ох... Потерять память?» (655)</div>"]:::sc');
@@ -144,7 +144,7 @@ function build(){
     E('H4 --> AMX', c4);
     E('H4 --> EXS', c4);
   }
-  L.push(hub('H5','Потеря памяти, Лес Смерти, Хаос<br/><small>amnez, inless_conv_chaos/memory, 655-930</small>','hhk',[[C_MAD, '−2…+5'], [C_LOG, '−4…+2'], [C_DEV, '−10…+2']]));
+  L.push(hub('H5','Потеря памяти, Лес Смерти, Хаос<br/><small>строки 655-930</small>','hhk',[[C_MAD, '−2…+5'], [C_LOG, '−4…+2'], [C_DEV, '−10…+2']]));
   if(EXP.has('H5')){
     L.push('AM0["<div style=\'width:260px;white-space:normal\'>Луиза спрашивает про память (655)</div>"]:::sc');
     L.push('AL["<div style=\'width:320px;white-space:normal\'>Луиза: «Ты знаешь, где мы?»; рассказ про Лес Смерти и Хаос (707-782)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Лесс называл имя места: «Лес Смерти»; если не называл - Луиза называет сама; при Безумии не ниже 1 уровня настроение Луизы −1 (736)</span></div>"]:::sc');
@@ -175,7 +175,7 @@ function build(){
     E('H5 --> IL', c5);
     E('H5 --> MY', c5);
   }
-  L.push(hub('H6','Луиза хочет уйти<br/><small>script_3_road_inless_conv_dev_airat, 1009-1104</small>','hhs',[[C_MAD, '0…+2'], [C_DEV, '−7…−4']]));
+  L.push(hub('H6','Луиза хочет уйти<br/><small>строки 1009-1104</small>','hhs',[[C_MAD, '0…+2'], [C_DEV, '−7…−4']]));
   if(EXP.has('H6')){
     L.push('IL["<div style=\'width:300px;white-space:normal\'>Луиза: «Я ухожу! Сама дойду!» (1009)<span style=\'background:rgb(220,252,231);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px\'>▼−4</span></div>"]:::sc');
     L.push('IL2["<div style=\'width:280px;white-space:normal\'>Вы идёте следом, Луиза пугается (1043)<span style=\'background:rgb(220,252,231);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px\'>▼−1</span></div>"]:::sc');
@@ -266,9 +266,9 @@ render();
 <div class="card">
 <h2>Ошибки и особенности кода</h2>
 <ul>
-<li><b>Неожиданный перезапуск:</b> в <code>inless_conv_memory</code> (838-882) без условия «про церковь Ара не спрашивали и Логика ≥ 1» метка кончается на <code>renpy.full_restart()</code> — игра перезапускается. Достижимо при «Это... и правда нехорошо.» / «Пожать плечами.» / «Нет. Это звучит плохо.».</li>
+<li><b>Неожиданный перезапуск:</b> в <code>inless_conv_memory</code> (838-882) без условия «про церковь Ара не спрашивали и Логика ≥ 1» метка кончается на <code>перезапуск игры</code> — игра перезапускается. Достижимо при «Это... и правда нехорошо.» / «Пожать плечами.» / «Нет. Это звучит плохо.».</li>
 <li>После <code>call_screen_strel()</code> (1059) стоит недостижимый <code>jump script_3_road_nodev_airat</code>; такой метки в доступных файлах нет.</li>
-<li><code>devd2.d1</code> нигде не присваивается (всегда 0), поэтому блок 707-760 идёт всегда.</li>
+<li><code>этот пункт</code> нигде не присваивается (всегда 0), поэтому блок 707-760 идёт всегда.</li>
 <li>Мёртвый код: закомментированный блок dev.mood (290-299), закомментированная сова (1365-1372).</li>
 <li>«Шутка» при имени «Вий» (1267-1274) возвращает в myname, где dv всё ещё «Вий» → снова viyname и ещё −2 dev.mood.</li>
 </ul>
