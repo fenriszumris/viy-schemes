@@ -55,7 +55,7 @@ function build(){
   L.push(hub('H8','Хаб 8. Серьёзный разговор<br/>ser / ser2_men · nazad:1544–1816','h8',[[C_TM,'−5…+3'],[C_MAD,'−1…+1'],[C_LOG,'0…+2']]));
   L.push(hub('RT','Повторные разговоры<br/>razg_menu = «tash» · day_1_tash_razg.rpy','hrt',[[C_TM,'0…+1']]));
   L.push(hub('DEAD','Мёртвый код<br/>nazadli · меню 948–987 · осмотры','hb',[]));
-  L.push('VH["<a href=\'road.html?v=65\' style=\'color:rgb(11,94,215);text-decoration:underline\'>Вход: script3_nazad_begin<br/>стрелкой из сцены «Дорога»</a>"]:::ext');
+  L.push('VH["<a href=\'road.html?v=66\' style=\'color:rgb(11,94,215);text-decoration:underline\'>Вход: script3_nazad_begin<br/>стрелкой из сцены «Дорога»</a>"]:::ext');
   L.push('VHR["Вход: razg_menu = «tash»<br/>повторный разговор"]:::ext');
   L.push('GN["'+mk('gone: Таша уходит → 2gone<br/>→ my_location = less_slime',null,[[C_TM,3]])+'"]:::hb');
   L.push('EX1["'+mk('→ strel: Таша помогает<br/>near + helpp · return (nazad:363)')+'"]:::term');
@@ -176,7 +176,7 @@ function build(){
     E('R2 --> R2B["'+mk('«Сделать морду кирпичом.»')+'"]:::h5', c5); E('R2B --> H5', c5);
     E('R2 --> R2C["'+mk('«Да! Классная же традиция!» (nazad:1236)',[[C_MAD,1]])+'"]:::h5', c5); E('R2C --> H5', c5);
     E('R2A --> NM["nomemory (nazad:1241)"]:::h5', c5);
-    E('NM --> NM1["'+mk('«хочу знать больше»'+cond('набор опций по persistent.memory'))+'"]:::h5', c5);
+    E('NM --> NM1["'+mk('«хочу знать больше»'+cond('набор опций по сохранённая память'))+'"]:::h5', c5);
     E('NM1 --> HLP["2help: Урза может вернуть память (nazad:1293)"]:::h5', c5);
     E('NM --> NM2["'+mk('«не хочу вспоминать»')+'"]:::h5', c5); E('NM2 --> H1', c5);
     E('HLP --> HM["меню 2help (nazad:1315)"]:::h5', c5);
@@ -345,8 +345,8 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <body>
 <header class="site"><div class="wrap">
 <h1>Назад — встреча с Таширом (Ташей)</h1>
-<p>script3_nazad.rpy (nazad) · tash_game.rpy · day_1_tash_razg.rpy (razg) · вход стрелкой из сцены <a href="road.html?v=65" style="color:#b9a7ff">«Дорога»</a> или повторным разговором (razg_menu = «tash»)</p>
-<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="road.html?v=65">Дорога</a> · <a href="strel.html?v=24">Экран переходов</a> · <a href="stats.html?v=34">Статы</a></nav>
+<p>script3_nazad.rpy (nazad) · tash_game.rpy · day_1_tash_razg.rpy (razg) · вход стрелкой из сцены <a href="road.html?v=66" style="color:#b9a7ff">«Дорога»</a> или повторным разговором (razg_menu = «tash»)</p>
+<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="road.html?v=66">Дорога</a> · <a href="strel.html?v=25">Экран переходов</a> · <a href="stats.html?v=34">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -415,7 +415,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <ul>
 <li>razg_2menu (767): «Как тебя зовут?» (1 раз) → razg_2; «У меня уже были проблемы с памятью?» (после «зовут»); «Много что поменялось?» (после «памятью», открывает ветку Урзы — canurza); «И что тогда со мной случилось в Лесу?» (после «памятью», Таша узнаёт Лесса); «Ты так любишь карты?» и «не смущает лес?» — без статов.</li>
 <li>razg_2 (1205): «Я потеряла память.» → nomemory; «морду кирпичом» → назад; «Да! Классная же традиция!» <span class="mad">mad +1</span> (1236, reason) → назад.</li>
-<li>nomemory (1241): набор ответов зависит от <code>persistent.memory</code>; «хочу знать больше» → 2help (1293): Урза может вернуть память — заметки «urza» и «urza_memory».</li>
+<li>nomemory (1241): набор ответов зависит от <code>сохранённая память</code>; «хочу знать больше» → 2help (1293): Урза может вернуть память — заметки «urza» и «urza_memory».</li>
 <li>2help_menu (1315): «Расскажи о нем побольше.» (<span class="logic">logic ≥ 2</span>, 1 раз) — <b>без начисления Логики</b>; «Да, это отличная идея!» → к Урзе (Хаб 6); «Нет...» → назад.</li>
 <li>canurza (991) / urza_question (1012): «отведи меня к Урзе» (ставит td3.d1) → «Да, давай сейчас!» → Хаб 6; отложенные варианты возвращают в разговор.</li>
 <li>urzamore (1030): рассказ об Урзе <span class="logic">logic +1</span> (reason «спросить об Урзе»); <code>urza.zn_name == True</code> — опечатка ==, не срабатывает (1034). <span style="color:#b91c1c;font-weight:700">Если td3.d1 = 1 — jump на несуществующую метку script3_nazad_tash_urzali (1043) → краш.</span></li>
@@ -514,7 +514,7 @@ classDef dead fill:#f1f3f5,stroke:#64748b,color:#333a45
 <tr><td>Дорога (перекрёсток)</td><td>0…+1</td><td>0…+1</td><td>0…+3</td><td>0</td><td>—</td></tr>
 <tr><td>Назад (Таша)</td><td>−3…+6</td><td>0…+4</td><td>0</td><td>0</td><td>−25…+26*</td></tr>
 </table>
-<p class="muted">Посчитано по коду 20.10.2026 перебором путей скриптом, смерти учтены. *При ограничении в 2 партии: в коде партии и рематчи не ограничены, реальные пределы Настроения Таши не ограничены. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=34">«Статы»</a>.</p>
+<p class="muted">Посчитано по коду 20.10.2026 перебором всех путей, смерти учтены. *При ограничении в 2 партии: в коде партии и рематчи не ограничены, реальные пределы Настроения Таши не ограничены. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=34">«Статы»</a>.</p>
 </div>
 
 </main>

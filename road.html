@@ -49,7 +49,7 @@ function build(){
   L.push(hub('H3','Хаб 3. Барьер<br/>less_up_barier','h3',[[C_MAD,'0…+1'],[C_BLD,'0…+3']]));
   L.push(hub('H4','Хаб 4. Лесс на кругах<br/>less_kr / kr_less','h4',[]));
   L.push(hub('BUR','Мёртвый код: бурундук<br/>kr_bur / bur_menu','hb',[[C_MAD,'+1'],[C_LOG,'+1']]));
-  L.push('VH["<a href=\'less.html?v=65\' style=\'color:rgb(11,94,215);text-decoration:underline\'>Вход: road_begin (после Лесса)<br/>· strel · возврат из совы</a>"]:::ext');
+  L.push('VH["<a href=\'less.html?v=66\' style=\'color:rgb(11,94,215);text-decoration:underline\'>Вход: road_begin (после Лесса)<br/>· strel · возврат из совы</a>"]:::ext');
   L.push('SOVA["script3_sova_begin<br/>сон / сова →"]:::term');
   L.push('TG["script_3_tgavan_road_begin<br/>→ дорога к Тёмной Гавани<br/>(script3_tgavan_road.rpy)"]:::term');
   L.push('NAZ["script3_nazad_begin<br/>→ назад (Таша)"]:::term');
@@ -158,8 +158,8 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <body>
 <header class="site"><div class="wrap">
 <h1>Дорога (перекрёсток)</h1>
-<p>script3_road.rpy (road) · переходы: script.rpy (krug, setblood) · вход после сцены <a href="less.html?v=65" style="color:#b9a7ff">«Разговор с Лессом»</a></p>
-<nav class="crumbs"><a href="index.html?v=21">← Все схемы</a> · <a href="strel.html?v=24">Экран переходов</a> · <a href="stats.html?v=34">Статы</a></nav>
+<p>script3_road.rpy (road) · переходы: script.rpy (krug, setblood) · вход после сцены <a href="less.html?v=66" style="color:#b9a7ff">«Разговор с Лессом»</a></p>
+<nav class="crumbs"><a href="index.html?v=21">← Все схемы</a> · <a href="strel.html?v=25">Экран переходов</a> · <a href="stats.html?v=34">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -216,7 +216,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <li>Условие: круг ≥ 4 и <code>script3_road_less_meet_kr == 0</code>. Статов не меняет.</li>
 <li>При <code>less_delo</code>: меню «Да, есть кое-что» / «Нет, ничего» — без эффектов, встреча повторяется на следующих кругах.</li>
 <li>Иначе: Лесс уходит (<code>set_less("None")</code>), <code>meet_kr = 1</code> — больше не появляется.</li>
-<li>Условные реплики: <span class="logic">logic ≥ 3</span> (get_level ≥ 1) — «Почему мышка?» (при <span class="mood">mood &gt; 4</span> — доп. ответ); <span class="mad">mad ≥ 3</span> — «Пи?»; при <code>less.zn_name</code> — приветствие по имени.</li>
+<li>Условные реплики: <span class="logic">logic ≥ 3</span> (уровень Логики 1) — «Почему мышка?» (при <span class="mood">mood &gt; 4</span> — доп. ответ); <span class="mad">mad ≥ 3</span> — «Пи?»; при <code>less.zn_name</code> — приветствие по имени.</li>
 </ul></div>
 <div class="hub"><h3>Мёртвый код: бурундук и doroga3 (road:240–245, 252–330)</h3>
 <ul>
@@ -265,7 +265,7 @@ classDef dead fill:#f1f3f5,stroke:#64748b,color:#333a45
 <tr><td><b>Итого по локации</b></td><td><b>−7…+11</b></td><td><b>−2…+12</b></td><td><b>0…+3</b></td><td><b>−7…+15</b></td></tr>
 <tr><td>Дорога (перекрёсток)</td><td>0…+1</td><td>0…+1</td><td>0…+3</td><td>0</td></tr>
 </table>
-<p class="muted">Посчитано по коду 20.10.2026 перебором путей скриптом, смерти учтены. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=34">«Статы»</a>.</p>
+<p class="muted">Посчитано по коду 20.10.2026 перебором всех путей, смерти учтены. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=34">«Статы»</a>.</p>
 </div>
 
 </main>
