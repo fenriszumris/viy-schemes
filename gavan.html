@@ -8,180 +8,11 @@
 <title>Тёмная Гавань: Адриан — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
-<script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
-const HUBS=["G1", "G2", "G3", "G4", "G5"];
-const EXP=new Set();
-const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)', C_ADR='rgb(13,148,136)', C_NAR='rgb(101,163,13)', C_ADO='rgb(79,70,229)';
-const CHIP_BG2=1;
-const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)'; CHIP_BG[C_ADR]='rgb(204,244,240)'; CHIP_BG[C_NAR]='rgb(236,252,203)'; CHIP_BG[C_ADO]='rgb(224,231,255)';
-function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
-function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
-function mk(text, ups, downs){
-  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
-  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
-    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
-    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
-    +'</div>';
-}
-function badge(ranges){
-  if(!ranges.length) return '';
-  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;margin-left:3px">'+p[1]+'</span>';}).join('');
-  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
-}
-function hub(id,label,cls,ranges){
-  const arrow = EXP.has(id) ? '▾' : '▸';
-  const b=badge(ranges||[]);
-  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
-  return id + '["' + inner + '"]:::' + cls;
-}
-const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>'+t+'</span>';};
-const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>'+t+'</span>';};
-const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
-function build(){
-  const L=[]; const ST=[]; let ei=0;
-  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
-  L.push('flowchart TD');
-  const cG='#9aa3b2', c1='#166534', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
-  L.push('ST["<a href=\'tgavan.html?v=70\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Из страницы «Дверь Адриана»: «Взять очень осторожно» (после зелья)<br/><small>script_3_tgavan_adr_after_door</small></div></a>"]:::ex');
-  L.push('EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex');
-  L.push('NS["<a href=\'less.html?v=69\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:280px;white-space:normal\'>Лесс спасает героиню: переход на метку nesm (212)</div></a>"]:::ex');
-  L.push('BAD["<div style=\'width:280px;white-space:normal\'>BAD END «У самурая нет цели» (214)</div>"]:::bad');
-  L.push('AD["<a href=\'adro.html?v=3\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Дальше: страница «Адро» (script_4_tgavan_adro) — Адриан ведёт к зданию эльфов (702-706)</div></a>"]:::ex');
-  E('ST --> G1', cG);
-  L.push(hub('G1','Договориться с Адрианом<br/><small>script_3_tgavan_adr_after_door, with_adr, 1-79</small>','hhn',[[C_MAD, '−2…+1'], [C_LOG, '−1…0'], [C_ADR, '0…+1']]));
-  if(EXP.has('G1')){
-    L.push('Q["<div style=\'width:280px;white-space:normal\'>Адриан у двери: «Может, мы можем договориться?» (2)</div>"]:::sc');
-    E('G1 --> Q', c1);
-    L.push('QC["<div style=\'width:240px;white-space:normal\'>Адриан отвечает на «договориться» (9)</div>"]:::sc');
-    L.push('QD["<div style=\'width:240px;white-space:normal\'>Адриан отвечает на «не можете бросить» (27)</div>"]:::sc');
-    L.push('WA["<div style=\'width:260px;white-space:normal\'>Адриан: «Но вы должны будете меня слушать» (47)</div>"]:::sc');
-    E('Q --> Q1["<div style=\'width:290px;white-space:normal\'>'+mk('«Может, мы можем договориться?»',null,null)+'</div>"]:::hhn', c1); E('Q1 --> QC', c1);
-    E('QC --> Q1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Адриана не ниже −2 (9):'+flag('если Адриан знает героиню как Вий: добавляет, что прежняя Вий не должна вернуться (12)'),null,null)+'</div>"]:::hhn', c1); E('Q1a --> WA', c1);
-    E('QC --> Q1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Адриана ниже −2 (22):',null,null)+'</div>"]:::hhn', c1); E('Q1b --> Q', c1);
-    E('Q --> Q2["<div style=\'width:290px;white-space:normal\'>'+mk('«Эй! Вы же не можете меня просто бросить!»',null,null)+'</div>"]:::hhn', c1); E('Q2 --> QD', c1);
-    E('QD --> Q2a["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Адриана ниже 0 (28):',null,null)+'</div>"]:::hhn', c1); E('Q2a --> EXS', c1);
-    E('QD --> Q2b["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Адриана не ниже 0 (31):',null,null)+'</div>"]:::hhn', c1); E('Q2b --> WA', c1);
-    E('Q --> Q3["<div style=\'width:290px;white-space:normal\'>'+mk('«Окей, пока!»'+cond('Адриан уходит, героиня остаётся одна (39-44)'),null,null)+'</div>"]:::hhn', c1); E('Q3 --> EXS', c1);
-    E('WA --> W1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я согласна.»',[[C_ADR, 1]],[[C_MAD, 2]])+'</div>"]:::hhn', c1); E('W1 --> G3', c1);
-    E('WA --> W2["<div style=\'width:290px;white-space:normal\'>'+mk('«Пожалуй все же нет.»',null,null)+'</div>"]:::hhn', c1); E('W2 --> EXS', c1);
-    E('WA --> W3["<div style=\'width:290px;white-space:normal\'>'+mk('«Ха! Никаких условий! Ты же стражник!»',[[C_MAD, 1]],[[C_LOG, 1]])+'</div>"]:::hhn', c1); E('W3 --> G2', c1);
-  } else {
-    E('G1 --> G2', c1);
-    E('G1 --> G3', c1);
-    E('G1 --> EXS', c1);
-  }
-  L.push(hub('G2','Гнев Адриана<br/><small>script_3_tgavan_wrong_adr, 80-216</small>','hhr',[[C_LOG, '−1…0'], [C_ADR, '−5…0']]));
-  if(EXP.has('G2')){
-    L.push('WM["<div style=\'width:260px;white-space:normal\'>Адриан: «Наслаждайтесь правами в одиночестве» (80)</div>"]:::sc');
-    E('G2 --> WM', c8);
-    L.push('FT["<div style=\'width:300px;white-space:normal\'>Героиня бросается на Адриана и падает парализованная; Адриан выносит её за ворота (87-197)</div>"]:::bad');
-    L.push('FZ["<div style=\'width:240px;white-space:normal\'>Решает Адриан: убить или нет (131)</div>"]:::sc');
-    E('WM --> X1["<div style=\'width:290px;white-space:normal\'>'+mk('«Просто согласиться.»',null,[[C_ADR, 5]])+'</div>"]:::hhr', c8); E('X1 --> EXS', c8);
-    E('WM --> X2["<div style=\'width:290px;white-space:normal\'>'+mk('«Улыбнуться и просто напасть на него голыми руками.»'+cond('если Безумие не ниже 1 уровня (85)'),null,[[C_ADR, 5]])+'</div>"]:::hhr', c8); E('X2 --> FT', c8);
-    E('WM --> X3["<div style=\'width:290px;white-space:normal\'>'+mk('«Эй! Пожалуйста!»',null,[[C_LOG, 1]])+'</div>"]:::hhr', c8); E('X3 --> EXS', c8);
-    E('FT --> FZ', c8);
-    E('FZ --> F1["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адриан знает героиню как Вий (131):'+flag('записывает флаг «Белая Стража — враг» (oh.bad = 1) → Белая Стража больше не друг'),null,null)+'</div>"]:::hhr', c8); E('F1 --> EXS', c8);
-    L.push('FD["<div style=\'width:260px;white-space:normal\'>Адриан режет героине горло (153-196)</div>"]:::bad');
-    E('FZ --> F2["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адриан не знает героиню как Вий (137):',null,null)+'</div>"]:::hhr', c8); E('F2 --> FD', c8);
-    E('FD --> F3["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Лесса не ниже 5 (198):',null,null)+'</div>"]:::hhr', c8); E('F3 --> NS', c8);
-    E('FD --> F4["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Лесса ниже 5 (198):',null,null)+'</div>"]:::hhr', c8); E('F4 --> BAD', c8);
-  } else {
-    E('G2 --> EXS', c8);
-    E('G2 --> NS', c8);
-    E('G2 --> BAD', c8);
-  }
-  L.push(hub('G3','Зачем вы в Гавани<br/><small>script_3_tgavan_yes_adr, menu, menu2, airat_adr_menu2, 221-432</small>','hhl',[[C_MAD, '−1…+1'], [C_LOG, '−1…0'], [C_ADR, '−2…0']]));
-  if(EXP.has('G3')){
-    L.push('Y["<div style=\'width:280px;white-space:normal\'>Адриан: «Почему вы вообще в Тёмной Гавани?» (222)</div>"]:::sc');
-    E('G3 --> Y', c2);
-    L.push('YA["<div style=\'width:300px;white-space:normal\'>Адриан: «Гавань не место, куда заходят случайно» — совет идти в Айрат (240-247)</div>"]:::sc');
-    L.push('M2["<div style=\'width:260px;white-space:normal\'>Адриан: «Хотите добраться до Айрата?» (278)</div>"]:::sc');
-    L.push('AIR["<div style=\'width:300px;white-space:normal\'>Адриан объясняет дорогу в Айрат и провожает до двери; герой выходит на развилку (381-432)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если направление уже известно: Адриан коротко желает удачи</span></div>"]:::sc');
-    E('Y --> D1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я потеряла память... Я пришла сюда случайно...»'+cond('один раз (224)')+flag('записывает: героиня потеряла память (oh.zn_vpotpam)'),null,[[C_MAD, 1]])+'</div>"]:::hhl', c2); E('D1 --> YA', c2);
-    E('Y --> D2["<div style=\'width:290px;white-space:normal\'>'+mk('«Мне больше некуда идти...»'+cond('один раз (250)'),null,null)+'</div>"]:::hhl', c2); E('D2 --> G4', c2);
-    E('Y --> D3["<div style=\'width:290px;white-space:normal\'>'+mk('«Эм... У меня нет особой причины, просто город прикольный.»',[[C_MAD, 1]],[[C_LOG, 1], [C_ADR, 2]])+'</div>"]:::hhl', c2); E('D3 --> G4', c2);
-    E('YA --> D1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адриан знает героиню как Вий (233):',null,null)+'</div>"]:::hhl', c2); E('D1a --> G4', c2);
-    E('YA --> D1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адриан не знает героиню как Вий:',null,null)+'</div>"]:::hhl', c2); E('D1b --> M2', c2);
-    E('M2 --> E1["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет, я хотя бы знакома с вами, я останусь здесь.»',null,null)+'</div>"]:::hhl', c2); E('E1 --> G4', c2);
-    E('M2 --> E2["<div style=\'width:290px;white-space:normal\'>'+mk('«Мне стоит пойти в Айрат.»',null,null)+'</div>"]:::hhl', c2); E('E2 --> AIR', c2);
-    E('M2 --> E3["<div style=\'width:290px;white-space:normal\'>'+mk('«Расскажите больше об этом городе, пожалуйста.»'+cond('один раз (291)'),null,null)+'</div>"]:::hhl', c2); E('E3 --> M2', c2);
-    E('M2 --> E4["<div style=\'width:290px;white-space:normal\'>'+mk('«Если это рай, почему вы сами не уйдете туда?»'+cond('после вопроса про город; один раз (302); ответ зависит от настроения Адриана: выше 1 — он объясняет; если 1 и ниже - отмахивается'),null,null)+'</div>"]:::hhl', c2); E('E4 --> M2', c2);
-    E('M2 --> E5["<div style=\'width:290px;white-space:normal\'>'+mk('«Что это вообще за страна такая?»'+cond('после вопроса про город; один раз (318)'),null,null)+'</div>"]:::hhl', c2); E('E5 --> M2', c2);
-    E('M2 --> E6["<div style=\'width:290px;white-space:normal\'>'+mk('«Ар? Кто это это?»'+cond('после вопроса про страну; один раз (329)'),null,null)+'</div>"]:::hhl', c2); E('E6 --> M2', c2);
-    E('M2 --> E7["<div style=\'width:290px;white-space:normal\'>'+mk('«Вы несколько раз упоминали Светлых и Темных, что это значит?»'+cond('после вопроса про город, страну или Ара; один раз (337)')+flag('записывает: героиня потеряла память (oh.zn_vpotpam)'),null,null)+'</div>"]:::hhl', c2); E('E7 --> M2', c2);
-    E('AIR --> EXS', c2);
-  } else {
-    E('G3 --> G4', c2);
-    E('G3 --> EXS', c2);
-  }
-  L.push(hub('G4','Предложение Адриана<br/><small>script_3_tgavan_guardbegin_adr, 434-625</small>','hhp',[[C_MAD, '0…+1'], [C_ADR, '+2…+4']]));
-  if(EXP.has('G4')){
-    L.push('GB["<div style=\'width:300px;white-space:normal\'>Адриан даёт личный белый жетон и предлагает вступить в Белую Стражу (434-462)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 открывает предмет «жетон Адриана»; Адриан знает вас лучше</span></div>"]:::sc');
-    E('G4 --> GB', c3);
-    L.push('WG["<div style=\'width:300px;white-space:normal\'>Адриан даёт значок Белой Стражи и объясняет правила (493-546)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает флаг «в Белой Страже» → открывает предмет «значок Стражи» и расследование (white_guard, invest_quest)</span></div>"]:::sc');
-    L.push('EL["<div style=\'width:260px;white-space:normal\'>Адриан: «Знаете, кто такие лунные эльфы?» (554)</div>"]:::sc');
-    E('GB --> B1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я с вами!»',[[C_ADR, 1]],null)+'</div>"]:::hhp', c3); E('B1 --> WG', c3);
-    E('GB --> B2["<div style=\'width:290px;white-space:normal\'>'+mk('«Пожалуй, откажусь.»'+cond('жетон остаётся; Адриан советует идти в Айрат (486)'),null,null)+'</div>"]:::hhp', c3); E('B2 --> EXS', c3);
-    E('WG --> EL', c3);
-    E('EL --> L1["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет, как-то не доводилось.»',[[C_ADR, 1]],null)+'</div>"]:::hhp', c3); E('L1 --> G5', c3);
-    E('EL --> L2["<div style=\'width:290px;white-space:normal\'>'+mk('«Как-то слышала»'+cond('если в прошлых прохождениях уже слышала про расследование (569)'),null,null)+'</div>"]:::hhp', c3); E('L2 --> G5', c3);
-    E('EL --> L3["<div style=\'width:290px;white-space:normal\'>'+mk('«Ээээ. Они воют на луну?»',[[C_MAD, 1]],[[C_ADR, 1]])+'</div>"]:::hhp', c3); E('L3 --> G5', c3);
-  } else {
-    E('G4 --> G5', c3);
-    E('G4 --> EXS', c3);
-  }
-  L.push(hub('G5','Расследование: вопросы<br/><small>script_3_tgavan_guardbegin_menu, 626-706</small>','hhk',[]));
-  if(EXP.has('G5')){
-    L.push('SM["<div style=\'width:240px;white-space:normal\'>Что расследуем? (626)</div>"]:::sc');
-    E('G5 --> SM', c4);
-    L.push('S1x["<div style=\'width:260px;white-space:normal\'>Подозреваемые: у посла почти не было врагов (633-650)</div>"]:::sc');
-    L.push('S2x["<div style=\'width:260px;white-space:normal\'>Орудие: яд Скорпикоры в чае (655-665)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «яд» в память расследования</span></div>"]:::sc');
-    L.push('S3x["<div style=\'width:280px;white-space:normal\'>Улики: нужен контракт Чёрной Печати (669-696)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает флаг «Чёрная Печать» → открывает заметку про Чёрную Печать (black_seal_zn)</span></div>"]:::sc');
-    E('SM --> S1["<div style=\'width:290px;white-space:normal\'>'+mk('«Есть еще подозреваемые?»'+cond('один раз (629)'),null,null)+'</div>"]:::hhk', c4); E('S1 --> S1x', c4);
-    E('SM --> S2["<div style=\'width:290px;white-space:normal\'>'+mk('«Какое было орудие убийства?»'+cond('один раз (652)'),null,null)+'</div>"]:::hhk', c4); E('S2 --> S2x', c4);
-    E('SM --> S3["<div style=\'width:290px;white-space:normal\'>'+mk('«Какие еще есть улики?»'+cond('один раз (668)'),null,null)+'</div>"]:::hhk', c4); E('S3 --> S3x', c4);
-    E('SM --> S4["<div style=\'width:290px;white-space:normal\'>'+mk('«Я узнала все что хотела.»',null,null)+'</div>"]:::hhk', c4); E('S4 --> AD', c4);
-    E('S1x --> SM', c4);
-    E('S2x --> SM', c4);
-    E('S3x --> SM', c4);
-  } else {
-    E('G5 --> AD', c4);
-  }
-  L.push('classDef hhk fill:#fde9ee,stroke:#be123c,color:#4d1223');
-  L.push('classDef hhl fill:#e5f2fa,stroke:#0369a1,color:#123043');
-  L.push('classDef hhn fill:#e7f4ea,stroke:#166534,color:#14331f');
-  L.push('classDef hhp fill:#f1eafd,stroke:#7c3aed,color:#2f1c5c');
-  L.push('classDef hhr fill:#fce9e9,stroke:#b91c1c,color:#4a1414');
-  L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
-  L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
-  L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
-  return L.concat(ST).join('\n');
-}
-async function render(){
-  const f=document.getElementById('fchart');
-  if(!f) return;
-  f.removeAttribute('data-processed');
-  f.textContent=build();
-  await mermaid.run({nodes:[f]});
-  for(const ss of document.styleSheets){
-    let rules; try{rules=ss.cssRules;}catch(e){continue;}
-    for(let i=rules.length-1;i>=0;i--){
-      const r=rules[i];
-      if(r.selectorText && /\.(hh[a-z0-9]*|sc|ex|dd|ok)( span| > \*)$/.test(r.selectorText)
-         && r.style && r.style.getPropertyPriority('color')==='important'){ r.style.removeProperty('color'); }
-    }
-  }
-  document.querySelectorAll('#fchart g.node').forEach(function(g){
-    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
-    if(m && HUBS.indexOf(m[1])>=0){ g.style.cursor='pointer'; g.addEventListener('click', function(){ window.th(m[1]); }); }
-  });
-}
-window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
-window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
-render();
-</script>
+<style>.hub{border:2px solid;border-radius:10px;margin:10px 0;background:#fff}.hub>summary{cursor:pointer;padding:8px 10px;font-size:15px;list-style:none}.hub>summary::before{content:"▸ ";}.hub[open]>summary::before{content:"▾ ";}.hub>div,.hub>.pl,.hub>.ch{margin-left:8px;margin-right:8px}.hub{padding-bottom:6px}
+.pl{border:1px solid #7a9cc6;border-radius:8px;padding:6px 8px;margin:6px 0;font-size:14px;line-height:1.35;overflow-wrap:anywhere}.pl.ex{border-color:#aab2c0;color:#4a5160}.pl.bad{border-color:#b91c1c;color:#4a1414}.pl.stub{border-color:#d97706}
+.ch{border:1.5px solid;border-radius:8px;margin:6px 0 6px 4px;padding:3px 4px;font-size:14px;overflow-wrap:anywhere}.ch .chh{padding-left:6px;font-weight:600}.ch .pl{margin-left:0}.ch .ch{margin-left:3px}
+.ref{font-size:13px;color:#475569;margin:4px 0 4px 6px}.muted{overflow-wrap:anywhere}
+@media(min-width:700px){.hub{max-width:900px}}</style><script>function openTo(a){var id=a.getAttribute('href').slice(1);var e=document.getElementById(id);var p=e;while(p){if(p.tagName=='DETAILS')p.open=true;p=p.parentElement}setTimeout(function(){e&&e.scrollIntoView({block:'center'})},50)}function allHubs(v){document.querySelectorAll('details.hub').forEach(function(d){d.open=v})}</script>
 </head>
 <body>
 <header class="site"><div class="wrap">
@@ -199,9 +30,15 @@ render();
 
 <div class="card">
 <h2>Схема</h2>
-<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
-<div class="widechart"><div id="fchart" class="mermaid"></div></div>
+<p class="muted">Вертикальные плашки: нажмите на группу, чтобы раскрыть. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке группы: минимум и максимум по всем путям внутри группы. У выбора ▲ прибавка, ▼ убавка. <b style="color:#b91c1c">Красным</b> условие, 🚩 что выбор записывает. Выборы вложены под плашкой, к которой они относятся; «↩» ведёт к плашке выше, если путь сходится.</p>
+<div class="pl ex">Из страницы «Дверь Адриана»: «Взять очень осторожно» (после зелья)<br/><small>script_3_tgavan_adr_after_door</small></div>
+<details class="hub" id="h_G1" style="border-color:#166534"><summary style="color:#166534"><b>Договориться с Адрианом<br/><br><small style="font-weight:400">script_3_tgavan_adr_after_door, with_adr, 1-79</small></b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(237,231,251);border:1.4px solid rgb(112,72,232);color:rgb(112,72,232);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−2…+1</span> <span style='display:inline-block;background:rgb(227,242,250);border:1.4px solid rgb(28,126,214);color:rgb(28,126,214);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−1…0</span> <span style='display:inline-block;background:rgb(204,244,240);border:1.4px solid rgb(13,148,136);color:rgb(13,148,136);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>0…+1</span></div></summary><div class="muted">Вход: jump script_3_tgavan_adr_after_door из страницы «Дверь Адриана» (script3_tgavan_begin.rpy:837), отказ в договоре (script3_tgavan_oh.rpy:20) и зелье у Нарси (script_4_tgavan_nars.rpy:1002)</div><div class="pl sc" id="n_Q" style="background:#E4EEF9">Адриан у двери: «Может, мы можем договориться?» (2)</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Может, мы можем договориться?» </div><div class="pl sc" id="n_QC" style="background:#E4EEF9">Адриан отвечает на «договориться» (9)</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если настроение Адриана не ниже −2 (9): <div style="font-size:12px;color:#92400e;font-weight:700">🚩 если Адриан знает героиню как Вий: добавляет, что прежняя Вий не должна вернуться (12)</div></div><div class="pl sc" id="n_WA" style="background:#E4EEF9">Адриан: «Но вы должны будете меня слушать» (47)</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Я согласна.» <span style='background:rgb(204,244,240);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Пожалуй все же нет.» </div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (дорога)</div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Ха! Никаких условий! Ты же стражник!» <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></div></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если настроение Адриана ниже −2 (22): </div><div class="ref">↩ продолжение выше: <a href="#n_Q" onclick="openTo(this)">Адриан у двери: «Может, мы можем договориться?» (2)…</a></div></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Эй! Вы же не можете меня просто бросить!» </div><div class="pl sc" id="n_QD" style="background:#E4EEF9">Адриан отвечает на «не можете бросить» (27)</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если настроение Адриана ниже 0 (28): </div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (дорога)</div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">Если настроение Адриана не ниже 0 (31): </div><div class="ref">↩ продолжение выше: <a href="#n_WA" onclick="openTo(this)">Адриан: «Но вы должны будете меня слушать» (47)…</a></div></div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Окей, пока!» <div style="font-size:12px;color:#b91c1c;font-weight:700">Адриан уходит, героиня остаётся одна (39-44)</div></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (дорога)</div></div></details>
+<details class="hub" id="h_G2" style="border-color:#b45309"><summary style="color:#b45309"><b>Гнев Адриана<br/><br><small style="font-weight:400">script_3_tgavan_wrong_adr, 80-216</small></b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(227,242,250);border:1.4px solid rgb(28,126,214);color:rgb(28,126,214);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−1…0</span> <span style='display:inline-block;background:rgb(204,244,240);border:1.4px solid rgb(13,148,136);color:rgb(13,148,136);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−5…0</span></div></summary><div class="muted">Вход: продолжение после группы «Договориться с Адрианом»</div><div class="pl sc" id="n_WM" style="background:#E4EEF9">Адриан: «Наслаждайтесь правами в одиночестве» (80)</div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Просто согласиться.» <span style='background:rgb(204,244,240);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−5</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (дорога)</div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Улыбнуться и просто напасть на него голыми руками.» <span style='background:rgb(204,244,240);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−5</span><div style="font-size:12px;color:#b91c1c;font-weight:700">если Безумие не ниже 1 уровня (85)</div></div><div class="pl bad" id="n_FT" style="background:#ffd6d6">Героиня бросается на Адриана и падает парализованная; Адриан выносит её за ворота (87-197)</div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Эй! Пожалуйста!» <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (дорога)</div></div></details>
+<details class="hub" id="h_G3" style="border-color:#0369a1"><summary style="color:#0369a1"><b>Зачем вы в Гавани<br/><br><small style="font-weight:400">script_3_tgavan_yes_adr, menu, menu2, airat_adr_menu2, 221-432</small></b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(237,231,251);border:1.4px solid rgb(112,72,232);color:rgb(112,72,232);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−1…+1</span> <span style='display:inline-block;background:rgb(227,242,250);border:1.4px solid rgb(28,126,214);color:rgb(28,126,214);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−1…0</span> <span style='display:inline-block;background:rgb(204,244,240);border:1.4px solid rgb(13,148,136);color:rgb(13,148,136);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−2…0</span></div></summary><div class="muted">Вход: продолжение после группы «Договориться с Адрианом»</div><div class="pl sc" id="n_Y" style="background:#E4EEF9">Адриан: «Почему вы вообще в Тёмной Гавани?» (222)</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Я потеряла память... Я пришла сюда случайно...» <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><div style="font-size:12px;color:#b91c1c;font-weight:700">один раз (224)</div><div style="font-size:12px;color:#92400e;font-weight:700">🚩 записывает: героиня потеряла память (oh.zn_vpotpam)</div></div><div class="pl sc" id="n_YA" style="background:#E4EEF9">Адриан: «Гавань не место, куда заходят случайно» — совет идти в Айрат (240-247)</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если Адриан знает героиню как Вий (233): </div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Если Адриан не знает героиню как Вий: </div><div class="pl sc" id="n_M2" style="background:#E4EEF9">Адриан: «Хотите добраться до Айрата?» (278)</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Нет, я хотя бы знакома с вами, я останусь здесь.» </div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Мне стоит пойти в Айрат.» </div><div class="pl sc" id="n_AIR" style="background:#E4EEF9">Адриан объясняет дорогу в Айрат и провожает до двери; герой выходит на развилку (381-432)<br/><span style='font-size:12px;color:#b91c1c;font-weight:700'>если направление уже известно: Адриан коротко желает удачи</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (дорога)</div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Расскажите больше об этом городе, пожалуйста.» <div style="font-size:12px;color:#b91c1c;font-weight:700">один раз (291)</div></div><div class="ref">↩ продолжение выше: <a href="#n_M2" onclick="openTo(this)">Адриан: «Хотите добраться до Айрата?» (278)…</a></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Если это рай, почему вы сами не уйдете туда?» <div style="font-size:12px;color:#b91c1c;font-weight:700">после вопроса про город; один раз (302); ответ зависит от настроения Адриана: выше 1 — он объясняет; если 1 и ниже - отмахивается</div></div><div class="ref">↩ продолжение выше: <a href="#n_M2" onclick="openTo(this)">Адриан: «Хотите добраться до Айрата?» (278)…</a></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Что это вообще за страна такая?» <div style="font-size:12px;color:#b91c1c;font-weight:700">после вопроса про город; один раз (318)</div></div><div class="ref">↩ продолжение выше: <a href="#n_M2" onclick="openTo(this)">Адриан: «Хотите добраться до Айрата?» (278)…</a></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Ар? Кто это это?» <div style="font-size:12px;color:#b91c1c;font-weight:700">после вопроса про страну; один раз (329)</div></div><div class="ref">↩ продолжение выше: <a href="#n_M2" onclick="openTo(this)">Адриан: «Хотите добраться до Айрата?» (278)…</a></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Вы несколько раз упоминали Светлых и Темных, что это значит?» <div style="font-size:12px;color:#b91c1c;font-weight:700">после вопроса про город, страну или Ара; один раз (337)</div><div style="font-size:12px;color:#92400e;font-weight:700">🚩 записывает: героиня потеряла память (oh.zn_vpotpam)</div></div><div class="ref">↩ продолжение выше: <a href="#n_M2" onclick="openTo(this)">Адриан: «Хотите добраться до Айрата?» (278)…</a></div></div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Мне больше некуда идти...» <div style="font-size:12px;color:#b91c1c;font-weight:700">один раз (250)</div></div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">«Эм... У меня нет особой причины, просто город прикольный.» <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> <span style='background:rgb(204,244,240);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span></div></div></details>
+<details class="hub" id="h_G4" style="border-color:#7c3aed"><summary style="color:#7c3aed"><b>Предложение Адриана<br/><br><small style="font-weight:400">script_3_tgavan_guardbegin_adr, 434-625</small></b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(237,231,251);border:1.4px solid rgb(112,72,232);color:rgb(112,72,232);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>0…+1</span> <span style='display:inline-block;background:rgb(204,244,240);border:1.4px solid rgb(13,148,136);color:rgb(13,148,136);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>+2…+4</span></div></summary><div class="muted">Вход: продолжение после группы «Зачем вы в Гавани»</div><div class="pl sc" id="n_GB" style="background:#E4EEF9">Адриан даёт личный белый жетон и предлагает вступить в Белую Стражу (434-462)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 открывает предмет «жетон Адриана»; Адриан знает вас лучше</span> <span style='background:rgb(204,244,240);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span></div><div class="ch" style="border-color:#7c3aed;background:#fff"><div class="chh" style="border-left:4px solid #7c3aed">«Я с вами!» <span style='background:rgb(204,244,240);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl sc" id="n_WG" style="background:#E4EEF9">Адриан даёт значок Белой Стражи и объясняет правила (493-546)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает флаг «в Белой Страже» → открывает предмет «значок Стражи» и расследование (white_guard, invest_quest)</span></div><div class="pl sc" id="n_EL" style="background:#E4EEF9">Адриан: «Знаете, кто такие лунные эльфы?» (554)</div><div class="ch" style="border-color:#7c3aed;background:#fff"><div class="chh" style="border-left:4px solid #7c3aed">«Нет, как-то не доводилось.» <span style='background:rgb(204,244,240);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div></div><div class="ch" style="border-color:#7c3aed;background:#fff"><div class="chh" style="border-left:4px solid #7c3aed">«Как-то слышала» <div style="font-size:12px;color:#b91c1c;font-weight:700">если в прошлых прохождениях уже слышала про расследование (569)</div></div></div><div class="ch" style="border-color:#7c3aed;background:#fff"><div class="chh" style="border-left:4px solid #7c3aed">«Ээээ. Они воют на луну?» <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(204,244,240);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></div></div></div><div class="ch" style="border-color:#7c3aed;background:#fff"><div class="chh" style="border-left:4px solid #7c3aed">«Пожалуй, откажусь.» <div style="font-size:12px;color:#b91c1c;font-weight:700">жетон остаётся; Адриан советует идти в Айрат (486)</div></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (дорога)</div></div></details>
+<details class="hub" id="h_G5" style="border-color:#be123c"><summary style="color:#be123c"><b>Расследование: вопросы<br/><br><small style="font-weight:400">script_3_tgavan_guardbegin_menu, 626-706</small></b></summary><div class="muted">Вход: продолжение после группы «Предложение Адриана»</div><div class="pl sc" id="n_SM" style="background:#E4EEF9">Что расследуем? (626)</div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">«Есть еще подозреваемые?» <div style="font-size:12px;color:#b91c1c;font-weight:700">один раз (629)</div></div><div class="pl sc" id="n_S1x" style="background:#E4EEF9">Подозреваемые: у посла почти не было врагов (633-650)</div><div class="ref">↩ продолжение выше: <a href="#n_SM" onclick="openTo(this)">Что расследуем? (626)…</a></div></div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">«Какое было орудие убийства?» <div style="font-size:12px;color:#b91c1c;font-weight:700">один раз (652)</div></div><div class="pl sc" id="n_S2x" style="background:#E4EEF9">Орудие: яд Скорпикоры в чае (655-665)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «яд» в память расследования</span></div><div class="ref">↩ продолжение выше: <a href="#n_SM" onclick="openTo(this)">Что расследуем? (626)…</a></div></div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">«Какие еще есть улики?» <div style="font-size:12px;color:#b91c1c;font-weight:700">один раз (668)</div></div><div class="pl sc" id="n_S3x" style="background:#E4EEF9">Улики: нужен контракт Чёрной Печати (669-696)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает флаг «Чёрная Печать» → открывает заметку про Чёрную Печать (black_seal_zn)</span></div><div class="ref">↩ продолжение выше: <a href="#n_SM" onclick="openTo(this)">Что расследуем? (626)…</a></div></div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">«Я узнала все что хотела.» </div><div class="pl ex" id="n_AD" style="background:#eef0f4">Дальше: страница «Адро» (script_4_tgavan_adro) — Адриан ведёт к зданию эльфов (702-706)</div></div></details>
 </div>
+
 </main>
 <footer>Схемы игры «Вий» · script3_tgavan_oh.rpy · выверено по коду 20.10.2026</footer>
 </body>

@@ -8,215 +8,11 @@
 <title>Адро: кабинет Лиассона — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
-<script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
-const HUBS=["K1", "K2", "K3", "K4", "K5", "K6", "K7", "K8"];
-const EXP=new Set();
-const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)', C_ADR='rgb(13,148,136)', C_NAR='rgb(101,163,13)', C_ADO='rgb(79,70,229)';
-const CHIP_BG2=1;
-const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)'; CHIP_BG[C_ADR]='rgb(204,244,240)'; CHIP_BG[C_NAR]='rgb(236,252,203)'; CHIP_BG[C_ADO]='rgb(224,231,255)';
-function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
-function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
-function mk(text, ups, downs){
-  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
-  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
-    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
-    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
-    +'</div>';
-}
-function badge(ranges){
-  if(!ranges.length) return '';
-  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;margin-left:3px">'+p[1]+'</span>';}).join('');
-  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
-}
-function hub(id,label,cls,ranges){
-  const arrow = EXP.has(id) ? '▾' : '▸';
-  const b=badge(ranges||[]);
-  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
-  return id + '["' + inner + '"]:::' + cls;
-}
-const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>'+t+'</span>';};
-const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>'+t+'</span>';};
-const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
-function build(){
-  const L=[]; const ST=[]; let ei=0;
-  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
-  L.push('flowchart TD');
-  const cG='#9aa3b2', c1='#0e7490', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
-  L.push('ST["<a href=\'adro.html?v=3\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Из страницы «Адро: ворота, допрос, контракт»: героиня подписала контракт<br/><small>script_4_tgavan_begin_adro</small></div></a>"]:::ex');
-  L.push('EXS["<div style=\'width:260px;white-space:normal\'>Экран переходов (кабинет Лиассона, карта)</div>"]:::ex');
-  L.push('END["<div style=\'width:260px;white-space:normal\'>Конец демоверсии (перезапуск игры)</div>"]:::bad');
-  L.push('NXT["<a href=\'adrc.html?v=4\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:280px;white-space:normal\'>Дальше: разговор с Адрианом о деле (страница «Адриан о деле»)</div></a>"]:::ex');
-  E('ST --> K1', cG);
-  L.push(hub('K1','Кабинет Лиассона: начало<br/><small>script_4_tgavan_begin_adro, 1-39</small>','hhn',[]));
-  if(EXP.has('K1')){
-    L.push('I0["<div style=\'width:340px;white-space:normal\'>Контракт подписан: тёмная магия следит за героиней; Адро уходит за дверь (1-39)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Логика не ниже 1 уровня: героиня замечает брелок с инициалами К.Р.</span><br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает в дневник расследования пункт 5</span></div>"]:::sc');
-    E('K1 --> I0', c1);
-    E('I0 --> EXS', c1);
-  } else {
-    E('K1 --> EXS', c1);
-  }
-  L.push(hub('K2','Осмотр кабинета<br/><small>sar_cab_*, 101-336</small>','hhl',[]));
-  if(EXP.has('K2')){
-    L.push('MAP["<div style=\'width:300px;white-space:normal\'>Героиня осматривает кабинет (вещи на карте, порядок любой)</div>"]:::sc');
-    E('K2 --> MAP', c2);
-    L.push('O1["<div style=\'width:340px;white-space:normal\'>Бумаги на столе (101-125): отчёты и бумаги об убийстве<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «бумаги осмотрены» (paper_osm)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'></span></div>"]:::sc');
-    E('MAP --> O1c["<div style=\'width:290px;white-space:normal\'>'+mk('Осмотреть: Бумаги на столе',null,null)+'</div>"]:::hhl', c2); E('O1c --> O1', c2);
-    E('O1 --> EXS', c2);
-    L.push('O2["<div style=\'width:340px;white-space:normal\'>Пачка писем Камилле (126-146)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «письма Камилле» (letter_kamletter)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'></span></div>"]:::sc');
-    E('MAP --> O2c["<div style=\'width:290px;white-space:normal\'>'+mk('Осмотреть: Пачка писем Камилле',null,null)+'</div>"]:::hhl', c2); E('O2c --> O2', c2);
-    E('O2 --> EXS', c2);
-    L.push('O3["<div style=\'width:340px;white-space:normal\'>Письмо на видном месте (187-204)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «письмо осмотрено» (letter_osm)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'></span></div>"]:::sc');
-    E('MAP --> O3c["<div style=\'width:290px;white-space:normal\'>'+mk('Осмотреть: Письмо на видном месте',null,null)+'</div>"]:::hhl', c2); E('O3c --> O3', c2);
-    E('O3 --> EXS', c2);
-    L.push('O4["<div style=\'width:340px;white-space:normal\'>Дневник Лиассона: 10-19 октября 3853 года (206-235)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «дневник осмотрен» (diary_osm)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'></span></div>"]:::sc');
-    E('MAP --> O4c["<div style=\'width:290px;white-space:normal\'>'+mk('Осмотреть: Дневник Лиассона: 10-19 октября 3853 года',null,null)+'</div>"]:::hhl', c2); E('O4c --> O4', c2);
-    E('O4 --> EXS', c2);
-    L.push('O5["<div style=\'width:340px;white-space:normal\'>Розовая книга и записка Камилле (236-280)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 «Открыть» книгу, потом «Открыть» записку: записывает «письмо Камилле найдено» (toKP_letter); в любом случае «розовая книга осмотрена»</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>при Логике выше 1 уровня: героиня замечает ещё одну деталь</span></div>"]:::sc');
-    E('MAP --> O5c["<div style=\'width:290px;white-space:normal\'>'+mk('Осмотреть: Розовая книга и записка Камилле',null,null)+'</div>"]:::hhl', c2); E('O5c --> O5', c2);
-    E('O5 --> EXS', c2);
-    L.push('O6["<div style=\'width:340px;white-space:normal\'>Бутылочка яда Скорпикоры (281-302)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 «Осмотреть бутылочку» → «яд закрыт нетронутым» (poison_closed_osm); в любом случае «яд осмотрен» (poison_osm)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>при Логике выше 1 уровня: героиня замечает ещё одну деталь</span></div>"]:::sc');
-    E('MAP --> O6c["<div style=\'width:290px;white-space:normal\'>'+mk('Осмотреть: Бутылочка яда Скорпикоры',null,null)+'</div>"]:::hhl', c2); E('O6c --> O6', c2);
-    E('O6 --> EXS', c2);
-    L.push('O7["<div style=\'width:340px;white-space:normal\'>Чайные чашки (303-336): две чашки наполовину полные<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «чашка осмотрена» (tea1_osm, tea_osm)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>при Логике выше 1 уровня: героиня замечает ещё одну деталь</span></div>"]:::sc');
-    E('MAP --> O7c["<div style=\'width:290px;white-space:normal\'>'+mk('Осмотреть: Чайные чашки',null,null)+'</div>"]:::hhl', c2); E('O7c --> O7', c2);
-    E('O7 --> EXS', c2);
-  } else {
-    E('K2 --> EXS', c2);
-  }
-  L.push(hub('K3','Расспросы Адро в кабинете<br/><small>script_4_tgavan_to_adro, 49-98</small>','hhp',[[C_ADO, '−3…+1']]));
-  if(EXP.has('K3')){
-    L.push('T0["<div style=\'width:260px;white-space:normal\'>Героиня зовёт Адро: меню расспросов (52)</div>"]:::sc');
-    E('K3 --> T0', c3);
-    L.push('TB["<div style=\'width:280px;white-space:normal\'>Адро: «Мы пили с ним чай» (60-72)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Адро говорил с братом» (adro_liass_talk)</span></div>"]:::sc');
-    L.push('TF["<div style=\'width:260px;white-space:normal\'>Адро: «Неплохо...» — переход к итогу (95-98)</div>"]:::sc');
-    L.push('TE["<div style=\'width:280px;white-space:normal\'>Адро: «Ничего другого я и не ожидал» (80-86)</div>"]:::bad');
-    E('T0 --> T1["<div style=\'width:290px;white-space:normal\'>'+mk('«Вернуться к вещам»'+cond('пока не нажали «На этом все» (53)'),null,null)+'</div>"]:::hhp', c3); E('T1 --> EXS', c3);
-    E('T0 --> T2["<div style=\'width:290px;white-space:normal\'>'+mk('«Яд»'+cond('пока не рассмотрены все три темы яда (57)'),null,null)+'</div>"]:::hhp', c3); E('T2 --> K4', c3);
-    E('T0 --> T3["<div style=\'width:290px;white-space:normal\'>'+mk('«Вы разговаривали с братом в ночь его смерти?»'+cond('один раз (59)'),null,null)+'</div>"]:::hhp', c3); E('T3 --> TB', c3);
-    E('TB --> T0', c3);
-    E('T0 --> T4["<div style=\'width:290px;white-space:normal\'>'+mk('«Женщина»'+cond('пока не рассмотрены все три темы про женщину (73)'),null,null)+'</div>"]:::hhp', c3); E('T4 --> K5', c3);
-    E('T0 --> T5["<div style=\'width:290px;white-space:normal\'>'+mk('Если не показано письмо Камилле и не взят флакон (79):'+cond('выбор «На этом все» (77)'),null,null)+'</div>"]:::hhp', c3); E('T5 --> TE', c3);
-    E('T0 --> T6["<div style=\'width:290px;white-space:normal\'>'+mk('Если письмо Камилле показано или флакон взят:'+cond('выбор «На этом все» (77)'),null,null)+'</div>"]:::hhp', c3); E('T6 --> TF', c3);
-    E('TE --> END', c3);
-    E('TF --> K7', c3);
-  } else {
-    E('K3 --> K4', c3);
-    E('K3 --> K5', c3);
-    E('K3 --> K7', c3);
-    E('K3 --> EXS', c3);
-    E('K3 --> END', c3);
-  }
-  L.push(hub('K4','Тема: яд<br/><small>script_4_tgavan_poison_adro, 337-381</small>','hhk',[]));
-  if(EXP.has('K4')){
-    L.push('P0["<div style=\'width:240px;white-space:normal\'>Тема: яд (337-340)</div>"]:::sc');
-    E('K4 --> P0', c4);
-    L.push('P1["<div style=\'width:300px;white-space:normal\'>Героиня говорит Адро о яде на полке (341-348)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «яд на полке сказан» (poison_cab)</span></div>"]:::sc');
-    L.push('P2["<div style=\'width:300px;white-space:normal\'>Адро: «Мог ли Нарси удержать часть яда?» (350-360)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «яд мог быть у Нарси» (poison_narsi)</span></div>"]:::sc');
-    L.push('P3["<div style=\'width:300px;white-space:normal\'>Адро отдаёт анализ состава яда (362-378)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «флакон взят» (poison_inf) и «анализ получен» (alh)</span></div>"]:::sc');
-    E('P0 --> P1c["<div style=\'width:290px;white-space:normal\'>'+mk('«Сказать о яде на полке.»'+cond('если яд на полке осмотрен (341); один раз'),null,null)+'</div>"]:::hhk', c4); E('P1c --> P1', c4);
-    E('P0 --> P2c["<div style=\'width:290px;white-space:normal\'>'+mk('«Мог ли Нарси удержать часть яда?»'+cond('после дневника или бумаг; один раз (349)'),null,null)+'</div>"]:::hhk', c4); E('P2c --> P2', c4);
-    E('P0 --> P3c["<div style=\'width:290px;white-space:normal\'>'+mk('«Я хочу взять флакон с собой.»'+cond('если яд осмотрен; один раз (361)'),null,null)+'</div>"]:::hhk', c4); E('P3c --> P3', c4);
-    E('P0 --> P4c["<div style=\'width:290px;white-space:normal\'>'+mk('«Спросить о другом»',null,null)+'</div>"]:::hhk', c4); E('P4c --> K3', c4);
-    E('P1 --> P0', c4);
-    E('P2 --> P0', c4);
-    E('P3 --> P0', c4);
-  } else {
-    E('K4 --> K3', c4);
-  }
-  L.push(hub('K5','Тема: женщина<br/><small>script_4_tgavan_women_adro, 382-430</small>','hhr',[[C_ADO, '−1…+2']]));
-  if(EXP.has('K5')){
-    L.push('W0["<div style=\'width:240px;white-space:normal\'>Тема: женщина К.Р. (382-385)</div>"]:::sc');
-    E('K5 --> W0', c5);
-    L.push('W1["<div style=\'width:300px;white-space:normal\'>Адро: «Камилла Ранто. Обычная человеческая женщина» (387-393)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «К.Р. названа» (KP_who)</span></div>"]:::sc');
-    L.push('W2["<div style=\'width:300px;white-space:normal\'>Адро рассказывает, как умерла Камилла (397-409)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Камилла мертва» (KP_dead)</span></div>"]:::sc');
-    L.push('W3["<div style=\'width:320px;white-space:normal\'>Адро читает записку Камилле: «Просчёт. Ошибка» (411-426)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «письмо Камилле показано» (KP_letter)</span></div>"]:::sc');
-    E('W0 --> W1c["<div style=\'width:290px;white-space:normal\'>'+mk('«Кто такая К.Р?»'+cond('если дневник или чашки осмотрены; один раз (386)'),null,null)+'</div>"]:::hhr', c5); E('W1c --> W1', c5);
-    E('W0 --> W2c["<div style=\'width:290px;white-space:normal\'>'+mk('«А как умерла Камилла?»'+cond('если дневник осмотрен; один раз (395)'),null,null)+'</div>"]:::hhr', c5); E('W2c --> W2', c5);
-    E('W0 --> W3c["<div style=\'width:290px;white-space:normal\'>'+mk('«Показать письмо Камилле»'+cond('если записка найдена; один раз (410)'),null,null)+'</div>"]:::hhr', c5); E('W3c --> W3', c5);
-    E('W0 --> W4c["<div style=\'width:290px;white-space:normal\'>'+mk('«Спросить о другом.»',null,null)+'</div>"]:::hhr', c5); E('W4c --> K3', c5);
-    E('W1 --> W0', c5);
-    E('W2 --> W0', c5);
-    E('W3 --> K6', c5);
-  } else {
-    E('K5 --> K3', c5);
-    E('K5 --> K6', c5);
-  }
-  L.push(hub('K6','Это самоубийство?<br/><small>script_4_tgavan_to_adro_suicide_kill, 512-561</small>','hhs',[[C_ADO, '−1…+2']]));
-  if(EXP.has('K6')){
-    L.push('S0["<div style=\'width:300px;white-space:normal\'>Адро: «Вы действительно думаете, что он просто решил...?» (424-426, 513)</div>"]:::sc');
-    E('K6 --> S0', c6);
-    L.push('SY["<div style=\'width:320px;white-space:normal\'>Адро: «Поэтичная и нелепая глупость» — расследование приостановлено (518-531)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «самоубийство» (yes_suicide)</span></div>"]:::bad');
-    L.push('SN["<div style=\'width:280px;white-space:normal\'>Героиня: «Это не мог быть суицид!» (537-538)</div>"]:::sc');
-    L.push('SY2["<div style=\'width:300px;white-space:normal\'>Адро: «Логично. Что ещё было найдено?» (539-548)</div>"]:::sc');
-    E('S0 --> S1["<div style=\'width:290px;white-space:normal\'>'+mk('«Да, скорее всего это был суицид.»'+cond('если ещё не говорили (515)'),null,null)+'</div>"]:::hhs', c6); E('S1 --> SY', c6);
-    E('SY --> END', c6);
-    E('S0 --> S2["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет, это не мог быть суицид.»',null,null)+'</div>"]:::hhs', c6); E('S2 --> SN', c6);
-    E('SN --> S2a["<div style=\'width:290px;white-space:normal\'>'+mk('Если флакон яда осмотрен нетронутым (539):',null,null)+'</div>"]:::hhs', c6); E('S2a --> SY2', c6);
-    E('SN --> S2b["<div style=\'width:290px;white-space:normal\'>'+mk('Если флакон яда не осмотрен нетронутым (549-556):'+cond('Адро не убеждён: «КОНЕЦ ДЕМОВЕРСИИ. Не самоубийство?»'),null,null)+'</div>"]:::hhs', c6); E('S2b --> END', c6);
-    E('SY2 --> K3', c6);
-  } else {
-    E('K6 --> K3', c6);
-    E('K6 --> END', c6);
-  }
-  L.push(hub('K7','Что делать дальше<br/><small>script_4_tgavan_end_adro, 566-705</small>','hhg',[[C_ADO, '−2…0']]));
-  if(EXP.has('K7')){
-    L.push('E0["<div style=\'width:300px;white-space:normal\'>Адро: «Что собираетесь делать далее?» (575)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 если анализа ещё нет, Адро отдаёт его сейчас: «анализ получен»</span></div>"]:::sc');
-    E('K7 --> E0', c7);
-    E('E0 --> E1["<div style=\'width:290px;white-space:normal\'>'+mk('«Он в последние дни общался с неким Нарси.»'+cond('если бумаги или письмо осмотрены (579); Адро советует осторожнее с Нарси: «КОНЕЦ ДЕМОВЕРСИИ. Нарси?»'),null,null)+'</div>"]:::hhg', c7); E('E1 --> END', c7);
-    E('E0 --> E2["<div style=\'width:290px;white-space:normal\'>'+mk('«Мне стоит поговорить с семьёй Каернос»'+cond('Адро объясняет вражду семей: «КОНЕЦ ДЕМОВЕРСИИ. Вражда семей.»'),null,null)+'</div>"]:::hhg', c7); E('E2 --> END', c7);
-    E('E0 --> E3["<div style=\'width:290px;white-space:normal\'>'+mk('«Кажется он интересовался делом старейшины, может стоит проверить?»'+cond('Адро: «У них никогда не было общих дел»: «КОНЕЦ ДЕМОВЕРСИИ. Общее дело.»'),null,null)+'</div>"]:::hhg', c7); E('E3 --> END', c7);
-    E('E0 --> E4["<div style=\'width:290px;white-space:normal\'>'+mk('«Возможно, убийца - это сам Адро.»'+cond('«КОНЕЦ ДЕМОВЕРСИИ. Вражда братьев.»'),null,[[C_ADO, 2]])+'</div>"]:::hhg', c7); E('E4 --> END', c7);
-  } else {
-    E('K7 --> END', c7);
-  }
-  L.push(hub('K8','Пока в заглушке (не достижимо в демо)<br/><small>после «КОНЕЦ ДЕМОВЕРСИИ»</small>','stub',[]));
-  if(EXP.has('K8')){
-    L.push('X1["<div style=\'width:340px;white-space:normal\'>Заглушка 1 (87-93): после «Сыщик-самоучка»: Адро «Свободны, можете возвращаться к Адриану»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «нет улик» (no_evid) и «осмотр завершён» (osm_end) → переход на карту</span></div>"]:::stub');
-    E('K8 --> X1', cG);
-    L.push('X2["<div style=\'width:340px;white-space:normal\'>Заглушка 2 (533-535): после «Расследование. Самоубийство?»: Адро «Свободны, можете возвращаться» → переход на карту</div>"]:::stub');
-    L.push('X3["<div style=\'width:340px;white-space:normal\'>Заглушка 3 (557-561): после «Не самоубийство?»: героиня «Но...», Адро «Можешь идти»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «самоубийство» (yes_suicide) → переход на карту</span></div>"]:::stub');
-    L.push('X4["<div style=\'width:340px;white-space:normal\'>Заглушка 4 (701-705): после меню «Что делать дальше»: Адро «До свидания»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «конец разговора» (end1) → переход на карту</span></div>"]:::stub');
-    L.push('X5["<div style=\'width:340px;white-space:normal\'>Закомментированные строки (603-621, 634-650, 682-699): старые реплики Раэллоса, если героиня заблудилась (не код)</div>"]:::stub');
-  } else {
-  }
-  L.push('classDef hhg fill:#e6f4f2,stroke:#0f766e,color:#16302c');
-  L.push('classDef hhk fill:#fde9ee,stroke:#be123c,color:#4d1223');
-  L.push('classDef hhl fill:#e5f2fa,stroke:#0369a1,color:#123043');
-  L.push('classDef hhn fill:#e7f4ea,stroke:#166534,color:#14331f');
-  L.push('classDef hhp fill:#f1eafd,stroke:#7c3aed,color:#2f1c5c');
-  L.push('classDef hhr fill:#fce9e9,stroke:#b91c1c,color:#4a1414');
-  L.push('classDef hhs fill:#edf1f6,stroke:#475569,color:#1d2733');
-  L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
-  L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
-  L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
-  L.push('classDef stub fill:#f3f4f6,stroke:#6b7280,stroke-dasharray:5 4,color:#6b7280');
-  return L.concat(ST).join('\n');
-}
-async function render(){
-  const f=document.getElementById('fchart');
-  if(!f) return;
-  f.removeAttribute('data-processed');
-  f.textContent=build();
-  await mermaid.run({nodes:[f]});
-  for(const ss of document.styleSheets){
-    let rules; try{rules=ss.cssRules;}catch(e){continue;}
-    for(let i=rules.length-1;i>=0;i--){
-      const r=rules[i];
-      if(r.selectorText && /\.(hh[a-z0-9]*|sc|ex|dd|ok)( span| > \*)$/.test(r.selectorText)
-         && r.style && r.style.getPropertyPriority('color')==='important'){ r.style.removeProperty('color'); }
-    }
-  }
-  document.querySelectorAll('#fchart g.node').forEach(function(g){
-    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
-    if(m && HUBS.indexOf(m[1])>=0){ g.style.cursor='pointer'; g.addEventListener('click', function(){ window.th(m[1]); }); }
-  });
-}
-window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
-window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
-render();
-</script>
+<style>.hub{border:2px solid;border-radius:10px;margin:10px 0;background:#fff}.hub>summary{cursor:pointer;padding:8px 10px;font-size:15px;list-style:none}.hub>summary::before{content:"▸ ";}.hub[open]>summary::before{content:"▾ ";}.hub>div,.hub>.pl,.hub>.ch{margin-left:8px;margin-right:8px}.hub{padding-bottom:6px}
+.pl{border:1px solid #7a9cc6;border-radius:8px;padding:6px 8px;margin:6px 0;font-size:14px;line-height:1.35;overflow-wrap:anywhere}.pl.ex{border-color:#aab2c0;color:#4a5160}.pl.bad{border-color:#b91c1c;color:#4a1414}.pl.stub{border-color:#d97706}
+.ch{border:1.5px solid;border-radius:8px;margin:6px 0 6px 4px;padding:3px 4px;font-size:14px;overflow-wrap:anywhere}.ch .chh{padding-left:6px;font-weight:600}.ch .pl{margin-left:0}.ch .ch{margin-left:3px}
+.ref{font-size:13px;color:#475569;margin:4px 0 4px 6px}.muted{overflow-wrap:anywhere}
+@media(min-width:700px){.hub{max-width:900px}}</style><script>function openTo(a){var id=a.getAttribute('href').slice(1);var e=document.getElementById(id);var p=e;while(p){if(p.tagName=='DETAILS')p.open=true;p=p.parentElement}setTimeout(function(){e&&e.scrollIntoView({block:'center'})},50)}function allHubs(v){document.querySelectorAll('details.hub').forEach(function(d){d.open=v})}</script>
 </head>
 <body>
 <header class="site"><div class="wrap">
@@ -235,9 +31,18 @@ render();
 
 <div class="card">
 <h2>Схема</h2>
-<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
-<div class="widechart"><div id="fchart" class="mermaid"></div></div>
+<p class="muted">Вертикальные плашки: нажмите на группу, чтобы раскрыть. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке группы: минимум и максимум по всем путям внутри группы. У выбора ▲ прибавка, ▼ убавка. <b style="color:#b91c1c">Красным</b> условие, 🚩 что выбор записывает. Выборы вложены под плашкой, к которой они относятся; «↩» ведёт к плашке выше, если путь сходится.</p>
+<div class="pl ex">Из страницы «Адро: ворота, допрос, контракт»: героиня подписала контракт<br/><small>script_4_tgavan_begin_adro</small></div>
+<details class="hub" id="h_K1" style="border-color:#166534"><summary style="color:#166534"><b>Кабинет Лиассона: начало<br/><br><small style="font-weight:400">script_4_tgavan_begin_adro, 1-39</small></b></summary><div class="muted">Вход: после подписи контракта jump script_4_tgavan_begin_adro (script3_tgavan_oh.rpy:1090, 1133, 1177)</div><div class="pl sc" id="n_I0" style="background:#E4EEF9">Контракт подписан: тёмная магия следит за героиней; Адро уходит за дверь (1-39)<br/><span style='font-size:12px;color:#b91c1c;font-weight:700'>если Логика не ниже 1 уровня: героиня замечает брелок с инициалами К.Р.</span><br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает в дневник расследования пункт 5</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (кабинет Лиассона, карта)</div></details>
+<details class="hub" id="h_K2" style="border-color:#0369a1"><summary style="color:#0369a1"><b>Осмотр кабинета<br/><br><small style="font-weight:400">sar_cab_*, 101-336</small></b></summary><div class="pl sc" id="n_MAP" style="background:#E4EEF9">Героиня осматривает кабинет (вещи на карте, порядок любой)</div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Осмотреть: Бумаги на столе </div><div class="pl sc" id="n_O1" style="background:#E4EEF9">Бумаги на столе (101-125): отчёты и бумаги об убийстве<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «бумаги осмотрены» (paper_osm)</span><br/><span style='font-size:12px;color:#b91c1c;font-weight:700'></span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (кабинет Лиассона, карта)</div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Осмотреть: Пачка писем Камилле </div><div class="pl sc" id="n_O2" style="background:#E4EEF9">Пачка писем Камилле (126-146)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «письма Камилле» (letter_kamletter)</span><br/><span style='font-size:12px;color:#b91c1c;font-weight:700'></span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (кабинет Лиассона, карта)</div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Осмотреть: Письмо на видном месте </div><div class="pl sc" id="n_O3" style="background:#E4EEF9">Письмо на видном месте (187-204)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «письмо осмотрено» (letter_osm)</span><br/><span style='font-size:12px;color:#b91c1c;font-weight:700'></span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (кабинет Лиассона, карта)</div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Осмотреть: Дневник Лиассона: 10-19 октября 3853 года </div><div class="pl sc" id="n_O4" style="background:#E4EEF9">Дневник Лиассона: 10-19 октября 3853 года (206-235)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «дневник осмотрен» (diary_osm)</span><br/><span style='font-size:12px;color:#b91c1c;font-weight:700'></span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (кабинет Лиассона, карта)</div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Осмотреть: Розовая книга и записка Камилле </div><div class="pl sc" id="n_O5" style="background:#E4EEF9">Розовая книга и записка Камилле (236-280)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 «Открыть» книгу, потом «Открыть» записку: записывает «письмо Камилле найдено» (toKP_letter); в любом случае «розовая книга осмотрена»</span><br/><span style='font-size:12px;color:#b91c1c;font-weight:700'>при Логике выше 1 уровня: героиня замечает ещё одну деталь</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (кабинет Лиассона, карта)</div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Осмотреть: Бутылочка яда Скорпикоры </div><div class="pl sc" id="n_O6" style="background:#E4EEF9">Бутылочка яда Скорпикоры (281-302)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 «Осмотреть бутылочку» → «яд закрыт нетронутым» (poison_closed_osm); в любом случае «яд осмотрен» (poison_osm)</span><br/><span style='font-size:12px;color:#b91c1c;font-weight:700'>при Логике выше 1 уровня: героиня замечает ещё одну деталь</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (кабинет Лиассона, карта)</div></div><div class="ch" style="border-color:#0369a1;background:#fff"><div class="chh" style="border-left:4px solid #0369a1">Осмотреть: Чайные чашки </div><div class="pl sc" id="n_O7" style="background:#E4EEF9">Чайные чашки (303-336): две чашки наполовину полные<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «чашка осмотрена» (tea1_osm, tea_osm)</span><br/><span style='font-size:12px;color:#b91c1c;font-weight:700'>при Логике выше 1 уровня: героиня замечает ещё одну деталь</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (кабинет Лиассона, карта)</div></div></details>
+<details class="hub" id="h_K3" style="border-color:#7c3aed"><summary style="color:#7c3aed"><b>Расспросы Адро в кабинете<br/><br><small style="font-weight:400">script_4_tgavan_to_adro, 49-98</small></b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(224,231,255);border:1.4px solid rgb(79,70,229);color:rgb(79,70,229);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−3…+1</span></div></summary><div class="muted">Вход: продолжение после группы «Тема: яд» или «Тема: женщина» или «Это самоубийство?»</div><div class="pl sc" id="n_T0" style="background:#E4EEF9">Героиня зовёт Адро: меню расспросов (52)</div><div class="ch" style="border-color:#7c3aed;background:#fff"><div class="chh" style="border-left:4px solid #7c3aed">«Вернуться к вещам» <div style="font-size:12px;color:#b91c1c;font-weight:700">пока не нажали «На этом все» (53)</div></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (кабинет Лиассона, карта)</div></div><div class="ch" style="border-color:#7c3aed;background:#fff"><div class="chh" style="border-left:4px solid #7c3aed">«Яд» <div style="font-size:12px;color:#b91c1c;font-weight:700">пока не рассмотрены все три темы яда (57)</div></div></div><div class="ch" style="border-color:#7c3aed;background:#fff"><div class="chh" style="border-left:4px solid #7c3aed">«Вы разговаривали с братом в ночь его смерти?» <div style="font-size:12px;color:#b91c1c;font-weight:700">один раз (59)</div></div><div class="pl sc" id="n_TB" style="background:#E4EEF9">Адро: «Мы пили с ним чай» (60-72)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «Адро говорил с братом» (adro_liass_talk)</span></div><div class="ref">↩ продолжение выше: <a href="#n_T0" onclick="openTo(this)">Героиня зовёт Адро: меню расспросов (52)…</a></div></div><div class="ch" style="border-color:#7c3aed;background:#fff"><div class="chh" style="border-left:4px solid #7c3aed">«Женщина» <div style="font-size:12px;color:#b91c1c;font-weight:700">пока не рассмотрены все три темы про женщину (73)</div></div></div><div class="ch" style="border-color:#7c3aed;background:#fff"><div class="chh" style="border-left:4px solid #7c3aed">Если не показано письмо Камилле и не взят флакон (79): <div style="font-size:12px;color:#b91c1c;font-weight:700">выбор «На этом все» (77)</div></div><div class="pl bad" id="n_TE" style="background:#ffd6d6">Адро: «Ничего другого я и не ожидал» (80-86) <span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▼−3</span></div></div><div class="ch" style="border-color:#7c3aed;background:#fff"><div class="chh" style="border-left:4px solid #7c3aed">Если письмо Камилле показано или флакон взят: <div style="font-size:12px;color:#b91c1c;font-weight:700">выбор «На этом все» (77)</div></div><div class="pl sc" id="n_TF" style="background:#E4EEF9">Адро: «Неплохо...» — переход к итогу (95-98) <span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div></div></details>
+<details class="hub" id="h_K4" style="border-color:#be123c"><summary style="color:#be123c"><b>Тема: яд<br/><br><small style="font-weight:400">script_4_tgavan_poison_adro, 337-381</small></b></summary><div class="muted">Вход: продолжение после группы «Расспросы Адро в кабинете»</div><div class="pl sc" id="n_P0" style="background:#E4EEF9">Тема: яд (337-340)</div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">«Сказать о яде на полке.» <div style="font-size:12px;color:#b91c1c;font-weight:700">если яд на полке осмотрен (341); один раз</div></div><div class="pl sc" id="n_P1" style="background:#E4EEF9">Героиня говорит Адро о яде на полке (341-348)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «яд на полке сказан» (poison_cab)</span></div><div class="ref">↩ продолжение выше: <a href="#n_P0" onclick="openTo(this)">Тема: яд (337-340)…</a></div></div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">«Мог ли Нарси удержать часть яда?» <div style="font-size:12px;color:#b91c1c;font-weight:700">после дневника или бумаг; один раз (349)</div></div><div class="pl sc" id="n_P2" style="background:#E4EEF9">Адро: «Мог ли Нарси удержать часть яда?» (350-360)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «яд мог быть у Нарси» (poison_narsi)</span></div><div class="ref">↩ продолжение выше: <a href="#n_P0" onclick="openTo(this)">Тема: яд (337-340)…</a></div></div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">«Я хочу взять флакон с собой.» <div style="font-size:12px;color:#b91c1c;font-weight:700">если яд осмотрен; один раз (361)</div></div><div class="pl sc" id="n_P3" style="background:#E4EEF9">Адро отдаёт анализ состава яда (362-378)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «флакон взят» (poison_inf) и «анализ получен» (alh)</span></div><div class="ref">↩ продолжение выше: <a href="#n_P0" onclick="openTo(this)">Тема: яд (337-340)…</a></div></div><div class="ch" style="border-color:#be123c;background:#fff"><div class="chh" style="border-left:4px solid #be123c">«Спросить о другом» </div></div></details>
+<details class="hub" id="h_K5" style="border-color:#b45309"><summary style="color:#b45309"><b>Тема: женщина<br/><br><small style="font-weight:400">script_4_tgavan_women_adro, 382-430</small></b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(224,231,255);border:1.4px solid rgb(79,70,229);color:rgb(79,70,229);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−1…+2</span></div></summary><div class="muted">Вход: продолжение после группы «Расспросы Адро в кабинете»</div><div class="pl sc" id="n_W0" style="background:#E4EEF9">Тема: женщина К.Р. (382-385)</div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Кто такая К.Р?» <div style="font-size:12px;color:#b91c1c;font-weight:700">если дневник или чашки осмотрены; один раз (386)</div></div><div class="pl sc" id="n_W1" style="background:#E4EEF9">Адро: «Камилла Ранто. Обычная человеческая женщина» (387-393)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «К.Р. названа» (KP_who)</span></div><div class="ref">↩ продолжение выше: <a href="#n_W0" onclick="openTo(this)">Тема: женщина К.Р. (382-385)…</a></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«А как умерла Камилла?» <div style="font-size:12px;color:#b91c1c;font-weight:700">если дневник осмотрен; один раз (395)</div></div><div class="pl sc" id="n_W2" style="background:#E4EEF9">Адро рассказывает, как умерла Камилла (397-409)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «Камилла мертва» (KP_dead)</span> <span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></div><div class="ref">↩ продолжение выше: <a href="#n_W0" onclick="openTo(this)">Тема: женщина К.Р. (382-385)…</a></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Показать письмо Камилле» <div style="font-size:12px;color:#b91c1c;font-weight:700">если записка найдена; один раз (410)</div></div><div class="pl sc" id="n_W3" style="background:#E4EEF9">Адро читает записку Камилле: «Просчёт. Ошибка» (411-426)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «письмо Камилле показано» (KP_letter)</span> <span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Спросить о другом.» </div></div></details>
+<details class="hub" id="h_K6" style="border-color:#475569"><summary style="color:#475569"><b>Это самоубийство?<br/><br><small style="font-weight:400">script_4_tgavan_to_adro_suicide_kill, 512-561</small></b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(224,231,255);border:1.4px solid rgb(79,70,229);color:rgb(79,70,229);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−1…+2</span></div></summary><div class="muted">Вход: продолжение после группы «Тема: женщина»</div><div class="pl sc" id="n_S0" style="background:#E4EEF9">Адро: «Вы действительно думаете, что он просто решил...?» (424-426, 513)</div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Да, скорее всего это был суицид.» <div style="font-size:12px;color:#b91c1c;font-weight:700">если ещё не говорили (515)</div></div><div class="pl bad" id="n_SY" style="background:#ffd6d6">Адро: «Поэтичная и нелепая глупость» — расследование приостановлено (518-531)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «самоубийство» (yes_suicide)</span> <span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">«Нет, это не мог быть суицид.» </div><div class="pl sc" id="n_SN" style="background:#E4EEF9">Героиня: «Это не мог быть суицид!» (537-538)</div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">Если флакон яда осмотрен нетронутым (539): </div><div class="pl sc" id="n_SY2" style="background:#E4EEF9">Адро: «Логично. Что ещё было найдено?» (539-548) <span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span></div></div><div class="ch" style="border-color:#475569;background:#fff"><div class="chh" style="border-left:4px solid #475569">Если флакон яда не осмотрен нетронутым (549-556): <div style="font-size:12px;color:#b91c1c;font-weight:700">Адро не убеждён: «КОНЕЦ ДЕМОВЕРСИИ. Не самоубийство?»</div></div><div class="pl bad" id="n_END" style="background:#ffd6d6">Конец демоверсии (перезапуск игры)</div></div></div></details>
+<details class="hub" id="h_K7" style="border-color:#0f766e"><summary style="color:#0f766e"><b>Что делать дальше<br/><br><small style="font-weight:400">script_4_tgavan_end_adro, 566-705</small></b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(224,231,255);border:1.4px solid rgb(79,70,229);color:rgb(79,70,229);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−2…0</span></div></summary><div class="muted">Вход: продолжение после группы «Расспросы Адро в кабинете»</div><div class="pl sc" id="n_E0" style="background:#E4EEF9">Адро: «Что собираетесь делать далее?» (575)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 если анализа ещё нет, Адро отдаёт его сейчас: «анализ получен»</span></div><div class="ch" style="border-color:#0f766e;background:#fff"><div class="chh" style="border-left:4px solid #0f766e">«Он в последние дни общался с неким Нарси.» <div style="font-size:12px;color:#b91c1c;font-weight:700">если бумаги или письмо осмотрены (579); Адро советует осторожнее с Нарси: «КОНЕЦ ДЕМОВЕРСИИ. Нарси?»</div></div><div class="pl bad" id="n_END" style="background:#ffd6d6">Конец демоверсии (перезапуск игры)</div></div><div class="ch" style="border-color:#0f766e;background:#fff"><div class="chh" style="border-left:4px solid #0f766e">«Мне стоит поговорить с семьёй Каернос» <div style="font-size:12px;color:#b91c1c;font-weight:700">Адро объясняет вражду семей: «КОНЕЦ ДЕМОВЕРСИИ. Вражда семей.»</div></div><div class="pl bad" id="n_END" style="background:#ffd6d6">Конец демоверсии (перезапуск игры)</div></div><div class="ch" style="border-color:#0f766e;background:#fff"><div class="chh" style="border-left:4px solid #0f766e">«Кажется он интересовался делом старейшины, может стоит проверить?» <div style="font-size:12px;color:#b91c1c;font-weight:700">Адро: «У них никогда не было общих дел»: «КОНЕЦ ДЕМОВЕРСИИ. Общее дело.»</div></div><div class="pl bad" id="n_END" style="background:#ffd6d6">Конец демоверсии (перезапуск игры)</div></div><div class="ch" style="border-color:#0f766e;background:#fff"><div class="chh" style="border-left:4px solid #0f766e">«Возможно, убийца - это сам Адро.» <span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span><div style="font-size:12px;color:#b91c1c;font-weight:700">«КОНЕЦ ДЕМОВЕРСИИ. Вражда братьев.»</div></div><div class="pl bad" id="n_END" style="background:#ffd6d6">Конец демоверсии (перезапуск игры)</div></div></details>
+<details class="hub" id="h_K8" style="border-color:#b45309"><summary style="color:#b45309"><b>Пока в заглушке (не достижимо в демо)<br/><br><small style="font-weight:400">после «КОНЕЦ ДЕМОВЕРСИИ»</small></b></summary><div class="pl stub" id="n_X1" style="background:#fdf1e2">Заглушка 1 (87-93): после «Сыщик-самоучка»: Адро «Свободны, можете возвращаться к Адриану»<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «нет улик» (no_evid) и «осмотр завершён» (osm_end) → переход на карту</span></div></details>
 </div>
+
 </main>
 <footer>Схемы игры «Вий» · script_4_tgavan_adro.rpy · выверено по коду 20.10.2026</footer>
 </body>

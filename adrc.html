@@ -8,127 +8,11 @@
 <title>Адриан: разговор о деле — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
-<script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
-const HUBS=["A1", "A2"];
-const EXP=new Set();
-const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)', C_ADR='rgb(13,148,136)', C_NAR='rgb(101,163,13)', C_ADO='rgb(79,70,229)';
-const CHIP_BG2=1;
-const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)'; CHIP_BG[C_ADR]='rgb(204,244,240)'; CHIP_BG[C_NAR]='rgb(236,252,203)'; CHIP_BG[C_ADO]='rgb(224,231,255)';
-function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
-function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
-function mk(text, ups, downs){
-  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
-  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
-    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
-    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
-    +'</div>';
-}
-function badge(ranges){
-  if(!ranges.length) return '';
-  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;margin-left:3px">'+p[1]+'</span>';}).join('');
-  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
-}
-function hub(id,label,cls,ranges){
-  const arrow = EXP.has(id) ? '▾' : '▸';
-  const b=badge(ranges||[]);
-  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
-  return id + '["' + inner + '"]:::' + cls;
-}
-const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>'+t+'</span>';};
-const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>'+t+'</span>';};
-const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
-function build(){
-  const L=[]; const ST=[]; let ei=0;
-  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
-  L.push('flowchart TD');
-  const cG='#9aa3b2', c1='#0f766e', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
-  L.push('ST["<a href=\'gavan.html?v=4\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:280px;white-space:normal\'>Героиня возвращается к Адриану у двери Гавани<br/><small>adrian_conv_door</small></div></a>"]:::ex');
-  L.push('EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex');
-  L.push('END["<div style=\'width:260px;white-space:normal\'>Конец демоверсии (перезапуск игры)</div>"]:::bad');
-  E('ST --> A1', cG);
-  L.push(hub('A1','Адриан у двери<br/><small>adrian_conv_door, 1281-1316</small>','hhn',[]));
-  if(EXP.has('A1')){
-    L.push('Z0["<div style=\'width:260px;white-space:normal\'>Адриан: «Вам что-то нужно?» (1281-1283)</div>"]:::sc');
-    E('A1 --> Z0', c1);
-    L.push('Z1["<div style=\'width:340px;white-space:normal\'>Адриан: «Не прошло и пяти минут... Научитесь молчать о том, что думаете» — даёт возможность показать значок снова (1290-1308)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Адриан в курсе ссоры» → открывает второй показ значка Адро (oh_d false1)</span></div>"]:::sc');
-    E('Z0 --> Z1c["<div style=\'width:290px;white-space:normal\'>'+mk('«Кажется, мы не поладили с эльфом.»'+cond('если героиня поссорилась с Адро и Адриан ещё не знает (1288)'),null,null)+'</div>"]:::hhn', c1); E('Z1c --> Z1', c1);
-    E('Z0 --> Z2c["<div style=\'width:290px;white-space:normal\'>'+mk('«До свидания.»',null,null)+'</div>"]:::hhn', c1); E('Z2c --> EXS', c1);
-    E('Z1 --> EXS', c1);
-  } else {
-    E('A1 --> EXS', c1);
-  }
-  L.push(hub('A2','Доклад Адриану<br/><small>adrian_conv_door_white, 1317-1576</small>','stub',[[C_ADR, '−1…+2'], [C_MOR, '−2…+2']]));
-  if(EXP.has('A2')){
-    L.push('R0["<div style=\'width:320px;white-space:normal\'>Адриан: «Как продвигается расследование?» (1317-1318)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>пока в заглушке: переход сюда закомментирован (1285-1286)</span></div>"]:::stub');
-    E('A2 --> R0', c2);
-    L.push('R1["<div style=\'width:300px;white-space:normal\'>Героиня знает про суицид; стоит ли говорить Адриану? (1319-1321)</div>"]:::stub');
-    L.push('R2["<div style=\'width:300px;white-space:normal\'>Адриан: «Это меняет все дело... Что если это ошибка?» (1327-1342)</div>"]:::stub');
-    L.push('R3["<div style=\'width:260px;white-space:normal\'>Адро просил молчать: героиня промолчала (1348-1350)</div>"]:::stub');
-    L.push('R4["<div style=\'width:320px;white-space:normal\'>Адро велел вернуться без улик; Адриан: «Скорее всего начнётся война» (1353-1358)</div>"]:::stub');
-    L.push('R5["<div style=\'width:340px;white-space:normal\'>Героиня рассказывает Адриану находки (1361-1565)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 каждый рассказ записывается: яд, дневник, письмо Камилле, чай, бумаги, анализ и т.д. (adrian_dialog)</span></div>"]:::stub');
-    E('R0 --> RR1["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адро принял версию «самоубийство» (1319):',null,null)+'</div>"]:::stub', c2); E('RR1 --> R1', c2);
-    E('R0 --> RR2["<div style=\'width:290px;white-space:normal\'>'+mk('Если в кабинете не нашли улик (1351):',null,null)+'</div>"]:::stub', c2); E('RR2 --> R4', c2);
-    E('R0 --> RR3["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адро не принял «самоубийство» и в кабинете нашли улики:',null,null)+'</div>"]:::stub', c2); E('RR3 --> R5', c2);
-    E('R1 --> RY["<div style=\'width:290px;white-space:normal\'>'+mk('«Да, ему стоит знать.»',[[C_ADR, 1]],null)+'</div>"]:::stub', c2); E('RY --> R2', c2);
-    E('R1 --> RN["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет, не стоит»',null,null)+'</div>"]:::stub', c2); E('RN --> R3', c2);
-    E('R2 --> END', c2);
-    E('R4 --> END', c2);
-    E('R3 --> R5', c2);
-    L.push('RP["<div style=\'width:300px;white-space:normal\'>Бумаги Лиассона: контрабанда и заказные убийства (1412-1417)</div>"]:::stub');
-    E('R5 --> Rp["<div style=\'width:290px;white-space:normal\'>'+mk('Если бумаги осмотрены (1412):',null,null)+'</div>"]:::stub', c2); E('Rp --> RP', c2);
-    E('RP --> Rp1["<div style=\'width:290px;white-space:normal\'>'+mk('«Но это же противозаконно!»',[[C_MOR, 1], [C_ADR, 1]],null)+'</div>"]:::stub', c2); E('Rp1 --> RA', c2);
-    E('RP --> Rp2["<div style=\'width:290px;white-space:normal\'>'+mk('«Не вижу в этом ничего плохого.»',null,[[C_MOR, 1], [C_ADR, 1]])+'</div>"]:::stub', c2); E('Rp2 --> RA', c2);
-    L.push('RA["<div style=\'width:300px;white-space:normal\'>Адриан узнаёт, что Лиассон заказал убийство брата Адро (1439-1443)</div>"]:::stub');
-    E('RA --> Ra1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я думаю, убийцей может быть Адро.»',null,null)+'</div>"]:::stub', c2); E('Ra1 --> RB', c2);
-    L.push('RB["<div style=\'width:240px;white-space:normal\'>Адриан: «Вы уверены?» (1452)</div>"]:::stub');
-    E('RB --> Rb1["<div style=\'width:290px;white-space:normal\'>'+mk('«Да.»'+cond('Адриан идёт с героиней к Адро вечером: «Конец демоверсии. Точно братоубийство?»'),null,null)+'</div>"]:::stub', c2); E('Rb1 --> END', c2);
-    E('RB --> Rb2["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет.»',null,null)+'</div>"]:::stub', c2); E('Rb2 --> R6', c2);
-    E('RA --> Ra2["<div style=\'width:290px;white-space:normal\'>'+mk('«Адро не мог убить брата»'+cond('внутри стоит проверка «adro_liass_talk» без сравнения, она всегда истинна (1474)'),null,null)+'</div>"]:::stub', c2); E('Ra2 --> R6', c2);
-    L.push('R6["<div style=\'width:260px;white-space:normal\'>Что ещё рассказать Адриану? (1480, 1482)</div>"]:::stub');
-    L.push('RF["<div style=\'width:300px;white-space:normal\'>Письма отца Лиассона: «Это мог быть его отец?» (1482-1489)</div>"]:::stub');
-    E('R6 --> Rf0["<div style=\'width:290px;white-space:normal\'>'+mk('Если найдены письма Камилле (1482):',null,null)+'</div>"]:::stub', c2); E('Rf0 --> RF', c2);
-    E('RF --> Rf1["<div style=\'width:290px;white-space:normal\'>'+mk('«Это мог быть его отец.»'+cond('если дневник осмотрен: Адриан спрашивает, плохо ли это (1495)'),null,null)+'</div>"]:::stub', c2); E('Rf1 --> RG', c2);
-    L.push('RG["<div style=\'width:260px;white-space:normal\'>Адриан: «Ты считаешь, это плохо?» (1497)</div>"]:::stub');
-    E('RG --> Rg1["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет! Почему это должно быть плохо?»'+cond('Адриан сам повёл бы к Адро: «Конец демоверсии. Точно его отец?» (1521)'),[[C_MOR, 1]],null)+'</div>"]:::stub', c2); E('Rg1 --> END', c2);
-    E('RG --> Rg2["<div style=\'width:290px;white-space:normal\'>'+mk('«Да! Он не имел права!»',null,[[C_MOR, 1]])+'</div>"]:::stub', c2); E('Rg2 --> END', c2);
-    E('RF --> Rf2["<div style=\'width:290px;white-space:normal\'>'+mk('«Не думаю, что это так.»',null,null)+'</div>"]:::stub', c2); E('Rf2 --> R6', c2);
-    E('R5 --> R6', c2);
-    E('R6 --> Rend["<div style=\'width:290px;white-space:normal\'>'+mk('«На этом все.»'+cond('Адриан: «Сначала убили Старейшину, теперь посол... У тебя есть предположения?» (1573) → «Конец демоверсии. Кто убийца?»'),null,null)+'</div>"]:::stub', c2); E('Rend --> END', c2);
-  } else {
-    E('A2 --> END', c2);
-  }
-  L.push('classDef hhn fill:#e7f4ea,stroke:#166534,color:#14331f');
-  L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
-  L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
-  L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
-  L.push('classDef stub fill:#f3f4f6,stroke:#6b7280,stroke-dasharray:5 4,color:#6b7280');
-  return L.concat(ST).join('\n');
-}
-async function render(){
-  const f=document.getElementById('fchart');
-  if(!f) return;
-  f.removeAttribute('data-processed');
-  f.textContent=build();
-  await mermaid.run({nodes:[f]});
-  for(const ss of document.styleSheets){
-    let rules; try{rules=ss.cssRules;}catch(e){continue;}
-    for(let i=rules.length-1;i>=0;i--){
-      const r=rules[i];
-      if(r.selectorText && /\.(hh[a-z0-9]*|sc|ex|dd|ok)( span| > \*)$/.test(r.selectorText)
-         && r.style && r.style.getPropertyPriority('color')==='important'){ r.style.removeProperty('color'); }
-    }
-  }
-  document.querySelectorAll('#fchart g.node').forEach(function(g){
-    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
-    if(m && HUBS.indexOf(m[1])>=0){ g.style.cursor='pointer'; g.addEventListener('click', function(){ window.th(m[1]); }); }
-  });
-}
-window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
-window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
-render();
-</script>
+<style>.hub{border:2px solid;border-radius:10px;margin:10px 0;background:#fff}.hub>summary{cursor:pointer;padding:8px 10px;font-size:15px;list-style:none}.hub>summary::before{content:"▸ ";}.hub[open]>summary::before{content:"▾ ";}.hub>div,.hub>.pl,.hub>.ch{margin-left:8px;margin-right:8px}.hub{padding-bottom:6px}
+.pl{border:1px solid #7a9cc6;border-radius:8px;padding:6px 8px;margin:6px 0;font-size:14px;line-height:1.35;overflow-wrap:anywhere}.pl.ex{border-color:#aab2c0;color:#4a5160}.pl.bad{border-color:#b91c1c;color:#4a1414}.pl.stub{border-color:#d97706}
+.ch{border:1.5px solid;border-radius:8px;margin:6px 0 6px 4px;padding:3px 4px;font-size:14px;overflow-wrap:anywhere}.ch .chh{padding-left:6px;font-weight:600}.ch .pl{margin-left:0}.ch .ch{margin-left:3px}
+.ref{font-size:13px;color:#475569;margin:4px 0 4px 6px}.muted{overflow-wrap:anywhere}
+@media(min-width:700px){.hub{max-width:900px}}</style><script>function openTo(a){var id=a.getAttribute('href').slice(1);var e=document.getElementById(id);var p=e;while(p){if(p.tagName=='DETAILS')p.open=true;p=p.parentElement}setTimeout(function(){e&&e.scrollIntoView({block:'center'})},50)}function allHubs(v){document.querySelectorAll('details.hub').forEach(function(d){d.open=v})}</script>
 </head>
 <body>
 <header class="site"><div class="wrap">
@@ -146,9 +30,12 @@ render();
 
 <div class="card">
 <h2>Схема</h2>
-<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
-<div class="widechart"><div id="fchart" class="mermaid"></div></div>
+<p class="muted">Вертикальные плашки: нажмите на группу, чтобы раскрыть. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке группы: минимум и максимум по всем путям внутри группы. У выбора ▲ прибавка, ▼ убавка. <b style="color:#b91c1c">Красным</b> условие, 🚩 что выбор записывает. Выборы вложены под плашкой, к которой они относятся; «↩» ведёт к плашке выше, если путь сходится.</p>
+<div class="pl ex">Героиня возвращается к Адриану у двери Гавани<br/><small>adrian_conv_door</small></div>
+<details class="hub" id="h_A1" style="border-color:#166534"><summary style="color:#166534"><b>Адриан у двери<br/><br><small style="font-weight:400">adrian_conv_door, 1281-1316</small></b></summary><div class="muted">Вход: клик по Адриану на экране у двери (script_newscreens.rpy:1723)</div><div class="pl sc" id="n_Z0" style="background:#E4EEF9">Адриан: «Вам что-то нужно?» (1281-1283)</div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«Кажется, мы не поладили с эльфом.» <div style="font-size:12px;color:#b91c1c;font-weight:700">если героиня поссорилась с Адро и Адриан ещё не знает (1288)</div></div><div class="pl sc" id="n_Z1" style="background:#E4EEF9">Адриан: «Не прошло и пяти минут... Научитесь молчать о том, что думаете» — даёт возможность показать значок снова (1290-1308)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 записывает «Адриан в курсе ссоры» → открывает второй показ значка Адро (oh_d false1)</span></div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (дорога)</div></div><div class="ch" style="border-color:#166534;background:#fff"><div class="chh" style="border-left:4px solid #166534">«До свидания.» </div><div class="pl ex" id="n_EXS" style="background:#eef0f4">Экран переходов (дорога)</div></div></details>
+<details class="hub" id="h_A2" style="border-color:#b45309"><summary style="color:#b45309"><b>Доклад Адриану<br/><br><small style="font-weight:400">adrian_conv_door_white, 1317-1576</small></b> <div style="margin-top:3px"><span style='display:inline-block;background:rgb(204,244,240);border:1.4px solid rgb(13,148,136);color:rgb(13,148,136);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−1…+2</span> <span style='display:inline-block;background:rgb(241,245,249);border:1.4px solid rgb(71,85,105);color:rgb(71,85,105);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700'>−2…+2</span></div></summary><div class="pl stub" id="n_R0" style="background:#fdf1e2">Адриан: «Как продвигается расследование?» (1317-1318)<br/><span style='font-size:12px;color:#b91c1c;font-weight:700'>пока в заглушке: переход сюда закомментирован (1285-1286)</span></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">Если Адро принял версию «самоубийство» (1319): </div><div class="pl stub" id="n_R1" style="background:#fdf1e2">Героиня знает про суицид; стоит ли говорить Адриану? (1319-1321)</div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Да, ему стоит знать.» <span style='background:rgb(204,244,240);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl stub" id="n_R2" style="background:#fdf1e2">Адриан: «Это меняет все дело... Что если это ошибка?» (1327-1342) <span style='background:rgb(204,244,240);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl bad" id="n_END" style="background:#ffd6d6">Конец демоверсии (перезапуск игры)</div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Нет, не стоит» </div><div class="pl stub" id="n_R3" style="background:#fdf1e2">Адро просил молчать: героиня промолчала (1348-1350)</div><div class="pl stub" id="n_R5" style="background:#fdf1e2">Героиня рассказывает Адриану находки (1361-1565)<br/><span style='font-size:12px;color:#92400e;font-weight:700'>🚩 каждый рассказ записывается: яд, дневник, письмо Камилле, чай, бумаги, анализ и т.д. (adrian_dialog)</span></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">Если бумаги осмотрены (1412): </div><div class="pl stub" id="n_RP" style="background:#fdf1e2">Бумаги Лиассона: контрабанда и заказные убийства (1412-1417)</div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Но это же противозаконно!» <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(204,244,240);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></div><div class="pl stub" id="n_RA" style="background:#fdf1e2">Адриан узнаёт, что Лиассон заказал убийство брата Адро (1439-1443)</div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Я думаю, убийцей может быть Адро.» </div><div class="pl stub" id="n_RB" style="background:#fdf1e2">Адриан: «Вы уверены?» (1452)</div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Да.» <div style="font-size:12px;color:#b91c1c;font-weight:700">Адриан идёт с героиней к Адро вечером: «Конец демоверсии. Точно братоубийство?»</div></div><div class="pl bad" id="n_END" style="background:#ffd6d6">Конец демоверсии (перезапуск игры)</div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Нет.» </div><div class="pl stub" id="n_R6" style="background:#fdf1e2">Что ещё рассказать Адриану? (1480, 1482)</div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">Если найдены письма Камилле (1482): </div><div class="pl stub" id="n_RF" style="background:#fdf1e2">Письма отца Лиассона: «Это мог быть его отец?» (1482-1489)</div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Это мог быть его отец.» <div style="font-size:12px;color:#b91c1c;font-weight:700">если дневник осмотрен: Адриан спрашивает, плохо ли это (1495)</div></div><div class="pl stub" id="n_RG" style="background:#fdf1e2">Адриан: «Ты считаешь, это плохо?» (1497)</div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Нет! Почему это должно быть плохо?» <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><div style="font-size:12px;color:#b91c1c;font-weight:700">Адриан сам повёл бы к Адро: «Конец демоверсии. Точно его отец?» (1521)</div></div><div class="pl bad" id="n_END" style="background:#ffd6d6">Конец демоверсии (перезапуск игры)</div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Да! Он не имел права!» <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></div><div class="pl bad" id="n_END" style="background:#ffd6d6">Конец демоверсии (перезапуск игры)</div></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Не думаю, что это так.» </div><div class="ref">↩ продолжение выше: <a href="#n_R6" onclick="openTo(this)">Что ещё рассказать Адриану? (1480, 1482)…</a></div></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«На этом все.» <div style="font-size:12px;color:#b91c1c;font-weight:700">Адриан: «Сначала убили Старейшину, теперь посол... У тебя есть предположения?» (1573) → «Конец демоверсии. Кто убийца?»</div></div><div class="pl bad" id="n_END" style="background:#ffd6d6">Конец демоверсии (перезапуск игры)</div></div></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Адро не мог убить брата» <div style="font-size:12px;color:#b91c1c;font-weight:700">внутри стоит проверка «adro_liass_talk» без сравнения, она всегда истинна (1474)</div></div><div class="ref">↩ продолжение выше: <a href="#n_R6" onclick="openTo(this)">Что ещё рассказать Адриану? (1480, 1482)…</a></div></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">«Не вижу в этом ничего плохого.» <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> <span style='background:rgb(204,244,240);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></div><div class="ref">↩ продолжение выше: <a href="#n_RA" onclick="openTo(this)">Адриан узнаёт, что Лиассон заказал убийство брата Адро (1439…</a></div></div></div></div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">Если в кабинете не нашли улик (1351): </div><div class="pl stub" id="n_R4" style="background:#fdf1e2">Адро велел вернуться без улик; Адриан: «Скорее всего начнётся война» (1353-1358)</div><div class="pl bad" id="n_END" style="background:#ffd6d6">Конец демоверсии (перезапуск игры)</div></div><div class="ch" style="border-color:#b45309;background:#fff"><div class="chh" style="border-left:4px solid #b45309">Если Адро не принял «самоубийство» и в кабинете нашли улики: </div><div class="ref">↩ продолжение выше: <a href="#n_R5" onclick="openTo(this)">Героиня рассказывает Адриану находки (1361-1565)…</a></div></div></details>
 </div>
+
 </main>
 <footer>Схемы игры «Вий» · script3_tgavan_oh.rpy · выверено по коду 20.10.2026</footer>
 </body>
