@@ -7,21 +7,163 @@
 <meta http-equiv="Pragma" content="no-cache">
 <title>Айрат: дом Луизы и концовки — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
+<style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
+const HUBS=["H1", "H2", "H3", "H4", "H5"];
+const EXP=new Set();
+const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)';
+const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)';
+function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
+function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
+function mk(text, ups, downs){
+  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
+  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
+    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
+    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
+    +'</div>';
+}
+function badge(ranges){
+  if(!ranges.length) return '';
+  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;margin-left:3px">'+p[1]+'</span>';}).join('');
+  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
+}
+function hub(id,label,cls,ranges){
+  const arrow = EXP.has(id) ? '▾' : '▸';
+  const b=badge(ranges||[]);
+  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
+  return id + '["' + inner + '"]:::' + cls;
+}
+const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>'+t+'</span>';};
+const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>'+t+'</span>';};
+const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
+function build(){
+  const L=[]; const ST=[]; let ei=0;
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
+  L.push('flowchart TD');
+  const cG='#9aa3b2', c1='#166534', c2='#be123c', c3='#7c3aed', c4='#b45309', c5='#b91c1c';
+  L.push('ST["<div style=\'width:300px;white-space:normal\'>Экран переходов: левая сторона главной улицы</div>"]:::ex');
+  L.push('EXS["<div style=\'width:200px;white-space:normal\'>Экран переходов</div>"]:::ex');
+  L.push(hub('H1','Дверь дома Луизы<br/><small>dev_door_label, airat_house_luiza, 1616-1673</small>','hhn',[]));
+  if(EXP.has('H1')){
+    L.push('DD["<div style=\'width:240px;white-space:normal\'>Дверь дома Луизы (1616)<br/><small>dev_door_label</small></div>"]:::sc');
+    E('H1 --> DD', c1);
+    E('DD --> DA["<div style=\'width:290px;white-space:normal\'>'+mk('«Войти»'+cond('если Луиза рядом'),null,null)+'</div>"]:::hhn', c1); E('DA --> HS', c1);
+    E('DD --> DB["<div style=\'width:290px;white-space:normal\'>'+mk('«Постучаться»'+cond('если Луизы рядом нет')+cond('dev.lock == дом Луизы: при dev_bad «Уходите! Я занята!»; если Феня ранена и рядом - Луиза пускает только Феню, rana = 1')+cond('иначе, если Луизы в доме нет: «Тишина. И пустота.»'),null,null)+'</div>"]:::hhn', c1); E('DB --> HS', c1);
+    E('DD --> DC["<div style=\'width:290px;white-space:normal\'>'+mk('«Конец»',null,null)+'</div>"]:::hhn', c1); E('DC --> X1', c1);
+    L.push('HS["<div style=\'width:300px;white-space:normal\'>Дом Луизы первый раз (1674): «home_luiza»<br/><small>ночью «поспи на скамейке», change_day(day, 5), dev.near = 1</small></div>"]:::sc');
+    L.push('SL["<div style=\'width:300px;white-space:normal\'>Метка airat_sleep (1987): «Сейчас глубокая ночь... стоит поспать»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 quest_find_priest.keep = 1</span></div>"]:::sc');
+    E('HS -- "ночью, вход с Луизой из ворот (in_wall 120)" --> SL', c1);
+    L.push('X1["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
+    E('HS --> X1', c1);
+  } else {
+    E('H1 --> EXS', c1);
+  }
+  L.push(hub('H2','Феня и аптечка<br/><small>airat_house_fenya_bint, 1787-1818</small>','hhk',[[C_MOR, '0…+1'], [C_FEN, '0…+1']]));
+  if(EXP.has('H2')){
+    L.push('F0["<div style=\'width:280px;white-space:normal\'>Феня ранена и рядом (fenya_rana): Луиза просит найти аптечку</div>"]:::sc');
+    L.push('F1["<div style=\'width:320px;white-space:normal\'>«medicine» в заметках quest_find_doc → airat_house_fenya_bint (1787)<br/>Луиза перевязывает Феню<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 rana = 1</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Луиза ищет жреца → luiza_next, иначе Феня «пойдёмте» → экран переходов</span><br/><span style=\'background:rgb(254,226,232);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span> <span style=\'background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span> (1802-1803)</div>"]:::sc');
+    L.push('F2["<div style=\'width:260px;white-space:normal\'>Иначе (осмотр аптечки не сделан) → экран переходов</div>"]:::sc');
+    E('H2 --> F0', c2);
+    E('F0 --> F1', c2);
+    E('F0 -- "пока не осмотрела" --> F2', c2);
+  } else {
+    E('H2 --> EXS', c2);
+  }
+  L.push(hub('H3','Выбор об отце<br/><small>airat_house_luiza_next, 1819-1870</small>','hhp',[[C_MAD, '0…+1'], [C_LOG, '0…+1'], [C_DEV, '−3…+1'], [C_MOR, '−1…+1']]));
+  if(EXP.has('H3')){
+    L.push('Q["<div style=\'width:260px;white-space:normal\'>Выбор продолжения: quest_find_priest.keep</div>"]:::sc');
+    L.push('Q1["<div style=\'width:280px;white-space:normal\'>«dev_priest_home2»: «Надо пойти в Церковь» → экран переходов<br/><small>церковь ещё не открывали</small></div>"]:::sc');
+    L.push('Q2["<div style=\'width:300px;white-space:normal\'>Повторно, «dev_church» ещё нет: cycle.d1 += 1; на 4-й раз «Да ты издеваешься!»<br/><span style=\'background:rgb(220,252,231);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px\'>▼−1</span> один раз (1774)</div>"]:::sc');
+    L.push('LN["<div style=\'width:300px;white-space:normal\'>«dev_church» есть, «dev_priest_home4» нет: airat_house_luiza_next (1819)</div>"]:::sc');
+    E('H3 --> Q', c3);
+    E('Q --> Q1', c3);
+    E('Q --> Q2', c3);
+    E('Q --> LN', c3);
+    E('LN --> L1["<div style=\'width:290px;white-space:normal\'>'+mk('«Не хочу тебя расстраивать, но он мог лгать.»'+cond('если «miranda_dev» в airat_sp')+flag('заметка priest_lie (1844)'),[[C_LOG, 1]],null)+'</div>"]:::hhp', c3); E('L1 --> L4', c3);
+    E('LN --> L2["<div style=\'width:290px;white-space:normal\'>'+mk('«Не думаю, что он мог лгать...»'+flag('заметка not_priest_lie (1858-1860)'),[[C_DEV, 1], [C_MOR, 1]],null)+'</div>"]:::hhp', c3); E('L2 --> L4', c3);
+    E('LN --> L3["<div style=\'width:290px;white-space:normal\'>'+mk('«Мне плевать.»'+note('«Пожалуй, я остаюсь.» (дальше) / «Ага. Отличная идея.»: quest_find_priest, find_doc, know_priest → false, dev.bad = 1, Луиза ушла (1865-1868)'),[[C_MAD, 1]],[[C_MOR, 1], [C_DEV, 2]])+'</div>"]:::hhp', c3); E('L3 --> L4', c3);
+    L.push('L4["<div style=\'width:260px;white-space:normal\'>«Помоги осмотреть дом» → экран переходов<br/><small>осмотр дома: airat_house_priest_menu</small></div>"]:::sc');
+  } else {
+    E('H3 --> EXS', c3);
+  }
+  L.push(hub('H4','Осмотр дома<br/><small>airat_house_priest_menu, 1900-1932</small>','hhs',[]));
+  if(EXP.has('H4')){
+    L.push('PM["<div style=\'width:260px;white-space:normal\'>Лупа в доме (1900): airat_house_priest_menu</div>"]:::sc');
+    L.push('PM1["<div style=\'width:280px;white-space:normal\'>«Осмотреть записку» (node): зашифрованная записка с гербом Церкви<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 «node»</span></div>"]:::sc');
+    L.push('PM2["<div style=\'width:280px;white-space:normal\'>«Осмотреть медицинские вещи» (medicine)</div>"]:::sc');
+    L.push('PM3["<div style=\'width:280px;white-space:normal\'>«Осмотреть странную аптечку» (medicine2)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>не засчитывается для перевязки: код пишет «medicine2» (1910), а проверка ищет «medicine_2» (1714)</span></div>"]:::sc');
+    L.push('PM4["<div style=\'width:200px;white-space:normal\'>«Закончить осмотр»</div>"]:::sc');
+    E('H4 --> PM', c4);
+    E('PM --> PM1', c4);
+    E('PM --> PM2', c4);
+    E('PM --> PM3', c4);
+    E('PM --> PM4', c4);
+  } else {
+    E('H4 --> H5', c4);
+  }
+  L.push(hub('H5','Концовки демоверсии<br/><small>airat_end_dev, 1933-1991</small>','hhr',[]));
+  if(EXP.has('H5')){
+    L.push('Q3["<div style=\'width:300px;white-space:normal\'>«dev_church» есть, «node» (записка) есть, «node2» нет → airat_end_dev (1933)</div>"]:::sc');
+    E('H5 --> Q3', c5);
+    L.push('E0["<div style=\'width:300px;white-space:normal\'>КОНЕЦ ДЕМОВЕРСИИ «Без понятия что тут творится»<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>мораль < 1, нет priest_lie, Логика (get_level) < 2</span><br/><small>airat__dont; меню без пунктов, общий renpy.full_restart() (1983)</small></div>"]:::bad');
+    L.push('E1["<div style=\'width:300px;white-space:normal\'>КОНЕЦ «Что-то творится в светлом королевстве»<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>priest_lie</span><br/><small>«Церковь действительно не так чиста?» airat__notclean</small></div>"]:::bad');
+    L.push('E2["<div style=\'width:300px;white-space:normal\'>КОНЕЦ «Подстава»<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>Логика (get_level) ≥ 2</span><br/><small>«Может, ему это подкинули?» airat__pods</small></div>"]:::bad');
+    L.push('E3["<div style=\'width:300px;white-space:normal\'>КОНЕЦ «Высокая цена»<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>мораль ≥ 1</span><br/><small>«Может быть, так было лучше?» airat__notclean2; renpy.full_restart() (1983)</small></div>"]:::bad');
+    E('Q3 --> E0', c5);
+    E('Q3 --> E1', c5);
+    E('Q3 --> E2', c5);
+    E('Q3 --> E3', c5);
+  } else {
+  }
+  E('ST -- "дверь дома" --> H1', cG);
+  E('ST -- "Феня ранена" --> H2', cG);
+  E('ST -- "выбор об отце" --> H3', cG);
+  E('ST -- "осмотр дома" --> H4', cG);
+  L.push('classDef hhk fill:#fde9ee,stroke:#be123c,color:#4d1223');
+  L.push('classDef hhn fill:#e7f4ea,stroke:#166534,color:#14331f');
+  L.push('classDef hhp fill:#f1eafd,stroke:#7c3aed,color:#2f1c5c');
+  L.push('classDef hhr fill:#fce9e9,stroke:#b91c1c,color:#4a1414');
+  L.push('classDef hhs fill:#edf1f6,stroke:#475569,color:#1d2733');
+  L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
+  L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
+  L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
+  return L.concat(ST).join('\n');
+}
+async function render(){
+  const f=document.getElementById('fchart');
+  if(!f) return;
+  f.removeAttribute('data-processed');
+  f.textContent=build();
+  await mermaid.run({nodes:[f]});
+  for(const ss of document.styleSheets){
+    let rules; try{rules=ss.cssRules;}catch(e){continue;}
+    for(let i=rules.length-1;i>=0;i--){
+      const r=rules[i];
+      if(r.selectorText && /\.(hh[a-z0-9]*|sc|ex|dd|ok)( span| > \*)$/.test(r.selectorText)
+         && r.style && r.style.getPropertyPriority('color')==='important'){ r.style.removeProperty('color'); }
+    }
+  }
+  document.querySelectorAll('#fchart g.node').forEach(function(g){
+    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
+    if(m && HUBS.indexOf(m[1])>=0){ g.style.cursor='pointer'; g.addEventListener('click', function(){ window.th(m[1]); }); }
+  });
+}
+window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
+window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
+render();
 </script>
-<style>.warn{color:#b91c1c;font-weight:700}</style>
 </head>
 <body>
 <header class="site"><div class="wrap">
-<h1>Айрат: дом Луизы, записка, концовки демо — script_4_airat.rpy</h1>
-<p>Строки 1616-1991: дверь дома, перевязка Фени, выбор об отце, 4 концовки демоверсии</p>
-<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="airat3.html?v=5">Карралак и лазарет</a> · <a href="stats.html?v=32">Статы</a></nav>
+<h1>Айрат: дом Луизы, записка, концовки демо</h1>
+<p>script_4_airat.rpy, строки 1616-1991: дверь дома, перевязка Фени, выбор об отце, 4 концовки демоверсии</p>
+<nav class="crumbs"><a href="index.html?v=41">← Все схемы</a> · <a href="airat3.html?v=5">Карралак</a> · <a href="airat5.html?v=40">Продолжение</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
-<h2>Статы (дом Луизы и концовки: script_4_airat.rpy 1616-1991)</h2>
+<h2>Статы сцены (строки 1616-1991)</h2>
 <table class="stats">
 <tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Комментарий</th></tr>
 <tr><td class="mad">Безумие</td><td>0</td><td>+1</td><td>«Мне плевать.» (1865)</td></tr>
@@ -34,64 +176,15 @@ mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:
 <p class="muted">4 концовки демо (centered «КОНЕЦ ДЕМОВЕРСИИ»): airat__dont, airat__notclean, airat__pods, airat__notclean2. Допущение: стартовая Мораль = 0 (в доступных файлах не найдено); значения Морали по всему Айрату суммируются с страницами airat3/airat2.</p>
 </div>
 <div class="card">
+<h2>Типичный путь (суждение, не измерение)</h2>
+<p><b>Как иду:</b> «Войти» с Луизой; перевязываю Феню; на выбор об отце «Не думаю, что он мог лгать...»; осматриваю записку. По условиям (мораль ≥ 1, без priest_lie, Логика ниже 2) выходит концовка «Высокая цена».</p>
+<p><b>Итог по сцене:</b> Безумие 0 · Логика 0 · Кровь 0 · Мораль +2 · Настроение Луизы +1 · Настроение Фени +1.</p>
+</div>
+
+<div class="card">
 <h2>Схема</h2>
-<div class="widechart"><div class="mermaid">
-flowchart TD
-ST["<b>strel: левая сторона главной улицы</b>"]:::out
-DD["<b>dev_door_label</b> (1616): дверь дома Луизы<br/>меню: «Войти» (если Луиза рядом) / «Постучаться» (если нет) / «Конец»"]:::hub
-DK["«Постучаться»: <span style='color:#b91c1c;font-weight:700'>dev.lock == дом Луизы</span><br/><span style='color:#b91c1c;font-weight:700'>dev_bad (to_airat_bad / after_airat_bad)</span>: «Уходите! Я занята!»; <span style='color:#b91c1c;font-weight:700'>если Феня ранена и рядом</span>: Луиза пускает только Феню, rana = 1 → strel<br/>иначе → дом<br/>если Луизы в доме нет: «Тишина. И пустота.»"]:::scene
-H["<b>airat_house_luiza</b> (1674): дом Луизы<br/>первый раз «home_luiza»; ночью — «поспи на скамейке», change_day(day, 5), dev.near = 1"]:::scene
-F0["<span style='color:#b91c1c;font-weight:700'>Феня ранена и рядом (fenya_rana)</span>: Луиза просит найти аптечку"]:::scene
-F1["<span style='color:#b91c1c;font-weight:700'>«medicine» в заметках quest_find_doc</span> → <b>airat_house_fenya_bint</b> (1787)<br/>Луиза перевязывает Феню, rana = 1<br/><span style='background:rgb(255,228,230);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▲+1</span><br/>если Луиза ищет жреца → luiza_next, иначе Феня «пойдёмте» → strel"]:::scene
-F2["иначе → strel (осмотр аптечки)"]:::out
-Q["<span style='color:#b91c1c;font-weight:700'>quest_find_priest.keep</span>: выбор продолжения"]:::hub
-Q1["«dev_priest_home2»: «Надо пойти в Церковь» → strel"]:::out
-Q2["повторно, «dev_church» ещё нет: cycle.d1 += 1<br/>на 4-й раз «Да ты издеваешься!» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> (один раз, ==4)"]:::scene
-Q3["<span style='color:#b91c1c;font-weight:700'>«dev_church» есть и «node» (записка) есть, «node2» нет</span> → <b>airat_end_dev</b> (1933)"]:::bad
-LN["<span style='color:#b91c1c;font-weight:700'>«dev_church» есть, «dev_priest_home4» нет</span> → <b>airat_house_luiza_next</b> (1819)"]:::hub
-L1["«Не хочу тебя расстраивать, но он мог лгать.» <span style='color:#b91c1c;font-weight:700'>(если «miranda_dev» в airat_sp и т. п.)</span><br/><span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> заметка priest_lie"]:::scene
-L2["«Не думаю, что он мог лгать...»<br/><span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▲+1</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> заметка not_priest_lie"]:::scene
-L3["«Мне плевать.» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>Мораль ▼−1</span> <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span><br/>«Пожалуй, я остаюсь.» / «Ага. Отличная идея.»"]:::scene
-L3b["«Ага. Отличная идея.»: quest_find_priest, find_doc, know_priest → false; dev.bad = 1 → strel (Луиза ушла)"]:::bad
-L4["«Помоги осмотреть дом» → strel (осмотр дома: airat_house_priest_menu)"]:::out
-PM["<b>airat_house_priest_menu</b> (1900): лупа в доме<br/>«Осмотреть записку» (node: зашифрованная записка с гербом Церкви) / «Осмотреть медицинские вещи» (medicine) / «Осмотреть странную аптечку» (medicine2) / «Закончить осмотр»"]:::hub
-E0["<b>КОНЕЦ ДЕМОВЕРСИИ «Без понятия что тут творится»</b><br/><span style='color:#b91c1c;font-weight:700'>мораль &lt; 1 и нет priest_lie и Логика (get_level) &lt; 2</span><br/>airat__dont; затем меню без доступных пунктов и общий <code>renpy.full_restart()</code> (1983)"]:::bad
-E1["<b>КОНЕЦ «Что-то творится в светлом королевстве»</b><br/>«Церковь действительно не так чиста?» <span style='color:#b91c1c;font-weight:700'>(priest_lie)</span> airat__notclean"]:::bad
-E2["<b>КОНЕЦ «Подстава»</b><br/>«Может, ему это подкинули?» <span style='color:#b91c1c;font-weight:700'>(Логика get_level ≥ 2)</span> airat__pods"]:::bad
-E3["<b>КОНЕЦ «Высокая цена»</b><br/>«Может быть, так было лучше?» <span style='color:#b91c1c;font-weight:700'>(мораль ≥ 1)</span> airat__notclean2<br/>после — <code>renpy.full_restart()</code> (1983)"]:::bad
-SL["<b>airat_sleep</b> (1987): «Сейчас глубокая ночь... стоит поспать»<br/>quest_find_priest.keep = 1 → strel"]:::out
-ST --> DD
-DD --> DK
-DD -- "«Войти»" --> H
-DK --> H
-H --> F0
-F0 --> F1
-F0 -- "пока не осмотрела" --> F2
-H --> Q
-Q -- "церковь ещё не открывали" --> Q1
-Q --> Q2
-Q --> Q3
-Q --> LN
-F1 --> LN
-LN --> L1
-LN --> L2
-LN --> L3
-L3 --> L3b
-L1 --> L4
-L2 --> L4
-L3 -- "«Пожалуй, я остаюсь.»" --> L4
-L4 --> PM
-PM -- "записка найдена, вернуться к Луизе" --> Q3
-Q3 --> E0
-Q3 --> E1
-Q3 --> E2
-Q3 --> E3
-H -- "ночью, при входе с Луизой из ворот (in_wall 120)" --> SL
-classDef scene fill:#E4EEF9,stroke:#7a9cc6
-classDef hub fill:#fff3bf,stroke:#d4a017
-classDef bad fill:#ffd6d6,stroke:#b91c1c
-classDef out fill:#d8f5e0,stroke:#2f9e44
-</div></div>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
+<div class="widechart"><div id="fchart" class="mermaid"></div></div>
 </div>
 <div class="card">
 <h2>Ошибки и особенности кода</h2>
@@ -101,7 +194,8 @@ classDef out fill:#d8f5e0,stroke:#2f9e44
 <li>Мёртвый вход <code>dev_door_osm2</code> (1664): флаги dev.lock, реплики; вызовы не найдены в доступных файлах.</li>
 </ul>
 </div>
+
 </main>
-<footer>Схемы игры «Вий» · Айрат: дом Луизы и концовки · выверено по коду 20.10.2026</footer>
+<footer>Схемы игры «Вий» · script_4_airat.rpy · выверено по коду 20.10.2026</footer>
 </body>
 </html>
