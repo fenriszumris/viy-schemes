@@ -147,7 +147,7 @@ function build(){
   L.push(hub('H5','Потеря памяти, Лес Смерти, Хаос<br/><small>amnez, inless_conv_chaos/memory, 655-930</small>','hhk',[[C_MAD, '−2…+5'], [C_LOG, '−4…+2'], [C_DEV, '−10…+2']]));
   if(EXP.has('H5')){
     L.push('AM0["<div style=\'width:260px;white-space:normal\'>Луиза спрашивает про память (655)</div>"]:::sc');
-    L.push('AL["<div style=\'width:320px;white-space:normal\'>Луиза: «Ты знаешь, где мы?»; рассказ про Лес Смерти и Хаос (707-782)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Лесс называл имя места: «Лес Смерти»; иначе Луиза называет сама; при Безумии не ниже 1 уровня настроение Луизы −1 (736)</span></div>"]:::sc');
+    L.push('AL["<div style=\'width:320px;white-space:normal\'>Луиза: «Ты знаешь, где мы?»; рассказ про Лес Смерти и Хаос (707-782)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Лесс называл имя места: «Лес Смерти»; если не называл - Луиза называет сама; при Безумии не ниже 1 уровня настроение Луизы −1 (736)</span></div>"]:::sc');
     E('H5 --> AM0', c5);
     L.push('AMM["<div style=\'width:260px;white-space:normal\'>Луиза в ужасе от вашей беззаботности (673)</div>"]:::sc');
     E('AM0 --> AA["<div style=\'width:290px;white-space:normal\'>'+mk('Если доля Логики не выше 0,5 (Безумия не меньше):',null,[[C_DEV, 1]])+'</div>"]:::hhk', c5); E('AA --> AMM', c5);
@@ -166,7 +166,7 @@ function build(){
     E('CH --> C2["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет. Это звучит плохо.»',[[C_LOG, 2], [C_DEV, 1]],[[C_MAD, 2]])+'</div>"]:::hhk', c5); E('C2 --> MEM', c5);
     E('CH --> C3["<div style=\'width:290px;white-space:normal\'>'+mk('«А кто это?»'+note('один раз'),[[C_LOG, 1]],null)+'</div>"]:::hhk', c5); E('C3 --> CH', c5);
     L.push('W2N["<div style=\'width:300px;white-space:normal\'>Если про церковь Ара ещё не спрашивали и Логика не ниже 1 уровня: вопрос про церковников (как в хабе вопросов)</div>"]:::sc');
-    L.push('CR["<div style=\'width:300px;white-space:normal\'>Если иначе: игра перезапускается без концовки (баг, 882)</div>"]:::bad');
+    L.push('CR["<div style=\'width:300px;white-space:normal\'>Если ни одно условие не выполнено: игра перезапускается без концовки (баг, 882)</div>"]:::bad');
     E('MEM --> E1["<div style=\'width:290px;white-space:normal\'>'+mk('«Хорошо...»',[[C_DEV, 2]],[[C_MAD, 1]])+'</div>"]:::hhk', c5); E('E1 --> W2N', c5);
     E('MEM --> E2["<div style=\'width:290px;white-space:normal\'>'+mk('«Со мной все в порядке – нет.»',[[C_MAD, 1]],[[C_DEV, 1]])+'</div>"]:::hhk', c5); E('E2 --> W2N', c5);
     E('MEM --> E3["<div style=\'width:290px;white-space:normal\'>'+mk('Если про церковь уже спрашивали или Логика ниже 1 уровня:',null,null)+'</div>"]:::hhk', c5); E('E3 --> CR', c5);

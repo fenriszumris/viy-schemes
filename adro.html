@@ -52,7 +52,7 @@ function build(){
   E('ST --> D1', cG);
   L.push(hub('D1','Адро у ворот<br/><small>script_4_tgavan_adro, adro_menu, 709-785</small>','hhn',[[C_MAD, '0…+1'], [C_LOG, '−1…+1'], [C_ADO, '−1…0']]));
   if(EXP.has('D1')){
-    L.push('G0["<div style=\'width:300px;white-space:normal\'>Адро преграждает проход: «Проход запрещён» (714-738)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если героиня в Белой Страже: текст про значок; иначе она идёт «по поводу...»</span></div>"]:::sc');
+    L.push('G0["<div style=\'width:300px;white-space:normal\'>Адро преграждает проход: «Проход запрещён» (714-738)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если героиня в Белой Страже: текст про значок; если не в Белой Страже - она идёт «по поводу...»</span></div>"]:::sc');
     E('D1 --> G0', c1);
     L.push('GM["<div style=\'width:240px;white-space:normal\'>Адро не замечает героиню (748)</div>"]:::sc');
     E('G0 --> GM', c1);
@@ -228,7 +228,7 @@ render();
 <div class="card">
 <h2>Ошибки и особенности кода</h2>
 <ul>
-<li>Строки 1186-1226: «Сопротивляться» ведёт на метку <code>nesm</code> (script_1_less_hand.rpy:428), если настроение Лесса не ниже 5, иначе концовка «Забытая».</li>
+<li>Строки 1186-1226: «Сопротивляться» ведёт на метку <code>nesm</code> (script_1_less_hand.rpy:428), если настроение Лесса не ниже 5; если ниже 5 - концовка «Забытая».</li>
 <li>Строка 1163: «End? Расследование, провал.» не перезапускает игру: героиня уходит на карту.</li>
 </ul>
 </div>

@@ -69,7 +69,7 @@ function build(){
   }
   L.push(hub('H3','Статуя кошки<br/><small>cat_inspect, cat_talk, 432-581</small>','hhk',[[C_MAD, '−2…+2'], [C_LOG, '−2…+1']]));
   if(EXP.has('H3')){
-    L.push('CI["<div style=\'width:320px;white-space:normal\'>Осмотр статуи кошки без пропуска (432): cat_inspect<br/>diary 2; «Бросить дело» или «Убежать» ранее → экран переходов, иначе my_location = airat_cat</div>"]:::sc');
+    L.push('CI["<div style=\'width:320px;white-space:normal\'>Осмотр статуи кошки без пропуска (432): cat_inspect<br/>diary 2; «Бросить дело» или «Убежать» ранее → экран переходов; если не выбирала - my_location = airat_cat</div>"]:::sc');
     L.push('CT["<div style=\'width:300px;white-space:normal\'>Статуя кошки (454): cat_talk, razg = cat, меню (460)</div>"]:::sc');
     E('H3 --> CI', c3);
     E('CI --> CT', c3);
