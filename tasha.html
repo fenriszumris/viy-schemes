@@ -345,8 +345,8 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <body>
 <header class="site"><div class="wrap">
 <h1>Назад — встреча с Таширом (Ташей)</h1>
-<p>script3_nazad.rpy (nazad) · tash_game.rpy · day_1_tash_razg.rpy (razg) · вход стрелкой из сцены <a href="road.html?v=2" style="color:#b9a7ff">«Дорога»</a> или повторным разговором (razg_menu = «tash»)</p>
-<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="road.html?v=2">Дорога</a> · <a href="strel.html?v=23">Экран переходов</a> · <a href="stats.html?v=33">Статы</a></nav>
+<p>script3_nazad.rpy (nazad) · tash_game.rpy · day_1_tash_razg.rpy (razg) · вход стрелкой из сцены <a href="road.html?v=3" style="color:#b9a7ff">«Дорога»</a> или повторным разговором (razg_menu = «tash»)</p>
+<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="road.html?v=3">Дорога</a> · <a href="strel.html?v=23">Экран переходов</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -375,6 +375,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <div class="panel-rel">
 <div id="panel-full">
 <h2>Полная схема: все хабы и все выборы</h2>
+<p class="muted">Плашки на хабе: минимум и максимум по всем путям внутри хаба от входа до выхода (со вложенными меню и циклами, с учётом разовых флагов и повторов причин); пути к смертям не считаются.</p>
 <p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его ветки, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Развернуть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button></p><p class="muted" style="font-size:13px">Значки на выборах: <span style="color:#7048e8;font-weight:700">▲/▼ Безумие</span> · <span style="color:#1c7ed6;font-weight:700">▲/▼ Логика</span> · <span style="color:#bc1888;font-weight:700">▲/▼ Кровь</span> · <span style="color:#e41a1c;font-weight:700">▲/▼ Настроение Лесса</span> · <span style="color:#d97706;font-weight:700">▲/▼ Настроение Таши</span>. Плюсы — вверху справа карточки, минусы — внизу слева. Плашка на хабе — диапазон прямых изменений статов внутри хаба (по коду).</p>
 <style>button.mini{font-size:13px;padding:3px 10px;border-radius:8px;border:1px solid #c6ccd6;background:#fff;cursor:pointer}</style>
 <div class="widechart"><pre class="mermaid" id="fchart"></pre></div>
