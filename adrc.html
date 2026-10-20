@@ -149,15 +149,6 @@ render();
 <p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
 <div class="widechart"><div id="fchart" class="mermaid"></div></div>
 </div>
-<div class="card">
-<h2>Ошибки и особенности кода</h2>
-<ul>
-<li><span style="font-weight:700">Доклад Адриану в демо не подключён (заглушка демо, так задумано, не ошибка)</span>: строки 1285-1286 (<code>if white_guard: jump adrian_conv_door_white</code>) закомментированы, и на метку <code>adrian_conv_door_white</code> (1317) нет ни одного перехода. Весь доклад (1317-1576) в демо не достигается; ветка «no_evid» (1351) тоже.</li>
-<li>Строка 1474: <code>if "adro_liass_talk":</code> без <code>in adro_dialog</code>, условие всегда истинно.</li>
-<li>В <code>adrian_conv_door</code> единственный пункт меню (1288) виден только при ссоре с Адро; без неё в меню нет ни одного пункта, а «До свидания» (1313) стоит уже после меню.</li>
-</ul>
-</div>
-
 </main>
 <footer>Схемы игры «Вий» · script3_tgavan_oh.rpy · выверено по коду 20.10.2026</footer>
 </body>
