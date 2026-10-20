@@ -49,7 +49,7 @@ function build(){
   L.push(hub('H3','Хаб 3. Барьер<br/>less_up_barier','h3',[[C_MAD,'0…+1'],[C_BLD,'0…+3']]));
   L.push(hub('H4','Хаб 4. Лесс на кругах<br/>less_kr / kr_less','h4',[]));
   L.push(hub('BUR','Мёртвый код: бурундук<br/>kr_bur / bur_menu','hb',[[C_MAD,'+1'],[C_LOG,'+1']]));
-  L.push('VH["<a href=\'less.html?v=64\' style=\'color:rgb(11,94,215);text-decoration:underline\'>Вход: road_begin (после Лесса)<br/>· strel · возврат из совы</a>"]:::ext');
+  L.push('VH["<a href=\'less.html?v=65\' style=\'color:rgb(11,94,215);text-decoration:underline\'>Вход: road_begin (после Лесса)<br/>· strel · возврат из совы</a>"]:::ext');
   L.push('SOVA["script3_sova_begin<br/>сон / сова →"]:::term');
   L.push('TG["script_3_tgavan_road_begin<br/>→ дорога к Тёмной Гавани<br/>(script3_tgavan_road.rpy)"]:::term');
   L.push('NAZ["script3_nazad_begin<br/>→ назад (Таша)"]:::term');
@@ -158,20 +158,20 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <body>
 <header class="site"><div class="wrap">
 <h1>Дорога (перекрёсток)</h1>
-<p>script3_road.rpy (road) · переходы: script.rpy (krug, setblood) · вход после сцены <a href="less.html?v=64" style="color:#b9a7ff">«Разговор с Лессом»</a></p>
-<nav class="crumbs"><a href="index.html?v=21">← Все схемы</a> · <a href="strel.html?v=23">Экран переходов</a> · <a href="stats.html?v=33">Статы</a></nav>
+<p>script3_road.rpy (road) · переходы: script.rpy (krug, setblood) · вход после сцены <a href="less.html?v=65" style="color:#b9a7ff">«Разговор с Лессом»</a></p>
+<nav class="crumbs"><a href="index.html?v=21">← Все схемы</a> · <a href="strel.html?v=24">Экран переходов</a> · <a href="stats.html?v=34">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
 <h2>Статы по сцене (мин/макс, по коду)</h2>
 <table class="stats">
-<tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Типичный путь*</th></tr>
-<tr><td class="mad">Безумие</td><td>0</td><td>+1</td><td>+0.2</td></tr>
-<tr><td class="logic">Логика</td><td>0</td><td>+1</td><td>+0.3</td></tr>
-<tr><td class="blood">Кровь</td><td>0</td><td>+3</td><td>+0.0</td></tr>
+<tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Типичный путь (суждение)*</th></tr>
+<tr><td class="mad">Безумие</td><td>0</td><td>+1</td><td>+1</td></tr>
+<tr><td class="logic">Логика</td><td>0</td><td>+1</td><td>0</td></tr>
+<tr><td class="blood">Кровь</td><td>0</td><td>+3</td><td>0</td></tr>
 <tr><td class="mood">Настроение Лесса</td><td>0</td><td>0</td><td>0</td></tr>
 </table>
-<p class="muted">*Оценка: перебор всех путей по коду скриптом (97 путей), выборы равновероятны. Кровь +3 только при входе с Кровью 0: +1 за каждый удар о барьер начиная с 4-го, при Крови ≥ 3 — sm_blood. Логика +1 только ночью («Стоит переждать»).</p>
+<p class="muted">*Типичный путь: один путь из схемы, выбранный по самым вероятным выборам (суждение, не среднее). Путь: «Не вижу никаких проблем.» → «Вперёд — к барьеру» → один раз «Удариться головой». Кровь +3 в максимуме только при входе с Кровью 0 (+1 за каждый удар с 4-го). Логика +1 в максимуме только ночью («Стоит переждать»).</p>
 </div>
 
 <div class="card">
@@ -225,7 +225,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <li>Закомментированная ветка знающего дорогу (<code>script_3_zndorog</code>, road:80–90, 197–213) и <code>add_logic(1, "Вспомнить дорогу")</code> (road:210) — не работают.</li>
 </ul></div>
 </div>
-<p class="muted">Скрытые переходы: <code>setblood(x)</code> при Крови ≥ 3 прыгает в sm_blood из любой строки с blood+1. Полный список найденных ошибок — на странице <a href="stats.html?v=33">«Статы»</a>.</p>
+<p class="muted">Скрытые переходы: <code>setblood(x)</code> при Крови ≥ 3 прыгает в sm_blood из любой строки с blood+1. Полный список найденных ошибок — на странице <a href="stats.html?v=34">«Статы»</a>.</p>
 </div>
 </div>
 <div id="panel-short" style="position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:100%">
@@ -265,7 +265,7 @@ classDef dead fill:#f1f3f5,stroke:#64748b,color:#333a45
 <tr><td><b>Итого по локации</b></td><td><b>−7…+11</b></td><td><b>−2…+12</b></td><td><b>0…+3</b></td><td><b>−7…+15</b></td></tr>
 <tr><td>Дорога (перекрёсток)</td><td>0…+1</td><td>0…+1</td><td>0…+3</td><td>0</td></tr>
 </table>
-<p class="muted">Посчитано по коду 20.10.2026 перебором путей скриптом, смерти учтены. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=33">«Статы»</a>.</p>
+<p class="muted">Посчитано по коду 20.10.2026 перебором путей скриптом, смерти учтены. Стрелки переходов сами по себе статов не меняют. Подробности и найденные в коде ошибки — на странице <a href="stats.html?v=34">«Статы»</a>.</p>
 </div>
 
 </main>
