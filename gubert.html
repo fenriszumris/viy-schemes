@@ -7,15 +7,122 @@
 <meta http-equiv="Pragma" content="no-cache">
 <title>Губерт (слизень) — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
+<style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:true, nodeSpacing:30, rankSpacing:50, diagramPadding:24}, theme:'default', themeVariables:{fontSize:'18px'}});
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
+const HUBS=["H1", "H2", "H3"];
+const EXP=new Set();
+const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)';
+const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)';
+function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
+function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
+function mk(text, ups, downs){
+  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
+  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
+    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
+    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
+    +'</div>';
+}
+function badge(ranges){
+  if(!ranges.length) return '';
+  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;margin-left:3px">'+p[1]+'</span>';}).join('');
+  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
+}
+function hub(id,label,cls,ranges){
+  const arrow = EXP.has(id) ? '▾' : '▸';
+  const b=badge(ranges||[]);
+  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
+  return id + '["' + inner + '"]:::' + cls;
+}
+const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>'+t+'</span>';};
+const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>'+t+'</span>';};
+const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 '+t+'</span>';};
+function build(){
+  const L=[]; const ST=[]; let ei=0;
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
+  L.push('flowchart TD');
+  const cG='#9aa3b2', c1='#475569', c2='#be123c', c3='#7c3aed', c4='#b45309';
+  L.push('ST["<div style=\'width:300px;white-space:normal\'>Вход script3_nazad_gubert (11)<br/><small>rand.d1: первый раз / повторный текст</small></div>"]:::ex');
+  L.push('EXS["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
+  L.push(hub('H1','Проверки при встрече<br/><small>script3_nazad_gubert, 11-150</small>','hhs',[]));
+  if(EXP.has('H1')){
+    L.push('RD["<div style=\'width:300px;white-space:normal\'>Таша не встречена (нет tash_meet) и tash.helpp не False<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>перенаправление на script3_nazad_tash_go (nazad:247)</span></div>"]:::sc');
+    L.push('P1["<div style=\'width:200px;white-space:normal\'>tash.helpp? (73)</div>"]:::sc');
+    L.push('SS["<div style=\'width:280px;white-space:normal\'>slime_tash (78): Таша спасает героиню и уходит; путь вправо открыт</div>"]:::sc');
+    L.push('P2["<div style=\'width:240px;white-space:normal\'>amulet()? (75): чёрный амулет keep/active</div>"]:::sc');
+    L.push('SA["<div style=\'width:240px;white-space:normal\'>slim_amul (116): Губерт убегает</div>"]:::sc');
+    L.push('MO["<div style=\'width:200px;white-space:normal\'>нет → slime_menu (151)</div>"]:::ex');
+    E('H1 --> RD', c1);
+    E('RD --> P1', c1);
+    E('P1 -- "да" --> SS', c1);
+    E('P1 -- "нет" --> P2', c1);
+    E('P2 -- "да" --> SA', c1);
+    E('P2 -- "нет" --> MO', c1);
+    E('MO --> H2', c1);
+  } else {
+    E('H1 --> H2', c1);
+  }
+  L.push(hub('H2','Меню Губерта и смерти<br/><small>slime_menu, 151-345</small>','hhk',[]));
+  if(EXP.has('H2')){
+    L.push('M["<div style=\'width:400px;white-space:normal\'><b>Меню Губерта <small>(slime_menu, 151)</small></b><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«По поводу шляпки...»<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>quests[quest_kap].keep (153)</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>↳ «Боюсь, нет...» (166)<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>обратно в меню</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>↳ «А как насчет... Сливочной Капибары?» (170)<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>kap_sliv в инвентаре</span><br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>обмен: шляпа получена, Губерт уходит, стрелка влево открыта (200)</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Давай, но учти, я ядовитая!» (206)<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>→ BAD END «Главное блюдо»</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Я... Боюсь сегодня меня нет в меню. Простите.» (240)<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>rand.d1 ≠ 2</span><br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>rand.d1 == 0: Губерт тает → экран (243); иначе rand.d1 = 2, назад в меню, пункт пропадает (264)</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Воткнуть в его иглу» (267)<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>игла в инвентаре</span><br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 igla._active = 0; Губерт убегает, путь вправо открыт (283)</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Боюсь, я вынуждена отказаться!» (293)<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>→ BAD END «Главное блюдо»</span></div><div style=\'text-align:left;margin-top:5px;padding:3px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff\'>«Съесть его!» (322)<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>Безумие ≥ 3 (get_level(mad) ≥ 1)</span><br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>→ BAD END «Часть чего-то большего»</span></div></div>"]:::hhk');
+    E('H2 --> M', c2);
+    L.push('D1["<div style=\'width:320px;white-space:normal\'>BAD END «Главное блюдо» (218-)<br/><small>persistent.death +1, deaths_list[meal]</small><br/>rand.d1 == 0: rand.d1 = 1, Губерт тает → экран переходов<br/>иначе rand.d1 = 2, назад в меню</div>"]:::bad');
+    L.push('D2["<div style=\'width:300px;white-space:normal\'>BAD END «Часть чего-то большего»<br/><small>deaths_list[eat_him], renpy.full_restart() (345)</small></div>"]:::bad');
+    E('M -- "«Давай...» / «Боюсь, я вынуждена...»" --> D1', c2);
+    E('M -- "«Съесть его!»" --> D2', c2);
+    L.push('MX["<div style=\'width:260px;white-space:normal\'>→ экран переходов (выходы меню)</div>"]:::ex');
+    E('M --> MX', c2);
+  } else {
+    E('H2 --> EXS', c2);
+  }
+  L.push(hub('H3','Боковые метки<br/><small>346-459</small>','hhs',[[C_MOO, '−∞…0']]));
+  if(EXP.has('H3')){
+    L.push('SD["<div style=\'width:340px;white-space:normal\'>Боковые метки: chaos_enter_down (346): Таша возвращает; osm_chaos_table (371): табличка «закрыто в демо»; chaos_enter_up (390): разлом; script_3_nazad_hat (412): шляпа взять/оставить; start_gub_osm (430): стена веток</div>"]:::sc');
+    L.push('FF["<div style=\'width:300px;white-space:normal\'>gub_osm_facel_fire (450): осмотр поджога веток<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 less.mood -= 2 (455), без гейта и счётчика</span><br/><span style=\'background:rgb(255,235,235);color:rgb(228,26,28);font-weight:700;border-radius:5px;padding:0 3px\'>▼−2</span></div>"]:::sc');
+    E('H3 --> SD', c3);
+    E('SD --> FF', c3);
+    E('FF --> FX', c3);
+    L.push('FX["<div style=\'width:200px;white-space:normal\'>→ экран переходов</div>"]:::ex');
+  } else {
+    E('H3 --> EXS', c3);
+  }
+  E('ST -- "встреча" --> H1', cG);
+  E('ST -- "осмотр веток" --> H3', cG);
+  L.push('classDef hhk fill:#fde9ee,stroke:#be123c,color:#4d1223');
+  L.push('classDef hhs fill:#edf1f6,stroke:#475569,color:#1d2733');
+  L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
+  L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
+  L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
+  return L.concat(ST).join('\n');
+}
+async function render(){
+  const f=document.getElementById('fchart');
+  if(!f) return;
+  f.removeAttribute('data-processed');
+  f.textContent=build();
+  await mermaid.run({nodes:[f]});
+  for(const ss of document.styleSheets){
+    let rules; try{rules=ss.cssRules;}catch(e){continue;}
+    for(let i=rules.length-1;i>=0;i--){
+      const r=rules[i];
+      if(r.selectorText && /\.(hh[a-z0-9]*|sc|ex|dd|ok)( span| > \*)$/.test(r.selectorText)
+         && r.style && r.style.getPropertyPriority('color')==='important'){ r.style.removeProperty('color'); }
+    }
+  }
+  document.querySelectorAll('#fchart g.node').forEach(function(g){
+    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
+    if(m && HUBS.indexOf(m[1])>=0){ g.style.cursor='pointer'; g.addEventListener('click', function(){ window.th(m[1]); }); }
+  });
+}
+window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
+window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
+render();
 </script>
-<style>.tmood{color:#D97706}.warn{color:#b91c1c;font-weight:700}.chip{display:inline-block;border-radius:6px;padding:0 6px;font-weight:700;color:#fff}</style>
 </head>
 <body>
 <header class="site"><div class="wrap">
-<h1>Губерт (слизень) — script3_gubert.rpy</h1>
+<h1>Губерт (слизень) - script3_gubert.rpy</h1>
 <p>Сцена «Еще глубже» на дороге к Таше · script3_gubert.rpy (459 строк), script.rpy:274 (amulet)</p>
 <nav class="crumbs"><a href="index.html?v=22">← Все схемы</a> · <a href="tasha.html?v=4">Таша (nazad)</a> · <a href="strel.html?v=23">Экран переходов</a></nav>
 </div></header>
@@ -33,58 +140,15 @@ mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:
 <p class="muted"><span class="warn">Две смерти (BAD END):</span> «Главное блюдо» (deaths_list["meal"]) и «Часть чего-то большего» (deaths_list["eat_him"]).</p>
 </div>
 <div class="card">
-<h2>Схема сцены</h2>
-<p class="muted">Красные пометки — условия из кода. Номера — строки script3_gubert.rpy.</p>
-<div class="widechart"><div class="mermaid">
-flowchart TD
-IN["<b>Вход</b> script3_nazad_gubert (11)<br/>rand.d1: первый раз / повторный текст"]:::scene
-RD["<span style='color:#b91c1c;font-weight:700'>если Таша не встречена (нет tash_meet) и tash.helpp не False</span><br/>→ redirect на script3_nazad_tash_go (nazad:247)"]:::red
-IN --> RD
-IN --> P1["tash.helpp? (73)"]:::scene
-P1 -- "да" --> ST["slime_tash (78)<br/>Таша спасает героиню, уходит;<br/>путь вправо открыт"]:::out
-P1 -- "нет" --> P2["amulet()? (75)<br/>чёрный амулет: keep/active"]:::scene
-P2 -- "да" --> SA["slim_amul (116)<br/>Губерт убегает"]:::out
-P2 -- "нет" --> M["<b>slime_menu</b> (151)"]:::hub
-M --> C1["«По поводу шляпки...»<br/><span style='color:#b91c1c;font-weight:700'>если quests[quest_kap].keep</span> (153)"]:::choice
-C1 --> C1a["«Боюсь, нет...» (166) → обратно в меню"]:::choice
-C1 --> C1b["«А как насчет... Сливочной Капибары?»<br/><span style='color:#b91c1c;font-weight:700'>если kap_sliv в инвентаре</span> (170)<br/>обмен: шляпа получена"]:::choice
-C1a --> M
-C1b --> HAT["Губерт уходит, шляпа у героини;<br/>стрелка влево открыта (200)"]:::out
-M --> C2["«Давай, но учти, я ядовитая!» (206)"]:::bad
-C2 --> D1["<b>BAD END «Главное блюдо»</b><br/>persistent.death +1, deaths_list[meal] (218-)"]:::bad
-D1 --> D1a["rand.d1 == 0 → rand.d1 = 1, Губерт тает → strel"]:::out
-D1 --> D1b["иначе → rand.d1 = 2, назад в меню"]:::scene
-D1b --> M
-M --> C3["«Я... Боюсь сегодня меня нет в меню. Простите.»<br/><span style='color:#b91c1c;font-weight:700'>если rand.d1 ≠ 2</span> (240)"]:::choice
-C3 --> C3a["rand.d1 == 0 → Губерт тает → strel (243)"]:::out
-C3 --> C3b["иначе rand.d1 = 2 → назад в меню; пункт пропадает (264)"]:::scene
-C3b --> M
-M --> C4["«Воткнуть в его иглу»<br/><span style='color:#b91c1c;font-weight:700'>если игла в инвентаре</span> (267)"]:::choice
-C4 --> IG["игла использована (igla._active = 0),<br/>Губерт убегает, путь вправо открыт (283)"]:::out
-M --> C5["«Боюсь, я вынуждена отказаться!» (293)"]:::bad
-C5 --> D1
-M --> C6["«Съесть его!»<br/><span style='color:#b91c1c;font-weight:700'>если безумие ≥ 3 (get_level(mad) ≥ 1)</span> (322)"]:::bad
-C6 --> D2["<b>BAD END «Часть чего-то большего»</b><br/>deaths_list[eat_him], renpy.full_restart() (345)"]:::bad
-SIDE["<b>Боковые метки</b><br/>chaos_enter_down (346): Таша возвращает<br/>osm_chaos_table (371): табличка «закрыто в демо»<br/>chaos_enter_up (390): разлом<br/>script_3_nazad_hat (412): шляпа взять/оставить<br/>start_gub_osm (430): стена веток<br/>gub_osm_facel_fire (450): осмотр поджога"]:::scene
-SIDE --> FF["gub_osm_facel_fire (450)"]:::scene
-FF --> MD["less.mood <span style='background:rgb(255,235,235);color:rgb(228,26,28);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> (455)"]:::scene
-AF["afterser (5) → script3_nazad_tash_end (nazad:1370)<br/>возврат в меню конца Таши"]:::scene
-classDef scene fill:#E4EEF9,stroke:#7a9cc6
-classDef hub fill:#fff3bf,stroke:#d4a017
-classDef choice fill:#ffffff,stroke:#888
-classDef bad fill:#ffd6d6,stroke:#b91c1c
-classDef out fill:#d8f5e0,stroke:#2f9e44
-classDef red fill:#fff0f0,stroke:#b91c1c
-</div></div>
+<h2>Типичный путь (суждение, не измерение)</h2>
+<p><b>Как иду:</b> без Таши и без амулета; в меню «Я... Боюсь сегодня меня нет в меню. Простите.» (при rand.d1 == 0 Губерт тает и экран переходов).</p>
+<p><b>Итог по сцене:</b> Безумие 0 · Логика 0 · Кровь 0 · Настроение Лесса 0.</p>
 </div>
+
 <div class="card">
-<h2>Что это значит</h2>
-<ul>
-<li>Осмотр поджога веток: настроение Лесса <span style="background:rgb(255,235,235);color:rgb(228,26,28);font-weight:700;border-radius:5px;padding:0 3px">▼−2</span> за каждый осмотр (gubert:455), счётчика нет: можно уходить в минус неограниченно.</li>
-<li>Если Таша помогала раньше (<code>tash.helpp</code>), сцена обходится без меню (slime_tash).</li>
-<li>Чёрный амулет (<code>amulet()</code>, script.rpy:274) тоже обходит меню: Губерт убегает.</li>
-<li>Отказ («ядовитая» или «вынуждена отказаться») = смерть «Главное блюдо». Если rand.d1 был 0, герой возвращается на карту (Губерт тает), иначе — в меню, а пункт «меня нет в меню» исчезает.</li>
-</ul>
+<h2>Схема</h2>
+<p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его выборы, повторный клик сворачивает. <button class="mini" onclick="allHubs(true)">Раскрыть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button> На плашке хаба: минимум и максимум по всем путям внутри хаба от входа до выхода. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, 🚩 какой флаг выбор записывает и что он открывает. Страница шире экрана: схему можно прокручивать.</p>
+<div class="widechart"><div id="fchart" class="mermaid"></div></div>
 </div>
 <div class="card">
 <h2>Ошибки в коде (для списка ошибок)</h2>
@@ -95,7 +159,8 @@ classDef red fill:#fff0f0,stroke:#b91c1c
 <li><code>afterser</code> лежит в gubert.rpy, но прыгает в меню конца Таши (nazad:1370), а не в сцену Губерта.</li>
 </ul>
 </div>
+
 </main>
-<footer>Схемы игры «Вий» · Губерт · выверено по коду 20.10.2026</footer>
+<footer>Схемы игры «Вий» · script3_gubert.rpy · выверено по коду 20.10.2026</footer>
 </body>
 </html>
