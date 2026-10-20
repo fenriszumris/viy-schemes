@@ -13,225 +13,29 @@
 <body>
 <header class="site"><div class="wrap">
 <h1>Статы: минимумы и максимумы</h1>
-<p>Диапазоны по всем веткам сцены, посчитано по коду. Смерти не учитывались.</p>
+<p>Диапазоны по всем веткам каждой сцены. Эта страница собрана из таблиц «Итог по сцене» самих страниц, поэтому числа здесь всегда совпадают с ними. Название сцены ведёт на её страницу.</p>
 <nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="location.html?v=20">Локация «Место пробуждения»</a> · <a href="strel.html?v=24">Экран переходов</a></nav>
 </div></header>
 <main>
-<div class="card">
-<h2>От начала игры до разговора с Лессом</h2>
-<table class="stats">
-<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)*</th></tr>
-<tr><td class="mad">Безумие</td><td>0</td><td>+5</td><td>+2</td></tr>
-<tr><td class="logic">Логика</td><td>0</td><td>+3</td><td>+1</td></tr>
-<tr><td class="blood">Кровь</td><td>0</td><td>+1</td><td>+1</td></tr>
-<tr><td class="mood">Настроение</td><td>0</td><td>0</td><td>0</td></tr>
-</table>
-<p class="muted">*Типичный путь: один путь из схемы, выбранный по самым вероятным выборам (суждение, не среднее). Путь: «Укусить себя за руку, вдруг все это сон?» → «Укусить еще сильнее. Для верности.» → «Бежать.» → «Пожалуйста! Не трогайте меня!». Мин и макс считаются по всем путям, пути к смертям тоже.</p>
-</div>
-<div class="card">
-<h2>Разговор с Лессом (каждый стат отдельно)</h2>
-<table class="stats">
-<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)*</th><th>Примечание</th></tr>
-<tr><td class="mad">Безумие</td><td>−7</td><td>+6</td><td>−2</td><td></td></tr>
-<tr><td class="logic">Логика</td><td>−2</td><td>+9</td><td>+1</td><td>−2 складывается на одном пути: «Все в порядке, просто расслабиться» (−1, conv:1097) и «Со злости ударить дерево» (−1, end:13)</td></tr>
-<tr><td class="blood">Кровь</td><td>0</td><td>+2</td><td>0</td><td>+2 только если на входе Кровь 0; из сцены руки вход всегда с Кровью 1, там предел +1</td></tr>
-<tr><td class="mood">Настроение Лесса</td><td>−7</td><td>+15</td><td>+4</td><td>стартовое значение в коде не найдено, считалось 0; −7: неверное имя −2, укус +1, схватить −2, удержать −1, удар −2, вырваться −1</td></tr>
-</table>
-<p class="muted">*Типичный путь: один путь из схемы, выбранный по самым вероятным выборам (суждение, не среднее). Путь: вход сразу в разговор («Его имя?»): «Не надо меня есть! Я не вкусная!» → «П...Подожди!» → «Видимо мы... Знакомы?» → «Как же так! Значит будут.» → ввод своего имени → «Оставить в покое.». Кровь +2 в максимуме только при входе с Кровью 0 (из сцены руки вход с Кровью 1, там предел +1). Стартовое настроение в коде не задано, считалось 0.</p>
-</div>
-<div class="card">
-<h2>Дорога — перекрёсток (script3_road.rpy, каждый стат отдельно)</h2>
-<table class="stats">
-<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)*</th><th>Примечание</th></tr>
-<tr><td class="mad">Безумие</td><td>0</td><td>+1</td><td>+1</td><td>первый удар о барьер (road:144), гейт elfs_krug</td></tr>
-<tr><td class="logic">Логика</td><td>0</td><td>+1</td><td>0</td><td>«Стоит переждать» (road:45), только ночью; add_logic без reason, но после сна день</td></tr>
-<tr><td class="blood">Кровь</td><td>0</td><td>+3</td><td>0</td><td>+1 за каждый удар о барьер с 4-го (road:175); максимум при входе с Кровью 0 — дальше sm_blood (Кровь ≥ 3)</td></tr>
-<tr><td class="mood">Настроение Лесса</td><td>0</td><td>0</td><td>0</td><td>в сцене не меняется</td></tr>
-</table>
-<p class="muted">*Типичный путь: один путь из схемы, выбранный по самым вероятным выборам (суждение, не среднее). Путь: «Не вижу никаких проблем.» → «Вперёд — к барьеру» → один раз «Удариться головой». Кровь +3 в максимуме только при входе с Кровью 0 (+1 за каждый удар с 4-го). Логика +1 в максимуме только ночью («Стоит переждать»).</p>
-</div>
-<div class="card">
-<h2>Назад — Таша (script3_nazad.rpy + tash_game.rpy + day_1_tash_razg.rpy)</h2>
-<table class="stats">
-<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)*</th><th>Примечание</th></tr>
-<tr><td class="mad">Безумие</td><td>−3</td><td>+6</td><td>+2</td><td>−3: «А правила!?» ×2 (tash_game:89) и «Сомнительно.» (nazad:1104); +6: «Улыбнуться», «Поехали!» ×2, «традиция», «не понимаю друзей», «Прекрасно!»</td></tr>
-<tr><td class="logic">Логика</td><td>0</td><td>+4</td><td>0</td><td>+4: «спросить об Урзе» (nazad:1032), «серьезным» (1486), 2 причины (1765, 1784)</td></tr>
-<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>0</td><td>в сцене не меняется</td></tr>
-<tr><td class="mood">Настроение Лесса</td><td>0</td><td>0</td><td>0</td><td>в сцене не меняется</td></tr>
-<tr><td class="tmood">Настроение Таши</td><td>−25</td><td>+26</td><td>+16</td><td>стартовое значение в коде не найдено, считалось 0; условий на tash.mood в коде нет. При капе 2 партии: в коде партии/рематчи/циклы отказов не ограничены — реальные пределы не ограничены</td></tr>
-</table>
-<p class="muted">*Типичный путь: один путь из схемы, выбранный по самым вероятным выборам (суждение, не среднее). Путь: «Подойти познакомиться.» → «Привет.» → «Не знаю! Улыбнуться.» → «Я тоже очень рада!» → «Хорошо, давай сыграем.» → «Поехали!» → одна партия до конца → «Эм, хватит.» → «Промолчать.». В коде число партий и рематчей не ограничено, поэтому реальные пределы Настроения Таши шире показанных; для оценки число партий ограничено двумя. Стартовое значение в коде не найдено, считалось 0.</p>
-</div>
-<div class="card">
-<h2>Губерт (script3_gubert.rpy)</h2>
-<table class="stats">
-<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)*</th><th>Примечание</th></tr>
-<tr><td class="mad">Безумие</td><td>0</td><td>0</td><td>0</td><td>не меняется</td></tr>
-<tr><td class="logic">Логика</td><td>0</td><td>0</td><td>0</td><td>не меняется</td></tr>
-<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>0</td><td>не меняется</td></tr>
-<tr><td class="mood">Настроение Лесса</td><td>без нижней границы</td><td>0</td><td>0</td><td>−2 за каждый осмотр поджога веток (gubert:455), без гейта</td></tr>
-</table>
-<p class="muted">*Типичный путь: один путь из схемы, выбранный по самым вероятным выборам (суждение, не среднее). Путь: без Таши и без амулета, в меню «Я... Боюсь сегодня меня нет в меню. Простите.». Меню выбора, статов нет. Две смерти: «Главное блюдо», «Часть чего-то большего».</p>
-</div>
-<div class="card">
-<h2>Сова и сны (script3_sova.rpy)</h2>
-<table class="stats">
-<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)*</th><th>Примечание</th></tr>
-<tr><td class="mad">Безумие</td><td>0</td><td>0</td><td>0</td><td>не меняется</td></tr>
-<tr><td class="logic">Логика</td><td>0</td><td>0</td><td>0</td><td>не меняется</td></tr>
-<tr><td class="blood">Кровь</td><td>−1</td><td>+2</td><td>0</td><td>−1 на входе при Крови &gt; 0 (sova:23); +1 «Пытаться вспомнить» (168); +1 клевок совы (319); при Крови ≥ 3 — sm_blood</td></tr>
-<tr><td class="mood">Настроение Лесса</td><td>0</td><td>0</td><td>0</td><td>только условия (≥ 3, &lt; 0)</td></tr>
-</table>
-<p class="muted">*Типичный путь: один путь из схемы, выбранный по самым вероятным выборам (суждение, не среднее). Кровь −1 в минимуме только при входе с Кровью больше 0, +1 в максимуме за «Пытаться вспомнить»; в типичном пути не меняется.</p>
-</div>
-<div class="card">
-<h2>Айрат: вход и церковь (script_4_airat.rpy 1-520)</h2>
-<table class="stats">
-<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Примечание</th></tr>
-<tr><td class="mad">Безумие</td><td>0</td><td>0</td><td>не меняется</td></tr>
-<tr><td class="logic">Логика</td><td>0</td><td>0</td><td>не меняется</td></tr>
-<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>не меняется</td></tr>
-<tr><td style="color:#16a34a">Настроение Луизы</td><td>−1</td><td>+1</td><td>плата Миранды (airat:445/450). Подробности: <a href="airat1.html?v=66">airat1.html</a></td></tr>
-</table>
-</div>
-<div class="card">
-<h2>Айрат: коридор и Лени (script_4_airat.rpy 520-1174)</h2>
-<table class="stats">
-<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Примечание</th></tr>
-<tr><td class="mad">Безумие</td><td>0</td><td>+2</td><td>«Да просто так!», «Да вот, недавно!»</td></tr>
-<tr><td class="logic">Логика</td><td>−3</td><td>+3</td><td>одноразовые пункты хаба Лени</td></tr>
-<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>не меняется</td></tr>
-<tr><td style="color:#b45309">Настроение Карралака</td><td>−1</td><td>0</td><td>новый стат kar.mood (цвет выбран агентом)</td></tr>
-<tr><td style="color:#0369a1">Настроение Лени</td><td>−1</td><td>0</td><td>новый стат leni.mood (цвет выбран агентом)</td></tr>
-<tr><td>Мораль</td><td>−1</td><td>0</td><td>sanity.moral, «Да вот, недавно!»</td></tr>
-</table>
-<p class="muted">Подробности: <a href="airat2.html?v=60">airat2.html</a></p>
-</div>
-<div class="card">
-<h2>Айрат: Карралак и лазарет (script_4_airat.rpy 1175-1615)</h2>
-<table class="stats">
-<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Примечание</th></tr>
-<tr><td class="mad">Безумие / Логика / Кровь</td><td>0</td><td>0</td><td>не меняются</td></tr>
-<tr><td>Мораль</td><td>−2</td><td>+2</td><td>плата Миранды и помощь Фене</td></tr>
-<tr><td style="color:#be123c">Настроение Фени</td><td>−2</td><td>+2</td><td>новый стат fenya.mood (цвет выбран агентом)</td></tr>
-</table>
-<p class="muted">Подробности: <a href="airat3.html?v=60">airat3.html</a></p>
-</div>
-<div class="card">
-<h2>Айрат: дом Луизы и концовки (script_4_airat.rpy 1616-1991)</h2>
-<table class="stats">
-<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Примечание</th></tr>
-<tr><td class="mad">Безумие</td><td>0</td><td>+1</td><td>«Мне плевать.»</td></tr>
-<tr><td class="logic">Логика</td><td>0</td><td>+1</td><td>«он мог лгать»</td></tr>
-<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>не меняется</td></tr>
-<tr><td style="color:#16a34a">Настроение Луизы</td><td>−3</td><td>+1</td><td>cycle.d1, «Мне плевать.», «не мог лгать»</td></tr>
-<tr><td>Мораль</td><td>−1</td><td>+2</td><td>перевязка Фени, ответы Луизе</td></tr>
-<tr><td style="color:#be123c">Настроение Фени</td><td>0</td><td>+1</td><td>перевязка</td></tr>
-</table>
-<p class="muted">4 концовки демо: «Без понятия что тут творится», «Что-то творится в светлом королевстве», «Подстава», «Высокая цена». <a href="airat4.html?v=60">airat4.html</a></p>
-</div>
-<div class="card">
-<h2>Луиза: разговоры по кнопке (day_1_dev_razg.rpy)</h2>
-<table class="stats">
-<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Примечание</th></tr>
-<tr><td class="mad">Безумие</td><td>0</td><td>0</td><td>не меняется</td></tr>
-<tr><td class="logic">Логика</td><td>0</td><td>+1</td><td>через «Я тогда не спросила...» (961)</td></tr>
-<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>не меняется</td></tr>
-<tr><td style="color:#16a34a">Настроение Луизы</td><td>−2</td><td>0</td><td>«взъелась» −1, «не до тебя» −1</td></tr>
-</table>
-<p class="muted">Подробности: <a href="dev2.html?v=67">dev2.html</a>. logic_l() в этом файле используется как уровень (logic_l()&gt;=2).</p>
-</div>
-<div class="card">
-<h2>Айрат: стража и статуя (script_5_airat.rpy)</h2>
-<table class="stats">
-<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Примечание</th></tr>
-<tr><td class="mad">Безумие</td><td>−2</td><td>+5</td><td>сумма независимых выборов (не полный перебор)</td></tr>
-<tr><td class="logic">Логика</td><td>−4</td><td>+4</td><td>то же</td></tr>
-<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>не меняется</td></tr>
-</table>
-<p class="muted">4 концовки «END?» (Забывчивость, Что-то здесь не так, Лжецы, Доверие), каждая завершается full_restart. <a href="airat5.html?v=60">airat5.html</a></p>
-</div>
-<div class="card">
-<h2>Луиза на дороге (script3_airat.rpy, часть 1)</h2>
-<table class="stats">
-<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)*</th><th>Примечание</th></tr>
-<tr><td class="mad">Безумие</td><td>−3</td><td>+9</td><td>0</td><td>имя Вий: −1…+3</td></tr>
-<tr><td class="logic">Логика</td><td>−4</td><td>+6</td><td>+2</td><td>имя Вий: 0…+4</td></tr>
-<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>0</td><td>имя Вий: до +1 (забег, airat:1305)</td></tr>
-<tr><td style="color:#16a34a">Настроение Луизы</td><td>−21</td><td>+8</td><td>+2</td><td>новый стат dev.mood; цвет зелёный (выбран агентом); имя Вий: −29…+4</td></tr>
-</table>
-<p class="muted">*Типичный путь: один путь из схемы, выбранный по самым вероятным выборам (суждение, не среднее). Путь описан на странице «Луиза: дорога» (dev.html). Мин и макс: по всем путям и по всем стартовым уровням Безумия и Логики; варианты с именем Вий дают более широкий разброс, см. столбец «Примечание».</p>
-</div>
-<div class="card">
-<h2>Дверь Адриана (script3_tgavan_begin.rpy)</h2>
-<table class="stats">
-<tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)*</th><th>Примечание</th></tr>
-<tr><td class="mad">Безумие</td><td>−2</td><td>+6</td><td>−1</td><td>зависит от входных уровней и амулета; см. таблицу сценариев на странице</td></tr>
-<tr><td class="logic">Логика</td><td>−1</td><td>+2</td><td>+1</td><td>«послушать» +1, «не послушать» −1, ветка Вия</td></tr>
-<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>0</td><td>не меняется</td></tr>
-<tr><td class="mood">Настроение Лесса</td><td>−1</td><td>0</td><td>0</td><td>−1 за «Постучать» (tgavan:113)</td></tr>
-<tr><td class="omood">Настроение Адриана</td><td>−18</td><td>+13</td><td>+3</td><td>новый стат oh.mood; цвет бирюзовый (выбран агентом)</td></tr>
-</table>
-<p class="muted">*Типичный путь: один путь из схемы, выбранный по самым вероятным выборам (суждение, не среднее). Путь: «Окликнуть.» → «Замереть.» → «Я послушаю!» → «Меня зовут (имя героини)» → «Что такое Белая Стража?» → «Я все узнала что хотела.» → «Я... Хочу войти.» → «Взять очень осторожно.». Настроение Лесса −1 в минимуме только за «Постучать» (строка 113), в типичном пути не выбирается. Мин и макс взяты по всем вариантам входа (уровни Безумия и Логики, чёрный амулет, имя Вий, память).</p>
-</div>
-<div class="card">
-<h2>Найденные в коде ошибки</h2>
-<h3>Ломают запуск</h3>
-<ul>
-<li><code>conv:1105</code> — реплика персонажа <code>мь</code>, который нигде не определён (по смыслу <code>vm</code>): ветка «Дико страшно... замереть» падает с ошибкой.</li>
-<li><code>mem:252</code> — персонаж <code>elf</code> не определён (ветка недостижима, см. ниже).</li>
-<li><code>razg:19</code> — вызов <code>show_less("smile")</code>: функция не найдена в коде.</li>
-<li><code>nazad:1666</code> — <code>ssanity.get_level("mad")</code> (опечатка, нужно <code>sanity</code>) и голая переменная <code>logic</code> в том же условии: опция «Кто такой Урза?» (ser2_men) падает с NameError всегда.</li>
-<li><code>nazad:1043</code> — <code>jump script3_nazad_tash_urzali</code>: такой метки нет — краш, если перед рассказом об Урзе уже спрашивали «отведи меня к нему» (td3.d1 = 1).</li>
-<li><code>airat4:257,261,303</code> — <code>logic_l &gt;= 1</code>/<code>mad_l &gt;= 1</code> без скобок (сравнение функции с числом), срабатывает при Луизе рядом.</li>
-<li><code>airat4:1534</code> — метка <code>podn</code> нигде не вызывается (мёртвый код).</li>
-<li><code>airat4:1714</code> — проверка <code>"medicine_2"</code> не совпадает с записью <code>"medicine2"</code> (1910).</li>
-<li><code>airat4:1941-1983</code> — в концовке «Без понятия что тут творится» меню без доступных пунктов (поведение не проверено), далее общий <code>renpy.full_restart()</code>.</li>
-<li><code>airat:882</code> — <code>renpy.full_restart()</code> при выходе из <code>inless_conv_memory</code> без условия (d3 == 0 и Логика ≥ 1): перезапуск игры.</li>
-<li><code>airat:1060</code> — недостижимый <code>jump script_3_road_nodev_airat</code>, метки нет.</li>
-<li><code>tgavan:837</code> — <code>jump script_3_tgavan_adr_after_door</code>: метки нет в доступных файлах, краш после «Взять очень осторожно».</li>
-</ul>
-<h3>Логика</h3>
-<ul>
-<li><code>amul:21</code> — <code>$ less.mood - 4</code> без присваивания: настроение не меняется (нужно <code>-=</code>).</li>
-<li><code>nazad:1034</code> и <code>razg:38</code> — <code>$ urza.zn_name == True</code> (сравнение вместо присваивания): имя Урзы не запоминается (нужно <code>=</code>).</li>
-<li>«Так кто ты?» и «Что тебе от меня нужно?» (ser2_men) делят один гейт <code>td4.d2</code>: доступна только одна из двух опций.</li>
-<li>«Как насчет карт?» (razg:13) и рематч (nazad:1350) без ограничений: Настроение Таши растёт бесконечно (+1 / +5 за партию, +10 за приглашение из sad).</li>
-<li>«Расслабиться» / «Замереть» / «Обмякнуть»: у add_logic дедупликация по причине, у add_mad нет — повторы начисляются неодинаково.</li>
-<li><code>conv:615</code> — <code>u_part(7.1)</code> вместо <code>u_part(7,1)</code>.</li>
-<li>Пороги настроения в прощании: <code>&gt;0</code> (conv:735) против <code>&lt;0</code> (conv:778): при ровно 0 срабатывает «благодушная» ветка.</li>
-<li>Условие «Обмякнуть» (end:158): <code>not ld1.d7 or ld1.d8</code> — после «Не шевелиться» вариант исчезает, после «Вырваться» появляется снова; похоже на опечатку.</li>
-<li><code>road_begin</code> проверяет <code>persistent.memory</code>, а не память текущего прохождения: реплика про скрижаль останется навсегда.</li>
-<li>Имя героини переспрашивается и перезаписывается в end:68 и end:112, даже если уже задано в разговоре.</li>
-<li>Две разные смерти пишутся в один ключ <code>deaths_list["less_eat"]</code>.</li>
-<li>«toggle» добавляется в заметку амулета дважды (amul:287-288 и 302-303).</li>
-<li><code>keep_cloath</code> (end:334) — метка без перехода в конце файла.</li>
-<li>«Конец» в повторном разговоре (razg:70) не завершает разговор, а перезапускает меню.</li>
-</ul>
-<h3>Мёртвый и недостижимый код</h3>
-<ul>
-<li><code>conv:3-7</code> — после <code>call_screen_strel()</code> не выполняется никогда.</li>
-<li><code>script_2_less_follow</code> (conv:921-951) закомментирован целиком; <code>script_2_less_end_follow</code> в коде нет.</li>
-<li><code>hand:230</code> — недостижимый <code>return</code> (комментарий «#доделать»).</li>
-<li><code>prop_memory</code> / <code>prop_memory2</code> (mem:234/250) — переходов на них нет; вторая заканчивается без jump/return.</li>
-<li><code>inv_end</code> (script.rpy:966) — вход в метку не найден.</li>
-<li><code>kr_bur</code> / <code>bur_menu</code> / <code>bur_osm</code> (road:253–330, бурундук) — единственный переход (<code>jump kr_bur</code>, road:252) закомментирован.</li>
-<li><code>doroga3</code> (road:240) — «Конец предварительный», входящих переходов нет.</li>
-<li><code>script_3_zndorog</code> (road:80–90, 197–213) — ветка «знает дорогу» закомментирована целиком, вместе с <code>add_logic(1, "Вспомнить дорогу")</code> (road:210).</li>
-<li><code>script3_nazadli</code> (nazad:2) — входная метка «в самую чащу?», входящих переходов нет.</li>
-<li>Внутреннее меню «Хватит болтать!» (nazad:948–987) недостижимо: флаги <code>tash_game</code> и <code>script3_tash_cards_per</code> ни в одном доступном .rpy не назначаются.</li>
-<li><code>tash_cards_osm</code> / <code>tash_tash_card</code> / <code>bonny_1_osm</code> / <code>bonny_1_tash</code> / <code>mant_osm</code> (nazad:1818–2079) — вызовов в доступном коде не найдено (inv_list и дефолты — в недоступном файле).</li>
-<li>Закомментированы: «Остановиться и нормально поговорить» (nazad:429–431) и «Летающих городов?» (nazad:1621–1638, внутри та же опечатка <code>ssanity</code>).</li>
-<li>Стартовое меню разработчика (start3, begin:17) видит каждый игрок: <code>razr = 1</code> стоит жёстко.</li>
-</ul>
-<h3>Опечатки и разметка</h3>
-<ul>
-<li>conv:43 «принюхмивается», conv:44 «громогласнный», conv:969 «одиночестве .», conv:1101 / end:66 «стоить» вместо «стоит», end:326 «не богу придумать».</li>
-<li>amul:30 — лишняя <code>}</code> в разметке; conv:1042 — <code>"bite blood.mp3"</code> с пробелом (в других местах <code>bite_blood.mp3</code>).</li>
-<li>Метка <code>script_2_less_strenght</code> — опечатка в имени (strength); на работу не влияет.</li>
-</ul>
-</div>
+<div class="card"><h2><a href="start.html?v=62">Старт: место пробуждения</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>0</td><td>+5</td><td>+2</td></tr><tr><td>Логика</td><td>0</td><td>+3</td><td>+1</td></tr><tr><td>Кровь</td><td>0</td><td>+1</td><td>+1</td></tr><tr><td>Настроение</td><td>0</td><td>0</td><td>0</td></tr></table></div>
+<div class="card"><h2><a href="less.html?v=66">Разговор с Лессом</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>−7</td><td>+6</td><td>−2</td></tr><tr><td>Логика</td><td>−2</td><td>+9</td><td>+1</td></tr><tr><td>Кровь</td><td>0</td><td>+2</td><td>0</td></tr><tr><td>Настроение Лесса</td><td>−7</td><td>+15</td><td>+4</td></tr></table></div>
+<div class="card"><h2><a href="road.html?v=67">Дорога (перекрёсток)</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>0</td><td>+1</td><td>+1</td></tr><tr><td>Логика</td><td>0</td><td>+1</td><td>0</td></tr><tr><td>Кровь</td><td>0</td><td>+3</td><td>0</td></tr><tr><td>Настроение Лесса</td><td>0</td><td>0</td><td>0</td></tr></table></div>
+<div class="card"><h2><a href="tasha.html?v=63">Назад: Таша</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>−3</td><td>+6</td><td>+2</td></tr><tr><td>Логика</td><td>0</td><td>+4</td><td>0</td></tr><tr><td>Кровь</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Настроение Лесса</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Настроение Таши</td><td>−25</td><td>+26</td><td>+16</td></tr></table></div>
+<div class="card"><h2><a href="gubert.html?v=62">Губерт</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td colspan="2">0 … 0</td><td></td></tr><tr><td>Логика</td><td colspan="2">0 … 0</td><td></td></tr><tr><td>Кровь</td><td colspan="2">0 … 0</td><td></td></tr><tr><td>Настроение Лесса</td><td colspan="2">без нижней границы … 0</td><td></td></tr></table></div>
+<div class="card"><h2><a href="sova.html?v=62">Сова</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Логика</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Кровь</td><td>−1</td><td>+2</td><td>0</td></tr><tr><td>Настроение Лесса</td><td>0</td><td>0</td><td>0</td></tr></table></div>
+<div class="card"><h2><a href="tgavan.html?v=72">Тёмная Гавань: дверь</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>−2</td><td>+9</td><td>−1</td></tr><tr><td>Логика</td><td>−3</td><td>+2</td><td>+1</td></tr><tr><td>Кровь</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Настроение</td><td>−1</td><td>0</td><td>0</td></tr><tr><td>Настроение Адриана</td><td>−24</td><td>+14</td><td>+3</td></tr><tr><td>Настроение Луизы</td><td>−1</td><td>0</td><td>0</td></tr></table></div>
+<div class="card"><h2><a href="gavan.html?v=72">Гавань</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>−3</td><td>+3</td><td>−3</td></tr><tr><td>Логика</td><td>−2</td><td>0</td><td>0</td></tr><tr><td>Кровь</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Настроение</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Настроение Адриана</td><td>−5</td><td>+5</td><td>+5</td></tr></table></div>
+<div class="card"><h2><a href="adro.html?v=4">Адро</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>−2</td><td>+4</td><td>−1</td></tr><tr><td>Логика</td><td>−4</td><td>+3</td><td>+2</td></tr><tr><td>Кровь</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Настроение</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Настроение Адро</td><td>−5</td><td>+4</td><td>+3</td></tr></table></div>
+<div class="card"><h2><a href="adro2.html?v=6">Адро, продолжение</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Логика</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Кровь</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Настроение</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Настроение Адро</td><td>−5</td><td>+5</td><td>+5</td></tr></table></div>
+<div class="card"><h2><a href="adrc.html?v=5">Адриан</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Логика</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Кровь</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Настроение</td><td>0</td><td>0</td><td>0</td></tr></table></div>
+<div class="card"><h2><a href="nars.html?v=4">Нарси</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>−1</td><td>+2</td><td>0</td></tr><tr><td>Логика</td><td>−1</td><td>+1</td><td>0</td></tr><tr><td>Кровь</td><td>0</td><td>+1</td><td>0</td></tr><tr><td>Настроение</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Настроение Нарси</td><td>−6</td><td>+7</td><td>+1</td></tr></table></div>
+<div class="card"><h2><a href="dev.html?v=69">Девочка (Луиза): начало</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td colspan="2">−3…+9 / −1…+3</td><td>0</td></tr><tr><td>Логика</td><td colspan="2">−4…+6 / 0…+4</td><td>+2</td></tr><tr><td>Кровь</td><td colspan="2">0 / 0…+1</td><td>0</td></tr><tr><td>Настроение Луизы (dev.mood)</td><td colspan="2">−21…+8 / −29…+4</td><td>+2</td></tr></table></div>
+<div class="card"><h2><a href="dev2.html?v=68">Девочка (Луиза): продолжение</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Логика</td><td>0</td><td>+1</td><td>0</td></tr><tr><td>Кровь</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Настроение Луизы</td><td>−2</td><td>0</td><td>0</td></tr></table></div>
+<div class="card"><h2><a href="airat1.html?v=69">Айрат: вход и церковь</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Логика</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Кровь</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Настроение</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Настроение Луизы</td><td>−1</td><td>+1</td><td>+1</td></tr></table></div>
+<div class="card"><h2><a href="airat2.html?v=63">Айрат: дверь коридора и Лени</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>0</td><td>+2</td><td>0</td></tr><tr><td>Логика</td><td>−3</td><td>+3</td><td>+2</td></tr><tr><td>Кровь</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Настроение</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Мораль</td><td>−1</td><td>0</td><td>0</td></tr><tr><td>Настроение Карралака</td><td>−1</td><td>0</td><td>0</td></tr><tr><td>Настроение Лени</td><td>−1</td><td>0</td><td>0</td></tr></table></div>
+<div class="card"><h2><a href="airat3.html?v=62">Айрат: Карралак</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Логика</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Кровь</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Мораль</td><td>−2</td><td>+2</td><td>+1</td></tr><tr><td>Настроение Фени</td><td>−2</td><td>+2</td><td>+2</td></tr></table></div>
+<div class="card"><h2><a href="airat4.html?v=70">Айрат: дом Луизы</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>0</td><td>+1</td><td>0</td></tr><tr><td>Логика</td><td>0</td><td>+1</td><td>0</td></tr><tr><td>Кровь</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Настроение</td><td>0</td><td>0</td><td>0</td></tr><tr><td>Мораль</td><td>−1</td><td>+2</td><td>+2</td></tr><tr><td>Настроение Фени</td><td>0</td><td>+1</td><td>+1</td></tr><tr><td>Настроение Луизы</td><td>−3</td><td>+1</td><td>+1</td></tr></table></div>
+<div class="card"><h2><a href="airat5.html?v=62">Айрат: стража и кот</a></h2><table class="stats"><tr><th>Стат</th><th>Минимум</th><th>Максимум</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>−2</td><td>+5</td><td>−2</td></tr><tr><td>Логика</td><td>−4</td><td>+4</td><td>+3</td></tr><tr><td>Кровь</td><td>0</td><td>0</td><td>0</td></tr></table></div>
 </main>
-<footer>Схемы игры «Вий» · статы и ошибки · выверено по коду 14–20.10.2026</footer>
 </body>
 </html>
