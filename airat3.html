@@ -152,9 +152,9 @@ function build(){
   } else {
     E('HB --> EXS', c4);
   }
-  L.push(hub('HK','Разговор с Карралаком<br/><small>1175-1376 (не вызывается)</small>','stub',[[C_MOR, '−1…+1']]));
+  L.push(hub('HK','Разговор с Карралаком<br/><small>1175-1376 (прямых вызовов нет)</small>','stub',[[C_MOR, '−1…+1']]));
   if(EXP.has('HK')){
-    L.push('K0["<div style=\'width:380px;white-space:normal\'>Вход: вызов метки не найден (jump в 582 закомментирован, jump в 1373 стоит внутри самой метки) (1175, 1373)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>в файлах ветки нет входа; см. bugs.html</span></div>"]:::stub');
+    L.push('K0["<div style=\'width:380px;white-space:normal\'>Вход: вызов метки не найден (jump в 582 закомментирован, jump в 1373 стоит внутри самой метки) (1175, 1373)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>прямого входа в файлах ветки нет; вызовы по имени из переменной не проверялись; см. bugs.html</span></div>"]:::stub');
     E('HK --> K0', c1);
     L.push('K1["<div style=\'width:320px;white-space:normal\'>Условие: Луиза рядом и Карралак с ней ещё не говорил в этом разговоре (1180)</div>"]:::stub');
     L.push('K2["<div style=\'width:320px;white-space:normal\'>Карралак: «Луиза?» Луиза: «Вы меня знаете?» «Я ищу отца!» (1182-1184)</div>"]:::stub');
@@ -221,9 +221,9 @@ function build(){
   } else {
     E('HK --> KX', c1);
   }
-  L.push(hub('HP','Ящик для подношений<br/><small>1534-1561 (не вызывается)</small>','stub',[[C_MOR, '−1…+1']]));
+  L.push(hub('HP','Ящик для подношений<br/><small>1534-1561 (прямых вызовов нет)</small>','stub',[[C_MOR, '−1…+1']]));
   if(EXP.has('HP')){
-    L.push('P0["<div style=\'width:360px;white-space:normal\'>Вход: метка этого блока не вызывается нигде в файлах ветки (1534)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>мёртвый код</span></div>"]:::stub');
+    L.push('P0["<div style=\'width:360px;white-space:normal\'>Вход: прямого вызова метки в файлах ветки нет (1534)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>прямых вызовов нет</span></div>"]:::stub');
     E('HP --> P0', c5);
     L.push('P1["<div style=\'width:300px;white-space:normal\'>Условие: задание «Вернуть деньги» взято (1535)</div>"]:::stub');
     L.push('P2["<div style=\'width:340px;white-space:normal\'>Героиня: «Кажется, это ящик для подношений.» «Меня просили вернуть деньги.» (1536-1537)</div>"]:::stub');
@@ -285,16 +285,16 @@ render();
 <body>
 <header class="site"><div class="wrap">
 <h1>Айрат: коридор, лазарет, Феня</h1>
-<p>script_4_airat.rpy, 1175-1615: лазарет и Феня, возвращение к Луизе, выход из церкви; разговор с Карралаком и ящик подношений в файлах не вызываются.</p>
+<p>script_4_airat.rpy, 1175-1615: лазарет и Феня, возвращение к Луизе, выход из церкви; у разговора с Карралаком и ящика подношений прямых вызовов в файлах нет (динамические не проверены).</p>
 <nav class="crumbs"><a href="index.html?v=70">← Все схемы</a> · <a href="airat4.html?v=70">Дом Луизы</a> · <a href="stats.html?v=34">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
 <h2>Типичный путь (суждение, не измерение)</h2>
 <p><b>Как иду:</b> налево к лазарету, «Ну и...?», затем «Мы сейчас как раз ищем врача.» (Мораль +1, Феня +2); возвращаюсь к Луизе; назад из церкви не иду.</p>
-<p class="muted">Числа взяты из script_4_airat.rpy (1425-1435). Настроение Фени введено автором схемы. Разговор с Карралаком (1175-1376) и ящик подношений (1534-1561) в найденных файлах не вызываются, в итог не входят.</p>
+<p class="muted">Числа взяты из script_4_airat.rpy (1425-1435). Настроение Фени введено автором схемы. Для разговора с Карралаком (1175-1376) и ящика подношений (1534-1561) в файлах ветки нет прямых вызовов; вызовы по имени из переменной не проверялись, поэтому это не доказанная недостижимость. Выбрано условное исключение: в итог эти блоки не входят.</p>
 </div>
-<div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Логика</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Кровь</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Мораль</td><td>от <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> до <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td><td><span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td></tr><tr><td>Настроение Фени</td><td>от <span style='background:rgb(254,226,232);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> до <span style='background:rgb(254,226,232);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span></td><td><span style='background:rgb(254,226,232);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше.</p><p>Разговор с Карралаком даёт Мораль −1…+1 и в итог не входит: в файлах ветки нет входа в метку.</p></div>
+<div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Логика</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Кровь</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Мораль</td><td>от <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> до <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td><td><span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td></tr><tr><td>Настроение Фени</td><td>от <span style='background:rgb(254,226,232);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> до <span style='background:rgb(254,226,232);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span></td><td><span style='background:rgb(254,226,232);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше.</p><p>Разговор с Карралаком (Мораль −1…+1) и ящик подношений (Мораль −1…+1) в итог не включены условно: прямых входов в файлах нет, динамические вызовы не проверены. Если вход есть, диапазон Морали шире.</p></div>
 
 <div class="card">
 <h2>Схема</h2>
