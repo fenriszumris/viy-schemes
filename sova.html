@@ -43,8 +43,8 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#4f46e5', c2='#be123c', c3='#0f766e';
-  L.push('ST["<div style=\'width:320px;white-space:normal\'>Вход script3_sova_begin (1) от road: «Стоит переждать»<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Логика > 0 - описание леса; если Безумие ≥ 3 и madlogic < 3 - реплики «уютно»</span></div>"]:::ex');
-  L.push('RD["<div style=\'width:260px;white-space:normal\'>script3_sova_road (275) → script_3_roadway (дорога)</div>"]:::ex');
+  L.push('ST["<a href=\'road.html?v=64\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:320px;white-space:normal\'>Вход script3_sova_begin (1) от road: «Стоит переждать»<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Логика > 0 - описание леса; если Безумие ≥ 3 и madlogic < 3 - реплики «уютно»</span></div></a>"]:::ex');
+  L.push('RD["<a href=\'road.html?v=64\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:260px;white-space:normal\'>script3_sova_road (275) → script_3_roadway (дорога)</div></a>"]:::ex');
   L.push(hub('H1','Сон 1: кора<br/><small>son_less1, 1-108</small>','hhs',[[C_BLD, '−1…0']]));
   if(EXP.has('H1')){
     L.push('B0["<div style=\'width:240px;white-space:normal\'>Кровь > 0 на входе (23-24)<br/><span style=\'background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px\'>▼−1</span></div>"]:::sc');
@@ -131,7 +131,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Сова и сны - script3_sova.rpy</h1>
 <p>Ночёвка в лесу: сон про кору, воспоминание о Лессе, сова · script3_sova.rpy (359 строк)</p>
-<nav class="crumbs"><a href="index.html?v=22">← Все схемы</a> · <a href="road.html?v=60">Дорога (road)</a> · <a href="gubert.html?v=60">Губерт</a></nav>
+<nav class="crumbs"><a href="index.html?v=22">← Все схемы</a> · <a href="road.html?v=64">Дорога (road)</a> · <a href="gubert.html?v=61">Губерт</a></nav>
 </div></header>
 <main>
 <div class="card">

@@ -43,7 +43,7 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#166534', c2='#0369a1', c3='#b45309', c4='#7c3aed', c5='#be123c', c6='#475569', c7='#b91c1c';
-  L.push('ST["<div style=\'width:260px;white-space:normal\'>Дорога: «Дальше по дороге»<br/><small>script_3_road_dev_airat, 91</small></div>"]:::ex');
+  L.push('ST["<a href=\'road.html?v=64\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:260px;white-space:normal\'>Дорога: «Дальше по дороге»<br/><small>script_3_road_dev_airat, 91</small></div></a>"]:::ex');
   L.push('EXS["<div style=\'width:200px;white-space:normal\'>Экран переходов</div>"]:::ex');
   L.push(hub('H1','Встреча с Луизой<br/><small>script_3_road_dev_airat, 91-257</small>','hhn',[]));
   if(EXP.has('H1')){
@@ -237,7 +237,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Луиза на дороге</h1>
 <p>script3_airat.rpy, строки 1-1381: встреча с Луизой, вопросы, имя, память, Лес Смерти</p>
-<nav class="crumbs"><a href="index.html?v=64">← Все схемы</a> · <a href="dev2.html?v=60">Разговоры по кнопке</a> · <a href="airat1.html?v=65">Айрат</a> · <a href="stats.html?v=33">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=64">← Все схемы</a> · <a href="dev2.html?v=67">Разговоры по кнопке</a> · <a href="airat1.html?v=66">Айрат</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
