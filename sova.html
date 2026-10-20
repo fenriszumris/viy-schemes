@@ -17,7 +17,7 @@ mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:
 <header class="site"><div class="wrap">
 <h1>Сова и сны — script3_sova.rpy</h1>
 <p>Ночёвка в лесу: сон про кору, воспоминание о Лессе, сова · script3_sova.rpy (359 строк)</p>
-<nav class="crumbs"><a href="index.html?v=22">← Все схемы</a> · <a href="road.html?v=2">Дорога (road)</a> · <a href="gubert.html?v=1">Губерт</a></nav>
+<nav class="crumbs"><a href="index.html?v=22">← Все схемы</a> · <a href="road.html?v=40">Дорога (road)</a> · <a href="gubert.html?v=40">Губерт</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -41,28 +41,28 @@ IN --> B0["<span style='color:#b91c1c;font-weight:700'>если Кровь &gt; 
 B0 --> D1["<b>Сон 1</b> son_less1 (27)<br/>кора, Лесс забирает кору"]:::scene
 IN --> D1
 D1 --> E1["son_less_end (87): просыпается<br/>sova_meet = 1, день 5"]:::scene
-E1 --> M1{"меню (109)<br/>начинает болеть голова"}:::hub
+E1 --> M1["меню (109)<br/>начинает болеть голова"]:::hub
 M1 -- "«Думаю хватит.»" --> ST["script_3_sova_stop (177)"]:::scene
 M1 -- "«Пытаться вспомнить.»" --> D2["<b>Сон 2</b> son_less2 (122)<br/>Лесс кусает, «Лес Смерти»"]:::scene
 D2 --> E2["son_less2_end (157)<br/>less.zn_name = 1<br/>Кровь <span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (168); из носа кровь"]:::blood
-E2 --> M2{"меню (170)"}:::hub
+E2 --> M2["меню (170)"]:::hub
 M2 -- "«Х-хватит...»" --> ST
 M2 -- "«{i}Идти до конца!{/i}»" --> DS["<b>death_son</b> (176)<br/>смерть во сне"]:::bad
 ST --> ST1["реплики по статам (180-193):<br/>логика ≥ 1 / безумие ≤ 1 / ratio &lt; 0.5"]:::scene
 ST1 --> SV["script3_sova_sova (196)<br/>sova_meet = 1, sova.lock = less_per"]:::scene
-SV --> M3{"меню (202)"}:::hub
+SV --> M3["меню (202)"]:::hub
 M3 -- "«Игнорировать.»" --> RD["script3_sova_road (275)<br/>→ script_3_roadway (дорога)"]:::out
 M3 -- "«Посмотреть ближе.»" --> TN["<span style='color:#b91c1c;font-weight:700'>если tash.near</span><br/>Таша: «она в моем вкусе... мертва» (210-223)"]:::scene
 M3 --> TN
-TN --> Q{"ratio &gt; 0.7? (225)"}:::scene
+TN --> Q["ratio &gt; 0.7? (225)"]:::scene
 Q -- "нет" --> PL["сова улетает (236)"]:::scene
 PL --> RD
 Q -- "да" --> MAD["script3_sova_mad (287)"]:::scene
-MAD --> Q2{"<span style='color:#b91c1c;font-weight:700'>less.mood ≥ 3</span>(297)"}:::scene
+MAD --> Q2["<span style='color:#b91c1c;font-weight:700'>less.mood ≥ 3</span>(297)"]:::scene
 Q2 -- "да" --> G["гладит сову, просит с собой (300-305)"]:::scene
 G --> M2M["script3_sova_2mad (328): сова улетает"]:::scene
 M2M --> RD
-Q2 -- "нет" --> Q3{"<span style='color:#b91c1c;font-weight:700'>less.mood &lt; 0</span>(311)"}:::scene
+Q2 -- "нет" --> Q3["<span style='color:#b91c1c;font-weight:700'>less.mood &lt; 0</span>(311)"]:::scene
 Q3 -- "да" --> PK["сова клюёт руку<br/>Кровь <span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (319); при Крови ≥ 3 → sm_blood"]:::blood
 PK --> FL["сова улетает (323)"]:::scene
 Q3 -- "нет" --> FL

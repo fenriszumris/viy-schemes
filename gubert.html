@@ -40,9 +40,9 @@ flowchart TD
 IN["<b>Вход</b> script3_nazad_gubert (11)<br/>rand.d1: первый раз / повторный текст"]:::scene
 RD["<span style='color:#b91c1c;font-weight:700'>если Таша не встречена (нет tash_meet) и tash.helpp не False</span><br/>→ redirect на script3_nazad_tash_go (nazad:247)"]:::red
 IN --> RD
-IN --> P1{"tash.helpp? (73)"}:::scene
+IN --> P1["tash.helpp? (73)"]:::scene
 P1 -- "да" --> ST["slime_tash (78)<br/>Таша спасает героиню, уходит;<br/>путь вправо открыт"]:::out
-P1 -- "нет" --> P2{"amulet()? (75)<br/>чёрный амулет: keep/active"}:::scene
+P1 -- "нет" --> P2["amulet()? (75)<br/>чёрный амулет: keep/active"]:::scene
 P2 -- "да" --> SA["slim_amul (116)<br/>Губерт убегает"]:::out
 P2 -- "нет" --> M["<b>slime_menu</b> (151)"]:::hub
 M --> C1["«По поводу шляпки...»<br/><span style='color:#b91c1c;font-weight:700'>если quests[quest_kap].keep</span> (153)"]:::choice
