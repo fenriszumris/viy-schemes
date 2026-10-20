@@ -17,7 +17,7 @@ mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:
 <header class="site"><div class="wrap">
 <h1>Айрат: вход, церковь снаружи, Миранда — script_4_airat.rpy</h1>
 <p>Строки 1-520: стена, город, двери церкви, горожанка с просьбой, правый коридор</p>
-<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="dev.html?v=4">Луиза на дороге</a> · <a href="stats.html?v=33">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="dev.html?v=40">Луиза на дороге</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -36,12 +36,12 @@ mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:
 <div class="widechart"><div class="mermaid">
 flowchart TD
 IN["<b>Вход</b> script_4_airat_in_wall (1)<br/>с дороги через белую стену (экран переходов)"]:::scene
-Q0{"<b>Амулет активен и чёрный?</b> (2)"}:::hub
+Q0["<b>Амулет активен и чёрный?</b> (2)"]:::hub
 TA["<span style='color:#b91c1c;font-weight:700'>если Ташир рядом (4)</span><br/>Ташир: «НАЗАД!» (5-22)"]:::scene
-M0{"меню (24)"}:::hub
+M0["меню (24)"]:::hub
 BK["«Согласиться с ним и сделать шаг назад.» → strel<br/>без изменений"]:::out
 DE["<b>DEATH END «Ошибка мироздания»</b> (62-66), затем <code>renpy.full_restart()</code> (66)<br/>«Уперто сделать шаг вперед» или (без Ташира) шаг вперёд<br/>persistent.death = 1, deaths_list[osh][1]"]:::bad
-Q1{"<b>«airat_go» ещё не в life_quest?</b> (68)<br/>первый вход: update_status(life_quest), «Какой светлый город...»"}:::hub
+Q1["<b>«airat_go» ещё не в life_quest?</b> (68)<br/>первый вход: update_status(life_quest), «Какой светлый город...»"]:::hub
 DV["<span style='color:#b91c1c;font-weight:700'>если Луиза рядом (dev.near, 78)</span><br/>Луиза: «Вот мы и в городе»"]:::scene
 B1["<span style='color:#b91c1c;font-weight:700'>dev_dialog «to_airat_bad» (94)</span><br/>Луиза: «Все, ты обещала уйти. Прощай!» dev.near = 0 → strel"]:::out
 B2["<span style='color:#b91c1c;font-weight:700'>dev_dialog «after_airat_bad» (104)</span><br/>Луиза убегает в дом слева, dev.near = 0 → strel"]:::out
@@ -50,13 +50,13 @@ TT["<span style='color:#b91c1c;font-weight:700'>если Ташир рядом (
 ST["<b>strel: город Айрат</b>"]:::out
 MB["<b>airat_main_bottom</b> (138): стрелка «вниз, к воротам»"]:::scene
 MBD["<span style='color:#b91c1c;font-weight:700'>если Луиза рядом (140)</span><br/>«за ворота я больше не выйду»<br/><span style='color:#b91c1c;font-weight:700'>если Феня рядом и не ранена (fenya.near и не rana, 146)</span>: Феню надо перевязать"]:::scene
-MM{"меню (160)"}:::hub
+MM["меню (160)"]:::hub
 MB1["«Прости, не туда свернула!» → strel, Луиза остаётся"]:::out
 MB2["«Ну, тогда нам стоит расстаться.»<br/>Луиза и Феня остаются в городе: dev.near = 0, fenya.near = 0, обе lock = дом Луизы<br/><span style='color:#b91c1c;font-weight:700'>если Феня рядом</span>: «Я пойду с Луизой»<br/>my_location = less_white_wall"]:::scene
 MU["<b>airat_main_up</b> (197): стрелка «вверх, к церкви»"]:::scene
-MUN{"<span style='color:#b91c1c;font-weight:700'>Луиза рядом и «ara_empty» ещё не в ara_pers (198)</span>"}:::hub
+MUN["<span style='color:#b91c1c;font-weight:700'>Луиза рядом и «ara_empty» ещё не в ara_pers (198)</span>"]:::hub
 MUN1["<span style='color:#b91c1c;font-weight:700'>ночь/sumer (199)</span>: «Сейчас не лучшее время идти сюда. Мой дом слева»"]:::scene
-MUM{"меню (206)"}:::hub
+MUM["меню (206)"]:::hub
 MU1["«Я пойду к тебе.» → strel"]:::out
 MU2["«Иди одна.» dev.near = 0, dev.lock = дом Луизы → strel"]:::out
 MU3["днём: «Это Церковь... Здесь слишком тихо»<br/>ara_pers.keep = 1, «ara_empty» в vrem_memory → strel"]:::out
@@ -65,10 +65,10 @@ CU["<b>airat_church_up</b> (307): двери церкви"]:::scene
 CUD["<span style='color:#b91c1c;font-weight:700'>Луиза рядом и «dev_church» не в arrows_per (309)</span><br/>входят вместе, «давай разделимся», quest_find_priest.diary<br/><span style='color:#b91c1c;font-weight:700'>если girl_air.lock == локация (340)</span>: Луиза замечает девушку"]:::scene
 CUE["иначе: «miranda_meet0» впервые — мелькает силуэт женщины"]:::scene
 CUF["quest_find_priest.keep и Луиза рядом → dev.lock = airat_church_inside; dev.near = 0<br/>girl_air добавляется в gametime._vrem"]:::scene
-GA{"<b>script_4_airat_girl_air</b> (363): горожанка Миранда (d_air)<br/>если «miranda_meet» уже есть: «мы уже решили вопросы» и выход"}:::hub
+GA["<b>script_4_airat_girl_air</b> (363): горожанка Миранда (d_air)<br/>если «miranda_meet» уже есть: «мы уже решили вопросы» и выход"]:::hub
 GA1["С Луизой (dev.lock == church_inside): диалог про Элеона Ара, «черная мантия?» — «были только белые»"]:::scene
 GA2["Без Луизы: «Тут подозрительно пусто»"]:::scene
-GM{"Просьба: передать плату за лечение, 5 золотых<br/>меню"}:::hub
+GM["Просьба: передать плату за лечение, 5 золотых<br/>меню"]:::hub
 GY["«Да, конечно.» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/>+5 золотых, quest_money_return = keep"]:::scene
 GN["«У меня есть другие дела.» <span style='background:rgb(220,245,228);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><br/>quest_money_return = false"]:::scene
 GX["С Луизой: «где лазарет?» — налево по коридору; dev.lock очищается<br/>→ strel"]:::out

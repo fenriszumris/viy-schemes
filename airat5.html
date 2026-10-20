@@ -17,7 +17,7 @@ mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:
 <header class="site"><div class="wrap">
 <h1>Айрат: стража, кошка Мурисса, статуя — script_5_airat.rpy</h1>
 <p>Строки 1-871: Горран и Алекс, пропуск, каменная кошка, четыре концовки «END?»</p>
-<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="airat4.html?v=2">Дом Луизы и концовки</a> · <a href="stats.html?v=32">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="airat4.html?v=40">Дом Луизы и концовки</a> · <a href="stats.html?v=32">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -36,12 +36,12 @@ mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:
 flowchart TD
 ST["<b>strel: правый коридор церкви, стража у статуи</b><br/>вход в script_5_airat_guard (2); «meet» сбрасывает стрелку airat_church_corridor._arrows._right._next_label"]:::out
 G0["<b>script_5_airat_guard</b> (2): первая встреча «meet» в quest_statue<br/>Алекс (g2) и Горран (g1) ругаются про страх и чай"]:::scene
-G1{"меню (50) при первой встрече"}:::hub
+G1["меню (50) при первой встрече"]:::hub
 G1a["«Прервать их» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (причина «Прервать стражников сразу.»)"]:::scene
 G1b["«Это весело!» → второе меню (71)"]:::scene
 G1c["«Хватит!» без статов"]:::scene
 G1d["«Опереться на стену и смотреть» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (причина «Не прервать стражников дважды.»)"]:::scene
-GH{"<b>Хаб разговора со стражей</b> (135)"}:::hub
+GH["<b>Хаб разговора со стражей</b> (135)"]:::hub
 GA["«А что здесь, собственно происходит?» (once «what») → quest_statue.diary"]:::scene
 GB["<span style='color:#b91c1c;font-weight:700'>«А можно посмотреть?» (после «what»)</span> (once «watch»)"]:::scene
 GC["<span style='color:#b91c1c;font-weight:700'>«В учебнике про Вий?» (после «drou»)</span> (once)"]:::scene
@@ -50,16 +50,16 @@ GE["<span style='color:#b91c1c;font-weight:700'>«Я ищу кое-кого. Э�
 GX["«Думаю, ничего.» → strel"]:::out
 P["<b>guard1_propusk</b> (398): «Держите пропуск!»<br/>Алекс/Горран забирают пропуск, inv propusk note = enter → strel<br/>(guard2_propusk / vosp_propusk — пустые метки, 386-397)"]:::out
 CI["<b>cat_inspect</b> (432): осмотр статуи кошки<br/>без пропуска: diary 2, → strel<br/>если уже «Бросить дело» (5.1) или «Убежать» (5.2): реплика и → strel<br/>иначе my_location = airat_cat"]:::scene
-CT{"<b>cat_talk</b> (454): статуя кошки (razg = cat)<br/>меню (460)"}:::hub
+CT["<b>cat_talk</b> (454): статуя кошки (razg = cat)<br/>меню (460)"]:::hub
 CT1["«Что за идиотизм? Это глупо.» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><br/>«Бросить это дело»: quest_statue.false, quest_karralak.false → strel / «Продолжить»"]:::scene
 CT2["«Кошки - страшные создания!» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span><br/>«Убежать.»: те же квесты false → strel / «Продолжить.»"]:::scene
 CT3["«Тут что-то не так.» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
 CH["«Привет?»; <span style='color:#b91c1c;font-weight:700'>Безумие ≥ 1: «Мяу!»</span>; <span style='color:#b91c1c;font-weight:700'>Логика ≥ 1: «не каменные же!»</span><br/>меню (555): «Неа!» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> / «Слышу.» <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
-S2{"<b>script_5_airat_statue_2</b> (582): разговор с кошкой Муриссой Белой"}:::hub
+S2["<b>script_5_airat_statue_2</b> (582): разговор с кошкой Муриссой Белой"]:::hub
 S2a["«Кто ты?» (catd.d2, один раз)"]:::scene
 S2b["«И чем именно ты занималась?» (после d2, d3)<br/>«А точнее?» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> / «Вы очень важная кошка!» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span>"]:::scene
 S2d["«Лизнуть ее в нос.» (catd.d1, один раз) <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span>"]:::scene
-S2c{"«Почему пугаешь паладинов?» (без гейта, можно повторять)<br/>Карралак (Жрец?) говорит, kar.zn_name = 1<br/>меню"}:::hub
+S2c["«Почему пугаешь паладинов?» (без гейта, можно повторять)<br/>Карралак (Жрец?) говорит, kar.zn_name = 1<br/>меню"]:::hub
 E1["<span style='color:#b91c1c;font-weight:700'>«Вырываться.» (Безумие ≥ 1)</span> <span style='background:rgb(236,230,252);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/><b>END? Забывчивость</b> (church__memory) → renpy.full_restart()"]:::bad
 E2["<span style='color:#b91c1c;font-weight:700'>«Сделать вид, что поверила.» (Логика ≥ 1)</span> <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span><br/><b>END? Что-то здесь не так.</b> (church__lie2) → renpy.full_restart()"]:::bad
 E3["«Вы ведь врете.»<br/><b>END? Лжецы.</b> (church__lie) → renpy.full_restart()"]:::bad

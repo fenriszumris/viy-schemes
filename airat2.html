@@ -17,7 +17,7 @@ mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:
 <header class="site"><div class="wrap">
 <h1>Айрат: дверь коридора и разговор с Лени — script_4_airat.rpy</h1>
 <p>Строки 520-1174: деревянная дверь, служка Лени, хаб разговоров</p>
-<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="airat1.html?v=3">Айрат: вход и церковь</a> · <a href="stats.html?v=32">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=29">← Все схемы</a> · <a href="airat1.html?v=40">Айрат: вход и церковь</a> · <a href="stats.html?v=32">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -37,12 +37,12 @@ mermaid.initialize({startOnLoad:true, maxTextSize:900000, flowchart:{htmlLabels:
 <h2>Схема</h2>
 <div class="widechart"><div class="mermaid">
 flowchart TD
-IN{"<b>airat_church_corridor_door</b> (520): деревянная дверь в конце правого коридора<br/>меню «Потянуть на себя» (не открывается; реплики по Логике/Безумию) / «Постучаться.» / «Конец»"}:::hub
+IN["<b>airat_church_corridor_door</b> (520): деревянная дверь в конце правого коридора<br/>меню «Потянуть на себя» (не открывается; реплики по Логике/Безумию) / «Постучаться.» / «Конец»"]:::hub
 KN0["«Постучаться.»: <span style='color:#b91c1c;font-weight:700'>если leni.lock == airat_church_kar (535)</span> → открывают<br/>иначе: «Никого нет дома.»"]:::scene
 OPEN["<b>corridor_arrows_up_next_label</b> (551): Лени открывает дверь<br/>первый раз «leni_meet»; my_location = airat_church_kar → strel"]:::out
 LD["<b>script_4_airat_leni_dialog</b> (658): разговор с Лени (razg = leni)<br/>первая встреча «leni_meet2»: реплики по Безумию/Логике; имя «Служка?» → «Лени»"]:::scene
 LDV["<span style='color:#b91c1c;font-weight:700'>если Луиза рядом и «dev_leni» ещё нет (710)</span><br/>Луиза требует сказать, где отец; ld.d3 = 1<br/><span style='color:#b91c1c;font-weight:700'>Логика ≥ 1</span>: «leni_lie» (Лени врёт)"]:::scene
-H{"<b>Хаб разговора с Лени</b> (841)<br/>меню, «Конец» → leni_dialog_end (1168)"}:::hub
+H["<b>Хаб разговора с Лени</b> (841)<br/>меню, «Конец» → leni_dialog_end (1168)"]:::hub
 D1["«Что за главный?» (ld.d1, один раз)<br/>Карралак Ар, Лени «за него»"]:::scene
 D1a["«Что значит, он того?» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span> (причина «Караллак, чего?»)"]:::scene
 D1b["«Он умер что ли?» <span style='background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> (причина «Карралак умер?»)"]:::scene
