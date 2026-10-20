@@ -64,7 +64,7 @@ function build(){
   if(EXP.has('H2')){
     L.push('F0["<div style=\'width:280px;white-space:normal\'>Феня ранена и рядом (fenya_rana): Луиза просит найти аптечку</div>"]:::sc');
     L.push('F1["<div style=\'width:320px;white-space:normal\'>«medicine» в заметках quest_find_doc → airat_house_fenya_bint (1787)<br/>Луиза перевязывает Феню<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 rana = 1</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Луиза ищет жреца → luiza_next, иначе Феня «пойдёмте» → экран переходов</span><br/><span style=\'background:rgb(254,226,232);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span> <span style=\'background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span> (1802-1803)</div>"]:::sc');
-    L.push('F2["<div style=\'width:260px;white-space:normal\'>Иначе (осмотр аптечки не сделан) → экран переходов</div>"]:::sc');
+    L.push('F2["<div style=\'width:260px;white-space:normal\'>Если осмотр аптечки не сделан → экран переходов</div>"]:::sc');
     E('H2 --> F0', c2);
     E('F0 --> F1', c2);
     E('F0 -- "пока не осмотрела" --> F2', c2);

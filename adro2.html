@@ -7,11 +7,11 @@
 <meta http-equiv="Pragma" content="no-cache">
 <title>Адро: кабинет Лиассона — Схемы игры «Вий»</title>
 <link rel="stylesheet" href="style7.css?v=22">
-<style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
+<style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
-const HUBS=["K1", "K2", "K3", "K4", "K5", "K6", "K7", "K8"];
+const HUBS=["K1", "K2", "K3", "K4", "K5", "K6", "K7"];
 const EXP=new Set();
 const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)', C_ADR='rgb(13,148,136)', C_NAR='rgb(101,163,13)', C_ADO='rgb(79,70,229)';
 const CHIP_BG2=1;
@@ -44,10 +44,10 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#0e7490', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
-  L.push('ST["<a href=\'adro.html?v=3\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Из страницы «Адро: ворота, допрос, контракт»: героиня подписала контракт<br/><small>script_4_tgavan_begin_adro</small></div></a>"]:::ex');
+  L.push('ST["<div style=\'width:300px;white-space:normal\'>Из страницы «Адро: ворота, допрос, контракт»: героиня подписала контракт<br/><small>script_4_tgavan_begin_adro</small></div>"]:::ex');
   L.push('EXS["<div style=\'width:260px;white-space:normal\'>Экран переходов (кабинет Лиассона, карта)</div>"]:::ex');
   L.push('END["<div style=\'width:260px;white-space:normal\'>Конец демоверсии (перезапуск игры)</div>"]:::bad');
-  L.push('NXT["<a href=\'adrc.html?v=4\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:280px;white-space:normal\'>Дальше: разговор с Адрианом о деле (страница «Адриан о деле»)</div></a>"]:::ex');
+  L.push('NXT["<div style=\'width:280px;white-space:normal\'>Дальше: разговор с Адрианом о деле (страница «Адриан о деле»)</div>"]:::ex');
   E('ST --> K1', cG);
   L.push(hub('K1','Кабинет Лиассона: начало<br/><small>script_4_tgavan_begin_adro, 1-39</small>','hhn',[]));
   if(EXP.has('K1')){
@@ -171,16 +171,6 @@ function build(){
   } else {
     E('K7 --> END', c7);
   }
-  L.push(hub('K8','Пока в заглушке (не достижимо в демо)<br/><small>после «КОНЕЦ ДЕМОВЕРСИИ»</small>','stub',[]));
-  if(EXP.has('K8')){
-    L.push('X1["<div style=\'width:340px;white-space:normal\'>Заглушка 1 (87-93): после «Сыщик-самоучка»: Адро «Свободны, можете возвращаться к Адриану»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «нет улик» (no_evid) и «осмотр завершён» (osm_end) → переход на карту</span></div>"]:::stub');
-    E('K8 --> X1', cG);
-    L.push('X2["<div style=\'width:340px;white-space:normal\'>Заглушка 2 (533-535): после «Расследование. Самоубийство?»: Адро «Свободны, можете возвращаться» → переход на карту</div>"]:::stub');
-    L.push('X3["<div style=\'width:340px;white-space:normal\'>Заглушка 3 (557-561): после «Не самоубийство?»: героиня «Но...», Адро «Можешь идти»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «самоубийство» (yes_suicide) → переход на карту</span></div>"]:::stub');
-    L.push('X4["<div style=\'width:340px;white-space:normal\'>Заглушка 4 (701-705): после меню «Что делать дальше»: Адро «До свидания»<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «конец разговора» (end1) → переход на карту</span></div>"]:::stub');
-    L.push('X5["<div style=\'width:340px;white-space:normal\'>Закомментированные строки (603-621, 634-650, 682-699): старые реплики Раэллоса, если героиня заблудилась (не код)</div>"]:::stub');
-  } else {
-  }
   L.push('classDef hhg fill:#e6f4f2,stroke:#0f766e,color:#16302c');
   L.push('classDef hhk fill:#fde9ee,stroke:#be123c,color:#4d1223');
   L.push('classDef hhl fill:#e5f2fa,stroke:#0369a1,color:#123043');
@@ -191,7 +181,6 @@ function build(){
   L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
   L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
   L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
-  L.push('classDef stub fill:#f3f4f6,stroke:#6b7280,stroke-dasharray:5 4,color:#6b7280');
   return L.concat(ST).join('\n');
 }
 async function render(){
@@ -222,16 +211,15 @@ render();
 <header class="site"><div class="wrap">
 <h1>Адро: кабинет Лиассона</h1>
 <p>script_4_tgavan_adro.rpy, 1-708: осмотр вещей, расспросы Адро, яд, Камилла, итоги.</p>
-<nav class="crumbs"><a href="index.html?v=67">← Все схемы</a> · <a href="adro.html?v=3">Адро: ворота</a> · <a href="stats.html?v=33">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=67">← Все схемы</a> · <a href="adro.html?v=1">Адро: ворота</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
-<div class="card" style="border:2px dashed #6b7280;background:#f3f4f6"><b>⚠ Серые пунктирные блоки: пока в заглушке (не достижимо в демо).</b> Блок «Заглушка демо» внизу схемы: код после «КОНЕЦ ДЕМОВЕРСИИ» (87-93, 533-535, 557-561, 701-705).</div>
 <div class="card">
 <h2>Типичный путь (суждение, не измерение)</h2>
 <p><b>Как иду:</b> осматриваю все вещи; «Яд» → «Сказать о яде на полке», «Мог ли Нарси удержать часть яда?», «Я хочу взять флакон с собой»; «Женщина» → «Кто такая К.Р?», «Показать письмо Камилле»; «Нет, это не мог быть суицид.»; «На этом все»; «Он в последние дни общался с неким Нарси.» (конец демоверсии).</p>
+<p><b>Итог по сцене:</b> настроение Адро <span style="background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px">▲+5</span> (письмо Камилле +2, «не суицид» +2, «На этом все» +1); Безумие и Логика не меняются.</p>
 <p class="muted">Числа из script_4_tgavan_adro.rpy.</p>
 </div>
-<div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Логика</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Кровь</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение Адро</td><td>от <span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▼−5</span> до <span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▲+5</span></td><td><span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▲+5</span></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше.</p></div>
 
 <div class="card">
 <h2>Схема</h2>
@@ -241,8 +229,8 @@ render();
 <div class="card">
 <h2>Ошибки и особенности кода</h2>
 <ul>
-<li>Строки 87-93, 533-535, 559-561, 603-621, 666-700: после «КОНЕЦ ДЕМОВЕРСИИ» и <code>renpy.full_restart()</code> остался код, который не выполнится. Так задумано: демо всегда заканчивается в момент ухода от Адро (не ошибка). Поэтому «Нет улик» (строки 79-93) всегда заканчивается перезапуском, а ветка с «no_evid» у Адриана (script3_tgavan_oh.rpy:1351) в демо не достигается.</li>
-<li>Строки 701-705 (после меню «Что делать дальше») не выполняются: все четыре пункта ведут на перезапуск (конец демо, так задумано).</li>
+<li>Строки 87-93, 533-535, 559-561, 603-621, 666-700: после «КОНЕЦ ДЕМОВЕРСИИ» и <code>renpy.full_restart()</code> остался код, который никогда не выполнится. Из-за этого «Нет улик» (строки 79-93) всегда заканчивается перезапуском, а ветка с «no_evid» у Адриана (script3_tgavan_oh.rpy:1351) недостижима.</li>
+<li>Строки 701-705 (после меню «Что делать дальше») недостижимы: все четыре пункта ведут на перезапуск.</li>
 </ul>
 </div>
 
