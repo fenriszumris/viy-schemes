@@ -50,7 +50,7 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; }
   L.push('flowchart TB');
   L.push(hub('H1','Хаб 1. Стартовое меню<br/>start_menu','h1',[[C_MAD,'0…+1'],[C_LOG,'0…+1']]));
-  L.push(hub('H2','Хаб 2. Сон<br/>c1_sleep → head_ache','h2',[[C_MAD,'−1…+1'],[C_LOG,'0…+1'],[C_BLD,'0…+1']]));
+  L.push(hub('H2','Хаб 2. Сон<br/>c1_sleep → head_ache','h2',[[C_MAD,'−1…+2'],[C_LOG,'0…+1'],[C_BLD,'0…+1']]));
   L.push(hub('H3','Хаб 3. Рука и корни<br/>c1_hand → zeml','h3',[[C_MAD,'−1…+4'],[C_LOG,'0…+2'],[C_BLD,'0…+1']]));
   L.push('A0["<b>Сцена 0. Выбор сложности</b> (hard)<br/>обучение, вопрос про HARDMODE<br/>статов нет"]:::ext');
   L.push('A1["<b>Сцена 1. Меню разработчика</b> (start3)<br/>razr = 1 жёстко: меню видит каждый игрок<br/>«Игра» → tash_game (мини-игра, вне схемы)"]:::ext');
@@ -189,7 +189,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <div class="panel-rel">
 <div id="panel-full">
 <h2>Полная схема: все хабы и все выборы</h2>
-<p class="muted">Плашки на хабе: минимум и максимум по всем путям внутри хаба от входа до выхода (со вложенными меню и циклами, с учётом разовых флагов и повторов причин); пути к смертям не считаются.</p>
+<p class="muted">Плашки на хабе: минимум и максимум по всем путям внутри хаба от входа до выхода (со вложенными меню и циклами, с учётом разовых флагов и повторов причин); включая пути к смертям, как в таблицах статов ниже.</p>
 <p class="muted">Блок-схема: хабы свёрнуты. Клик по блоку хаба раскрывает его ветки, повторный клик сворачивает. У каждого хаба свой цвет ветки. <button class="mini" onclick="allHubs(true)">Развернуть все</button> <button class="mini" onclick="allHubs(false)">Свернуть все</button></p><p class="muted" style="font-size:13px">Значки на выборах: <span style="color:#e41a1c;font-weight:700">▲/▼ Настроение</span> · <span style="color:#bc1888;font-weight:700">▲/▼ Кровь</span> · <span style="color:#7048e8;font-weight:700">▲/▼ Безумие</span> · <span style="color:#1c7ed6;font-weight:700">▲/▼ Логика</span>. Плюсы — вверху справа карточки, минусы — внизу слева. Плашка на хабе — диапазон прямых изменений статов внутри хаба (по коду).</p>
 <style>button.mini{font-size:13px;padding:3px 10px;border-radius:8px;border:1px solid #c6ccd6;background:#fff;cursor:pointer}</style>
 <div class="widechart"><pre class="mermaid" id="fchart"></pre></div>
