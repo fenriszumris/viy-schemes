@@ -134,7 +134,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Адриан: разговор о деле</h1>
 <p>script3_tgavan_oh.rpy:1281-1576: Адриан у двери после Адро, доклад по расследованию.</p>
-<nav class="crumbs"><a href="index.html?v=67">← Все схемы</a> · <a href="adro2.html?v=1">Адро: кабинет</a> · <a href="stats.html?v=33">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=67">← Все схемы</a> · <a href="adro2.html?v=2">Адро: кабинет</a> · <a href="stats.html?v=33">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -151,7 +151,7 @@ render();
 <div class="card">
 <h2>Ошибки и особенности кода</h2>
 <ul>
-<li><span style="color:#b91c1c;font-weight:700">Доклад Адриану не подключён</span>: строки 1285-1286 (<code>if white_guard: jump adrian_conv_door_white</code>) закомментированы, и на метку <code>adrian_conv_door_white</code> (1317) нет ни одного перехода. Весь доклад (1317-1576) недостижим.</li>
+<li><span style="font-weight:700">Доклад Адриану в демо не подключён (заглушка демо, так задумано, не ошибка)</span>: строки 1285-1286 (<code>if white_guard: jump adrian_conv_door_white</code>) закомментированы, и на метку <code>adrian_conv_door_white</code> (1317) нет ни одного перехода. Весь доклад (1317-1576) в демо не достигается; ветка «no_evid» (1351) тоже.</li>
 <li>Строка 1474: <code>if "adro_liass_talk":</code> без <code>in adro_dialog</code>, условие всегда истинно.</li>
 <li>В <code>adrian_conv_door</code> единственный пункт меню (1288) виден только при ссоре с Адро; без неё в меню нет ни одного пункта, а «До свидания» (1313) стоит уже после меню.</li>
 </ul>
