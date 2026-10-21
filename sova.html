@@ -44,58 +44,60 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#475569', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
-  L.push('ST["<div style=\'width:320px;white-space:normal\'>Вход: на дороге выбор «Стоит переждать.» (Логика +1; Таша, если рядом, уходит) (script3_road.rpy:44-58)<br/><a href=\'road.html?v=105\'>← страница «Дорога»</a></div>"]:::ex');
-  L.push('RD["<div style=\'width:280px;white-space:normal\'>Дальше: дорога<br/><small>script3_sova_road, 275: «Пора в путь...»</small><br/><a href=\'road.html?v=105\'>страница «Дорога»</a></div>"]:::ex');
-  L.push('DIE["<div style=\'width:280px;white-space:normal\'>BAD END «Вспомнить все...»<br/><small>сцена смерти script_memory.rpy:199-230, перезапуск</small></div>"]:::bad');
+  L.push('ST["<div style=\'width:320px;white-space:normal\'>Вход: на дороге выбор «Стоит переждать.» (Логика +1; Таша, если рядом, уходит) (script3_road.rpy:42-56)<br/><a href=\'road.html?v=160\'>← страница «Дорога»</a></div>"]:::ex');
+  L.push('RD["<div style=\'width:280px;white-space:normal\'>Дальше: дорога<br/><small>script3_sova_road, 263-265: «Пора в путь...»</small><br/><a href=\'road.html?v=160\'>страница «Дорога»</a></div>"]:::ex');
+  L.push('DIE["<div style=\'width:280px;white-space:normal\'>BAD END «Вспомнить все...»<br/><small>сцена смерти script_memory.rpy:195-226, перезапуск</small></div>"]:::bad');
   E('ST --> S1', cG);
-  L.push(hub('S1','Ночь и первый сон<br/><small>script3_sova_begin, 1-86</small>','hhn',[[C_BLD, '−1…0']]));
+  L.push(hub('S1','Ночь и первый сон<br/><small>script3_sova_begin, 1-81</small>','hhn',[[C_BLD, '−1…0']]));
   if(EXP.has('S1')){
     L.push('N0["<div style=\'width:340px;white-space:normal\'>Героиня решает дождаться утра у дерева, закрывает глаза и засыпает (3-22)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если уровень Логики выше 0: подробно замечает, что в лесу нет ветра, птиц и даже насекомых (3-10)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если уровень Безумия не ниже 1 и «безумная логика» меньше 3: говорит, что здесь уютно и хочется есть (11-13)</span></div>"]:::sc');
     E('S1 --> N0', c1);
     L.push('B1["<div style=\'width:280px;white-space:normal\'>Если у героини есть Кровь: она убывает перед сном (23-24)</div>"]:::sc');
-    L.push('D1["<div style=\'width:340px;white-space:normal\'>Первый сон: героиня идёт на уханье совы, срывает кору с дерева, из-под коры течёт красное; появляется Лесс, требует кору обратно и прикладывает к дереву (27-85)</div>"]:::sc');
+    L.push('D1["<div style=\'width:340px;white-space:normal\'>Первый сон: героиня идёт на уханье совы, срывает кору с дерева, из-под коры течёт красное; появляется Лесс, требует кору обратно и прикладывает к дереву (27-80)</div>"]:::sc');
     E('N0 --> X1["<div style=\'width:290px;white-space:normal\'>'+mk('Если Кровь больше 0:',null,[[C_BLD, 1]])+'</div>"]:::hhn', c1); E('X1 --> B1', c1);
     E('N0 --> X2["<div style=\'width:290px;white-space:normal\'>'+mk('Если Крови нет:',null,null)+'</div>"]:::hhn', c1); E('X2 --> D1', c1);
     E('B1 --> D1', c1);
   } else {
     E('S1 --> S2', c1);
   }
-  L.push(hub('S2','Пробуждение и воспоминания<br/><small>son_less_end, 87-176</small>','hhl',[[C_BLD, '0…+1']]));
+  L.push(hub('S2','Пробуждение и воспоминания<br/><small>son_less_end, 82-170</small>','hhl',[[C_BLD, '0…+1']]));
   if(EXP.has('S2')){
-    L.push('W0["<div style=\'width:340px;white-space:normal\'>Героиня просыпается: она «и правда знакома» с Лессом, но не помнит почему (87-108)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: сова встречена</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если уровень Безумия не ниже 1: «какое это имеет значение?!» (101-102)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если уровень Безумия ниже 1, но Логики не ниже 1: ей важно, но неясно, стоит ли вспоминать (103-107)</span></div>"]:::sc');
+    L.push('W0["<div style=\'width:340px;white-space:normal\'>Героиня просыпается: она «и правда знакома» с Лессом, но не помнит почему (82-103)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: сова встречена</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если уровень Безумия не ниже 1: «какое это имеет значение?!» (96-97)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если уровень Безумия ниже 1, но Логики не ниже 1: ей важно, но неясно, стоит ли вспоминать (98-102)</span></div>"]:::sc');
     E('S2 --> W0', c2);
-    L.push('D2["<div style=\'width:340px;white-space:normal\'>Второй сон: героиня находит Лесса, он называет себя Лесом Смерти и кусает в шею; героиня просит проводить до границы леса (122-156)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: героиня знает имя Лесса</span></div>"]:::sc');
-    L.push('HD["<div style=\'width:300px;white-space:normal\'>Голова болит всё сильнее, из носа идёт кровь (157-169)</div>"]:::sc');
-    E('W0 --> Y1["<div style=\'width:290px;white-space:normal\'>'+mk('«Думаю хватит.» (110-112)',null,null)+'</div>"]:::hhl', c2); E('Y1 --> S3', c2);
-    E('W0 --> Y2["<div style=\'width:290px;white-space:normal\'>'+mk('«Пытаться вспомнить.» (114)'+flag('Кровь +1 в конце воспоминания: из носа идёт кровь (168)'),[[C_BLD, 1]],null)+'</div>"]:::hhl', c2); E('Y2 --> D2', c2);
+    L.push('D2["<div style=\'width:340px;white-space:normal\'>Второй сон: героиня находит Лесса, он называет себя Лесом Смерти и кусает в шею; героиня просит проводить до границы леса (117-150)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: героиня знает имя Лесса</span></div>"]:::sc');
+    L.push('HD["<div style=\'width:300px;white-space:normal\'>Голова болит всё сильнее, из носа идёт кровь (151-163)</div>"]:::sc');
+    E('W0 --> Y1["<div style=\'width:290px;white-space:normal\'>'+mk('«Думаю хватит.» (105-106)',null,null)+'</div>"]:::hhl', c2); E('Y1 --> S3', c2);
+    E('W0 --> Y2["<div style=\'width:290px;white-space:normal\'>'+mk('«Пытаться вспомнить.» (109)'+flag('Кровь +1 в конце воспоминания: из носа идёт кровь (162)'),[[C_BLD, 1]],null)+'</div>"]:::hhl', c2); E('Y2 --> D2', c2);
     E('D2 --> HD', c2);
-    E('HD --> Y3["<div style=\'width:290px;white-space:normal\'>'+mk('«Х-хватит...» (171-174)',null,null)+'</div>"]:::hhl', c2); E('Y3 --> S3', c2);
-    E('HD --> Y4["<div style=\'width:290px;white-space:normal\'>'+mk('«Идти до конца!» (175-176)',null,null)+'</div>"]:::hhr', c8); E('Y4 --> DIE', c8);
+    E('HD --> Y3["<div style=\'width:290px;white-space:normal\'>'+mk('«Х-хватит...» (165-168)',null,null)+'</div>"]:::hhl', c2); E('Y3 --> S3', c2);
+    E('HD --> Y4["<div style=\'width:290px;white-space:normal\'>'+mk('«Идти до конца!» (169-170)',null,null)+'</div>"]:::hhr', c8); E('Y4 --> DIE', c8);
   } else {
     E('S2 --> S3', c2);
     E('S2 --> DIE', c2);
   }
-  L.push(hub('S3','Сова<br/><small>script_3_sova_stop, script3_sova_sova, script3_sova_mad, 177-335</small>','hhl',[[C_BLD, '0…+1']]));
+  L.push(hub('S3','Сова<br/><small>script_3_sova_stop, script3_sova_sova, script3_sova_mad, 171-317</small>','hhl',[[C_BLD, '0…+1']]));
   if(EXP.has('S3')){
-    L.push('A0["<div style=\'width:340px;white-space:normal\'>Героиня приходит в себя, голова болит (177-195)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если уровень Логики не ниже 1: это не похоже на простую амнезию (180-183)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если уровень Безумия не выше 1: ей кажется, что она вела себя странно (184-188)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если доля Логики от суммы Логики и Безумия ниже 0,5: воспоминания кажутся забавными (189-194)</span></div>"]:::sc');
+    L.push('A0["<div style=\'width:340px;white-space:normal\'>Героиня приходит в себя, голова болит (171-189)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если уровень Логики не ниже 1: это не похоже на простую амнезию (174-177)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если уровень Безумия не выше 1: ей кажется, что она вела себя странно (178-182)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если доля Логики от суммы Логики и Безумия ниже 0,5: воспоминания кажутся забавными (183-188)</span></div>"]:::sc');
     E('S3 --> A0', c4);
-    L.push('SV["<div style=\'width:300px;white-space:normal\'>Слышно уханье совы (196-201)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: сова встречена; сова появляется на локации «Перекрёсток»</span></div>"]:::sc');
-    L.push('LK["<div style=\'width:320px;white-space:normal\'>Героиня смотрит на сову ближе (209-224)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Таша рядом: Таша узнаёт сову («в моём вкусе: мертва»), героиня удивлена, что сова дышит (210-223)</span></div>"]:::sc');
-    L.push('LM["<div style=\'width:320px;white-space:normal\'>Героиня смотрит на сову и тянет к ней руку; сова улетает: «Кажется она не в настроении» (229-239)</div>"]:::sc');
-    L.push('MD["<div style=\'width:300px;white-space:normal\'>«Интересненько!» Героиня здоровается с совой (287-296)</div>"]:::sc');
-    L.push('M1["<div style=\'width:320px;white-space:normal\'>Сова: «Ух!» Героиня гладит сову, просит идти с ней; сова улетает (297-335)</div>"]:::sc');
-    L.push('M2["<div style=\'width:320px;white-space:normal\'>Сова молчит; героиня тянется к ней, сова улетает (306-326)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Настроение Лесса ниже 0: сова клюёт руку, течёт кровь (311-319)</span></div>"]:::sc');
-    L.push('M3["<div style=\'width:280px;white-space:normal\'>Сова клюёт руку героини (311-319)</div>"]:::sc');
+    L.push('SV["<div style=\'width:300px;white-space:normal\'>Слышно уханье совы (190-195)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: сова встречена; сова появляется на локации «Перекрёсток»</span></div>"]:::sc');
+    L.push('LK["<div style=\'width:320px;white-space:normal\'>Героиня смотрит на сову ближе (204-217)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Таша рядом: Таша узнаёт сову («в моём вкусе: мертва»), героиня удивлена, что сова дышит (204-217)</span></div>"]:::sc');
+    L.push('LM["<div style=\'width:320px;white-space:normal\'>Героиня смотрит на сову и тянет к ней руку; сова улетает: «Кажется она не в настроении» (222-231)</div>"]:::sc');
+    L.push('MD["<div style=\'width:300px;white-space:normal\'>«Интересненько!» Героиня здоровается с совой (275-279)</div>"]:::sc');
+    L.push('M1["<div style=\'width:320px;white-space:normal\'>Сова: «Ух!» Героиня: «Хммм... Кажется можно.» Гладит сову: «Мягонкая... Мне нравится!» «Пойдешь со мной?» Сова молчит, героиня: «Ну пожалуйста!» (280-288)</div>"]:::sc');
+    L.push('M2["<div style=\'width:320px;white-space:normal\'>Сова молчит, героиня: «Хмм... Что-то не так?» (289-292); тянется к сове (293); сова улетает: «Она явно не в настроении... Жаль...», «Ну куда же!» (304-309)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Настроение Лесса ниже 0: сова клюёт руку, течёт кровь (294-302)</span></div>"]:::sc');
+    L.push('M1B["<div style=\'width:320px;white-space:normal\'>script3_sova_2mad (311-317): сова молчит, улетает; героиня: «Ну куда же!» «Жаль.»; переход на script3_sova_road (317)</div>"]:::sc');
+    L.push('M3["<div style=\'width:280px;white-space:normal\'>Сова клюёт руку героини (294-302)</div>"]:::sc');
     E('A0 --> SV', c4);
-    E('SV --> Z1["<div style=\'width:290px;white-space:normal\'>'+mk('«Посмотреть ближе.» (203-204)',null,null)+'</div>"]:::hhl', c4); E('Z1 --> LK', c4);
-    E('SV --> Z2["<div style=\'width:290px;white-space:normal\'>'+mk('«Игнорировать.» (206-207)',null,null)+'</div>"]:::hhl', c4); E('Z2 --> RD', c4);
-    E('LK --> Z3["<div style=\'width:290px;white-space:normal\'>'+mk('Если доля Логики от суммы Логики и Безумия выше 0,7 (225):',null,null)+'</div>"]:::hhl', c4); E('Z3 --> MD', c4);
+    E('SV --> Z1["<div style=\'width:290px;white-space:normal\'>'+mk('«Посмотреть ближе.» (197)',null,null)+'</div>"]:::hhl', c4); E('Z1 --> LK', c4);
+    E('SV --> Z2["<div style=\'width:290px;white-space:normal\'>'+mk('«Игнорировать.» (200-201)',null,null)+'</div>"]:::hhl', c4); E('Z2 --> RD', c4);
+    E('LK --> Z3["<div style=\'width:290px;white-space:normal\'>'+mk('Если доля Логики от суммы Логики и Безумия выше 0,7 (219):',null,null)+'</div>"]:::hhl', c4); E('Z3 --> MD', c4);
     E('LK --> Z4["<div style=\'width:290px;white-space:normal\'>'+mk('Если доля Логики не выше 0,7:',null,null)+'</div>"]:::hhl', c4); E('Z4 --> LM', c4);
     E('LM --> RD', c4);
-    E('MD --> Z5["<div style=\'width:290px;white-space:normal\'>'+mk('Если Настроение Лесса не ниже 3 (297):',null,null)+'</div>"]:::hhl', c4); E('Z5 --> M1', c4);
+    E('MD --> Z5["<div style=\'width:290px;white-space:normal\'>'+mk('Если Настроение Лесса не ниже 3 (280):',null,null)+'</div>"]:::hhl', c4); E('Z5 --> M1', c4);
     E('MD --> Z6["<div style=\'width:290px;white-space:normal\'>'+mk('Если Настроение Лесса ниже 3:',null,null)+'</div>"]:::hhl', c4); E('Z6 --> M2', c4);
-    E('M2 --> Z7["<div style=\'width:290px;white-space:normal\'>'+mk('Если Настроение Лесса ниже 0 (311):',[[C_BLD, 1]],null)+'</div>"]:::hhl', c4); E('Z7 --> M3', c4);
-    E('M1 --> RD', c4);
+    E('M2 --> Z7["<div style=\'width:290px;white-space:normal\'>'+mk('Если Настроение Лесса ниже 0 (294):',[[C_BLD, 1]],null)+'</div>"]:::hhl', c4); E('Z7 --> M3', c4);
+    E('M1 --> M1B', c4);
+    E('M1B --> RD', c4);
     E('M2 --> RD', c4);
     E('M3 --> RD', c4);
   } else {
@@ -137,7 +139,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Сова и сны: ночёвка в лесу</h1>
 <p>script3_sova.rpy: первый сон о Лессе, пробуждение, выбор вспоминать (возможная смерть), сова на перекрёстке.</p>
-<nav class="crumbs"><a href="index.html?v=197">← Все схемы</a> · <a href="road.html?v=105">Дорога</a> · <a href="stats.html?v=198">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=105">← Все схемы</a> · <a href="road.html?v=160">Дорога</a> · <a href="stats.html?v=105">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
