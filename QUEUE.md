@@ -29,3 +29,4 @@ STATE 9:40: v=273 pushed. Done: locations, char click/drop sections, trees(tash,
 
 10:20 v297 live: derived flag meanings (condru derive + MEAN for tea/cap/dv/vinp), trees use plain-text conditions. Still unresolved: persistent.memory, tash_game, script3_tash_cards_per, sovet_kap, quests _note reward, hod_per, my_cards. Next: inventory prose x27, trees kar/urza/kai/cat/girl, bugs undefined-vars, final audit, Cloudflare prep. No report to main yet (needs screenshot, bundle with next).
 10:27 v299: all char talk trees replaced with choice_tree.py (collapsible, choices only, no replies, no mermaid/links). Kate asked this for Leni.
+10:35 v302: Leni = hub diagram (hub_tree.py/hub_embed.py); others restored to cards. Main rejected v299 (accordion). Do NOT convert other chars until Kate decides. Next: inventory prose, undefined vars, final audit, Cloudflare prep.
