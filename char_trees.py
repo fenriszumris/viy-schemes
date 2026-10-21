@@ -2,7 +2,7 @@
 import re,sys
 sys.path.insert(0,'/tmp/sch')
 import trees
-V=279
+V=280
 T={'tash':('tash_razg_menu','tash','tash.near','кнопка-сообщение рядом с фигурой Таша (<code>tashir_button2</code>)'),
 'fenrira':('fen_razg_menu','fenya','fenya.near','кнопка-сообщение (<code>fen_button2</code>)'),
 'luiza':('dev_razg_menu','dev','dev.near','кнопка-сообщение (<code>dev_button2</code>); клик по самой фигуре открывает/закрывает экран <code>dev_screen</code>'),
@@ -12,7 +12,9 @@ T={'tash':('tash_razg_menu','tash','tash.near','кнопка-сообщение 
 'leni':('script_4_airat_leni_dialog',None,None,None),
 'adro':('script_4_tgavan_to_adro',None,None,None),
 'kap':('script4_kapibar_start_menu',None,None,None),
-'sova':('script3_sova_sova',None,None,None)}
+'sova':('script3_sova_sova',None,None,None),
+'starichok':('script_5_airat_guard',None,None,None),
+'parenek':('script_5_airat_guard',None,None,None)}
 for sl,(lab,pers,near,btn) in T.items():
     f='char_%s.html'%sl
     try: s=open(f,encoding='utf8').read()
@@ -22,7 +24,7 @@ for sl,(lab,pers,near,btn) in T.items():
     if pers:
         h+='<p class="muted">Когда персонаж идёт рядом с героиней (<code>%s</code>), у его фигуры справа есть %s: клик ведёт в меню разговора <code>%s</code> (%s:%d). Клик по фигуре переключает «идёт рядом» (знак <code>%s</code> умножается на −1).</p>'%(near,btn,lab,fn,i+1,near)
     else:
-        h+='<p class="muted">Меню разговора <code>%s</code> (%s:%d).</p>'%(lab,fn,i+1)
+        h+='<p class="muted">Меню разговора <code>%s</code> (%s:%d).%s</p>'%(lab,fn,i+1,' Это одна общая сцена для двух стражников: Горрана (старший, реплики g1) и Алекса (младший, реплики g2); реплики каждого подписаны своим именем.' if sl in ('starichok','parenek') else '')
     h+='<p class="muted">Показаны реплики, варианты ответа, условия и последствия (флаги, настроение, безумие) по коду. Вложенные ветки раскрываются; повторные переходы на уже показанные ветки не раскрываются, глубина ограничена тремя уровнями, глубже написано «метка», это явный пробел. Условия двух видов: расшифрованные (понятное русское условие; чтение кода) и нерасшифрованные: у флагов указано только, где они ставятся и сбрасываются, а смысл в коде не назван, его я не придумываю; «проверка в коде (смысл не расшифрован)» значит, что выражение пока не разобрано.</p>'
     h+=trees.render(lab,0,None,3)+'</div><!--/TREE-->'
     s=re.sub(r'<!--TREE-->.*?<!--/TREE-->','',s,flags=re.S)
