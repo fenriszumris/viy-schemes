@@ -150,7 +150,7 @@ def atom(a):
         if m:
             inner=m.group(1).strip()
             k=_key(inner)
-            if k: return MEAN[inner][2] if inner in MEAN else k.replace('стоит','не стоит').replace('уже записана','ещё не записана').replace('есть запись','нет записи')
+            if k: return MEAN[inner][2] if inner in MEAN else k.replace('уже произошло','ещё не произошло').replace('стоит','не стоит').replace('уже записана','ещё не записана').replace('есть запись','нет записи')
     # logic/mad levels via definitions (script.rpy:126-145)
     LV={'mad':{1:3,2:6,3:9},'logic':{1:2,2:4,3:6}}
     NM={'mad':'безумия','logic':'логики'}
@@ -227,3 +227,68 @@ def cond_html(expr,lvl=0):
             return atom(e)
         return f(expr,0)
     finally: SHORT=old
+
+# ---- derive meaning from set sites ----
+_FILES={}
+def _lines(fn):
+    if fn not in _FILES: _FILES[fn]=open('/tmp/viy/game/'+fn,encoding='utf8',errors='ignore').read().split('\n')
+    return _FILES[fn]
+def _ind(l): return len(l)-len(l.lstrip(' \t'))
+def _clean(t): return re.sub(r'\{[^}]*\}','',t).replace('\\n',' ').strip()
+def ctx(lab,fn,line):
+    ls=_lines(fn);i=line-1;base=_ind(ls[i])
+    j=i-1
+    while j>=0:
+        l=ls[j]
+        if l.strip() and not l.strip().startswith('#'):
+            if re.match(r'label \w+:',l): break
+            if _ind(l)<base:
+                t=l.strip()
+                m=re.match(r'"(.*?)"\s*(?:if .*)?:$',t)
+                if m: return 'при выборе варианта «%s»'%_clean(m.group(1))[:70]
+                base=_ind(l)
+        j-=1
+    # scene: first speech after label
+    k=j+1 if j>=0 else 0
+    for z in range(k,min(k+60,len(ls))):
+        m=re.match(r'\s*(\w+) "(.*)"\s*$',ls[z]) or re.match(r'\s*()"(.*)"\s*$',ls[z])
+        if m and not ls[z].strip().startswith('$'): return 'в сцене, начинающейся словами «%s»'%_clean(m.group(2))[:70]
+    return 'в сцене «%s»'%lab
+def derive(key):
+    _scan();st=_SET.get(key)
+    if not st: return None
+    cs=[]
+    for lab,fn,ln in st[:3]:
+        c=ctx(lab,fn,ln)
+        if c not in cs: cs.append(c)
+    t=' / '.join(cs)+(' (и ещё в %d местах)'%(len(st)-3) if len(st)>3 else '')
+    return t
+_orig_scan=_scan
+def _scan():
+    if _SET or _RESET: return
+    _orig_scan()
+    for f in glob.glob('/tmp/viy/game/*.rpy'):
+        ls=open(f,encoding='utf8',errors='ignore').read().split('\n');fn=f.split('/')[-1];lab=None
+        for i,l in enumerate(ls):
+            m=re.match(r'label (\w+):',l)
+            if m: lab=m.group(1)
+            m=re.search(r'\$ ([A-Za-z_]\w*)\s*=\s*(True|1|"[^"]*")\s*$',l)
+            if m: _SET.setdefault(m.group(1),[]).append((lab,fn,i+1))
+_old2=_key
+def _key(a):
+    if not SHORT: return _old2(a)
+    r=_old2(a)
+    k=a
+    m=re.fullmatch(r'([A-Za-z_]\w*)\s*(?:==\s*(?:True|1))?',a)
+    if r is None and m and m.group(1) not in ('persistent',):
+        k=m.group(1)
+    if r is None and k in _SET.keys()|{k} :
+        d=derive(k)
+        if d: LEG[a]='выведено по месту, где это ставится: '+d+'. Не сбрасывается.' if k not in _RESET else 'выведено по месту, где это ставится: '+d; return 'уже произошло (ставится '+d.split(' / ')[0]+')'
+    if r and a in _SET and LEG.get(a,'').startswith('устанавливается'):
+        d=derive(a)
+        if d: LEG[a]=LEG[a]+'. Выведено по месту установки: '+d
+        if d and r.startswith('флаг'): return 'уже произошло (ставится '+d.split(' / ')[0]+')'
+        if d and r.startswith('метка'): return 'уже произошло (ставится '+d.split(' / ')[0]+')'
+        if d and r.startswith('в памяти'): return 'уже произошло (ставится '+d.split(' / ')[0]+')'
+    return r
