@@ -5,6 +5,28 @@ PERS={'tash':'Таш','fenya':'Феня','dev':'Луиза','nars':'Нарси',
 ATTR={'near':'идёт рядом с героиней','mood':'настроение','zn_name':'знает имя','zn_vpotpam':'знает, что «Вий» — псевдоним героини','helpp':'обещал помочь','bad':'отношение испорчено','good':'отношение хорошее','lock':'находится в месте','note':'заметки'}
 def atom(a):
     a=a.strip().strip('()')
+    m=re.fullmatch(r'(.+?)\s*==\s*(True|1)',a)
+    if m and not m.group(1).strip().startswith('razg_menu'): return atom(m.group(1))
+    m=re.fullmatch(r'(.+?)\s*==\s*(False|0)',a)
+    if m and not re.search(r'mood|level',m.group(1)): return atom('not '+m.group(1).strip())
+    m=re.fullmatch(r'(mad_l|logic_l)\(\)\s*(>=|<=|>|<|==)\s*(\d+)',a)
+    if m:
+        op={'>=':'не ниже','<=':'не выше','>':'выше','<':'ниже','==':'равен'}[m.group(2)]
+        return 'уровень %s у героини %s %s'%({'mad_l':'безумия','logic_l':'логики'}[m.group(1)],op,m.group(3))
+    m=re.fullmatch(r'sanity\.ratio\(\)\s*(>=|<=|>|<)\s*([\d.]+)',a)
+    if m:
+        op={'>=':'не меньше','<=':'не больше','>':'больше','<':'меньше'}[m.group(1)]
+        return 'доля логики у героини (логика/(логика+безумие)) %s %s'%(op,m.group(2))
+    m=re.fullmatch(r'razg_menu\s*==\s*"(\w+)"',a)
+    if m: return 'разговор ведётся из меню персонажа «%s»'%({'tash':'Таш','less':'Лесс','dev':'Луиза','nars':'Нарси','fen':'Феня','bonny':'Бонни'}.get(m.group(1),m.group(1)))
+    m=re.fullmatch(r'blood\s*>\s*0',a)
+    if m: return 'у героини есть кровопотеря (blood > 0)'
+    m=re.fullmatch(r'v\.name\s*==\s*"(.+)"',a)
+    if m: return 'имя героини в игре сейчас «%s»'%m.group(1)
+    m=re.fullmatch(r'(\w+)\.zn_name',a)
+    if m and m.group(1) in PERS: return '%s знает имя героини или своё (признак zn_name)'%PERS[m.group(1)] if False else 'признак «%s.zn_name» (имя уже известно)'%m.group(1)
+    m=re.fullmatch(r'quests\["(\w+)"\]\.(keep|done|know|false)',a)
+    if m: return 'квест «%s»: %s'%(m.group(1),{'keep':'взят','done':'выполнен','know':'о нём известно','false':'провален'}[m.group(2)])
     m=re.fullmatch(r'not (.+)',a)
     if m:
         inner=m.group(1).strip()
