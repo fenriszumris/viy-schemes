@@ -2,7 +2,7 @@
 import re,glob,html,sys,collections
 sys.path.insert(0,'/tmp/sch')
 import condru
-V=314
+V=315
 condru._scan()
 SET=condru._SET;RESET=condru._RESET
 FILES={}
@@ -101,6 +101,44 @@ def meaning(k):
     d=condru.derive(k)
     if not d: return None
     return d.split(' / ')[0]
+
+def choice_of(k):
+    mm=meaning(k)
+    if mm:
+        m=re.search(r'(?:выбран вариант|выбор\w* варианта) «(.*?)»',mm)
+        if m: return m.group(1)
+    return None
+def short_key(k):
+    c=choice_of(k)
+    if c: return '«%s»'%c
+    m=re.fullmatch(r'"([^"]+)" in mem:(\w+)',k)
+    return 'метка «%s» (смысл в коде не назван)'%(m.group(1) if m else k)
+MEMRE=re.compile(r'"(\w+)" (not )?in (?:vrem_memory|persistent\.memory)\["(\w+)"\]')
+def plain_cond(ce,neg=False):
+    """Russian game-meaning for a membership condition; None if not simple."""
+    m=MEMRE.fullmatch(ce.strip())
+    if not m: return None
+    k='"%s" in mem:%s'%(m.group(1),m.group(3))
+    notin=bool(m.group(2))^neg
+    sk=short_key(k)
+    return ('не выбрано ' if notin and choice_of(k) else 'не стоит ' if notin else 'выбрано ' if choice_of(k) else 'стоит ')+sk
+def menu_question(fn,ln):
+    ls=FILES[fn];j=ln-1
+    ind=_ind(ls[j])
+    while j>0:
+        j-=1
+        if ls[j].strip()=='menu:' and _ind(ls[j])<ind: break
+        if ls[j].strip() and _ind(ls[j])<ind-8 and False: return None
+    else: return None
+    q=[]
+    k=j-1
+    while k>=0 and len(q)<2:
+        t=ls[k].strip()
+        m=re.match(r'^\w+\s+"(.*)"\s*$',t)
+        if m: q.append(m.group(1))
+        elif t and not t.startswith('$'): break
+        k-=1
+    return ' '.join(reversed(q)) if q else None
 def row(k):
     sets=SET.get(k,[]);chk=CHK.get(k,[])
     mm=meaning(k)
@@ -112,18 +150,23 @@ def row(k):
     qn=None
     mq0=re.fullmatch(r'"[^"]+" in mem:(\w+)',k)
     if mq0 and mq0.group(1) in condru.QN: qn=condru.QN[mq0.group(1)]
-    title=esc((('«%s»: '%qn) if qn else '')+(core if core else 'смысл в коде не назван'))
+    ch=choice_of(k)
+    if ch: title=esc('«%s»'%ch)+(' <span class="muted">- вариант выбора в квесте «%s»</span>'%esc(qn) if qn else ' <span class="muted">- вариант выбора</span>')
+    else: title=esc((('«%s»: '%qn) if qn else '')+(core if core else 'смысл в коде не назван'))
     dtx=''
     for ce_,lab_,fn_,ln_ in chk:
         if fn_=='Diary_text.rpy':
             mt=re.search(r'появляется текст: «(.*?)»\.',' '.join(consequence(fn_,ln_)))
             if mt: dtx=mt.group(1);break
-    if dtx: title+=' <span class="muted">→ в дневнике: «%s»</span>'%esc(dtx[:70]+('…' if len(dtx)>70 else ''))
+    if dtx: title+=' <span class="muted">→ в дневнике: «%s»</span>'%esc(dtx[:60]+('…' if len(dtx)>60 else ''))
+    qline=None
+    if ch and sets: qline=menu_question(sets[0][1],sets[0][2])
     short=m.group(1) if m else k
     h='<details class="fl"><summary><span class="ft">%s</span> <span class="muted"><code>%s</code></span> <span class="b">ставится: %d</span> <span class="b">проверок: %d</span></summary><div class="fb">'%(title,esc(k),len(sets),len(chk))
     if mm: h+='<p class="muted">Смысл выведен по месту, где метка ставится (в коде не подписан).</p>'
     mq=re.fullmatch(r'"[^"]+" in mem:(\w+)',k)
     if mq and mq.group(1) in condru.QN: h+='<p>Квест: <a href="quests.html?v=%d#q_%s">«%s»</a></p>'%(V,mq.group(1),esc(condru.QN[mq.group(1)]))
+    if qline: h+='<p>Вопрос в игре перед выбором: «%s»</p>'%esc(qline)
     if sets:
         h+='<h5>Где ставится</h5><ul>'
         for lab,fn,ln in sets[:8]:
@@ -141,10 +184,16 @@ def row(k):
             cons=consequence(fn,ln) if fn=='Diary_text.rpy' else []
             if cons:
                 encl,prev=enclosing(fn,ln)
-                extra=''
-                if encl: extra+='<br/><span class="muted">Только если: '+'; '.join(condru.cond_html(e).replace('<br/>',' ') for e in encl)+'</span>'
-                if prev: extra+='<br/><span class="muted">И если не сработал ни один из предыдущих вариантов этой цепочки (%s)</span>'%esc('; '.join(p.split(' ',1)[1].rstrip(':') for p in reversed(prev)))
-                h+='<li><b>Когда метка стоит:</b> %s%s<br/>%s<br/><span class="muted">%s · <code>%s:%d</code> · <code>%s</code></span></li>'%(condru.cond_html(ce).replace('<br/>',' '),extra,'<br/>'.join(cons),esc(cx),fn,ln,esc(ce[:110]))
+                parts=[]
+                for e in encl:
+                    parts.append(condru._simp(condru.cond_html(e).replace('<br/>',' ')) if False else re.sub('<[^>]+>','',condru.cond_html(e)).replace('\n',' ').strip())
+                own=plain_cond(ce) or re.sub('<[^>]+>','',condru.cond_html(ce)).strip()
+                parts.append(own)
+                for p in reversed(prev):
+                    pc=p.split(' ',1)[1].rstrip(':')
+                    parts.append(plain_cond(pc,neg=True) or ('не выполнено: '+re.sub('<[^>]+>','',condru.cond_html(pc)).strip()))
+                body='; '.join(x[0].lower()+x[1:] if x and x[0].isupper() and x[1:2].islower() else x for x in parts)
+                h+='<li><b>Показывается, когда:</b> %s<br/>%s<br/><span class="muted">%s · <code>%s:%d</code> · <code>%s</code></span></li>'%(body,'<br/>'.join(c.replace('В дневнике','<b>Результат:</b> в дневнике') for c in cons),esc(cx),fn,ln,esc(ce[:110]))
             else:
                 h+='<li>%s<br/><span class="muted">%s · <code>%s:%d</code></span><br/><span class="muted"><code>%s</code></span></li>'%(condru.cond_html(ce).replace('<br/>',' '),esc(cx),fn,ln,esc(ce[:110]))
         if len(chk)>8: h+='<li class="muted">…и ещё %d</li>'%(len(chk)-8)
