@@ -2,7 +2,7 @@
 import re,glob,html,sys,collections
 sys.path.insert(0,'/tmp/sch')
 import condru
-V=324
+V=325
 condru._scan()
 SET=condru._SET;RESET=condru._RESET
 FILES={}
@@ -20,10 +20,10 @@ def needle(k):
 
 MN={}
 for _l in FILES.get('script _define.rpy',[])+sum(FILES.values(),[]):
-    _m=re.search(r'memoris_notes\["(\w+)"\] = memory_diary\(name = "([^"]+)"',_l)
-    if _m: MN[_m.group(1)]=_m.group(2)
+    _m=re.search(r'memory_diary\(name = "([^"]+)".*?name2 = "(\w+)"',_l)
+    if _m: MN[_m.group(2)]=_m.group(1)
 def _ind(l): return len(l)-len(l.lstrip(' '))
-ASG=re.compile(r'(quests|memoris_notes)\["(\w+)"\](?:\.diary)?\.(_part_text|_rtext)\[(\d+)\](\[1\])?\s*=\s*(.*)$')
+ASG=re.compile(r'(quests|memoris_notes|memoris_pers)\["(\w+)"\](?:\.diary)?\.(_part_text|_rtext)\[(\d+)\](\[1\])?\s*=\s*(.*)$')
 def consequence(fn,ln):
     ls=FILES[fn];base=_ind(ls[ln-1]);out=[]
     for j in range(ln,min(ln+8,len(ls))):
@@ -34,6 +34,7 @@ def consequence(fn,ln):
         if not m: continue
         kind,nm,fld,idx,sub,val=m.groups()
         if kind=='quests': who='квеста «%s»'%esc(condru.QN.get(nm,nm)); link='<a href="quests.html?v=%d#q_%s">к странице квеста</a>'%(V,nm)
+        elif kind=='memoris_pers': who='о персонаже «%s»'%esc(MN.get(nm,nm)); link=''
         else: who='заметки «%s»'%esc(MN.get(nm,nm)); link=''
         sv=re.match(r'"(.*)"\s*$',val)
         if fld=='_part_text' and not sub and sv:
@@ -406,6 +407,11 @@ def row(k):
     qn=None
     mq0=re.fullmatch(r'"[^"]+" in mem:(\w+)',k)
     if mq0 and mq0.group(1) in condru.QN: qn=condru.QN[mq0.group(1)]
+    dtx0=None
+    for ce_,lab_,fn_,ln_ in chk:
+        if fn_=='Diary_text.rpy':
+            mt=re.search(r'В дневнике (.*?) в записи №\d+ появляется текст: «(.*?)»\.',' '.join(consequence(fn_,ln_)))
+            if mt: dtx0=(mt.group(2),mt.group(1));break
     ch=choice_of(k)
     if ch: title=esc('«%s»'%ch)+(' <span class="muted">- вариант выбора в квесте «%s»</span>'%esc(qn) if qn else ' <span class="muted">- вариант выбора</span>')
     gd_=None if ch else guard_of(k)
@@ -413,6 +419,7 @@ def row(k):
     elif ch: pass
     elif gd_ is not None:
         title=esc('Сцена уже проигрывалась'+(': «%s…»'%gd_[:60] if gd_ else ''))+(' <span class="muted">- квест «%s»</span>'%esc(qn) if qn else '')
+    elif dtx0 and k.startswith('"') and ' in mem:' in k: title=esc('Запись в дневнике: «%s»'%dtx0[0][:80])+' <span class="muted">- %s</span>'%dtx0[1]
     else: title=esc((('«%s»: '%qn) if qn else '')+(core if core else 'смысл в коде не назван'))
     dtx=''
     for ce_,lab_,fn_,ln_ in chk:
@@ -458,6 +465,9 @@ def row(k):
                 encl,prev=enclosing(fn,ln)
                 parts=[]
                 for e in encl:
+                    mv=re.fullmatch(r'(?:vrem_memory|persistent\.memory)\["(\w+)"\]',e.strip())
+                    if mv:
+                        parts.append('в дневнике «%s» уже есть хотя бы одна запись (метка)'%MN.get(mv.group(1),mv.group(1)));continue
                     parts.append(condru._simp(condru.cond_html(e).replace('<br/>',' ')) if False else re.sub('<[^>]+>','',condru.cond_html(e)).replace('\n',' ').strip())
                 own=plain_cond(ce) or re.sub('<[^>]+>','',condru.cond_html(ce)).strip()
                 parts.append(own)
