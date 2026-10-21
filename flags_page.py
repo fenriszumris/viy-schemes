@@ -2,7 +2,7 @@
 import re,glob,html,sys,collections
 sys.path.insert(0,'/tmp/sch')
 import condru
-V=322
+V=323
 condru._scan()
 SET=condru._SET;RESET=condru._RESET
 FILES={}
@@ -81,6 +81,60 @@ def scene_effects(fn,ln):
     if say: res.append('дальше в сцене идут реплики: '+' / '.join('«%s»'%esc(x[:80]) for x in say))
     res+=out[:4]
     return res
+
+PN={}
+for _fn,_ls in FILES.items():
+    for _l in _ls:
+        _m=re.match(r'\s*\$ (\w+) = pers\(.*?r_name = "([^"]+)"',_l)
+        if _m: PN[_m.group(1)]=_m.group(2)
+PN.update({'less':'Лесс','tash':'Таш','oh':'Адриан','adro':'Адро','nars':'Нарси','kap':'Кап','dev':'Луиза'})
+def mark_name(m,razdel):
+    for k in ('"%s" in mem:%s'%(m,razdel),'"%s" in %s'%(m,razdel)):
+        if k in MANUAL: return '«%s»'%MANUAL[k]['title']
+        if k in SET:
+            c=choice_of(k)
+            if c: return 'выбран вариант «%s»'%c
+    return 'метка «%s» (смысл не расшифрован)'%m
+def branch_summary(fn,ln,maxl=220,skip=None):
+    ls=FILES[fn];base=_ind(ls[ln-1]);ev=[];opts=[];nsay=0;lg=0
+    for j in range(ln,min(ln+maxl,len(ls))):
+        l=ls[j]
+        if not l.strip(): continue
+        if _ind(l)<=base: break
+        t=l.strip()
+        if re.match(r'^(?:\w+\s+)?"[^"]+"\s*$',t) and not t.startswith('$'): nsay+=1;continue
+        m=re.match(r'^"([^"]{2,90})"\s*(?:if (.*))?:$',t)
+        if m: opts.append(m.group(1));continue
+        m=re.search(r'quests\["(\w+)"\]\.(keep|done|false)\s*=\s*(\d)',t)
+        if m:
+            q=condru.QN.get(m.group(1),m.group(1));on=m.group(3)!='0'
+            ev.append({'keep':('Квест «%s» берётся','Квест «%s» снимается'),'done':('Квест «%s» засчитывается выполненным','Квест «%s» снимается как выполненный'),'false':('Квест «%s» проваливается','Квест «%s»: провал снят')}[m.group(2)][0 if on else 1]%esc(q));continue
+        m=re.search(r'quests\["(\w+)"\]\.diary\.u_part\((\d+)',t)
+        if m: ev.append('Дневник квеста «%s»: запись №%s'%(esc(condru.QN.get(m.group(1),m.group(1))),m.group(2)));continue
+        m=re.search(r'persistent_append\(\s*"(\w+)"\s*,\s*"(\w+)"',t)
+        if m:
+            if skip and skip in ('"%s" in mem:%s'%(m.group(1),m.group(2)),): continue
+            ev.append('Запоминается: '+esc(mark_name(m.group(1),m.group(2))));continue
+        m=re.search(r'\$ (\w+)\.append\("(\w+)"\)',t)
+        if m and skip=='"%s" in %s'%(m.group(2),m.group(1)): continue
+        if m and m.group(1) not in ('persistent',): ev.append('Запоминается: '+esc(mark_name(m.group(2),m.group(1))));continue
+        m=re.search(r'\$ (\w+)\.mood\s*([+-])=\s*(\d+)',t)
+        if m: ev.append('Настроение %s к героине %s%s'%(esc(PN.get(m.group(1),m.group(1))),m.group(2),m.group(3)));continue
+        m=re.search(r'sanity\.add_(logic|mad)\(\s*(-?\d+)\s*,\s*"([^"]*)"',t)
+        if m: ev.append('%s %s%s (%s)'%('Логика' if m.group(1)=='logic' else 'Безумие',('+' if int(m.group(2))>0 else ''),m.group(2),esc(m.group(3))));continue
+        m=re.search(r'\$ money\s*([+-])=\s*(\d+)',t)
+        if m: ev.append('Деньги %s%s'%(m.group(1),m.group(2)));continue
+        m=re.search(r'\$ blood\s*([+-])=\s*(\d+)',t)
+        if m: ev.append('Ранения %s%s'%(m.group(1),m.group(2)));continue
+        m=re.search(r'inv_list\["(\w+)"\]\.(?:_active|state)\s*=\s*(.+)$',t)
+        if m: ev.append('Предмет «%s»: %s'%(esc(m.group(1)),'получен/на сцене' if m.group(2).strip() not in ('0','None') else 'убран'));continue
+        m=re.match(r'^(?:\$ )?(jump|call)\s+(\w+)',t)
+        if m: ev.append('Переход: сцена «%s»'%m.group(2));continue
+        if re.match(r'if logic_l\(\)',t): lg+=1
+    out=[]
+    if nsay: out.append('разговор из %d реплик'%nsay)
+    if opts: out.append('варианты выбора внутри: '+'; '.join('«%s»'%esc(o) for o in opts[:6]))
+    return out,ev
 def enclosing(fn,ln):
     ls=FILES[fn];cur=_ind(ls[ln-1]);res=[];prev=[]
     # earlier branches of the same if/elif chain
@@ -216,6 +270,13 @@ _nm('igl_floor','Проверка иглой: героиня дала игле �
  {51:'Если свет включён (tgavan_svet), игла не в инвентаре и не у Нарси, на сцене справа внизу показывается кнопка-картинка иглы (подсвечивается при наведении).'},fn='images.rpy')
 _nm('igl_keep','Проверка иглой: героиня поймала иглу','героиня поймала иглу','героиня не ловила иглу',
  'Вариант «Попытаться поймать»: игла впивается в палец, меняется музыка на страшную, героиню охватывает ужас, вокруг ползут тени. Чтений метки не найдено.','при выборе «Попытаться поймать»',{})
+
+MANUAL['"guards1" in mem:quest_find_priest']=dict(title='Героиня спросила стражей про Элеона Ара (жрец, лекарь)',yes='героиня уже спрашивала стражей про Элеона Ара',no='героиня ещё не спрашивала стражей про Элеона Ара',fn='script_5_airat.rpy',sites=[],
+ what='Ставится, когда героиня при квесте «Где жрец?» спрашивает Горрана и Алекса (стражей) про Элеона Ара. Пункт «Я ищу кое-кого. Элеона Ара.» показывается только пока квест взят и вопрос ещё не задавали, после вопроса пункт пропадает. Стражи удивляются («ЛЕКАРЯ?!») и спрашивают, зачем он нужен. Если у героини достаточно логики (logic_l), она может ещё выбрать «Попытаться соврать что-то убедительное»: тогда стражи советуют обратиться к начальнику Карралаку, который знает, где Элеон (ставится отдельная метка guards2). Иначе (или при ответе «Его ищет его дочь») героиня говорит, что его ищет дочь Луиза: стражи смеются, сообщают, что Элеон на выезде, помогает беженцам, и к вечеру будет дома. Квест при этом не меняется (в этой ветке нет изменений квеста или дневника).',
+ where='в начале разговора со стражами про Элеона',
+ eff={279:'Пункт меню «Я ищу кое-кого. Элеона Ара.»: стражи Горран и Алекс удивлены, спрашивают зачем. Затем: (если хватает логики) вариант соврать - совет идти к Карралаку; либо ответ «Его ищет его дочь, Луиза» - Элеон на выезде с беженцами, вернётся вечером. После ветки снова меню разговора со стражами.'})
+MANUAL['"guards2" in mem:quest_find_priest']=dict(title='Героиня соврала стражам, зачем ищет Элеона, и узнала про Карралака',yes='героиня уже врала стражам про Элеона',no='героиня ещё не врала стражам про Элеона',fn='script_5_airat.rpy',sites=[],
+ what='Ставится, если героиня с достаточной логикой выбрала «Попытаться соврать что-то убедительное»: стражи говорят, что Элеон сейчас на задании Карралака, и советуют обратиться к нему (он «в душе милашка»). Чтений метки не найдено.',where='при выборе «Попытаться соврать что-то убедительное»',eff={})
 def choice_of(k):
     mm=meaning(k)
     if mm:
@@ -378,13 +439,15 @@ def row(k):
                 body='; '.join(x[0].lower()+x[1:] if x and x[0].isupper() and x[1:2].islower() else x for x in parts)
                 h+='<li><b>Показывается, когда:</b> %s<br/>%s<br/><span class="muted">%s · <code>%s:%d</code> · <code>%s</code></span></li>'%(body,'<br/>'.join(c.replace('В дневнике','<b>Результат:</b> в дневнике') for c in cons),esc(cx),fn,ln,esc(ce[:110]))
             else:
-                try: se=scene_effects(fn,ln)
-                except Exception: se=[]
-                eff=('<br/><b>Первые действия ветки (не все последствия):</b> '+'; '.join(se)) if se else ''
+                try: bo,be=branch_summary(fn,ln,skip=k)
+                except Exception: bo,be=[],[]
+                eff=''
+                if bo or be: eff='<br/><b>Что делает ветка (собрано по коду автоматически, без пересказа реплик):</b> '+'; '.join(bo+be)+'.'
+                else: eff='<br/><span class="muted">Содержание ветки не разобрано.</span>'
                 if k in MANUAL and 'eff' in MANUAL[k] and ln in MANUAL[k]['eff'] and fn==MANUAL[k].get('fn','script_4_kapibar.rpy' if k.endswith('kap_dialog') else 'script_4_tgavan_nars.rpy'): eff='<br/><b>Что происходит:</b> '+esc(MANUAL[k]['eff'][ln])
                 if k in MANUAL and (fn,ln) in MANUAL[k].get('sites',[]): eff='<br/><b>Что происходит:</b> '+esc(MANUAL[k]['effect'])
                 pe=plain_expr(ce)
-                h+='<li>%s%s<br/><span class="muted">%s · <code>%s:%d</code></span><br/><span class="muted"><code>%s</code></span></li>'%(esc(pe[0].upper()+pe[1:]) if pe else condru.cond_html(ce).replace('<br/>',' '),eff,esc(cx),fn,ln,esc(ce[:110]))
+                h+='<li>%s%s<br/><span class="muted"><code>%s:%d</code> · <code>%s</code></span></li>'%(esc(pe[0].upper()+pe[1:]) if pe else condru.cond_html(ce).replace('<br/>',' '),eff,fn,ln,esc(ce[:110]))
         if len(chk)>8: h+='<li class="muted">…и ещё %d</li>'%(len(chk)-8)
         h+='</ul>'
     else: h+='<p>Чтений этой метки не найдено. Проверено по всему коду игры: нет ни одного условия с её именем, нет обращений через переменное имя (getattr/eval/globals - они есть в игре, но только для картинок, музыки и стрелок перехода, не для меток), а общий код дневника читает у записей памяти только числа и «keep», строковые метки не читает. Значит, по найденному, метка только запоминается; полнота всех возможных динамических чтений не доказана.</p>'
