@@ -240,16 +240,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <li>«Ничего не делать» → BAD END «Подкормка...». Тот же ключ <code>deaths_list["less_eat"]</code>, что у смерти от корней в конце разговора, — две разные смерти пишутся в одну запись.</li>
 <li>Выходы ветки (shh, zeml_ran) → <code>script_2_less_conv_2</code>: разговор начинается сразу, гляделки (start_cycle) пропускаются.</li>
 </ul></div>
-<div class="hub"><h3>Кликабельные осмотры экрана стрелок (стартовая локация)</h3>
-<ul>
-<li>Все входы — <code>clicked Jump</code> в script_npc_items.rpy; выход обратно на экран (<code>call_screen_strel</code>).</li>
-<li><b>Куча корней/спальников</b> (<code>script_1_less_spal</code>, begin:322-429, вход npc_items:494). Если <code>"korn"</code> в <code>vrem_memory["viy_quest"]</code> — наваждение с меню: «Бороться с наваждением.» → <span class="mad">Безумие −2</span> (352); «Поддаться потоку.» → видение (эльфы, Риал, пленница) → <span class="blood">Кровь +1</span> (setblood 412). Без «korn» — короткий осмотр (флаг <code>spal0</code>, 329). Флаг «korn» появляется только в разговоре day_1 (day_1_less_razg:56), то есть ветка наваждения достижима при повторном визите на локацию, не при первом проходе.</li>
-<li><b>Табличка «Территория Лесса»</b> (<code>script_1_less_tabl</code>, begin:286-321, вход npc_items:614). «Взять с собой.» — корешок хлещет (blood_effect, Кровь не меняется); «Оставить на месте» — выход. Статов нет.</li>
-<li><b>Кровавый отпечаток на дереве</b> (<code>script_1_hand_blood</code>, begin:528-552, вход npc_items:557): реплики по уровням Логики/Безумия. Статов нет.</li>
-<li><b>Кремень</b> (<code>kremen_action_osm</code>, begin:553-590, вход npc_items:585): меняет <code>inv_list["kremen"]._text</code> (гравировка «РДС», связка с факелом при <code>facel._active</code>). Статов нет.</li>
-<li><b>Пять луп-направлений</b> (begin:430-527: less_start_left/right_osm_label, less_per_left/right/up_osm_label): метки собираются динамически <code>namee+napr+"_osm_label"</code> (script.rpy:439-443), раскрывают подписи стрелок «???» → имя, доп. реплики по уровням Логики/Безумия. Статов нет.</li>
-<li><code>prop_memory</code> / <code>prop_memory2</code> (script_memory:230, 245): вызывающий не найден в проверенном наборе файлов — вероятно, вызов из файлов вне набора. Не мёртвый код.</li>
-</ul></div>
+
 <div class="hub"><h3>Кликабельные осмотры экрана стрелок (стартовая локация)</h3>
 <ul>
 <li>Все входы — <code>clicked Jump</code> в script_npc_items.rpy; выход обратно на экран (<code>call_screen_strel</code>).</li>
