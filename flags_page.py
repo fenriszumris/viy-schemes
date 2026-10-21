@@ -2,7 +2,7 @@
 import re,glob,html,sys,collections
 sys.path.insert(0,'/tmp/sch')
 import condru
-V=317
+V=318
 condru._scan()
 SET=condru._SET;RESET=condru._RESET
 FILES={}
@@ -140,7 +140,7 @@ def meaning(k):
 def choice_of(k):
     mm=meaning(k)
     if mm:
-        m=re.search(r'(?:выбран вариант|выбор\w* варианта) «(.*?)»',mm)
+        m=re.search(r'(?:выбран вариант|выбор\w* варианта) «(.*?)»',condru._simp(mm),re.I)
         if m: return m.group(1)
     return None
 
@@ -149,6 +149,7 @@ def guard_of(k):
     sets=SET.get(k,[])
     nd=NEED.get(k)
     if not sets or not nd: return None
+    if len(CHK.get(k,[]))>len(sets): return None
     first=None
     for lab,fn,ln in sets:
         ls=FILES[fn];ind=_ind(ls[ln-1]);j=ln-2;ok=False
@@ -180,9 +181,26 @@ def plain_cond(ce,neg=False):
     notin=bool(m.group(2))^neg
     g=guard_of(k)
     if g is not None and not choice_of(k):
-        return ('вступление сцены ещё не показывалось' if notin else 'вступление сцены уже показывалось')+((' («%s…»)'%g[:50]) if g else '')
+        return ('эта сцена ещё не проигрывалась' if notin else 'эта сцена уже проигрывалась')+((' («%s…»)'%g[:50]) if g else '')
     sk=short_key(k)
     return ('не выбрано ' if notin and choice_of(k) else 'не стоит ' if notin else 'выбрано ' if choice_of(k) else 'стоит ')+sk
+
+def plain_expr(ce):
+    e=ce.strip()
+    parts=re.split(r'\s+and\s+',e)
+    out=[]
+    for p in parts:
+        q=p.strip()
+        neg=False
+        if q.startswith('not '): neg=True;q=q[4:].strip()
+        m=MEMRE.fullmatch(q)
+        if not m: return None
+        k='"%s" in mem:%s'%(m.group(1),m.group(3))
+        notin=bool(m.group(2))^neg
+        if guard_of(k) is not None and not choice_of(k): out.append('эта сцена ещё не проигрывалась' if notin else 'эта сцена уже проигрывалась')
+        elif choice_of(k): out.append('вариант «%s» ещё не выбирался'%choice_of(k) if notin else 'вариант «%s» уже выбирался'%choice_of(k))
+        else: out.append(('метка «%s» не стоит'%m.group(1) if notin else 'метка «%s» стоит'%m.group(1))+' (смысл не расшифрован)')
+    return '; '.join(out)
 def menu_question(fn,ln):
     ls=FILES[fn];j=ln-1
     ind=_ind(ls[j])
@@ -214,8 +232,9 @@ def row(k):
     ch=choice_of(k)
     if ch: title=esc('«%s»'%ch)+(' <span class="muted">- вариант выбора в квесте «%s»</span>'%esc(qn) if qn else ' <span class="muted">- вариант выбора</span>')
     gd_=None if ch else guard_of(k)
-    if gd_ is not None:
-        title=esc('Вступление уже показывалось'+(': «%s…»'%gd_[:60] if gd_ else ''))+(' <span class="muted">- квест «%s»</span>'%esc(qn) if qn else '')
+    if ch: pass
+    elif gd_ is not None:
+        title=esc('Сцена уже проигрывалась'+(': «%s…»'%gd_[:60] if gd_ else ''))+(' <span class="muted">- квест «%s»</span>'%esc(qn) if qn else '')
     else: title=esc((('«%s»: '%qn) if qn else '')+(core if core else 'смысл в коде не назван'))
     dtx=''
     for ce_,lab_,fn_,ln_ in chk:
@@ -227,10 +246,10 @@ def row(k):
     if ch and sets: qline=menu_question(sets[0][1],sets[0][2])
     short=m.group(1) if m else k
     h='<details class="fl"><summary><span class="ft">%s</span> <span class="muted"><code>%s</code></span> <span class="b">ставится: %d</span> <span class="b">проверок: %d</span></summary><div class="fb">'%(title,esc(k),len(sets),len(chk))
-    if mm: h+='<p class="muted">Смысл выведен по месту, где метка ставится (в коде не подписан).</p>'
+    if mm and not ch and gd_ is None: h+='<p class="muted">Смысл выведен по месту, где метка ставится (в коде не подписан).</p>'
     mq=re.fullmatch(r'"[^"]+" in mem:(\w+)',k)
     if mq and mq.group(1) in condru.QN: h+='<p>Квест: <a href="quests.html?v=%d#q_%s">«%s»</a></p>'%(V,mq.group(1),esc(condru.QN[mq.group(1)]))
-    if gd_ is not None: h+='<p class="muted">Метка ставится внутри блока «если её ещё нет», то есть нужна, чтобы эта сцена/вступление отыгрывалось один раз (по структуре кода; что ещё от неё зависит - в списке проверок).</p>'
+    if gd_ is not None: h+='<p class="muted">Метка ставится внутри блока «если её ещё нет». Это структурный факт кода; назначение (повтор сцены, награда, одноразовое событие) подтверждено только если других чтений нет - иначе смысл не расшифрован.</p>'
     if qline: h+='<p>Вопрос в игре перед выбором: «%s»</p>'%esc(qline)
     if sets:
         h+='<h5>Где ставится</h5><ul>'
@@ -263,7 +282,8 @@ def row(k):
                 try: se=scene_effects(fn,ln)
                 except Exception: se=[]
                 eff=('<br/><b>Первые действия ветки (не все последствия):</b> '+'; '.join(se)) if se else ''
-                h+='<li>%s%s<br/><span class="muted">%s · <code>%s:%d</code></span><br/><span class="muted"><code>%s</code></span></li>'%(condru.cond_html(ce).replace('<br/>',' '),eff,esc(cx),fn,ln,esc(ce[:110]))
+                pe=plain_expr(ce)
+                h+='<li>%s%s<br/><span class="muted">%s · <code>%s:%d</code></span><br/><span class="muted"><code>%s</code></span></li>'%(esc(pe[0].upper()+pe[1:]) if pe else condru.cond_html(ce).replace('<br/>',' '),eff,esc(cx),fn,ln,esc(ce[:110]))
         if len(chk)>8: h+='<li class="muted">…и ещё %d</li>'%(len(chk)-8)
         h+='</ul>'
     else: h+='<p class="muted">Проверок этой метки по коду не найдено (возможно, читается другим способом).</p>'
