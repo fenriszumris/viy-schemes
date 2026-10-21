@@ -13,7 +13,7 @@ class G:
         s.n=0;s.L=['flowchart TD'];s.entry={};s.maxd=maxd;s.cls=[];s.rets={};s.opts=[]
     def node(s,html_,kind='sc'):
         s.n+=1;i='N%d'%s.n
-        if kind=='cd': s.L.append('%s{"<div style=\'width:260px;white-space:normal\'>%s</div>"}:::cd'%(i,html_))
+        if kind=='cd': s.L.append('%s{{"<div style=\'width:300px;white-space:normal;text-align:left\'>%s</div>"}}:::cd'%(i,html_))
         else: s.L.append('%s["<div style=\'width:%dpx;white-space:normal\'>%s</div>"]:::%s'%(i,340 if kind=='sc' else 280,html_,kind))
         return i
     def edge(s,a,b,lab=''):
@@ -80,9 +80,9 @@ class G:
                     while z<e and not lines[z].strip(): z+=1
                 conds=[(kd,ce) for kd,ce,_,_ in chain if kd!='else']
                 if len(conds)==1:
-                    dt='<b>Если</b> %s<br/><small style=\'color:#9ca3af\'>%s</small>'%(q(sh(cond_ru(conds[0][1]),160)),q(sh(conds[0][1],90)))
+                    dt='<b>Если</b> %s<br/><small style=\'color:#9ca3af\'>%s</small>'%(q(sh(cond_ru(conds[0][1]),300)),q(sh(conds[0][1],90)))
                 else:
-                    dt='<b>Проверяется по порядку:</b>'+''.join('<br/><b>%d)</b> %s<br/><small style=\'color:#9ca3af\'>%s</small>'%(n+1,q(sh(cond_ru(ce),130)),q(sh(ce,80))) for n,(kd,ce) in enumerate(conds))
+                    dt='<b>Проверяется по порядку:</b>'+''.join('<br/><b>%d)</b> %s<br/><small style=\'color:#9ca3af\'>%s</small>'%(n+1,q(sh(cond_ru(ce),240)),q(sh(ce,80))) for n,(kd,ce) in enumerate(conds))
                 d=s.node(dt,'cd'); s.link(pend,d)
                 ex=[];has_else=False;cn=0
                 for kind,ce,z0,z1 in chain:
