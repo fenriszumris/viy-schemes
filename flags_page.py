@@ -2,7 +2,7 @@
 import re,glob,html,sys,collections
 sys.path.insert(0,'/tmp/sch')
 import condru
-V=319
+V=320
 condru._scan()
 SET=condru._SET;RESET=condru._RESET
 FILES={}
@@ -137,6 +137,17 @@ def meaning(k):
     if not d: return None
     return d.split(' / ')[0]
 
+
+MANUAL={
+ '"kapik" in kap_dialog':dict(
+  title='Кап уже объяснил, как тут платят (про Капики)',
+  yes='Кап уже объяснил про оплату пожертвованиями и Капики',
+  no='Кап ещё не объяснял про оплату пожертвованиями и Капики',
+  what='Метка запоминает, что Капибара (Кап) один раз рассказал героине, как у него платят: золотом тут не торгуют, живут на пожертвования; за пожертвование Кап выдаёт значок, а «Капики» (местная валюта) героиня получает за помощь ему и посетителям. Метка нужна только чтобы этот рассказ не повторялся: единственное чтение - защита перед самим рассказом. Не путать с предметом «Капики» (inv_list["kapik"]) - это счёт монет, отдельная вещь, к метке отношения не имеет. Список kap_dialog создаётся пустым в начале игры (script _define.rpy:226), то есть запоминается только в текущем прохождении.',
+  effect='Кап говорит: золотом тут не торгуют, это не то место; живут на пожертвования; за них он даёт красивый значок (показывает его); Капики героиня получит за помощь ему и другим посетителям. После этого открывается обычное меню Капа (ночлег и другое). Это разбор всего блока, не только первых реплик.',
+  where='в самом начале рассказа Капа про оплату (прямо перед его первой репликой)',
+  sites=[('script_4_kapibar.rpy',329)],norep=True),
+}
 def choice_of(k):
     mm=meaning(k)
     if mm:
@@ -194,10 +205,14 @@ def plain_expr(ce):
         neg=False
         if q.startswith('not '): neg=True;q=q[4:].strip()
         m=MEMRE.fullmatch(q)
+        ml=re.fullmatch(r'"(\w+)" (not )?in (\w+)',q)
+        if ml and '"%s" in %s'%(ml.group(1),ml.group(3)) in MANUAL:
+            k='"%s" in %s'%(ml.group(1),ml.group(3));out.append(MANUAL[k]['no'] if bool(ml.group(2))^neg else MANUAL[k]['yes']);continue
         if not m: return None
         k='"%s" in mem:%s'%(m.group(1),m.group(3))
         notin=bool(m.group(2))^neg
-        if guard_of(k) is not None and not choice_of(k): out.append('эта сцена ещё не проигрывалась' if notin else 'эта сцена уже проигрывалась')
+        if k in MANUAL: out.append(MANUAL[k]['no'] if notin else MANUAL[k]['yes'])
+        elif guard_of(k) is not None and not choice_of(k): out.append('эта сцена ещё не проигрывалась' if notin else 'эта сцена уже проигрывалась')
         elif choice_of(k): out.append('вариант «%s» ещё не выбирался'%choice_of(k) if notin else 'вариант «%s» уже выбирался'%choice_of(k))
         else: out.append(('метка «%s» не стоит'%m.group(1) if notin else 'метка «%s» стоит'%m.group(1))+' (смысл не расшифрован)')
     return '; '.join(out)
@@ -233,7 +248,8 @@ def row(k):
     ch=choice_of(k)
     if ch: title=esc('«%s»'%ch)+(' <span class="muted">- вариант выбора в квесте «%s»</span>'%esc(qn) if qn else ' <span class="muted">- вариант выбора</span>')
     gd_=None if ch else guard_of(k)
-    if ch: pass
+    if k in MANUAL: title=esc(MANUAL[k]['title'])
+    elif ch: pass
     elif gd_ is not None:
         title=esc('Сцена уже проигрывалась'+(': «%s…»'%gd_[:60] if gd_ else ''))+(' <span class="muted">- квест «%s»</span>'%esc(qn) if qn else '')
     else: title=esc((('«%s»: '%qn) if qn else '')+(core if core else 'смысл в коде не назван'))
@@ -247,6 +263,7 @@ def row(k):
     if ch and sets: qline=menu_question(sets[0][1],sets[0][2])
     short=m.group(1) if m else k
     gd0=None if choice_of(k) else guard_of(k)
+    if k in MANUAL and MANUAL[k].get('norep'): gd0=gd0 if gd0 is not None else ''
     if gd0 is not None: badge='<span class="b">'+ICON+' не повторяется</span>'
     elif not chk: badge='<span class="b">нигде не читается</span>'
     else: badge='<span class="b">проверок: %d</span>'%len(chk)
@@ -254,13 +271,15 @@ def row(k):
     if mm and not ch and gd_ is None: h+='<p class="muted">Смысл выведен по месту, где метка ставится (в коде не подписан).</p>'
     mq=re.fullmatch(r'"[^"]+" in mem:(\w+)',k)
     if mq and mq.group(1) in condru.QN: h+='<p>Квест: <a href="quests.html?v=%d#q_%s">«%s»</a></p>'%(V,mq.group(1),esc(condru.QN[mq.group(1)]))
-    if gd_ is not None: h+='<p class="muted">Метка ставится внутри блока «если её ещё нет». Это структурный факт кода; назначение (повтор сцены, награда, одноразовое событие) подтверждено только если других чтений нет - иначе смысл не расшифрован.</p>'
+    if k in MANUAL: h+='<p><b>Что это (разобрано по коду вручную):</b> %s</p>'%esc(MANUAL[k]['what'])
+    elif gd_ is not None: h+='<p class="muted">Метка ставится внутри блока «если её ещё нет». Это структурный факт кода; назначение (повтор сцены, награда, одноразовое событие) подтверждено только если других чтений нет - иначе смысл не расшифрован.</p>'
     if qline: h+='<p>Вопрос в игре перед выбором: «%s»</p>'%esc(qline)
     if sets:
         h+='<h5>Где ставится</h5><ul>'
         for lab,fn,ln in sets[:8]:
             try: cx=condru.ctx(lab,fn,ln)
             except Exception: cx='в сцене «%s»'%lab
+            if k in MANUAL and MANUAL[k].get('where'): cx=MANUAL[k]['where']
             h+='<li>%s <span class="muted"><code>%s:%d</code></span></li>'%(esc(condru._simp(cx)),fn,ln)
         if len(sets)>8: h+='<li class="muted">…и ещё %d</li>'%(len(sets)-8)
         h+='</ul>'
@@ -287,6 +306,7 @@ def row(k):
                 try: se=scene_effects(fn,ln)
                 except Exception: se=[]
                 eff=('<br/><b>Первые действия ветки (не все последствия):</b> '+'; '.join(se)) if se else ''
+                if k in MANUAL and (fn,ln) in MANUAL[k]['sites']: eff='<br/><b>Что происходит:</b> '+esc(MANUAL[k]['effect'])
                 pe=plain_expr(ce)
                 h+='<li>%s%s<br/><span class="muted">%s · <code>%s:%d</code></span><br/><span class="muted"><code>%s</code></span></li>'%(esc(pe[0].upper()+pe[1:]) if pe else condru.cond_html(ce).replace('<br/>',' '),eff,esc(cx),fn,ln,esc(ce[:110]))
         if len(chk)>8: h+='<li class="muted">…и ещё %d</li>'%(len(chk)-8)
