@@ -11,3 +11,4 @@ Notes: barrier+spalniki done v=261.
 Done so far: loc_names.py; locations.html NOT built yet.
 9. Kate: "И кар. И нарс тоже", "Лени тоже" -> characters. kar (door kar_air: check kar_door_screen vs Карралак char page, don't guess) and nars. Characters need TALK TREES (replicas, answer options, conditions, consequences) on char pages. char_clicks.py builds click+drop sections; run order: apply_clk.py(NO, would overwrite rows) -> char_clicks.py -> post_site.py -> build_locs.py. Bump ?v= with sed (also V in scripts).
 build: sh build_all.sh (never rerun apply_clk.py); then sed bump v and V in *.py
+done: item links (post_site ilink), RU conditions in trees, unified drag list.
