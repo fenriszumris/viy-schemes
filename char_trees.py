@@ -2,7 +2,7 @@
 import re,sys
 sys.path.insert(0,'/tmp/sch')
 import trees
-V=280
+V=281
 T={'tash':('tash_razg_menu','tash','tash.near','кнопка-сообщение рядом с фигурой Таша (<code>tashir_button2</code>)'),
 'fenrira':('fen_razg_menu','fenya','fenya.near','кнопка-сообщение (<code>fen_button2</code>)'),
 'luiza':('dev_razg_menu','dev','dev.near','кнопка-сообщение (<code>dev_button2</code>); клик по самой фигуре открывает/закрывает экран <code>dev_screen</code>'),
@@ -13,6 +13,8 @@ T={'tash':('tash_razg_menu','tash','tash.near','кнопка-сообщение 
 'adro':('script_4_tgavan_to_adro',None,None,None),
 'kap':('script4_kapibar_start_menu',None,None,None),
 'sova':('script3_sova_sova',None,None,None),
+'blu':('blu_label',None,None,None),
+'slime':('script3_nazad_slime_menu',None,None,None),
 'starichok':('script_5_airat_guard',None,None,None),
 'parenek':('script_5_airat_guard',None,None,None)}
 for sl,(lab,pers,near,btn) in T.items():

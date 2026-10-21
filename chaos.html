@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>Вход в хаос — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style7.css?v=280">
+<link rel="stylesheet" href="style7.css?v=281">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -44,7 +44,7 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#475569', c2='#be123c', c3='#7c3aed', c4='#b45309', c5='#0f766e', c6='#0369a1', c7='#475569', c8='#b91c1c';
-  L.push('ST["<div style=\'width:300px;white-space:normal\'>Вход: героиня с Таширом доходит до разлома (script3_nazad.rpy:1042), локация становится «Вход в хаос»<br/><a href=\'tasha.html?v=280\'>← страница «Назад: Таша»</a></div>"]:::ex');
+  L.push('ST["<div style=\'width:300px;white-space:normal\'>Вход: героиня с Таширом доходит до разлома (script3_nazad.rpy:1042), локация становится «Вход в хаос»<br/><a href=\'tasha.html?v=281\'>← страница «Назад: Таша»</a></div>"]:::ex');
   L.push('EXS["<div style=\'width:300px;white-space:normal\'>Экран «Вход в хаос»: табличка, стрелка вверх «В разлом?», стрелка вниз<br/><small>script _define.rpy:266-279, script_newscreens.rpy:312-313</small></div>"]:::ex');
   L.push('RET["<div style=\'width:260px;white-space:normal\'>Дорога к Таше (локация): стрелка вниз «Назад»</div>"]:::ex');
   L.push('RZ["<div style=\'width:280px;white-space:normal\'>Разлом (локация «Вход в хаос», дальше): единственная стрелка вниз возвращает ко входу<br/><small>script _define.rpy:279</small></div>"]:::ex');
@@ -57,8 +57,8 @@ function build(){
     L.push('TM["<div style=\'width:280px;white-space:normal\'>Табличка предлагает забрать её с собой (372-379)</div>"]:::sc');
     L.push('TY["<div style=\'width:260px;white-space:normal\'>Героиня берёт табличку (373-376)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 табличка теперь в инвентаре, исчезает с экрана</span></div>"]:::sc');
     L.push('TN["<div style=\'width:260px;white-space:normal\'>Героиня не берёт табличку (377-378)</div>"]:::sc');
-    L.push('U1["<div style=\'width:320px;white-space:normal\'>Блу: если Блу ещё не встречена, героиня видит её, место кажется странным, экран темнеет (380-392)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: вход в разлом посещён</span></div>"]:::sc');
-    L.push('U2["<div style=\'width:300px;white-space:normal\'>Если Блу уже встречена: разлом «заколочен намертво», героиня удивлена (394-401)</div>"]:::sc');
+    L.push('U1["<div style=\'width:320px;white-space:normal\'>Блю: если Блю ещё не встречена, героиня видит её, место кажется странным, экран темнеет (380-392)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: вход в разлом посещён</span></div>"]:::sc');
+    L.push('U2["<div style=\'width:300px;white-space:normal\'>Если Блю уже встречена: разлом «заколочен намертво», героиня удивлена (394-401)</div>"]:::sc');
     L.push('D1["<div style=\'width:300px;white-space:normal\'>Таша рядом и помогает: спрашивает «Ты куда?» (336-345)</div>"]:::sc');
     L.push('D2["<div style=\'width:280px;white-space:normal\'>«Я передумала.»: Таша уходит (346-353)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Таша больше не рядом и не помогает</span></div>"]:::sc');
     L.push('D3["<div style=\'width:280px;white-space:normal\'>«Ой. Не в ту сторону»: Таша: «Нам вперед!» (354-358)</div>"]:::sc');
@@ -66,8 +66,8 @@ function build(){
     E('TB --> K1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если таблички ещё нет в инвентаре:',null,null)+'</div>"]:::hhn', c3); E('K1a --> TM', c3);
     E('TM --> K1b["<div style=\'width:290px;white-space:normal\'>'+mk('«Можно.»',null,null)+'</div>"]:::hhn', c3); E('K1b --> TY', c3);
     E('TM --> K1c["<div style=\'width:290px;white-space:normal\'>'+mk('«Но зачем?»',null,null)+'</div>"]:::hhn', c3); E('K1c --> TN', c3);
-    E('L0 --> K2["<div style=\'width:290px;white-space:normal\'>'+mk('Стрелка вверх «В разлом?»'+cond('если Блу ещё не встречена (метка в списке аватаров)'),null,null)+'</div>"]:::hhn', c3); E('K2 --> U1', c3);
-    E('L0 --> K2b["<div style=\'width:290px;white-space:normal\'>'+mk('Стрелка вверх «В разлом?» (Блу уже встречена)',null,null)+'</div>"]:::hhn', c3); E('K2b --> U2', c3);
+    E('L0 --> K2["<div style=\'width:290px;white-space:normal\'>'+mk('Стрелка вверх «В разлом?»'+cond('если Блю ещё не встречена (метка в списке аватаров)'),null,null)+'</div>"]:::hhn', c3); E('K2 --> U1', c3);
+    E('L0 --> K2b["<div style=\'width:290px;white-space:normal\'>'+mk('Стрелка вверх «В разлом?» (Блю уже встречена)',null,null)+'</div>"]:::hhn', c3); E('K2b --> U2', c3);
     E('L0 --> K3["<div style=\'width:290px;white-space:normal\'>'+mk('Стрелка вниз'+cond('если Таша рядом и помогает; иначе героиня сразу уходит на дорогу к Таше'),null,null)+'</div>"]:::hhn', c3); E('K3 --> D1', c3);
     E('D1 --> K3a["<div style=\'width:290px;white-space:normal\'>'+mk('«Я передумала.»',null,null)+'</div>"]:::hhn', c3); E('K3a --> D2', c3);
     E('D1 --> K3b["<div style=\'width:290px;white-space:normal\'>'+mk('«Ой. Не в ту сторону»',null,null)+'</div>"]:::hhn', c3); E('K3b --> D3', c3);
@@ -117,7 +117,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Вход в хаос (разлом)</h1>
 <p>Локация chaos_enter: табличка, разлом, возврат на дорогу к Таше. Код: script3_gubert.rpy:336-401.</p>
-<nav class="crumbs"><a href="index.html?v=280">← Все схемы</a> · <a href="tasha.html?v=280">Назад: Таша</a> · <a href="stats.html?v=280">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=281">← Все схемы</a> · <a href="tasha.html?v=281">Назад: Таша</a> · <a href="stats.html?v=281">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
