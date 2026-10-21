@@ -2,7 +2,7 @@
 import re,glob,html,sys,collections
 sys.path.insert(0,'/tmp/sch')
 import condru
-V=327
+V=328
 condru._scan()
 SET=condru._SET;RESET=condru._RESET
 FILES={}
@@ -364,6 +364,8 @@ def plain_cond(ce,neg=False):
     if not m: return None
     k='"%s" in mem:%s'%(m.group(1),m.group(3))
     notin=bool(m.group(2))^neg
+    if k in MANUAL:
+        return (MANUAL[k]['no'] if notin else MANUAL[k]['yes'])
     g=guard_of(k)
     if g is not None and not choice_of(k):
         return ('эта сцена ещё не проигрывалась' if notin else 'эта сцена уже проигрывалась')+((' («%s…»)'%g[:50]) if g else '')
@@ -476,7 +478,9 @@ def row(k):
         for ce,lab,fn,ln in chk[:8]:
             try: cx=condru.ctx(lab,fn,ln) if lab else 'в файле описания дневника'
             except Exception: cx='в сцене «%s»'%lab
-            if k in MANUAL: cx='в разговоре с Нарси' if k.endswith('nars_d') else 'в кафе Капа'
+            if fn=='Diary_text.rpy': cx='в описании дневника'
+            elif k in MANUAL and k.endswith('nars_d'): cx='в разговоре с Нарси'
+            elif k in MANUAL and k.endswith('kap_dialog'): cx='в кафе Капа'
             cons=consequence(fn,ln) if fn=='Diary_text.rpy' else []
             if cons:
                 encl,prev=enclosing(fn,ln)
@@ -491,7 +495,7 @@ def row(k):
                 for p in reversed(prev):
                     pc=p.split(' ',1)[1].rstrip(':')
                     parts.append(plain_cond(pc,neg=True) or ('не выполнено: '+re.sub('<[^>]+>','',condru.cond_html(pc)).strip()))
-                body='; '.join(x[0].lower()+x[1:] if x and x[0].isupper() and x[1:2].islower() else x for x in parts)
+                body='; '.join(x[0].lower()+x[1:] if x.startswith('Квест') else x for x in parts)
                 h+='<li><b>Показывается, когда:</b> %s<br/>%s<br/><span class="muted">%s · <code>%s:%d</code> · <code>%s</code></span></li>'%(body,'<br/>'.join(c.replace('В дневнике','<b>Результат:</b> в дневнике') for c in cons),esc(cx),fn,ln,esc(ce[:110]))
             else:
                 try: bo,be=branch_summary(fn,ln,skip=k)
