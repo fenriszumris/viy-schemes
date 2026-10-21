@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>Губерт (слизень) — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style7.css?v=328">
+<link rel="stylesheet" href="style7.css?v=330">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -44,11 +44,11 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#475569', c2='#be123c', c3='#7c3aed', c4='#b45309', c5='#0f766e', c6='#0369a1', c7='#475569', c8='#b91c1c';
-  L.push('ST["<div style=\'width:300px;white-space:normal\'>Вход: стрелка «Еще глубже» на дороге к Таше (script _define.rpy:346-350) → сцена Губерта<br/><small>script3_nazad_gubert, 11</small><br/><a href=\'tasha.html?v=328\'>← страница «Назад: Таша»</a></div>"]:::ex');
+  L.push('ST["<div style=\'width:300px;white-space:normal\'>Вход: стрелка «Еще глубже» на дороге к Таше (script _define.rpy:346-350) → сцена Губерта<br/><small>script3_nazad_gubert, 11</small><br/><a href=\'tasha.html?v=330\'>← страница «Назад: Таша»</a></div>"]:::ex');
   L.push('EXS["<div style=\'width:300px;white-space:normal\'>Экран локации Губерта: стрелки, стена из веток, шляпа на земле (если лежит)<br/><small>script_newscreens.rpy:994-995, script_npc_items.rpy:1146</small></div>"]:::ex');
   L.push('BAD1["<div style=\'width:260px;white-space:normal\'>BAD END «Главное блюдо»<br/><small>смерть, перезапуск игры</small></div>"]:::bad');
   L.push('BAD2["<div style=\'width:260px;white-space:normal\'>BAD END «Часть чего-то большего»<br/><small>смерть, перезапуск игры</small></div>"]:::bad');
-  L.push('TS["<div style=\'width:280px;white-space:normal\'>Сцена Таши: героиня встречает Ташу (переход на script3_nazad_tash_go)<br/><a href=\'tasha.html?v=328\'>страница «Назад: Таша»</a></div>"]:::ex');
+  L.push('TS["<div style=\'width:280px;white-space:normal\'>Сцена Таши: героиня встречает Ташу (переход на script3_nazad_tash_go)<br/><a href=\'tasha.html?v=330\'>страница «Назад: Таша»</a></div>"]:::ex');
   E('ST --> G1', cG);
   L.push(hub('G1','Встреча с Губертом<br/><small>script3_nazad_gubert, 11-142</small>','hhn',[]));
   if(EXP.has('G1')){
@@ -134,6 +134,7 @@ function build(){
   L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
   L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
   L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
+  /*XD_PATCH*/ (function(){var XD={'ST':'ST["<div style=\'width:300px;white-space:normal\'>Вход: стрелка «Еще глубже» на дороге к Таше (script _define.rpy:346-350) → сцена Губерта<br/><small>script3_nazad_gubert, 11</small><br/><a href=\'tasha.html?v=330\'>← страница «Назад: Таша»</a></div>"]:::ex','EXS':'EXS["<div style=\'width:300px;white-space:normal\'>Экран локации Губерта: стрелки, стена из веток, шляпа на земле (если лежит)<br/><small>script_newscreens.rpy:994-995, script_npc_items.rpy:1146</small></div>"]:::ex','TS':'TS["<div style=\'width:280px;white-space:normal\'>Сцена Таши: героиня встречает Ташу (переход на script3_nazad_tash_go)<br/><a href=\'tasha.html?v=330\'>страница «Назад: Таша»</a></div>"]:::ex'};var tx=L.join('\n');for(var id in XD){if(!new RegExp('\\b'+id+'\\s*[\\[(]').test(tx)&&new RegExp('(-->\\s*'+id+'(\\s|$)|(^|\\n)'+id+'\\s*-->)').test(tx))L.push(XD[id]);}})();
   return L.concat(ST).join('\n');
 }
 async function render(){
@@ -164,7 +165,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Губерт (слизень): «Еще глубже»</h1>
 <p>script3_gubert.rpy: встреча со слизнем на дороге к Таше, меню Губерта, две концовки BAD END, объекты на локации Губерта.</p>
-<nav class="crumbs"><a href="index.html?v=328">← Все схемы</a> · <a href="tasha.html?v=328">Назад: Таша</a> · <a href="stats.html?v=328">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=330">← Все схемы</a> · <a href="tasha.html?v=330">Назад: Таша</a> · <a href="stats.html?v=330">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
