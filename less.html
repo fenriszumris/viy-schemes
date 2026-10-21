@@ -194,13 +194,21 @@ function build(){
   // --- H9 ---
   if(EXP.has('H9')){
     E('H9 --> C9A["'+mk('«Со злости ударить дерево»',[[C_MAD,1]],[[C_LOG,1],[C_MOO,2]])+'"]:::h9', c9); E('C9A --> KRN["less_korn_menu<br/>циклы: «не шевелиться» безумие +1 ·<br/>«вырваться» логика +1, настроение −1"]:::h9', c9);
-    E('KRN --> C9B["'+mk('«Обмякнуть и обмануть корни.» → ushel<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: без «не шевелиться» или после «вырваться»</span>',[[C_LOG,1],[C_MOO,1]],[[C_MAD,1]])+'"]:::h9', c9); E('C9B --> RB', c9);
-    E('KRN --> C9C["'+mk('«Извиниться.» → ushel<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: героиня знает имя Лесса</span>',[[C_LOG,1],[C_MOO,2]])+'"]:::h9', c9); E('C9C --> RB', c9);
+    E('KRN --> C9B["'+mk('«Обмякнуть и обмануть корни.» → ushel<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: без «не шевелиться» или после «вырваться»</span>',[[C_LOG,1],[C_MOO,1]],[[C_MAD,1]])+'"]:::h9', c9); E('C9B --> NMI["Ввод имени<br/><small>«Меня зовут...»</small>"]:::h9', c9);
+    E('KRN --> C9C["'+mk('«Извиниться.» → ushel<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: героиня знает имя Лесса</span>',[[C_LOG,1],[C_MOO,2]])+'"]:::h9', c9); E('C9C --> NMI', c9);
     E('KRN --> C9D["'+mk('«Расслабиться и поспать.»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: после «не шевелиться»</span>',[[C_MAD,1],[C_MOO,2]])+'"]:::h9', c9); E('C9D --> E1', c9);
     E('KRN --> C9E["'+mk('«В панике бороться до конца.»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: после «вырваться»</span>')+'"]:::h9', c9); E('C9E --> D2', c9);
-    E('H9 --> C9F1["'+mk('«Это было чертовски опасно...» → ushel<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: Кровь &gt; 0</span>',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h9', c9); E('C9F1 --> RB', c9);
-    E('H9 --> C9F2["'+mk('«Я... Что вообще только что произошло?» → ushel<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: Кровь = 0</span>',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h9', c9); E('C9F2 --> RB', c9);
-    E('H9 --> C9G["'+mk('«Броситься за ним.»')+'"]:::h9', c9); E('C9G --> SLC', c9);
+    E('H9 --> C9F1["'+mk('«Это было чертовски опасно...» → ushel<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: Кровь &gt; 0</span>',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h9', c9); E('C9F1 --> NMI', c9);
+    E('NMI --> NMI1["'+mk('пусто или «Вий»<br/><span style="font-size:12px;color:#92400e;font-weight:700">имя = «Вий»; zn_name = True</span>',[[C_MAD,1]])+'"]:::h9', c9);
+    E('NMI --> NMI2["'+mk('своё имя')+'"]:::h9', c9);
+    E('NMI1 --> RB', c9);
+    E('NMI2 --> RB', c9);
+    E('H9 --> C9F2["'+mk('«Я... Что вообще только что произошло?» → ushel<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: Кровь = 0</span>',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h9', c9); E('C9F2 --> NMI', c9);
+    E('H9 --> C9G["'+mk('«Броситься за ним.»',[[C_MAD,1]])+'"]:::h9', c9); E('C9G --> NMJ["Ввод имени<br/><small>«Меня зовут...»</small>"]:::h9', c9);
+    E('NMJ --> NMJ1["'+mk('пусто или «Вий»<br/><span style="font-size:12px;color:#92400e;font-weight:700">имя = «Вий»; zn_name = True</span>',[[C_MAD,1]])+'"]:::h9', c9);
+    E('NMJ --> NMJ2["'+mk('своё имя')+'"]:::h9', c9);
+    E('NMJ1 --> SLC', c9);
+    E('NMJ2 --> SLC', c9);
   } else {
     E('H9 --> RB', c9);
     E('H9 --> E1', c9);
