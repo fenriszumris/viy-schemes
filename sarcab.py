@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import html
-from PIL import Image,ImageDraw
+from PIL import Image,ImageDraw,ImageFont
+F=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',30)
 G='/tmp/viy/game/images/'
 bg=Image.open(G+'bg/sar_cab.png').convert('RGBA')
 H=[ # id, x,y, title, text
@@ -29,7 +30,7 @@ for n,(i,x,y,t,lab,src,tx) in enumerate(H,1):
     hv=Image.open(G+'sar_cab/sar_cab_%s_hover.png'%i if i!='diary' else G+'sar_cab/sar_cab_diary_hover.png').convert('RGBA')
     ov.alpha_composite(hv,(x,y))
     d.rectangle([x-3,y-3,x+hv.width+3,y+hv.height+3],outline=(255,60,60,255),width=4)
-    d.ellipse([x-14,y-30,x+22,y+6],fill=(255,60,60,255)); d.text((x-3,y-22),str(n),fill=(255,255,255,255))
+    d.ellipse([x-18,y-44,x+22,y-4],fill=(255,60,60,255)); d.text((x+2,y-24),str(n),font=F,fill=(255,255,255,255),anchor='mm')
 ov.convert('RGB').resize((1280,720)).save('img/sarcab/overview.jpg',quality=85)
 out.append('<p><img src="img/sarcab/overview.jpg" style="max-width:100%;border-radius:6px" alt="Кабинет Сареброса, области осмотра"></p>')
 for n,(i,x,y,t,lab,src,tx) in enumerate(H,1):

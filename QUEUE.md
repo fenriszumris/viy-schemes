@@ -16,3 +16,8 @@ STATE 9:40: v=273 pushed. Done: locations, char click/drop sections, trees(tash,
 9:45: flags explained via setting sites (condru). Remaining unexplained: 'смысл не расшифрован' atoms like mad_l()/logic_l(): replace by reading defs.
 9:46 fixed sova ratio (logic share). cond RU extended.
 9:48 flags now list all set/reset sites, meaning not claimed.
+
+## 9:57 new (Kate via main)
+- DONE v281: guards trees, Блю (renamed), Губерт (char_slime renamed, tree), Кап page exists, Adro cabinet inspection on locations #tgavan_sar_cab with game images (sarcab.py).
+- TODO site-wide: everywhere code is shown, main content must be Russian explanation, code only small hint. Mood checks (настроение/mood): per check explain scene, whose indicator, threshold, what depends. Items "где получается и зачем" in Russian prose, no raw labels. Audit all pages (strel, bugs, replics, scheme pages) for raw code as main text.
+- Unknown meaning stays explicit gap.
