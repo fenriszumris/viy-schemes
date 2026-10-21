@@ -2,7 +2,7 @@
 import re,glob,html,sys,collections
 sys.path.insert(0,'/tmp/sch')
 import condru
-V=309
+V=310
 condru._scan()
 SET=condru._SET;RESET=condru._RESET
 FILES={}
@@ -55,7 +55,7 @@ def row(k):
     sets=SET.get(k,[]);chk=CHK.get(k,[])
     mm=meaning(k)
     m=re.fullmatch(r'"([^"]+)" in (?:mem:)?([\w\.]+)',k)
-    title=esc(mm and 'ставится '+mm or 'смысл в коде не подписан')
+    title=esc(mm and 'Ставится: '+condru._simp(mm) or 'Смысл в коде не подписан')
     short=m.group(1) if m else k
     h='<details class="fl"><summary><span class="ft">%s</span> <span class="muted"><code>%s</code></span> <span class="b">ставится: %d</span> <span class="b">проверок: %d</span></summary><div class="fb">'%(title,esc(k),len(sets),len(chk))
     if mm: h+='<p class="muted">Смысл выведен по месту, где метка ставится (в коде не подписан).</p>'
@@ -66,14 +66,14 @@ def row(k):
         for lab,fn,ln in sets[:8]:
             try: cx=condru.ctx(lab,fn,ln)
             except Exception: cx='в сцене «%s»'%lab
-            h+='<li>%s <span class="muted"><code>%s:%d</code></span></li>'%(esc(cx),fn,ln)
+            h+='<li>%s <span class="muted"><code>%s:%d</code></span></li>'%(esc(condru._simp(cx)),fn,ln)
         if len(sets)>8: h+='<li class="muted">…и ещё %d</li>'%(len(sets)-8)
         h+='</ul>'
     if k in RESET: h+='<p>Где-то сбрасывается (есть присваивание «выключить»).</p>'
     if chk:
         h+='<h5>Где проверяется</h5><ul>'
         for ce,lab,fn,ln in chk[:8]:
-            try: cx=condru.ctx(lab,fn,ln)
+            try: cx=condru.ctx(lab,fn,ln) if lab else 'в файле описания дневника'
             except Exception: cx='в сцене «%s»'%lab
             h+='<li>%s<br/><span class="muted">%s · <code>%s:%d</code></span><br/><span class="muted"><code>%s</code></span></li>'%(condru.cond_html(ce).replace('<br/>',' '),esc(cx),fn,ln,esc(ce[:110]))
         if len(chk)>8: h+='<li class="muted">…и ещё %d</li>'%(len(chk)-8)
