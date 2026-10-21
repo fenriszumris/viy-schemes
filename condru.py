@@ -305,3 +305,39 @@ MEAN.update({
  'vinp == "Вий"':('игрок ввёл имя «Вий»','vinp - строка, введённая в окне «Меня зовут...» (script_3_less_end.rpy:65-67)','игрок ввёл другое имя'),
  'vinp == ""':('игрок оставил имя пустым','vinp - строка из окна «Меня зовут...» (script_3_less_end.rpy:65-67)','игрок ввёл какое-то имя'),
 })
+
+# ---- quests: names from the game, direct Russian, links ----
+QN={}
+for _l in open('/tmp/viy/game/script _define.rpy',encoding='utf8',errors='ignore'):
+    _m=re.search(r'quests\["(\w+)"\]\s*=\s*quest\(name\s*=\s*"\w+",\s*name_quest\s*=\s*"([^"]+)"',_l)
+    if _m: QN[_m.group(1)]=_m.group(2)
+def qref(q):
+    n=QN.get(q)
+    if not n: return '«%s» (название в игре не задано)'%q
+    return '«<a href=\'quests.html?v=%d#q_%s\' title=\'%s\'>%s</a>»'%(V,q,q,n) if SHORT else '«%s»'%n
+_QW={'keep':('взят','не взят'),'done':('выполнен','не выполнен'),'know':('о нём известно','о нём не известно'),'false':('провален','не провален')}
+_atom_q=atom
+def atom(a):
+    a=a.strip()
+    m=re.fullmatch(r'(not\s+)?quests\["(\w+)"\]\.(keep|done|know|false)',a)
+    if m:
+        w=_QW[m.group(3)][1 if m.group(1) else 0]
+        return 'Квест %s %s'%(qref(m.group(2)),w)
+    return _atom_q(a)
+V=308
+
+# ---- quest diary entries (text from Diary_text.rpy, multi-line aware) ----
+DT={}
+_dt=open('/tmp/viy/game/Diary_text.rpy',encoding='utf8',errors='ignore').read()
+for _m in re.finditer(r'quests\["(\w+)"\]\.diary\._part_text\[([\d\.\-]+)\]\s*=\s*\["((?:[^"\\]|\\.)*)"',_dt,re.S):
+    DT[(_m.group(1),_m.group(2))]=re.sub(r'\s+',' ',re.sub(r'\{/?[a-z]+(=[^}]*)?\}','',_m.group(3).replace('\\n',' ').replace('\\',' '))).strip()
+def _short(t,n=60): return t if len(t)<=n else t[:n-1]+'…'
+_atom_q2=atom
+def atom(a):
+    a=a.strip()
+    m=re.fullmatch(r'(not\s+)?quests\["(\w+)"\]\.diary\._part_text\[([\d\.\-]+)\]\[1\]',a)
+    if m:
+        t=DT.get((m.group(2),m.group(3)))
+        return 'В дневнике квеста %s запись №%s %sоткрыта%s'%(qref(m.group(2)),m.group(3),'ещё не ' if m.group(1) else '',(': «%s»'%_short(t)) if t else '')
+    return _atom_q2(a)
+V=308

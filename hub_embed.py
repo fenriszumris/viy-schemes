@@ -46,7 +46,7 @@ def block(lab,owner,openhubs='first'):
     allh=list(d['hubs'])
     openl=tg[:1] if openhubs=='first' else (allh if openhubs=='all' else [])
     data={'start':d['start'],'startTargets':tg,'hubs':d['hubs'],'open':openl}
-    h='<p class="muted">Схема только мест выбора. Нажмите на жёлтый блок «Выбор игрока», чтобы раскрыть его варианты на месте; повторное нажатие сворачивает. Фиолетовые скруглённые блоки - условия. Значки: <span style="color:#e41a1c;font-weight:700">настроение</span> · <span style="color:#7048e8;font-weight:700">безумие</span> · <span style="color:#1c7ed6;font-weight:700">логика</span>; плюсы вверху справа карточки, минусы внизу слева. Оранжевый мелкий текст - что запоминается. Реплик здесь нет.</p>'
+    h='<p class="muted">Схема только мест выбора. Нажмите на жёлтый блок «Выбор игрока», чтобы раскрыть его варианты на месте; повторное нажатие сворачивает. Фиолетовые скруглённые блоки - условия. Значки: <span style="color:#e41a1c;font-weight:700">настроение</span> · <span style="color:#7048e8;font-weight:700">безумие</span> · <span style="color:#1c7ed6;font-weight:700">логика</span>; плюсы вверху справа карточки, минусы внизу слева. Оранжевый мелкий текст - что запоминается. <b style="color:#7c3aed">①</b> - вариант есть в меню только до первого выбора. Реплик здесь нет.</p>'
     h+='<p><button class="hubbtn" onclick="hubAll(true)">Развернуть все</button><button class="hubbtn" onclick="hubAll(false)">Свернуть все</button></p>'
     h+='<div class="widechart"><div id="hubchart" class="mermaid"></div></div>'
     h+='<script type="application/json" id="hubdata">'+json.dumps(data,ensure_ascii=False).replace('</','<\\/')+'</script>'+JS
