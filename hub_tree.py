@@ -70,7 +70,9 @@ class B:
             if cond:
                 cc=nid();s.condnode(H,cc,cond);H['exp'].append('%s --> %s'%(hid,cc));src=cc
             else: src=hid
-            tails+=s.card(H,c,'«%s»'%q(sh(text,80)),items,src,nid)
+            once=text.endswith(' \u2460')
+            tx=text[:-2] if once else text
+            tails+=s.card(H,c,'«%s»'%q(sh(tx,80))+(' <b style=\'color:#7c3aed;font-size:18px\'>\u2460</b>' if once else ''),items,src,nid)
         if tails:
             if rest:
                 j=nid();H['exp'].append('%s(["далее"]):::ex'%j)
@@ -96,7 +98,8 @@ class B:
         body_=title
         for t in txt:
             P='запоминается: при выборе варианта «'
-            if t.startswith(P) and t[len(P):len(P)+25]==title[1:26]: t='помечается как выбранный'
+            inner_=re.sub(r'<[^>]+>','',title).replace('\u2460','').strip()[1:-1].strip().rstrip('»').strip()
+            if t.startswith(P+inner_[:25]): continue
             body_+='<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>%s</span>'%q(t)
         pad='padding:%s 10px %s 10px'%('18px' if ups else '4px','18px' if dns else '4px')
         h='<div style=\'position:relative;display:inline-block;width:240px;white-space:normal;text-align:left;%s\'>%s'%(pad,body_)
@@ -188,10 +191,17 @@ class B:
                     it,term=s.blk(lab,lines,z+1,end)
                     if term: it=it+[('closed',)]
                     cond=None
+                    once=False
                     if m.group(2):
-                        chh=cond_html(m.group(2)).replace('ещё не произошло (ставится при выборе варианта «%s»)'%q(m.group(1)),'этот вариант ещё не выбирался').replace('ещё не произошло (ставится при выборе варианта «%s»)'%q(sh(m.group(1),70)),'этот вариант ещё не выбирался')
-                        cond='Вариант виден, если:<br/>%s<br/><small style=\'color:#9ca3af\'>%s</small>'%(chh,q(sh(m.group(2),80)))
-                    opts.append((m.group(1),cond,it))
+                        chh=cond_html(m.group(2)).replace('ещё не произошло (ставится при выборе варианта «%s»)'%q(m.group(1)),'ОНЦЕ').replace('ещё не произошло (ставится при выборе варианта «%s»)'%q(sh(m.group(1),70)),'ОНЦЕ')
+                        parts=chh.split('<br/><b>и одновременно</b><br/>')
+                        if 'ОНЦЕ' in parts:
+                            once=True;parts=[p for p in parts if p!='ОНЦЕ']
+                        chh='<br/><b>и одновременно</b><br/>'.join(parts)
+                        if parts and chh and 'ОНЦЕ' not in chh and '(' not in chh[:0]:
+                            cond='Вариант виден, если:<br/>%s<br/><small style=\'color:#9ca3af\'>%s</small>'%(chh,q(sh(m.group(2),80)))
+                    text=m.group(1)+(' \u2460' if once else '')
+                    opts.append((text,cond,it))
                 hid=s.hub2(lab,k,opts,rest)
                 items.append(('menu',hid));return items,True
             m=re.match(r'(if|elif|else)\b(.*):$',t)
