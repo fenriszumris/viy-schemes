@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import re,json
-V=299
+V=302
 src=open('char_clicks.py',encoding='utf8').read()
 pre=src[:src.find('# inventory link')]
 g={}
