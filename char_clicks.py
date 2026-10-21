@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import re,json,html
 exec(open('loc_names.py',encoding='utf8').read())
-V=315
+V=316
 st=json.load(open('clk_story.json',encoding='utf8'))
 CH={'tash':'tash','bonny':'bonny','sova':'sova','leni':'leni','nars':'narsi','guard1':'starichok','guard2':'parenek','kap':'kap','cat':'cat_statue','girl_air':'devushka_airat','dev_button':'luiza','dev_sleep':'luiza','adro_screen':'adro','blu':'blu','fen_button':'fenrira'}
 REL={'karralak':['kar_air'],'tash':['tash_cards','mant','bonny_1'],'bonny':['b_head','bonny_x','b_find','head','full_bones'],'luiza':['dev_door','dev_door2'],'kap':['cap_ch']}
