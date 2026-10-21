@@ -2,7 +2,7 @@
 # idempotent post-processing: row anchors + location links
 import re,glob
 exec(open('loc_names.py',encoding='utf8').read())
-V=327
+V=328
 def rowids(s):
     def f(m):
         return '<tr id="o_%s">'%m.group(2)+m.group(1)
