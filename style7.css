@@ -44,3 +44,4 @@ footer{max-width:none;margin:0 0 40px;padding:0 20px;color:var(--muted);font-siz
 .viewtoggle button.active{background:#2b2440;color:#fff;border-color:#2b2440}
 .panel-rel{position:relative}
 .panel-hidden{position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:100%}
+.lid{font-size:11px;color:#6b7280}.stats td:nth-child(2){font-size:11px;color:#6b7280}
