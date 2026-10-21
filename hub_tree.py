@@ -5,8 +5,8 @@ from trees import LAB,body,ind,SKIP,KEY
 import condru
 import condru
 def fx(t):
-    t=re.sub(r'в сцене, начинающейся словами «Из-за монументального стола[^»]*»','в сцене первой встречи с Лени (он выглядывает из-за стола)',t)
-    t=re.sub(r'в сцене, начинающейся словами «([^»]{0,34})[^»]*»',lambda m:'в сцене, начинающейся словами «'+m.group(1)+'…»',t)
+    t=re.sub(r'(?:в сцене|сцена со словами)(?:, начинающейся словами)? «Из-за монументального стола[^»]*»','сцена первой встречи с Лени (он выглядывает из-за стола)',t)
+    t=re.sub(r'сцена со словами «([^»]{0,34})[^»]*»',lambda m:'сцена со словами «'+m.group(1)+'…»',t)
     return t
 def cond_html(e): return fx(condru.cond_html(e))
 def cond_plain(e): return fx(condru.cond_plain(e))
@@ -28,10 +28,10 @@ def eff(t,owner):
     m=re.match(r'([\w\.\[\]"]+)\s*=\s*(True|1|"[^"]*")\s*$',t)
     if m:
         d=cond_plain(m.group(1))
-        d=re.sub(r'^уже произошло \(ставится (.*)\)$',r'\1',d)
+        d=re.sub(r'^Уже было: (.*)$',r'\1',d)
         return ('txt','запоминается: '+d)
     m=re.match(r'([\w\.\[\]"]+)\s*=\s*(False|0)\s*$',t)
-    if m: return ('txt','сбрасывается: '+re.sub(r'^уже произошло \(ставится (.*)\)$',r'\1',cond_plain(m.group(1))))
+    if m: return ('txt','сбрасывается: '+re.sub(r'^Уже было: (.*)$',r'\1',cond_plain(m.group(1))))
     return ('txt','изменение: '+sh(t,60))
 C={'mood':'rgb(228,26,28)','mad':'rgb(112,72,232)','log':'rgb(28,126,214)'}
 BG={'mood':'rgb(255,235,235)','mad':'rgb(237,231,251)','log':'rgb(227,242,250)'}
@@ -97,7 +97,7 @@ class B:
         rest=items[k:]
         body_=title
         for t in txt:
-            P='запоминается: при выборе варианта «'
+            P='запоминается: выбран вариант «'
             inner_=re.sub(r'<[^>]+>','',title).replace('\u2460','').strip()[1:-1].strip().rstrip('»').strip()
             if t.startswith(P+inner_[:25]): continue
             body_+='<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>%s</span>'%q(t)
@@ -193,7 +193,7 @@ class B:
                     cond=None
                     once=False
                     if m.group(2):
-                        chh=cond_html(m.group(2)).replace('ещё не произошло (ставится при выборе варианта «%s»)'%q(m.group(1)),'ОНЦЕ').replace('ещё не произошло (ставится при выборе варианта «%s»)'%q(sh(m.group(1),70)),'ОНЦЕ')
+                        chh=cond_html(m.group(2)).replace('Ещё не было: выбран вариант «%s»'%q(m.group(1)),'ОНЦЕ').replace('Ещё не было: выбран вариант «%s»'%q(sh(m.group(1),70)),'ОНЦЕ')
                         parts=chh.split('<br/><b>и одновременно</b><br/>')
                         if 'ОНЦЕ' in parts:
                             once=True;parts=[p for p in parts if p!='ОНЦЕ']
