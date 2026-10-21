@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import re,json,html
 exec(open('loc_names.py',encoding='utf8').read())
-V=264
+V=265
 st=json.load(open('clk_story.json',encoding='utf8'))
 CH={'tash':'tash','bonny':'bonny','sova':'sova','leni':'leni','nars':'narsi','guard1':'starichok','guard2':'parenek','kap':'kap','cat':'cat_statue','girl_air':'devushka_airat','dev_button':'luiza','dev_sleep':'luiza','adro_screen':'adro','blu':'blu','fen_button':'fenrira'}
 REL={'tash':['tash_cards','mant','bonny_1'],'bonny':['b_head','bonny_x','b_find','head','full_bones'],'luiza':['dev_door','dev_door2'],'kap':['cap_ch']}
@@ -36,10 +36,11 @@ DROP={
 def il(i): return '<a href="inventory.html?v=%d#i_%s">%s</a>'%(V,i,INV.get(i,i))
 INV={}
 inv=open('inventory.html',encoding='utf8').read()
-for m in re.finditer(r'<details class="inv"(?: id="i_\w+")?>\s*<summary><img src="[^"]*" alt="(\w+)"><span><b>(.*?)</b>',inv,re.S): INV[m.group(1)]=m.group(2)
+for m in re.finditer(r'<summary>(?:<img[^>]*>)?<span><b>(.*?)</b><br><span class="rid">(\w+) ·',inv,re.S): INV[m.group(2)]=m.group(1).replace('\\&quot;','&quot;')
 ck=open('clickables.html',encoding='utf8').read()
+ck_orig=open('clk_rows_orig.txt',encoding='utf8').read()
 def rowcell(o):
-    m=re.search(r'<tr id="o_%s">(.*?)</tr>'%o,ck,re.S)
+    m=re.search(r'<tr id="o_%s">(.*?)</tr>'%o,ck_orig,re.S)
     return m.group(1) if m else ''
 blocks={}
 for o,sl in CH.items():
@@ -49,7 +50,7 @@ for o,sl in CH.items():
     act=tds[3] if len(tds)>3 else ''
     story=st.get(o,'')
     b='<h3>Объект <code>%s</code></h3><p class="muted">Где показывается: %s</p>'%(o,where)
-    if act: b+='<p class="muted">Что запускает: %s</p>'%act
+    if act and not act.startswith('Это персонаж'): b+='<p class="muted">Что запускает: %s</p>'%act
     if story: b+='<p>%s</p>'%story
     blocks.setdefault(sl,[]).append(b)
 def sect(sl):
