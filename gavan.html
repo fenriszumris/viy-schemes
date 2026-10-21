@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>Тёмная Гавань: Адриан — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style7.css?v=330">
+<link rel="stylesheet" href="style7.css?v=331">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -44,11 +44,11 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#166534', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
-  L.push('ST["<a href=\'tgavan.html?v=330\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Из страницы «Дверь Адриана»: «Взять очень осторожно» (после зелья)<br/><small>script_3_tgavan_adr_after_door</small></div></a>"]:::ex');
+  L.push('ST["<a href=\'tgavan.html?v=331\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Из страницы «Дверь Адриана»: «Взять очень осторожно» (после зелья)<br/><small>script_3_tgavan_adr_after_door</small></div></a>"]:::ex');
   L.push('EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex');
-  L.push('NS["<a href=\'less.html?v=330\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:280px;white-space:normal\'>Лесс спасает героиню: переход на метку nesm (206)</div></a>"]:::ex');
+  L.push('NS["<a href=\'less.html?v=331\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:280px;white-space:normal\'>Лесс спасает героиню: переход на метку nesm (206)</div></a>"]:::ex');
   L.push('BAD["<div style=\'width:280px;white-space:normal\'>BAD END «У самурая нет цели» (208)</div>"]:::bad');
-  L.push('AD["<a href=\'adro.html?v=330\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Дальше: страница «Адро» (script_4_tgavan_adro) — Адриан ведёт к зданию эльфов (689-693)</div></a>"]:::ex');
+  L.push('AD["<a href=\'adro.html?v=331\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Дальше: страница «Адро» (script_4_tgavan_adro) — Адриан ведёт к зданию эльфов (689-693)</div></a>"]:::ex');
   E('ST --> G1', cG);
   L.push(hub('G1','Договориться с Адрианом<br/><small>script_3_tgavan_adr_after_door, with_adr, 1-77</small>','hhn',[[C_MAD, '−2…+1'], [C_LOG, '−1…0'], [C_ADR, '0…+1']]));
   if(EXP.has('G1')){
@@ -157,7 +157,7 @@ function build(){
   L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
   L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
   L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
-  /*XD_PATCH*/ (function(){var XD={'EXS':'EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex'};var tx=L.join('\n');for(var id in XD){if(!new RegExp('\\b'+id+'\\s*[\\[(]').test(tx)&&new RegExp('(-->\\s*'+id+'(\\s|$)|(^|\\n)'+id+'\\s*-->)').test(tx))L.push(XD[id]);}})();
+  /*XD_PATCH*/ (function(){var XD={'EXS':'EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex','BAD':'BAD["<div style=\'width:280px;white-space:normal\'>BAD END «У самурая нет цели» (208)</div>"]:::bad','Q':'Q["<div style=\'width:280px;white-space:normal\'>Адриан у двери: «Может, мы можем договориться?» (2)</div>"]:::sc','QC':'QC["<div style=\'width:240px;white-space:normal\'>Адриан отвечает на «договориться» (9)</div>"]:::sc','QD':'QD["<div style=\'width:240px;white-space:normal\'>Адриан отвечает на «не можете бросить» (27)</div>"]:::sc','WA':'WA["<div style=\'width:260px;white-space:normal\'>Адриан: «Но вы должны будете меня слушать» (49)</div>"]:::sc','WM':'WM["<div style=\'width:260px;white-space:normal\'>Адриан: «Наслаждайтесь правами в одиночестве» (79)</div>"]:::sc','FT':'FT["<div style=\'width:300px;white-space:normal\'>Героиня бросается на Адриана и падает парализованная; Адриан выносит её за ворота (85-186)</div>"]:::bad','FZ':'FZ["<div style=\'width:240px;white-space:normal\'>Решает Адриан: убить или нет (129)</div>"]:::sc','FD':'FD["<div style=\'width:260px;white-space:normal\'>Адриан режет героине горло (151-186)</div>"]:::bad','Y':'Y["<div style=\'width:280px;white-space:normal\'>Адриан: «Почему вы вообще в Тёмной Гавани?» (216)</div>"]:::sc','YA':'YA["<div style=\'width:300px;white-space:normal\'>Адриан: «Гавань не место, куда заходят случайно» — совет идти в Айрат (233-240)</div>"]:::sc','M2':'M2["<div style=\'width:260px;white-space:normal\'>Адриан: «Хотите добраться до Айрата?» (271)</div>"]:::sc','AIR':'AIR["<div style=\'width:300px;white-space:normal\'>Адриан объясняет дорогу в Айрат и провожает до двери; герой выходит на развилку (374-423)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если направление уже известно: Адриан коротко желает удачи</span></div>"]:::sc','GB':'GB["<div style=\'width:300px;white-space:normal\'>Адриан даёт личный белый жетон и предлагает вступить в Белую Стражу (425-452)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 открывает предмет «жетон Адриана»; Адриан знает вас лучше</span></div>"]:::sc','WG':'WG["<div style=\'width:300px;white-space:normal\'>Адриан даёт значок Белой Стражи и объясняет правила (481-533)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает флаг «в Белой Страже» → открывает предмет «значок Стражи» и расследование (white_guard, invest_quest)</span></div>"]:::sc','EL':'EL["<div style=\'width:260px;white-space:normal\'>Адриан: «Знаете, кто такие лунные эльфы?» (542)</div>"]:::sc','SM':'SM["<div style=\'width:240px;white-space:normal\'>Что расследуем? (613)</div>"]:::sc','S1x':'S1x["<div style=\'width:260px;white-space:normal\'>Подозреваемые: у посла почти не было врагов (620-637)</div>"]:::sc','S2x':'S2x["<div style=\'width:260px;white-space:normal\'>Орудие: яд Скорпикоры в чае (642-651)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «яд» в память расследования</span></div>"]:::sc','S3x':'S3x["<div style=\'width:280px;white-space:normal\'>Улики: нужен контракт Чёрной Печати (656-683)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает флаг «Чёрная Печать» → открывает заметку про Чёрную Печать (black_seal_zn)</span></div>"]:::sc'};var tx=L.join('\n');for(var id in XD){if(!new RegExp('\\b'+id+'\\s*[\\[(]').test(tx)&&new RegExp('(-->\\s*'+id+'(\\s|$)|(^|\\n)'+id+'\\s*-->)').test(tx))L.push(XD[id]);}})();
   return L.concat(ST).join('\n');
 }
 async function render(){
@@ -188,7 +188,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Тёмная Гавань: Адриан</h1>
 <p>script3_tgavan_oh.rpy, 1-693: Адриан соглашается помочь, расспрашивает, берёт в Белую Стражу, рассказывает про дело посла.</p>
-<nav class="crumbs"><a href="index.html?v=330">← Все схемы</a> · <a href="tgavan.html?v=330">Дверь Адриана</a> · <a href="stats.html?v=330">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=331">← Все схемы</a> · <a href="tgavan.html?v=331">Дверь Адриана</a> · <a href="stats.html?v=331">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
