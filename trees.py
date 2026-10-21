@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-import re,glob,html
+import re,glob,html,sys
+sys.path.insert(0,'/tmp/sch')
+from condru import cond_ru
 SP={'v':'Героиня','a':'Рассказчик','aa':'Рассказчик','vm':'Мысль героини','vvv':'Героиня','n':'Нарси','t':'Таш','ls':'Лесс','lss':'Лесс','ka':'Капибара','b':'Бонни','d':'Луиза','f':'Феня','sov':'Сова','g1':'Горран','g2':'Алекс','l':'Лени','k':'Карралак','sadr':'Адро','e1':'Эльф (Риал)','e2':'Эльф'}
 LAB={}
 LINES={}
@@ -52,7 +54,7 @@ def blk(lines,s,e,seen,depth,maxd):
                 end=idxs[n+1] if n+1<len(idxs) else j
                 m=re.match(r'"(.*)"\s*(?:if (.*))?:$',lines[q].strip())
                 if not m: continue
-                cond=' <span class="muted">(если <code>%s</code>)</span>'%html.escape(m.group(2)) if m.group(2) else ''
+                cond=' <span class="muted">(если %s; <code>%s</code>)</span>'%(html.escape(cond_ru(m.group(2))),html.escape(m.group(2))) if m.group(2) else ''
                 inner,_=blk(lines,q+1,end,seen,depth,maxd)
                 h+='<li><b>Вариант: «%s»</b>%s%s</li>'%(esc(m.group(1)),cond,inner)
             out.append('<div class="muted">Выбор:</div>'+h+'</ul>')
@@ -61,7 +63,8 @@ def blk(lines,s,e,seen,depth,maxd):
         if m:
             inner,_=blk(lines,k+1,j,seen,depth,maxd)
             c={'if':'Если','elif':'Иначе, если','else':'Иначе'}[m.group(1)]
-            out.append('<div class="cond"><span class="muted">%s <code>%s</code>:</span>%s</div>'%(c,html.escape(m.group(2).strip()),inner))
+            ce=m.group(2).strip()
+            out.append('<div class="cond"><span class="muted">%s%s <code>%s</code>:</span>%s</div>'%(c,(' '+html.escape(cond_ru(ce))+';') if ce else '',html.escape(ce),inner))
             k=j;continue
         m=re.match(r'(\w+) "(.*)"$',t) or re.match(r'()"(.*)"$',t)
         if m and not t.startswith('$'):
