@@ -2,7 +2,7 @@
 import re,glob,html,sys,collections
 sys.path.insert(0,'/tmp/sch')
 import condru
-V=316
+V=317
 condru._scan()
 SET=condru._SET;RESET=condru._RESET
 FILES={}
@@ -78,7 +78,7 @@ def scene_effects(fn,ln):
             w={'keep':('Квест «%s» берётся','Квест «%s» снимается'),'done':('Квест «%s» засчитывается выполненным','Квест «%s» снимается как выполненный'),'false':('Квест «%s» считается проваленным','Квест «%s»: провал снимается')}[m.group(2)][0 if on else 1]
             out.append(w%esc(q))
     res=[]
-    if say: res.append('дальше в сцене: '+' / '.join('«%s»'%esc(x[:80]) for x in say))
+    if say: res.append('дальше в сцене идут реплики: '+' / '.join('«%s»'%esc(x[:80]) for x in say))
     res+=out[:4]
     return res
 def enclosing(fn,ln):
@@ -143,6 +143,29 @@ def choice_of(k):
         m=re.search(r'(?:выбран вариант|выбор\w* варианта) «(.*?)»',mm)
         if m: return m.group(1)
     return None
+
+def guard_of(k):
+    """Flag is 'shown once': every set site sits directly in an `if not <this flag>` block. Returns first spoken line of the first guarded block."""
+    sets=SET.get(k,[])
+    nd=NEED.get(k)
+    if not sets or not nd: return None
+    first=None
+    for lab,fn,ln in sets:
+        ls=FILES[fn];ind=_ind(ls[ln-1]);j=ln-2;ok=False
+        while j>=0:
+            l=ls[j]
+            if l.strip() and _ind(l)<ind:
+                t=l.strip()
+                m=re.match(r'(?:\$ )?if\s+(.*):$',t)
+                if m and nd.search(m.group(1)) and re.match(r'not\b',m.group(1).strip()) and ' and ' not in m.group(1) and ' or ' not in m.group(1): ok=True;gi=j
+                break
+            j-=1
+        if not ok: return None
+        if first is None:
+            for l in ls[gi+1:gi+30]:
+                m=re.match(r'^\s*(?:\w+\s+)?"(.{8,}?)"\s*$',l)
+                if m and not l.strip().startswith('$'): first=m.group(1);break
+    return first or ''
 def short_key(k):
     c=choice_of(k)
     if c: return '«%s»'%c
@@ -155,6 +178,9 @@ def plain_cond(ce,neg=False):
     if not m: return None
     k='"%s" in mem:%s'%(m.group(1),m.group(3))
     notin=bool(m.group(2))^neg
+    g=guard_of(k)
+    if g is not None and not choice_of(k):
+        return ('вступление сцены ещё не показывалось' if notin else 'вступление сцены уже показывалось')+((' («%s…»)'%g[:50]) if g else '')
     sk=short_key(k)
     return ('не выбрано ' if notin and choice_of(k) else 'не стоит ' if notin else 'выбрано ' if choice_of(k) else 'стоит ')+sk
 def menu_question(fn,ln):
@@ -187,6 +213,9 @@ def row(k):
     if mq0 and mq0.group(1) in condru.QN: qn=condru.QN[mq0.group(1)]
     ch=choice_of(k)
     if ch: title=esc('«%s»'%ch)+(' <span class="muted">- вариант выбора в квесте «%s»</span>'%esc(qn) if qn else ' <span class="muted">- вариант выбора</span>')
+    gd_=None if ch else guard_of(k)
+    if gd_ is not None:
+        title=esc('Вступление уже показывалось'+(': «%s…»'%gd_[:60] if gd_ else ''))+(' <span class="muted">- квест «%s»</span>'%esc(qn) if qn else '')
     else: title=esc((('«%s»: '%qn) if qn else '')+(core if core else 'смысл в коде не назван'))
     dtx=''
     for ce_,lab_,fn_,ln_ in chk:
@@ -201,6 +230,7 @@ def row(k):
     if mm: h+='<p class="muted">Смысл выведен по месту, где метка ставится (в коде не подписан).</p>'
     mq=re.fullmatch(r'"[^"]+" in mem:(\w+)',k)
     if mq and mq.group(1) in condru.QN: h+='<p>Квест: <a href="quests.html?v=%d#q_%s">«%s»</a></p>'%(V,mq.group(1),esc(condru.QN[mq.group(1)]))
+    if gd_ is not None: h+='<p class="muted">Метка ставится внутри блока «если её ещё нет», то есть нужна, чтобы эта сцена/вступление отыгрывалось один раз (по структуре кода; что ещё от неё зависит - в списке проверок).</p>'
     if qline: h+='<p>Вопрос в игре перед выбором: «%s»</p>'%esc(qline)
     if sets:
         h+='<h5>Где ставится</h5><ul>'
@@ -232,7 +262,7 @@ def row(k):
             else:
                 try: se=scene_effects(fn,ln)
                 except Exception: se=[]
-                eff=('<br/><b>Что происходит при выполнении:</b> '+'; '.join(se)) if se else ''
+                eff=('<br/><b>Первые действия ветки (не все последствия):</b> '+'; '.join(se)) if se else ''
                 h+='<li>%s%s<br/><span class="muted">%s · <code>%s:%d</code></span><br/><span class="muted"><code>%s</code></span></li>'%(condru.cond_html(ce).replace('<br/>',' '),eff,esc(cx),fn,ln,esc(ce[:110]))
         if len(chk)>8: h+='<li class="muted">…и ещё %d</li>'%(len(chk)-8)
         h+='</ul>'
