@@ -19,6 +19,8 @@ def atom(a):
     if m: return 'в памяти «%s» есть запись «%s»'%(m.group(2),m.group(1))
     m=re.fullmatch(r'my_location(?:\.name)? == (\w+)',a)
     if m: return 'героиня находится: %s'%(L[m.group(1)][0] if m.group(1) in L else m.group(1))
+    m=re.fullmatch(r'"(\w+)" in ([\w.]+)',a)
+    if m: return 'в списке «%s» есть метка «%s»'%(m.group(2),m.group(1))
     m=re.fullmatch(r'(\w+)\.(near|zn_name|zn_vpotpam|helpp|bad|good)',a)
     if m and m.group(1) in PERS: return '%s: %s'%(PERS[m.group(1)],ATTR[m.group(2)])
     m=re.fullmatch(r'(\w+)\.mood\s*(>=|<=|>|<|==)\s*(-?\d+)',a)
@@ -31,7 +33,7 @@ def atom(a):
     if m: return 'флаг %s уже стоит (смысл флага в коде не подписан)'%a
     m=re.fullmatch(r'(\w+)\.(\w+)',a)
     if m: return 'признак «%s» (смысл в коде не подписан)'%a
-    return 'условие в коде (смысл не расшифрован)'
+    return 'проверка в коде (смысл не расшифрован)'
 def cond_ru(expr):
     parts=re.split(r'\s+(and|or)\s+',expr.strip())
     out=[]
