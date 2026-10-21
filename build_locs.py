@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import re,html
 exec(open('loc_names.py',encoding='utf8').read())
-V=265
+V=266
 DIR={'left':'налево','right':'направо','up':'вперёд (вверх)','bottom':'назад (вниз)'}
 edges={}
 for l in open('/tmp/locgraph.txt',encoding='utf8'):
