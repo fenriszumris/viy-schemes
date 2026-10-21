@@ -324,7 +324,7 @@ def atom(a):
         w=_QW[m.group(3)][1 if m.group(1) else 0]
         return 'Квест %s %s'%(qref(m.group(2)),w)
     return _atom_q(a)
-V=309
+V=310
 
 # ---- quest diary entries (text from Diary_text.rpy, multi-line aware) ----
 DT={}
@@ -340,7 +340,7 @@ def atom(a):
         t=DT.get((m.group(2),m.group(3)))
         return 'В дневнике квеста %s запись №%s %sоткрыта%s'%(qref(m.group(2)),m.group(3),'ещё не ' if m.group(1) else '',(': «%s»'%_short(t)) if t else '')
     return _atom_q2(a)
-V=309
+V=310
 
 # ---- simple wording of derived conditions ----
 def _simp(d):
@@ -357,4 +357,4 @@ def atom(a):
     m=re.fullmatch(r'ещё не произошло \(ставится (.*)\)',r,re.S)
     if m: return 'Ещё не было: '+_simp(m.group(1))
     return r
-V=309
+V=310
