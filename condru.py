@@ -324,7 +324,7 @@ def atom(a):
         w=_QW[m.group(3)][1 if m.group(1) else 0]
         return 'Квест %s %s'%(qref(m.group(2)),w)
     return _atom_q(a)
-V=310
+V=312
 
 # ---- quest diary entries (text from Diary_text.rpy, multi-line aware) ----
 DT={}
@@ -340,21 +340,21 @@ def atom(a):
         t=DT.get((m.group(2),m.group(3)))
         return 'В дневнике квеста %s запись №%s %sоткрыта%s'%(qref(m.group(2)),m.group(3),'ещё не ' if m.group(1) else '',(': «%s»'%_short(t)) if t else '')
     return _atom_q2(a)
-V=310
+V=312
 
 # ---- simple wording of derived conditions ----
 def _simp(d):
     d=re.sub(r'при выборе варианта «',r'выбран вариант «',d)
-    d=re.sub(r'в сцене, начинающейся словами «',r'сцена со словами «',d)
-    d=re.sub(r'^в сцене ',r'сцена ',d)
-    d=d.replace('в сцене первой встречи','сцена первой встречи')
+    d=re.sub(r'в сцене, начинающейся словами «',r'в сцене со словами «',d)
     return d
 _atom_s=atom
 def atom(a):
     r=_atom_s(a)
-    m=re.fullmatch(r'уже произошло \(ставится (.*)\)',r,re.S)
-    if m: return 'Уже было: '+_simp(m.group(1))
-    m=re.fullmatch(r'ещё не произошло \(ставится (.*)\)',r,re.S)
-    if m: return 'Ещё не было: '+_simp(m.group(1))
+    for pat,pos,neg in ((r'уже произошло \(ставится (.*)\)','Уже было: ','Метка уже стоит. Ставится: '),(r'ещё не произошло \(ставится (.*)\)','Ещё не было: ','Метка ещё не стоит. Ставится: ')):
+        m=re.fullmatch(pat,r,re.S)
+        if m:
+            d=m.group(1)
+            single=d.startswith('при выборе варианта') and ' / ' not in d and 'и ещё' not in d
+            return (pos if single else neg)+_simp(d)
     return r
-V=310
+V=312

@@ -5,8 +5,7 @@ from trees import LAB,body,ind,SKIP,KEY
 import condru
 import condru
 def fx(t):
-    t=re.sub(r'(?:в сцене|сцена со словами)(?:, начинающейся словами)? «Из-за монументального стола[^»]*»','сцена первой встречи с Лени (он выглядывает из-за стола)',t)
-    t=re.sub(r'сцена со словами «([^»]{0,34})[^»]*»',lambda m:'сцена со словами «'+m.group(1)+'…»',t)
+    t=re.sub(r'в сцене со словами «([^»]{0,34})[^»]*»',lambda m:'в сцене со словами «'+m.group(1)+'…»',t)
     return t
 def cond_html(e): return fx(condru.cond_html(e))
 def cond_plain(e): return fx(condru.cond_plain(e))
@@ -28,7 +27,8 @@ def eff(t,owner):
     m=re.match(r'([\w\.\[\]"]+)\s*=\s*(True|1|"[^"]*")\s*$',t)
     if m:
         d=cond_plain(m.group(1))
-        d=re.sub(r'^Уже было: (.*)$',r'\1',d)
+        if d.startswith('Уже было: '): return ('txt','запоминается: '+d[10:])
+        if d.startswith('Метка'): return ('txt','запоминается метка (смысл в коде не назван)')
         return ('txt','запоминается: '+d)
     m=re.match(r'([\w\.\[\]"]+)\s*=\s*(False|0)\s*$',t)
     if m: return ('txt','сбрасывается: '+re.sub(r'^Уже было: (.*)$',r'\1',cond_plain(m.group(1))))
