@@ -21,3 +21,8 @@ STATE 9:40: v=273 pushed. Done: locations, char click/drop sections, trees(tash,
 - DONE v281: guards trees, Блю (renamed), Губерт (char_slime renamed, tree), Кап page exists, Adro cabinet inspection on locations #tgavan_sar_cab with game images (sarcab.py).
 - TODO site-wide: everywhere code is shown, main content must be Russian explanation, code only small hint. Mood checks (настроение/mood): per check explain scene, whose indicator, threshold, what depends. Items "где получается и зачем" in Russian prose, no raw labels. Audit all pages (strel, bugs, replics, scheme pages) for raw code as main text.
 - Unknown meaning stays explicit gap.
+
+## 10:11 status v289
+- DONE: trees as per-branch flowcharts (tree_graph.py, lazy render), compact rounded cond blocks (condru.cond_html, SHORT mode+LEG legend), logic_l/mad_l thresholds from script.rpy:126-145, dev_leni meaning (condru.MEAN), cabinet renamed "Кабинет Адро (кабинет Лиассона...)".
+- TODO next: mood-check section per character (scene, whose indicator, threshold, what depends; mood>=v_good(8) -> .good, <=n_bad -> .bad; less n_bad -5, others -10; oh=Адриан/Страж, adro, dev, nars). Script /tmp/m.py lists 34 mood conditions.
+- TODO: site-wide code->Russian pass (strel, bugs, replics), items "где получается и зачем", remaining ~50 unknown flag conditions, final established vs undeciphered summary.
