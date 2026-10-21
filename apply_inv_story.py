@@ -4,7 +4,7 @@ s=open('inventory.html',encoding='utf8').read()
 st=json.load(open('inv_story.json',encoding='utf8'))
 s=re.sub(r' <span class="why">.*?</span>','',s)
 s=re.sub(r'<p class="story">.*?</p>','',s)
-s=re.sub(r'<p class="nostory">.*?</p>','',s)
+s=re.sub(r'<p class="nostory[^"]*">.*?</p>','',s)
 def f(m):
     b=m.group(0); n=re.search(r'class="rid">([^ <]+)',b).group(1)
     if n in st: p='<p class="story"><b>Простыми словами:</b> '+st[n]+'</p>'
