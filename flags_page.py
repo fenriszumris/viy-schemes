@@ -2,7 +2,7 @@
 import re,glob,html,sys,collections
 sys.path.insert(0,'/tmp/sch')
 import condru
-V=315
+V=316
 condru._scan()
 SET=condru._SET;RESET=condru._RESET
 FILES={}
@@ -46,6 +46,41 @@ def consequence(fn,ln):
         elif fld=='_rtext' and sub:
             out.append('В дневнике %s пункт задач №%s отмечается выполненным. %s'%(who,idx,link))
     return out
+
+LABL={}
+for _fn,_ls in FILES.items():
+    for _i,_l in enumerate(_ls):
+        _m=re.match(r'label (\w+):',_l)
+        if _m: LABL[_m.group(1)]=(_fn,_i)
+def first_line(lab):
+    if lab not in LABL: return None
+    fn,i=LABL[lab]
+    for l in FILES[fn][i+1:i+40]:
+        m=re.match(r'^\s*(?:\w+\s+)?"(.{8,}?)"\s*$',l)
+        if m and not l.strip().startswith('$'): return m.group(1)
+    return None
+def scene_effects(fn,ln):
+    ls=FILES[fn];base=_ind(ls[ln-1]);out=[];say=[]
+    for j in range(ln,min(ln+25,len(ls))):
+        l=ls[j]
+        if not l.strip(): continue
+        if _ind(l)<=base: break
+        t=l.strip()
+        m=re.match(r'^(?:\w+\s+)?"(.+)"\s*$',t)
+        if m and not t.startswith('$') and len(say)<2 and not re.match(r'^"[^"]*"\s*:',t): say.append(m.group(1)); continue
+        m=re.match(r'^(?:\$ )?(?:renpy\.)?(jump|call)\s+(\w+)',t)
+        if m:
+            fl=first_line(m.group(2))
+            out.append('переход в сцену'+(' со словами «%s»'%esc(fl[:70]) if fl else ' «%s»'%m.group(2)));continue
+        m=re.search(r'quests\["(\w+)"\]\.(keep|done|false)\s*=\s*(\d)',t)
+        if m:
+            q=condru.QN.get(m.group(1),m.group(1));on=m.group(3)!='0'
+            w={'keep':('Квест «%s» берётся','Квест «%s» снимается'),'done':('Квест «%s» засчитывается выполненным','Квест «%s» снимается как выполненный'),'false':('Квест «%s» считается проваленным','Квест «%s»: провал снимается')}[m.group(2)][0 if on else 1]
+            out.append(w%esc(q))
+    res=[]
+    if say: res.append('дальше в сцене: '+' / '.join('«%s»'%esc(x[:80]) for x in say))
+    res+=out[:4]
+    return res
 def enclosing(fn,ln):
     ls=FILES[fn];cur=_ind(ls[ln-1]);res=[];prev=[]
     # earlier branches of the same if/elif chain
@@ -195,7 +230,10 @@ def row(k):
                 body='; '.join(x[0].lower()+x[1:] if x and x[0].isupper() and x[1:2].islower() else x for x in parts)
                 h+='<li><b>Показывается, когда:</b> %s<br/>%s<br/><span class="muted">%s · <code>%s:%d</code> · <code>%s</code></span></li>'%(body,'<br/>'.join(c.replace('В дневнике','<b>Результат:</b> в дневнике') for c in cons),esc(cx),fn,ln,esc(ce[:110]))
             else:
-                h+='<li>%s<br/><span class="muted">%s · <code>%s:%d</code></span><br/><span class="muted"><code>%s</code></span></li>'%(condru.cond_html(ce).replace('<br/>',' '),esc(cx),fn,ln,esc(ce[:110]))
+                try: se=scene_effects(fn,ln)
+                except Exception: se=[]
+                eff=('<br/><b>Что происходит при выполнении:</b> '+'; '.join(se)) if se else ''
+                h+='<li>%s%s<br/><span class="muted">%s · <code>%s:%d</code></span><br/><span class="muted"><code>%s</code></span></li>'%(condru.cond_html(ce).replace('<br/>',' '),eff,esc(cx),fn,ln,esc(ce[:110]))
         if len(chk)>8: h+='<li class="muted">…и ещё %d</li>'%(len(chk)-8)
         h+='</ul>'
     else: h+='<p class="muted">Проверок этой метки по коду не найдено (возможно, читается другим способом).</p>'
