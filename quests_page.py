@@ -2,7 +2,7 @@
 import re,glob,html,sys,collections
 sys.path.insert(0,'/tmp/sch')
 import condru,trees
-V=308
+V=309
 QN=condru.QN
 FILES={}
 for f in sorted(glob.glob('/tmp/viy/game/*.rpy')):
