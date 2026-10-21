@@ -2,7 +2,7 @@
 import re,glob,html,sys,collections
 sys.path.insert(0,'/tmp/sch')
 import condru
-V=318
+V=319
 condru._scan()
 SET=condru._SET;RESET=condru._RESET
 FILES={}
@@ -218,6 +218,7 @@ def menu_question(fn,ln):
         elif t and not t.startswith('$'): break
         k-=1
     return ' '.join(reversed(q)) if q else None
+ICON='<svg class="norep" viewBox="0 0 16 16" width="14" height="14" aria-label="не повторяется" role="img"><path d="M13 8a5 5 0 1 1-1.6-3.7" fill="none" stroke="#5b21b6" stroke-width="1.6" stroke-linecap="round"/><path d="M13.4 1.8v3.4H10" fill="none" stroke="#5b21b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 13.5L13.5 2.5" stroke="#dc2626" stroke-width="1.8" stroke-linecap="round"/></svg>'
 def row(k):
     sets=SET.get(k,[]);chk=CHK.get(k,[])
     mm=meaning(k)
@@ -245,7 +246,11 @@ def row(k):
     qline=None
     if ch and sets: qline=menu_question(sets[0][1],sets[0][2])
     short=m.group(1) if m else k
-    h='<details class="fl"><summary><span class="ft">%s</span> <span class="muted"><code>%s</code></span> <span class="b">ставится: %d</span> <span class="b">проверок: %d</span></summary><div class="fb">'%(title,esc(k),len(sets),len(chk))
+    gd0=None if choice_of(k) else guard_of(k)
+    if gd0 is not None: badge='<span class="b">'+ICON+' не повторяется</span>'
+    elif not chk: badge='<span class="b">нигде не читается</span>'
+    else: badge='<span class="b">проверок: %d</span>'%len(chk)
+    h='<details class="fl"><summary><span class="ft">%s</span> <span class="muted"><code>%s</code></span> <span class="b">ставится: %d</span> %s</summary><div class="fb">'%(title,esc(k),len(sets),badge)
     if mm and not ch and gd_ is None: h+='<p class="muted">Смысл выведен по месту, где метка ставится (в коде не подписан).</p>'
     mq=re.fullmatch(r'"[^"]+" in mem:(\w+)',k)
     if mq and mq.group(1) in condru.QN: h+='<p>Квест: <a href="quests.html?v=%d#q_%s">«%s»</a></p>'%(V,mq.group(1),esc(condru.QN[mq.group(1)]))
@@ -286,13 +291,13 @@ def row(k):
                 h+='<li>%s%s<br/><span class="muted">%s · <code>%s:%d</code></span><br/><span class="muted"><code>%s</code></span></li>'%(esc(pe[0].upper()+pe[1:]) if pe else condru.cond_html(ce).replace('<br/>',' '),eff,esc(cx),fn,ln,esc(ce[:110]))
         if len(chk)>8: h+='<li class="muted">…и ещё %d</li>'%(len(chk)-8)
         h+='</ul>'
-    else: h+='<p class="muted">Проверок этой метки по коду не найдено (возможно, читается другим способом).</p>'
+    else: h+='<p>Эту метку ничего не читает. Проверено по всему коду игры: нет ни одного условия с её именем, нет обращений через переменное имя (getattr/eval/globals - они есть в игре, но только для картинок, музыки и стрелок перехода, не для меток), а общий код дневника читает у записей памяти только числа и «keep», строковые метки не читает. Значит, метка только запоминается и сама ничего не включает и не запрещает повторять.</p>'
     return h+'</div></details>'
-CSS='''<style>.fl{background:#fff;border:1px solid #d9dee8;border-radius:10px;padding:6px 12px;margin:6px 0}.fl>summary{cursor:pointer;display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}.ft{font-weight:600}.b{font-size:12px;background:#ede9fe;color:#5b21b6;border-radius:10px;padding:1px 8px}.fb h5{margin:10px 0 3px;color:#374151}.fb ul{margin:4px 0 4px 20px}.fb code,.fl code{font-size:11px;color:#6b7280;word-break:break-all}.sg{margin:14px 0 4px;font-size:16px;color:#4338ca}.gtoc a{display:inline-block;margin:3px 8px 3px 0;padding:3px 12px;border:1px solid #d9dee8;border-radius:14px;background:#fff;text-decoration:none}</style>'''
+CSS='''<style>.fl{background:#fff;border:1px solid #d9dee8;border-radius:10px;padding:6px 12px;margin:6px 0}.fl>summary{cursor:pointer;display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}.ft{font-weight:600}.b{font-size:12px;background:#ede9fe;color:#5b21b6;border-radius:10px;padding:1px 8px}.norep{vertical-align:-2px}.fb h5{margin:10px 0 3px;color:#374151}.fb ul{margin:4px 0 4px 20px}.fb code,.fl code{font-size:11px;color:#6b7280;word-break:break-all}.sg{margin:14px 0 4px;font-size:16px;color:#4338ca}.gtoc a{display:inline-block;margin:3px 8px 3px 0;padding:3px 12px;border:1px solid #d9dee8;border-radius:14px;background:#fff;text-decoration:none}</style>'''
 def page():
     n=sum(len(v) for g in G.values() for v in g.values())
     h='<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, must-revalidate"><title>Игровые метки</title><link rel="stylesheet" href="style7.css?v=%d">%s</head><body><header class="site"><div class="wrap"><h1>Игровые метки</h1><p>%d меток, которые игра ставит и потом проверяет. Сгруппированы по тому, как они устроены в коде. Смысл у большинства в коде не подписан: здесь он выведен по месту, где метка ставится, и помечен так.</p><nav class="crumbs"><a href="index.html?v=%d">← Все схемы</a> · <a href="quests.html?v=%d">Квесты</a></nav></div></header><main>'%(V,CSS,n,V,V)
-    h+='<div class="card"><p class="gtoc">'+''.join('<a href="#g_%s">%s <span class="muted">(%d)</span></a>'%(gk,esc(gt),sum(len(v) for v in G[(gk,gt,gd)].values())) for gk,gt,gd in ORD)+'</p><p class="muted">Квесты (взят, выполнен, записи дневника) - отдельная страница, это другой механизм: объект <code>quests[…]</code>. Метки здесь - строки в списках и числовые флаги; не путать с метками переходов <code>label</code> в Ren\'Py.</p></div>'
+    h+='<div class="card"><p class="gtoc">'+''.join('<a href="#g_%s">%s <span class="muted">(%d)</span></a>'%(gk,esc(gt),sum(len(v) for v in G[(gk,gt,gd)].values())) for gk,gt,gd in ORD)+'</p><p class="muted">Значок <svg class="norep" viewBox="0 0 16 16" width="14" height="14"><path d="M13 8a5 5 0 1 1-1.6-3.7" fill="none" stroke="#5b21b6" stroke-width="1.6" stroke-linecap="round"/><path d="M13.4 1.8v3.4H10" fill="none" stroke="#5b21b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 13.5L13.5 2.5" stroke="#dc2626" stroke-width="1.8" stroke-linecap="round"/></svg> «не повторяется»: метка нужна только для того, чтобы этот кусок не показывался второй раз (её единственное чтение - защита в том же блоке). «Нигде не читается»: ни одно условие игры метку не проверяет. Память «в этом прохождении» (<code>vrem_memory</code>) очищается в блоке начальной настройки игры (script _define.rpy:529), память «навсегда» (<code>persistent.memory</code>) нет.</p><p class="muted">Квесты (взят, выполнен, записи дневника) - отдельная страница, это другой механизм: объект <code>quests[…]</code>. Метки здесь - строки в списках и числовые флаги; не путать с метками переходов <code>label</code> в Ren\'Py.</p></div>'
     for gk,gt,gd in ORD:
         g=G[(gk,gt,gd)]
         h+='<div class="card" id="g_%s"><h2>%s</h2><p class="muted">%s</p>'%(gk,esc(gt),gd)
