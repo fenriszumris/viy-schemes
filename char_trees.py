@@ -2,7 +2,7 @@
 import re,sys
 sys.path.insert(0,'/tmp/sch')
 import trees
-V=272
+V=273
 T={'tash':('tash_razg_menu','tash','tash.near','кнопка-сообщение рядом с фигурой Таша (<code>tashir_button2</code>)'),
 'fenrira':('fen_razg_menu','fenya','fenya.near','кнопка-сообщение (<code>fen_button2</code>)'),
 'luiza':('dev_razg_menu','dev','dev.near','кнопка-сообщение (<code>dev_button2</code>); клик по самой фигуре открывает/закрывает экран <code>dev_screen</code>'),

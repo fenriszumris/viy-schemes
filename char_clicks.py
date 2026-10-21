@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import re,json,html
 exec(open('loc_names.py',encoding='utf8').read())
-V=272
+V=273
 st=json.load(open('clk_story.json',encoding='utf8'))
 CH={'tash':'tash','bonny':'bonny','sova':'sova','leni':'leni','nars':'narsi','guard1':'starichok','guard2':'parenek','kap':'kap','cat':'cat_statue','girl_air':'devushka_airat','dev_button':'luiza','dev_sleep':'luiza','adro_screen':'adro','blu':'blu','fen_button':'fenrira'}
-REL={'tash':['tash_cards','mant','bonny_1'],'bonny':['b_head','bonny_x','b_find','head','full_bones'],'luiza':['dev_door','dev_door2'],'kap':['cap_ch']}
+REL={'karralak':['kar_air'],'tash':['tash_cards','mant','bonny_1'],'bonny':['b_head','bonny_x','b_find','head','full_bones'],'luiza':['dev_door','dev_door2'],'kap':['cap_ch']}
 NAME={'tash':'Ташир (Таш)','bonny':'Бонни','sova':'Сова','leni':'Лени','narsi':'Нарси','starichok':'Горран (старший страж)','parenek':'Алекс (страж)','kap':'Капибара','cat_statue':'Статуя кошки','devushka_airat':'Девушка в церкви Айрата','luiza':'Луиза','adro':'Адро','blu':'Блу','fenrira':'Фенрира'}
 NOT='ветка не разобрана: известно только условие запуска (предмет брошен на этот объект)'
 DROP={
@@ -54,7 +54,7 @@ for o,sl in CH.items():
     if story: b+='<p>%s</p>'%story
     blocks.setdefault(sl,[]).append(b)
 def sect(sl):
-    h='<!--CLK--><div class="card" id="clk"><h2>Где на него можно нажать</h2>'+''.join(blocks.get(sl,[]))
+    h='<!--CLK--><div class="card" id="clk"><h2>Где на него можно нажать</h2>'+(''.join(blocks.get(sl,[])) or '<p>Отдельного кликабельного объекта самого персонажа в экранах не найдено. Связана дверь в коридоре церкви: по клику «Постучаться» сцена переходит к нему, если Лени стоит в его комнате (условие <code>leni.lock</code>); подробности в строке двери.</p>')
     rel=[o for k,v in REL.items() if k==sl or (sl=='bonny' and k=='bonny') for o in v] if sl in REL else []
     if sl=='tash': rel=REL['tash']
     if sl=='luiza': rel=REL['luiza']
@@ -68,7 +68,7 @@ def sect(sl):
         h+='</ul>'
     else: h+='<p class="muted">Для этого объекта подходящих меток «предмет на объект» в коде не найдено.</p>'
     return h+'</div><!--/CLK-->'
-for sl in sorted(set(CH.values())):
+for sl in sorted(set(CH.values())|{'karralak'}):
     f='char_%s.html'%sl
     s=open(f,encoding='utf8').read()
     s=re.sub(r'<!--CLK-->.*?<!--/CLK-->','',s,flags=re.S)
