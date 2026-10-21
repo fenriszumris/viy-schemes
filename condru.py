@@ -67,37 +67,34 @@ def cond_ru(expr):
 
 import glob
 _SET={}
-_SP={'v':'Героиня','a':'Рассказчик','aa':'Рассказчик','vm':'Мысль героини','n':'Нарси','t':'Таш','ls':'Лесс','lss':'Лесс','ka':'Капибара','b':'Бонни','d':'Луиза','l':'Лени','k':'Карралак','f':'Феня','sov':'Сова','g1':'Горран','g2':'Алекс','sadr':'Адро'}
+_RESET={}
 def _scan():
-    if _SET: return
+    if _SET or _RESET: return
     for f in glob.glob('/tmp/viy/game/*.rpy'):
         ls=open(f,encoding='utf8',errors='ignore').read().split('\n');fn=f.split('/')[-1]
         lab=None
         for i,l in enumerate(ls):
             m=re.match(r'label (\w+):',l)
             if m: lab=m.group(1)
-            keys=[]
-            m=re.search(r'\$ ([\w.]+)\s*(?:=|\+=)\s*(?!0\b|False)',l)
-            if m and re.search(r'\.d\d+$',m.group(1)): keys.append(m.group(1))
+            m=re.search(r'\$ ([\w.]+)\s*(=|\+=|-=)\s*(\w+)',l)
+            if m and re.search(r'\.d\d+$',m.group(1)):
+                tgt=_RESET if (m.group(2)=='=' and m.group(3) in ('0','False')) else _SET
+                tgt.setdefault(m.group(1),[]).append((lab,fn,i+1))
             m=re.search(r'\$ ([\w.]+)\.append\("(\w+)"\)',l)
-            if m: keys.append('"%s" in %s'%(m.group(2),m.group(1)))
+            if m: _SET.setdefault('"%s" in %s'%(m.group(2),m.group(1)),[]).append((lab,fn,i+1))
             m=re.search(r'persistent_append\("(\w+)", *"(\w+)"\)',l)
-            if m: keys.append('"%s" in mem:%s'%(m.group(1),m.group(2)))
-            for k in keys:
-                if k in _SET: continue
-                near=[]
-                for j in list(range(i-1,max(i-8,0),-1))+list(range(i+1,min(i+4,len(ls)))):
-                    mm=re.match(r'\s+(\w+) "(.*)"\s*$',ls[j]) or re.match(r'\s+()"(.*)"\s*$',ls[j])
-                    if mm and not ls[j].strip().startswith('$'):
-                        near.append('%s: «%s»'%(_SP.get(mm.group(1),mm.group(1) or 'Рассказчик'),re.sub(r'\{[^}]*\}','',mm.group(2))[:70]))
-                        break
-                _SET[k]=(lab,fn,i+1,near[0] if near else '')
+            if m: _SET.setdefault('"%s" in mem:%s'%(m.group(1),m.group(2)),[]).append((lab,fn,i+1))
+            m=re.search(r'\.remove\("(\w+)"\)',l)
+            if m: _RESET.setdefault('"%s" in *'%m.group(1),[]).append((lab,fn,i+1))
 def where(key):
     _scan()
-    r=_SET.get(key)
-    if not r: return None
-    lab,fn,n,near=r
-    return 'ставится в ветке «%s» (%s:%d)%s'%(lab,fn,n,(', рядом реплика '+near) if near else '')
+    st=_SET.get(key)
+    if not st: return None
+    def fmt(x): return '«%s» (%s:%d)'%x
+    t='устанавливается (мест: %d): %s'%(len(st),', '.join(fmt(x) for x in st[:3])+(' и ещё %d'%(len(st)-3) if len(st)>3 else ''))
+    rs=_RESET.get(key)
+    t+='; сбрасывается: '+(', '.join(fmt(x) for x in rs[:2]) if rs else 'нигде в коде не найдено')
+    return t+'. Смысл флага в коде не назван'
 _old_atom=atom
 def atom(a):
     a=a.strip().strip('()')
