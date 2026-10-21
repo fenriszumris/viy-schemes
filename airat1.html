@@ -46,8 +46,8 @@ function build(){
   const cG='#9aa3b2', c1='#4d7c0f', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
   L.push('ST["<a href=\'strel.html?v=194\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Экран переходов: стрелка «вверх» от Белой стены и стрелки города Айрат</div></a>"]:::ex');
   L.push('EXS["<div style=\'width:240px;white-space:normal\'>Экран переходов (дальше по городу)</div>"]:::ex');
-  L.push('DEATH["<div style=\'width:320px;white-space:normal\'>BAD END «Ошибка мироздания» (63-66): запись о смерти и перезапуск игры</div>"]:::bad');
-  L.push('SLEEP["<a href=\'airat4.html?v=105\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:260px;white-space:normal\'>Ночь: переход к сну в доме Луизы (см. «Айрат 4»)</div></a>"]:::ex');
+  L.push('DEATH["<div style=\'width:320px;white-space:normal\'>BAD END «Ошибка мироздания» (62-65): запись о смерти и перезапуск игры</div>"]:::bad');
+  L.push('SLEEP["<a href=\'airat4.html?v=147\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:260px;white-space:normal\'>Ночь: переход к сну в доме Луизы (см. «Айрат 4»)</div></a>"]:::ex');
   E('ST --> W', c1);
   E('ST --> B', c2);
   E('ST --> U', c3);
@@ -55,7 +55,7 @@ function build(){
   E('ST --> IN', c5);
   E('ST --> GA', c6);
   E('ST --> RT', c7);
-  L.push(hub('W','Белая стена, вход в город<br/><small>script_4_airat_in_wall, 1-137</small>','hhn',[]));
+  L.push(hub('W','Белая стена, вход в город<br/><small>script_4_airat_in_wall, 1-135</small>','hhn',[]));
   if(EXP.has('W')){
     L.push('W0["<div style=\'width:280px;white-space:normal\'>Героиня идёт вверх через Белую стену в Айрат (1)</div>"]:::sc');
     E('W --> W0', c1);
@@ -63,20 +63,20 @@ function build(){
     L.push('WM["<div style=\'width:300px;white-space:normal\'>Меню: «Согласиться с ним и сделать шаг назад» или «Уперто сделать шаг вперед» (24)</div>"]:::sc');
     L.push('WOK["<div style=\'width:300px;white-space:normal\'>Героиня делает шаг назад: «Ты меня спас?», Ташир: «Ага!» (25-32)</div>"]:::sc');
     L.push('WN["<div style=\'width:300px;white-space:normal\'>Героиня идёт вперёд: «Нет, я пойду!», Ташир убирает руку (34-40)</div>"]:::sc');
-    L.push('WA["<div style=\'width:320px;white-space:normal\'>Волна огня, белизна: героиня исчезает без боли (43-61)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>мысли про Логику (48, 58) и Безумие (55) только добавляют реплики</span></div>"]:::bad');
-    L.push('W1["<div style=\'width:320px;white-space:normal\'>Первый вход в Айрат: «Какой светлый город... Странное соседство» (68-77)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «вошла в Айрат» → открывает запись «Белая стена»</span></div>"]:::sc');
-    L.push('WD["<div style=\'width:300px;white-space:normal\'>Луиза: «Фух! Ничего не случилось! Вот мы и в городе» (82-92)</div>"]:::sc');
-    L.push('WB["<div style=\'width:320px;white-space:normal\'>Луиза: «Всё, ты обещала уйти. Прощай!», силуэт скрывается слева (94-102)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: Луиза больше не рядом</span></div>"]:::sc');
-    L.push('WA2["<div style=\'width:300px;white-space:normal\'>Луиза: «Прощай», быстро убегает в дом слева (104-111)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: Луиза больше не рядом</span></div>"]:::sc');
-    L.push('WF["<div style=\'width:260px;white-space:normal\'>Луиза: «Как я счастлива!» (116-119)</div>"]:::sc');
-    L.push('WF2["<div style=\'width:320px;white-space:normal\'>Луиза: «Надо срочно найти папу! Он в церкви, прямо по дороге!» (122-124)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «задание найти жреца взято» → открывает церковь</span></div>"]:::sc');
-    L.push('WTA["<div style=\'width:300px;white-space:normal\'>Ташир: «Айрат! Какая прелесть!», растворяется в воздухе (127-136)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>Ташир больше не рядом</span></div>"]:::sc');
+    L.push('WA["<div style=\'width:320px;white-space:normal\'>Волна огня, белизна: героиня исчезает без боли (42-60)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>мысли про Логику (47, 57) и Безумие (54) только добавляют реплики</span></div>"]:::bad');
+    L.push('W1["<div style=\'width:320px;white-space:normal\'>Первый вход в Айрат: «Какой светлый город... Странное соседство» (67-76)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «вошла в Айрат» → открывает запись «Белая стена»</span></div>"]:::sc');
+    L.push('WD["<div style=\'width:300px;white-space:normal\'>Луиза: «Фух! Ничего не случилось! Вот мы и в городе» (81-91)</div>"]:::sc');
+    L.push('WB["<div style=\'width:320px;white-space:normal\'>Луиза: «Всё, ты обещала уйти. Прощай!», силуэт скрывается слева (93-101)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: Луиза больше не рядом</span></div>"]:::sc');
+    L.push('WA2["<div style=\'width:300px;white-space:normal\'>Луиза: «Прощай», быстро убегает в дом слева (103-110)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: Луиза больше не рядом</span></div>"]:::sc');
+    L.push('WF["<div style=\'width:260px;white-space:normal\'>Луиза: «Как я счастлива!» (115-118)</div>"]:::sc');
+    L.push('WF2["<div style=\'width:320px;white-space:normal\'>Луиза: «Надо срочно найти папу! Он в церкви, прямо по дороге!» (121-123)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «задание найти жреца взято» → открывает церковь</span></div>"]:::sc');
+    L.push('WTA["<div style=\'width:300px;white-space:normal\'>Ташир: «Айрат! Какая прелесть!», растворяется в воздухе (125-134)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>Ташир больше не рядом</span></div>"]:::sc');
     L.push('WS["<div style=\'width:220px;white-space:normal\'>Героиня идёт дальше по городу</div>"]:::sc');
     L.push('WAM["<div style=\'width:260px;white-space:normal\'>На героине чёрный активный амулет (2)</div>"]:::sc');
     E('W0 --> W1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если на героине чёрный активный амулет (2):',null,null)+'</div>"]:::hhn', c1); E('W1a --> WAM', c1);
     E('WAM --> W1d["<div style=\'width:290px;white-space:normal\'>'+mk('Если Ташир рядом (4):',null,null)+'</div>"]:::hhn', c1); E('W1d --> WT', c1);
     E('WAM --> W1e["<div style=\'width:290px;white-space:normal\'>'+mk('Если Ташира рядом нет:',null,null)+'</div>"]:::hhn', c1); E('W1e --> WA', c1);
-    E('W0 --> W1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если в Айрат входят впервые (68):',null,null)+'</div>"]:::hhn', c1); E('W1b --> W1', c1);
+    E('W0 --> W1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если в Айрат входят впервые (67):',null,null)+'</div>"]:::hhn', c1); E('W1b --> W1', c1);
     E('W0 --> W1c["<div style=\'width:290px;white-space:normal\'>'+mk('Если в Айрате уже были:',null,null)+'</div>"]:::hhn', c1); E('W1c --> WS', c1);
     E('WT --> WM', c1);
     E('WM --> Wm1["<div style=\'width:290px;white-space:normal\'>'+mk('«Согласиться с ним и сделать шаг назад.»',null,null)+'</div>"]:::hhn', c1); E('Wm1 --> WOK', c1);
@@ -84,17 +84,17 @@ function build(){
     E('WOK --> EXS', c1);
     E('WN --> WA', c1);
     E('WA --> DEATH', c1);
-    E('W1 --> W2a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза рядом (78):',null,null)+'</div>"]:::hhn', c1); E('W2a --> WD', c1);
+    E('W1 --> W2a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза рядом (77):',null,null)+'</div>"]:::hhn', c1); E('W2a --> WD', c1);
     E('W1 --> W2b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луизы нет:',null,null)+'</div>"]:::hhn', c1); E('W2b --> WS', c1);
-    E('WD --> W3a["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня согласилась «Идёт» уйти у ворот (94):',null,null)+'</div>"]:::hhn', c1); E('W3a --> WB', c1);
-    E('WD --> W3b["<div style=\'width:290px;white-space:normal\'>'+mk('Если ответила «Еще чего!» (104):',null,null)+'</div>"]:::hhn', c1); E('W3b --> WA2', c1);
+    E('WD --> W3a["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня согласилась «Идёт» уйти у ворот (93):',null,null)+'</div>"]:::hhn', c1); E('W3a --> WB', c1);
+    E('WD --> W3b["<div style=\'width:290px;white-space:normal\'>'+mk('Если ответила «Еще чего!» (103):',null,null)+'</div>"]:::hhn', c1); E('W3b --> WA2', c1);
     E('WD --> W3c["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня не договаривалась с Луизой уйти:',null,null)+'</div>"]:::hhn', c1); E('W3c --> WF', c1);
     E('WB --> EXS', c1);
     E('WA2 --> EXS', c1);
     E('WF --> WF2', c1);
-    E('WF --> W4a["<div style=\'width:290px;white-space:normal\'>'+mk('Если ночь или сумерки (120):',null,null)+'</div>"]:::hhn', c1); E('W4a --> SLEEP', c1);
+    E('WF --> W4a["<div style=\'width:290px;white-space:normal\'>'+mk('Если ночь или сумерки (119):',null,null)+'</div>"]:::hhn', c1); E('W4a --> SLEEP', c1);
     E('WF2 --> W4b["<div style=\'width:290px;white-space:normal\'>'+mk('Если сейчас день:',null,null)+'</div>"]:::hhn', c1); E('W4b --> WS', c1);
-    E('WS --> W5a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Ташир рядом (127):',null,null)+'</div>"]:::hhn', c1); E('W5a --> WTA', c1);
+    E('WS --> W5a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Ташир рядом (125):',null,null)+'</div>"]:::hhn', c1); E('W5a --> WTA', c1);
     E('WS --> W5b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Ташира рядом нет:',null,null)+'</div>"]:::hhn', c1); E('W5b --> EXS', c1);
     E('WTA --> EXS', c1);
   } else {
@@ -102,18 +102,18 @@ function build(){
     E('W --> SLEEP', c1);
     E('W --> DEATH', c1);
   }
-  L.push(hub('B','Вниз с площади: прощание с Луизой<br/><small>airat_main_bottom, 138-196</small>','hhl',[]));
+  L.push(hub('B','Вниз с площади: прощание с Луизой<br/><small>airat_main_bottom, 136-194</small>','hhl',[]));
   if(EXP.has('B')){
-    L.push('B0["<div style=\'width:280px;white-space:normal\'>Героиня идёт вниз с площади (к Белой стене) (138-139)</div>"]:::sc');
+    L.push('B0["<div style=\'width:280px;white-space:normal\'>Героиня идёт вниз с площади (к Белой стене) (136-137)</div>"]:::sc');
     E('B --> B0', c2);
-    L.push('BL["<div style=\'width:320px;white-space:normal\'>Луиза: «За ворота я больше не выйду... Найди меня в Церкви или у меня дома» (142-145)</div>"]:::sc');
-    L.push('BF["<div style=\'width:300px;white-space:normal\'>Луиза: «Нужно срочно перевязать Феню!», Феня хромает (146-159)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Феня с героиней и ещё не перевязана</span></div>"]:::sc');
+    L.push('BL["<div style=\'width:320px;white-space:normal\'>Луиза: «За ворота я больше не выйду... Найди меня в Церкви или у меня дома» (140-143)</div>"]:::sc');
+    L.push('BF["<div style=\'width:300px;white-space:normal\'>Луиза: «Нужно срочно перевязать Феню!», Феня хромает (144-157)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Феня с героиней и ещё не перевязана</span></div>"]:::sc');
     L.push('BM["<div style=\'width:300px;white-space:normal\'>Меню: «Прости, не туда свернула!» или «Ну, тогда нам стоит расстаться.»</div>"]:::sc');
-    L.push('BOK["<div style=\'width:300px;white-space:normal\'>Героиня: «Я просто задумалась». Луиза расслабляется (161-170)</div>"]:::sc');
-    L.push('BGO["<div style=\'width:340px;white-space:normal\'>Героиня прощается и уходит; Луиза («Прощай...») и Феня («Я пойду с Луизой») остаются в городе (171-194)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: Луиза и Феня дома у Луизы, больше не рядом</span></div>"]:::sc');
-    E('B0 --> B1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза рядом (140):',null,null)+'</div>"]:::hhl', c2); E('B1a --> BL', c2);
+    L.push('BOK["<div style=\'width:300px;white-space:normal\'>Героиня: «Я просто задумалась». Луиза расслабляется (159-168)</div>"]:::sc');
+    L.push('BGO["<div style=\'width:340px;white-space:normal\'>Героиня прощается и уходит; Луиза («Прощай...») и Феня («Я пойду с Луизой») остаются в городе (169-192)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: Луиза и Феня дома у Луизы, больше не рядом</span></div>"]:::sc');
+    E('B0 --> B1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза рядом (138):',null,null)+'</div>"]:::hhl', c2); E('B1a --> BL', c2);
     E('B0 --> B1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луизы нет рядом:',null,null)+'</div>"]:::hhl', c2); E('B1b --> EXS', c2);
-    E('BL --> B2a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Феня рядом и не перевязана (146):',null,null)+'</div>"]:::hhl', c2); E('B2a --> BF', c2);
+    E('BL --> B2a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Феня рядом и не перевязана (144):',null,null)+'</div>"]:::hhl', c2); E('B2a --> BF', c2);
     E('BL --> B2b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Фени нет рядом или она уже перевязана:',null,null)+'</div>"]:::hhl', c2); E('B2b --> BM', c2);
     E('BF --> BM', c2);
     E('BM --> Bm1["<div style=\'width:290px;white-space:normal\'>'+mk('«Прости, не туда свернула!»',null,null)+'</div>"]:::hhl', c2); E('Bm1 --> BOK', c2);
@@ -123,17 +123,17 @@ function build(){
   } else {
     E('B --> EXS', c2);
   }
-  L.push(hub('U','Вверх с площади: подход к церкви<br/><small>airat_main_up, 197-236</small>','hhp',[]));
+  L.push(hub('U','Вверх с площади: подход к церкви<br/><small>airat_main_up, 195-234</small>','hhp',[]));
   if(EXP.has('U')){
-    L.push('U0["<div style=\'width:260px;white-space:normal\'>Героиня идёт вверх, к церкви (197-198)</div>"]:::sc');
+    L.push('U0["<div style=\'width:260px;white-space:normal\'>Героиня идёт вверх, к церкви (195-196)</div>"]:::sc');
     E('U --> U0', c3);
-    L.push('UN["<div style=\'width:340px;white-space:normal\'>Луиза: «Это Церковь... Сейчас не лучшее время идти сюда. Мой дом слева от главной улицы» (200-205)</div>"]:::sc');
+    L.push('UN["<div style=\'width:340px;white-space:normal\'>Луиза: «Это Церковь... Сейчас не лучшее время идти сюда. Мой дом слева от главной улицы» (198-202)</div>"]:::sc');
     L.push('UM["<div style=\'width:240px;white-space:normal\'>Меню: «Я пойду к тебе.» или «Иди одна.»</div>"]:::sc');
-    L.push('UG["<div style=\'width:300px;white-space:normal\'>Луиза: «Как хочешь. Я буду дома»; уходит (208-217)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: Луиза дома, больше не рядом</span></div>"]:::sc');
-    L.push('UD["<div style=\'width:340px;white-space:normal\'>Луиза: «Это Церковь! Я здесь частенько бываю. Но слишком тихо... Что-то случилось?» (221-234)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «в церкви пусто» → открывает запись о Луизе</span></div>"]:::sc');
-    E('U0 --> U1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза рядом и «в церкви пусто» ещё не звучало (198):'+cond('если сейчас не ночь и не сумерки: сразу Луиза про тишину (221)'),null,null)+'</div>"]:::hhp', c3); E('U1a --> UN', c3);
+    L.push('UG["<div style=\'width:300px;white-space:normal\'>Луиза: «Как хочешь. Я буду дома»; уходит (207-215)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: Луиза дома, больше не рядом</span></div>"]:::sc');
+    L.push('UD["<div style=\'width:340px;white-space:normal\'>Луиза: «Это Церковь! Я здесь частенько бываю. Но слишком тихо... Что-то случилось?» (219-232)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «в церкви пусто» → открывает запись о Луизе</span></div>"]:::sc');
+    E('U0 --> U1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза рядом и «в церкви пусто» ещё не звучало (196):'+cond('если сейчас не ночь и не сумерки: сразу Луиза про тишину (219)'),null,null)+'</div>"]:::hhp', c3); E('U1a --> UN', c3);
     E('U0 --> U1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луизы нет рядом или в церкви уже было пусто:',null,null)+'</div>"]:::hhp', c3); E('U1b --> EXS', c3);
-    E('UN --> U2a["<div style=\'width:290px;white-space:normal\'>'+mk('Если ночь или сумерки (199):',null,null)+'</div>"]:::hhp', c3); E('U2a --> UM', c3);
+    E('UN --> U2a["<div style=\'width:290px;white-space:normal\'>'+mk('Если ночь или сумерки (197):',null,null)+'</div>"]:::hhp', c3); E('U2a --> UM', c3);
     E('UN --> U2b["<div style=\'width:290px;white-space:normal\'>'+mk('Если сейчас день:',null,null)+'</div>"]:::hhp', c3); E('U2b --> UD', c3);
     E('UM --> Um1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я пойду к тебе.»',null,null)+'</div>"]:::hhp', c3); E('Um1 --> EXS', c3);
     E('UM --> Um2["<div style=\'width:290px;white-space:normal\'>'+mk('«Иди одна.»',null,null)+'</div>"]:::hhp', c3); E('Um2 --> UG', c3);
@@ -142,19 +142,19 @@ function build(){
   } else {
     E('U --> EXS', c3);
   }
-  L.push(hub('CH','Церковь снаружи<br/><small>church_shield, church_osm, church_windows, 237-305</small>','hhk',[]));
+  L.push(hub('CH','Церковь снаружи<br/><small>church_shield, church_osm, church_windows, 235-303</small>','hhk',[]));
   if(EXP.has('CH')){
     L.push('CH0["<div style=\'width:280px;white-space:normal\'>Осмотр церкви снаружи: щит, здание, окно</div>"]:::sc');
     E('CH --> CH0', c4);
-    L.push('CHS["<div style=\'width:240px;white-space:normal\'>Щит и меч над входом (237-267)</div>"]:::sc');
-    L.push('CHO["<div style=\'width:320px;white-space:normal\'>Здание церкви: «Архитектура крепости, замаскированная под обитель веры» (268-286)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «церковь осмотрена» → не повторяется</span></div>"]:::sc');
-    L.push('CHW["<div style=\'width:280px;white-space:normal\'>Витражное окно: «Синее, пульсирующее вихрь» (287-305)</div>"]:::sc');
+    L.push('CHS["<div style=\'width:240px;white-space:normal\'>Щит и меч над входом (235-265)</div>"]:::sc');
+    L.push('CHO["<div style=\'width:320px;white-space:normal\'>Здание церкви: «Архитектура крепости, замаскированная под обитель веры» (266-283)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «церковь осмотрена» → не повторяется</span></div>"]:::sc');
+    L.push('CHW["<div style=\'width:280px;white-space:normal\'>Витражное окно: «Синее, пульсирующее вихрь» (285-303)</div>"]:::sc');
     L.push('CHSL["<div style=\'width:320px;white-space:normal\'>Если Луиза рядом: «священная символика Ара», золото с церкви почти ушло, «Я не слишком уверена»</div>"]:::sc');
     L.push('CHOL["<div style=\'width:300px;white-space:normal\'>Если Луиза рядом: «Я прихожу сюда с самого детства. Люблю это место»</div>"]:::sc');
     L.push('CHWL["<div style=\'width:300px;white-space:normal\'>Если Луиза рядом: «Так древние мастера изображали защитные чары»</div>"]:::sc');
-    E('CH0 --> C1["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня смотрит на щит:'+cond('Логика ≥ 1: «Символика военного ордена»; Безумие ≥ 1: шутка про зубочистку (239-244)'),null,null)+'</div>"]:::hhk', c4); E('C1 --> CHS', c4);
-    E('CH0 --> C2["<div style=\'width:290px;white-space:normal\'>'+mk('Если смотрит на здание (лупа):'+cond('только один раз (814)'),null,null)+'</div>"]:::hhk', c4); E('C2 --> CHO', c4);
-    E('CH0 --> C3["<div style=\'width:290px;white-space:normal\'>'+mk('Если смотрит на окно:'+cond('Логика ≥ 1: «фокус защитного заклинания»; Безумие ≥ 1: «застывшая молния» (288-296)'),null,null)+'</div>"]:::hhk', c4); E('C3 --> CHW', c4);
+    E('CH0 --> C1["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня смотрит на щит:'+cond('Логика ≥ 1: «Символика военного ордена»; Безумие ≥ 1: шутка про зубочистку (237-242)'),null,null)+'</div>"]:::hhk', c4); E('C1 --> CHS', c4);
+    E('CH0 --> C2["<div style=\'width:290px;white-space:normal\'>'+mk('Если смотрит на здание (лупа):'+cond('только один раз (script_newscreens.rpy:722)'),null,null)+'</div>"]:::hhk', c4); E('C2 --> CHO', c4);
+    E('CH0 --> C3["<div style=\'width:290px;white-space:normal\'>'+mk('Если смотрит на окно:'+cond('Логика ≥ 1: «фокус защитного заклинания»; Безумие ≥ 1: «застывшая молния» (286-293)'),null,null)+'</div>"]:::hhk', c4); E('C3 --> CHW', c4);
     E('CHS --> CHSL', c4);
     E('CHO --> CHOL', c4);
     E('CHW --> CHWL', c4);
@@ -164,50 +164,50 @@ function build(){
   } else {
     E('CH --> EXS', c4);
   }
-  L.push(hub('IN','Вход в церковь<br/><small>airat_church_up, 307-362</small>','hhs',[]));
+  L.push(hub('IN','Вход в церковь<br/><small>airat_church_up, 305-358</small>','hhs',[]));
   if(EXP.has('IN')){
-    L.push('I0["<div style=\'width:260px;white-space:normal\'>Героиня входит в церковь (307)</div>"]:::sc');
+    L.push('I0["<div style=\'width:260px;white-space:normal\'>Героиня входит в церковь (305)</div>"]:::sc');
     E('IN --> I0', c5);
-    L.push('I1["<div style=\'width:340px;white-space:normal\'>Двери открываются, золотой зал, «Тут так мило, правда?!»; Луиза предлагает разделиться (310-345)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Луиза в церкви» → дневник «найти жреца»</span></div>"]:::sc');
-    L.push('I2["<div style=\'width:320px;white-space:normal\'>Впереди между колоннами мелькает силуэт взволнованной девушки (346-347)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если девушка здесь: Луиза советует поговорить с ней</span></div>"]:::sc');
-    L.push('I3["<div style=\'width:320px;white-space:normal\'>Впереди между колоннами мелькнул женский силуэт (349-355)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Миранда мелькнула» → не повторяется</span></div>"]:::sc');
-    L.push('I4["<div style=\'width:300px;white-space:normal\'>Луиза остаётся в церкви и больше не рядом (357-362)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: Луиза в церкви</span></div>"]:::sc');
-    E('I0 --> I1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза рядом и в церковь заходят впервые (309):',null,null)+'</div>"]:::hhs', c5); E('I1a --> I1', c5);
-    E('I0 --> I1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луизы нет рядом и девушку ещё не видели (349):',null,null)+'</div>"]:::hhs', c5); E('I1b --> I3', c5);
+    L.push('I1["<div style=\'width:340px;white-space:normal\'>Двери открываются, золотой зал, «Тут так мило, правда?!»; Луиза предлагает разделиться (308-341)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Луиза в церкви» → дневник «найти жреца»</span></div>"]:::sc');
+    L.push('I2["<div style=\'width:320px;white-space:normal\'>Впереди между колоннами мелькает силуэт взволнованной девушки (339-340)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если девушка здесь: Луиза советует поговорить с ней</span></div>"]:::sc');
+    L.push('I3["<div style=\'width:320px;white-space:normal\'>Впереди между колоннами мелькнул женский силуэт (345-351)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Миранда мелькнула» → не повторяется</span></div>"]:::sc');
+    L.push('I4["<div style=\'width:300px;white-space:normal\'>Луиза остаётся в церкви и больше не рядом (353-358)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: Луиза в церкви</span></div>"]:::sc');
+    E('I0 --> I1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза рядом и в церковь заходят впервые (307):',null,null)+'</div>"]:::hhs', c5); E('I1a --> I1', c5);
+    E('I0 --> I1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луизы нет рядом и девушку ещё не видели (345):',null,null)+'</div>"]:::hhs', c5); E('I1b --> I3', c5);
     E('I0 --> I1c["<div style=\'width:290px;white-space:normal\'>'+mk('Если девушка уже мелькала и Луизы нет рядом:',null,null)+'</div>"]:::hhs', c5); E('I1c --> EXS', c5);
     E('I1 --> I2', c5);
-    E('I2 --> I2a["<div style=\'width:290px;white-space:normal\'>'+mk('Если задание «найти жреца» взято и Луиза рядом (357):',null,null)+'</div>"]:::hhs', c5); E('I2a --> I4', c5);
+    E('I2 --> I2a["<div style=\'width:290px;white-space:normal\'>'+mk('Если задание «найти жреца» взято и Луиза рядом (353):',null,null)+'</div>"]:::hhs', c5); E('I2a --> I4', c5);
     E('I2 --> I2b["<div style=\'width:290px;white-space:normal\'>'+mk('Если задание «найти жреца» не взято или Луизы нет рядом:',null,null)+'</div>"]:::hhs', c5); E('I2b --> EXS', c5);
-    E('I3 --> I3a["<div style=\'width:290px;white-space:normal\'>'+mk('Если задание взято и Луиза рядом (357):',null,null)+'</div>"]:::hhs', c5); E('I3a --> I4', c5);
+    E('I3 --> I3a["<div style=\'width:290px;white-space:normal\'>'+mk('Если задание взято и Луиза рядом (353):',null,null)+'</div>"]:::hhs', c5); E('I3a --> I4', c5);
     E('I3 --> I3b["<div style=\'width:290px;white-space:normal\'>'+mk('Если задание «найти жреца» не взято или Луизы нет рядом:',null,null)+'</div>"]:::hhs', c5); E('I3b --> EXS', c5);
     E('I4 --> EXS', c5);
   } else {
     E('IN --> EXS', c5);
   }
-  L.push(hub('GA','Девушка в церкви (Миранда)<br/><small>script_4_airat_girl_air, 363-500</small>','hhp',[[C_DEV, '−1…+1']]));
+  L.push(hub('GA','Девушка в церкви (Миранда)<br/><small>script_4_airat_girl_air, 359-495</small>','hhp',[[C_DEV, '−1…+1']]));
   if(EXP.has('GA')){
-    L.push('G0["<div style=\'width:260px;white-space:normal\'>Героиня окликает девушку-горожанку (363)</div>"]:::sc');
+    L.push('G0["<div style=\'width:260px;white-space:normal\'>Героиня окликает девушку-горожанку (359)</div>"]:::sc');
     E('GA --> G0', c6);
-    L.push('GD["<div style=\'width:340px;white-space:normal\'>С Луизой: девушка говорит, что в лазарете одни белые жрецы, «Я не слышала про чёрного» (367-414)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «встретились с Мирандой с Луизой»</span></div>"]:::sc');
-    L.push('GN["<div style=\'width:320px;white-space:normal\'>Без Луизы: «Тут подозрительно пусто», девушка ищет жрецов (415-433)</div>"]:::sc');
-    L.push('GQ["<div style=\'width:320px;white-space:normal\'>Девушка просит передать здешним 5 золотых за лечение (434-442)</div>"]:::sc');
-    L.push('GY["<div style=\'width:300px;white-space:normal\'>Героиня берёт 5 золотых (443-446)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>Луиза ▲+1</span><br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: деньги на передачу взяты</span></div>"]:::sc');
-    L.push('GNO["<div style=\'width:300px;white-space:normal\'>Героиня отказывает: «У меня слишком много своих забот» (448-458)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>Луиза ▼−1</span><br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: просьба не принята</span></div>"]:::sc');
-    L.push('GL["<div style=\'width:320px;white-space:normal\'>Если Луиза рядом: девушка отвечает, что лазарет налево по коридору, дверь с крестом (463-492)</div>"]:::sc');
-    L.push('GX["<div style=\'width:240px;white-space:normal\'>Героиня и девушка расходятся (496-500)</div>"]:::sc');
-    L.push('GR["<div style=\'width:280px;white-space:normal\'>Героиня: «Кажется, мы уже решили с ней все вопросы» (493-495)</div>"]:::sc');
-    E('G0 --> G1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня с девушкой ещё не говорила (364):',null,null)+'</div>"]:::hhp', c6); E('G1a --> GA1', c6);
-    E('G0 --> G1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня с девушкой уже говорила (493):',null,null)+'</div>"]:::hhp', c6); E('G1b --> GR', c6);
+    L.push('GD["<div style=\'width:340px;white-space:normal\'>С Луизой: девушка говорит, что в лазарете одни белые жрецы, «Я не слышала про чёрного» (363-408)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «встретились с Мирандой с Луизой»</span></div>"]:::sc');
+    L.push('GN["<div style=\'width:320px;white-space:normal\'>Без Луизы: «Тут подозрительно пусто», девушка ищет жрецов (410-428)</div>"]:::sc');
+    L.push('GQ["<div style=\'width:320px;white-space:normal\'>Девушка просит передать здешним 5 золотых за лечение (430-437)</div>"]:::sc');
+    L.push('GY["<div style=\'width:300px;white-space:normal\'>Героиня берёт 5 золотых (439-441)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>Луиза ▲+1</span><br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: деньги на передачу взяты</span></div>"]:::sc');
+    L.push('GNO["<div style=\'width:300px;white-space:normal\'>Героиня отказывает: «У меня слишком много своих забот» (444-453)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>Луиза ▼−1</span><br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: просьба не принята</span></div>"]:::sc');
+    L.push('GL["<div style=\'width:320px;white-space:normal\'>Если Луиза рядом: девушка отвечает, что лазарет налево по коридору, дверь с крестом (458-479)</div>"]:::sc');
+    L.push('GX["<div style=\'width:240px;white-space:normal\'>Героиня и девушка расходятся (491-495)</div>"]:::sc');
+    L.push('GR["<div style=\'width:280px;white-space:normal\'>Героиня: «Кажется, мы уже решили с ней все вопросы» (488-490)</div>"]:::sc');
+    E('G0 --> G1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня с девушкой ещё не говорила (360):',null,null)+'</div>"]:::hhp', c6); E('G1a --> GA1', c6);
+    E('G0 --> G1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня с девушкой уже говорила (488):',null,null)+'</div>"]:::hhp', c6); E('G1b --> GR', c6);
     L.push('GA1["<div style=\'width:280px;white-space:normal\'>Диалог: девушка ищет жрецов, хочет передать плату за лечение</div>"]:::sc');
-    E('GA1 --> G2a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза в церкви рядом (367):',null,null)+'</div>"]:::hhp', c6); E('G2a --> GD', c6);
+    E('GA1 --> G2a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза в церкви рядом (363):',null,null)+'</div>"]:::hhp', c6); E('G2a --> GD', c6);
     E('GA1 --> G2b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луизы в церкви рядом нет:',null,null)+'</div>"]:::hhp', c6); E('G2b --> GN', c6);
     E('GD --> GQ', c6);
     E('GN --> GQ', c6);
     E('GQ --> Gm1["<div style=\'width:290px;white-space:normal\'>'+mk('«Да, конечно.»',null,null)+'</div>"]:::hhp', c6); E('Gm1 --> GY', c6);
     E('GQ --> Gm2["<div style=\'width:290px;white-space:normal\'>'+mk('«У меня есть другие дела.»',null,null)+'</div>"]:::hhp', c6); E('Gm2 --> GNO', c6);
-    E('GY --> G3a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза в церкви рядом (463):',null,null)+'</div>"]:::hhp', c6); E('G3a --> GL', c6);
+    E('GY --> G3a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза в церкви рядом (458):',null,null)+'</div>"]:::hhp', c6); E('G3a --> GL', c6);
     E('GY --> G3b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луизы в церкви рядом нет:',null,null)+'</div>"]:::hhp', c6); E('G3b --> GX', c6);
-    E('GNO --> G4a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза в церкви рядом (463):',null,null)+'</div>"]:::hhp', c6); E('G4a --> GL', c6);
+    E('GNO --> G4a["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луиза в церкви рядом (458):',null,null)+'</div>"]:::hhp', c6); E('G4a --> GL', c6);
     E('GNO --> G4b["<div style=\'width:290px;white-space:normal\'>'+mk('Если Луизы в церкви рядом нет:',null,null)+'</div>"]:::hhp', c6); E('G4b --> GX', c6);
     E('GL --> GX', c6);
     E('GR --> GX', c6);
@@ -215,12 +215,12 @@ function build(){
   } else {
     E('GA --> EXS', c6);
   }
-  L.push(hub('RT','Правая сторона церкви<br/><small>script_4_airat_right, 501-519</small>','hhs',[]));
+  L.push(hub('RT','Правая сторона церкви<br/><small>script_4_airat_right, 496-514</small>','hhs',[]));
   if(EXP.has('RT')){
-    L.push('R0["<div style=\'width:280px;white-space:normal\'>Героиня идёт направо по коридору (501)</div>"]:::sc');
+    L.push('R0["<div style=\'width:280px;white-space:normal\'>Героиня идёт направо по коридору (496)</div>"]:::sc');
     E('RT --> R0', c7);
-    L.push('R1["<div style=\'width:340px;white-space:normal\'>«Я решила пройтись направо»: коридор рабочий, без украшений, впереди деревянная дверь (503-518)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «пошла направо» → дневник квеста «найти жреца»</span></div>"]:::sc');
-    E('R0 --> R1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня идёт сюда впервые (502):'+cond('Безумие ≥ 1: шутка про то, что украшения съели (510-516)'),null,null)+'</div>"]:::hhs', c7); E('R1a --> R1', c7);
+    L.push('R1["<div style=\'width:340px;white-space:normal\'>«Я решила пройтись направо»: коридор рабочий, без украшений, впереди деревянная дверь (499-513)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «пошла направо» → дневник квеста «найти жреца»</span></div>"]:::sc');
+    E('R0 --> R1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня идёт сюда впервые (497):'+cond('Безумие ≥ 1: шутка про то, что украшения съели (505-511)'),null,null)+'</div>"]:::hhs', c7); E('R1a --> R1', c7);
     E('R0 --> R1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня здесь уже была:',null,null)+'</div>"]:::hhs', c7); E('R1b --> EXS', c7);
     E('R1 --> EXS', c7);
   } else {
@@ -263,14 +263,14 @@ render();
 <body>
 <header class="site"><div class="wrap">
 <h1>Айрат: вход, церковь снаружи, Миранда</h1>
-<p>script_4_airat.rpy, 1-519: Белая стена, площадь, церковь снаружи, вход, девушка, правый коридор.</p>
-<nav class="crumbs"><a href="index.html?v=219">← Все схемы</a> · <a href="airat2.html?v=105">Лени</a> · <a href="airat3.html?v=105">Карралак</a> · <a href="stats.html?v=220">Статы</a></nav>
+<p>script_4_airat.rpy, 1-514: Белая стена, площадь, церковь снаружи, вход, девушка, правый коридор.</p>
+<nav class="crumbs"><a href="index.html?v=219">← Все схемы</a> · <a href="airat2.html?v=156">Лени</a> · <a href="airat3.html?v=222">Карралак</a> · <a href="stats.html?v=220">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
 <h2>Типичный путь (суждение, не измерение)</h2>
 <p><b>Как иду:</b> вхожу в Айрат с Луизой днём; «Ну, тогда нам стоит расстаться» не выбираю, иду вверх к церкви; в церкви встречаю девушку, «Да, конечно» (берёт 5 золотых).</p>
-<p class="muted">Настроение Луизы (dev.mood) — стат этой страницы, цвет зелёный выбран мной. Числа взяты из script_4_airat.rpy (445, 450).</p>
+<p class="muted">Настроение Луизы (dev.mood) — стат этой страницы, цвет зелёный выбран мной. Числа взяты из script_4_airat.rpy (440, 445).</p>
 </div>
 <div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Логика</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Кровь</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение Луизы</td><td>от <span style='background:rgb(220,252,231);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span> до <span style='background:rgb(220,252,231);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td><td><span style='background:rgb(220,252,231);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше.</p></div>
 
