@@ -120,3 +120,102 @@ def _key(a):
         w=where('"%s" in mem:%s'%(m.group(1),m.group(2)))
         if w: return 'в памяти «%s» есть запись «%s» (%s)'%(m.group(2),m.group(1),w)
     return None
+
+# ---- short mode for diagrams ----
+SHORT=False
+LEG={}
+_long_key=_key
+MEAN={'"dev_leni" in airat_sp':('Лени уже увидел Луизу рядом с героиней (метка «dev_leni»)','ставится в момент, когда Лени впервые видит Луизу рядом с героиней (script_4_airat.rpy:626-627, реплика «Л-л-л-луиза?!»); нигде не сбрасывается; читается в разговоре с Луизой (day_1_dev_razg.rpy:39) как условие темы про Лени','Лени ещё не видел Луизу рядом с героиней (метки «dev_leni» нет)')}
+def _key(a):
+    if not SHORT: return _long_key(a)
+    m=re.fullmatch(r'(td\d|vd\d|ld\d|devd|\w+_d)\.d(\d+)',a)
+    if m:
+        w=where(a); LEG[a]=w or 'где ставится, в коде не найдено'
+        return 'флаг «%s» стоит'%a
+    if a in MEAN: LEG[a]=MEAN[a][1]; return MEAN[a][0]
+    m=re.fullmatch(r'"(\w+)" in ([\w.]+)',a)
+    if m and not a.endswith('.note'):
+        w=where(a)
+        if w: LEG[a]=w; return 'метка «%s» уже записана'%m.group(1)
+    m=re.fullmatch(r'"(\w+)" in (?:vrem_memory|persistent\.memory)\["(\w+)"\]',a)
+    if m:
+        w=where('"%s" in mem:%s'%(m.group(1),m.group(2)))
+        if w: LEG[a]=w; return 'в памяти «%s» есть запись «%s»'%(m.group(2),m.group(1))
+    return None
+_atom2=atom
+def atom(a):
+    a=_strip_par(a)
+    if SHORT:
+        m=re.fullmatch(r'not (.+)',a)
+        if m:
+            inner=m.group(1).strip()
+            k=_key(inner)
+            if k: return MEAN[inner][2] if inner in MEAN else k.replace('стоит','не стоит').replace('уже записана','ещё не записана').replace('есть запись','нет записи')
+    # logic/mad levels via definitions (script.rpy:126-145)
+    LV={'mad':{1:3,2:6,3:9},'logic':{1:2,2:4,3:6}}
+    NM={'mad':'безумия','logic':'логики'}
+    def pts(kind,op,n):
+        t=LV[kind]
+        if op in('>=',) : return 'не ниже' if False else None
+    mm=re.fullmatch(r'(?:not )?(mad_l|logic_l)\(\)',a)
+    if mm:
+        kind='mad' if mm.group(1)=='mad_l' else 'logic'
+        if a.startswith('not'): return 'уровень %s героини равен 0 (%s)'%(NM[kind],'безумие 0-2' if kind=='mad' else 'логика 0-1')
+        return 'уровень %s героини не ниже 1 (%s %d и больше)'%(NM[kind],'безумие' if kind=='mad' else 'логика',LV[kind][1])
+    mm=re.fullmatch(r'(?:sanity\.get_level\("(mad|logic)"\)|(mad_l|logic_l)\(\))\s*(>=|<=|>|<|==|!=)\s*(\d+)',a)
+    if mm:
+        kind=mm.group(1) or ('mad' if mm.group(2)=='mad_l' else 'logic')
+        op=mm.group(3);n=int(mm.group(4));t=LV[kind]
+        lo={0:0,1:t[1],2:t[2],3:t[3]};hi={0:t[1]-1,1:t[2]-1,2:t[3]-1,3:None}
+        w=NM[kind];p='безумие' if kind=='mad' else 'логика'
+        if op=='>=': need=n
+        elif op=='>': need=n+1
+        else: need=None
+        if need is not None:
+            if need<=0: return 'уровень %s героини любой'%w
+            if need>3: return 'невозможно: уровень %s не бывает выше 3'%w
+            return 'уровень %s героини не ниже %d (%s %d и больше)'%(w,need,p,t[need])
+        if op in('<','<='):
+            top=n-1 if op=='<' else n
+            if top<0: return 'невозможно'
+            return 'уровень %s героини не выше %d (%s %s)'%(w,top,p,('не больше %d'%hi[top]) if hi[top] is not None else 'любое')
+        if op=='==': return 'уровень %s героини равен %d (%s %s)'%(w,n,p,('от %d до %d'%(lo[n],hi[n])) if hi[n] is not None else '%d и больше'%lo[n])
+        if op=='!=': return 'уровень %s героини не равен %d'%(w,n)
+    if re.fullmatch(r'not (mad_l|logic_l)\(\)',a): pass
+    return _atom2(a)
+def _split_top(e,word):
+    out=[];d=0;cur='';i=0
+    toks=re.split(r'(\s+(?:and|or)\s+|\(|\))',e)
+    for t in toks:
+        if t=='(':d+=1;cur+=t
+        elif t==')':d-=1;cur+=t
+        elif d==0 and re.fullmatch(r'\s+%s\s+'%word,t or ''): out.append(cur);cur=''
+        else: cur+=t
+    out.append(cur);return [x.strip() for x in out if x.strip()]
+def _strip_par(e):
+    e=e.strip()
+    while e.startswith('(') and e.endswith(')'):
+        d=0;ok=True
+        for i,ch in enumerate(e):
+            d+=ch=='(';d-=ch==')'
+            if d==0 and i<len(e)-1: ok=False;break
+        if not ok: break
+        e=e[1:-1].strip()
+    return e
+def cond_html(expr,lvl=0):
+    """Russian condition, atoms on separate lines, logical AND/OR explicit and correctly grouped."""
+    global SHORT
+    old=SHORT;SHORT=True
+    try:
+        def f(e,lv):
+            e=_strip_par(e)
+            ors=_split_top(e,'or')
+            if len(ors)>1:
+                parts=[f(x,lv+1) for x in ors]
+                return ('<br/><b>или</b><br/>').join(('(%s)'%p if '<br/>' in p else p) for p in parts)
+            ands=_split_top(e,'and')
+            if len(ands)>1:
+                return ('<br/><b>и одновременно</b><br/>').join(('(%s)'%p if '<b>или</b>' in p else p) for p in (f(x,lv+1) for x in ands))
+            return atom(e)
+        return f(expr,0)
+    finally: SHORT=old
