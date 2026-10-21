@@ -2,7 +2,7 @@
 import re,glob,html,sys,collections
 sys.path.insert(0,'/tmp/sch')
 import condru
-V=313
+V=314
 condru._scan()
 SET=condru._SET;RESET=condru._RESET
 FILES={}
@@ -17,6 +17,56 @@ def needle(k):
     if m: return re.compile(r'(?<![\w\.])%s\.d%s(?![\w])'%(m.group(1),m.group(2)))
     if re.fullmatch(r'\w+',k): return re.compile(r'(?<![\w\.\"])%s(?![\w\"])'%k)
     return None
+
+MN={}
+for _l in FILES.get('script _define.rpy',[])+sum(FILES.values(),[]):
+    _m=re.search(r'memoris_notes\["(\w+)"\] = memory_diary\(name = "([^"]+)"',_l)
+    if _m: MN[_m.group(1)]=_m.group(2)
+def _ind(l): return len(l)-len(l.lstrip(' '))
+ASG=re.compile(r'(quests|memoris_notes)\["(\w+)"\](?:\.diary)?\.(_part_text|_rtext)\[(\d+)\](\[1\])?\s*=\s*(.*)$')
+def consequence(fn,ln):
+    ls=FILES[fn];base=_ind(ls[ln-1]);out=[]
+    for j in range(ln,min(ln+8,len(ls))):
+        l=ls[j]
+        if not l.strip(): continue
+        if _ind(l)<=base: break
+        m=ASG.search(l.strip())
+        if not m: continue
+        kind,nm,fld,idx,sub,val=m.groups()
+        if kind=='quests': who='квеста «%s»'%esc(condru.QN.get(nm,nm)); link='<a href="quests.html?v=%d#q_%s">к странице квеста</a>'%(V,nm)
+        else: who='заметки «%s»'%esc(MN.get(nm,nm)); link=''
+        sv=re.match(r'"(.*)"\s*$',val)
+        if fld=='_part_text' and not sub and sv:
+            out.append('В дневнике %s в записи №%s появляется текст: «%s». %s'%(who,idx,esc(sv.group(1).replace('\\n',' ').strip()),link))
+        elif fld=='_rtext' and sv is None:
+            lm=re.match(r'\[\s*"([^"]+)"',val)
+            if lm: out.append('В дневнике %s в списке задач пункт №%s: «%s». %s'%(who,idx,esc(lm.group(1)),link))
+        elif fld=='_part_text' and sub:
+            out.append('В дневнике %s запись №%s отмечается как открытая. %s'%(who,idx,link))
+        elif fld=='_rtext' and sub:
+            out.append('В дневнике %s пункт задач №%s отмечается выполненным. %s'%(who,idx,link))
+    return out
+def enclosing(fn,ln):
+    ls=FILES[fn];cur=_ind(ls[ln-1]);res=[];prev=[]
+    # earlier branches of the same if/elif chain
+    j=ln-2
+    c=ls[ln-1].strip()
+    if c.startswith('elif'):
+        while j>=0:
+            l=ls[j]
+            if l.strip() and _ind(l)==cur and re.match(r'(if|elif)\b',l.strip()):
+                prev.append(l.strip()); 
+                if l.strip().startswith('if'): break
+            if l.strip() and _ind(l)<cur: break
+            j-=1
+    j=ln-2
+    while j>=0 and cur>0:
+        l=ls[j]
+        if l.strip() and _ind(l)<cur:
+            if re.match(r'(if|elif|while)\b.*:$',l.strip()): res.append(l.strip()[l.strip().index(' ')+1:-1]); 
+            cur=_ind(l)
+        j-=1
+    return res,prev
 CHK=collections.defaultdict(list)
 NEED={k:needle(k) for k in SET}
 COND=re.compile(r'^(?:\$ )?(?:if|elif|while)\s+(.*):$|^"[^"]*"\s*if\s+(.*):$')
@@ -55,7 +105,20 @@ def row(k):
     sets=SET.get(k,[]);chk=CHK.get(k,[])
     mm=meaning(k)
     m=re.fullmatch(r'"([^"]+)" in (?:mem:)?([\w\.]+)',k)
-    title=esc(mm and 'Ставится: '+condru._simp(mm) or 'Смысл в коде не подписан')
+    core=None
+    if mm:
+        core=condru._simp(mm)
+        core=re.sub(r'^(?:Ставится: )?выбран вариант','Выбрано:',core)
+    qn=None
+    mq0=re.fullmatch(r'"[^"]+" in mem:(\w+)',k)
+    if mq0 and mq0.group(1) in condru.QN: qn=condru.QN[mq0.group(1)]
+    title=esc((('«%s»: '%qn) if qn else '')+(core if core else 'смысл в коде не назван'))
+    dtx=''
+    for ce_,lab_,fn_,ln_ in chk:
+        if fn_=='Diary_text.rpy':
+            mt=re.search(r'появляется текст: «(.*?)»\.',' '.join(consequence(fn_,ln_)))
+            if mt: dtx=mt.group(1);break
+    if dtx: title+=' <span class="muted">→ в дневнике: «%s»</span>'%esc(dtx[:70]+('…' if len(dtx)>70 else ''))
     short=m.group(1) if m else k
     h='<details class="fl"><summary><span class="ft">%s</span> <span class="muted"><code>%s</code></span> <span class="b">ставится: %d</span> <span class="b">проверок: %d</span></summary><div class="fb">'%(title,esc(k),len(sets),len(chk))
     if mm: h+='<p class="muted">Смысл выведен по месту, где метка ставится (в коде не подписан).</p>'
@@ -75,7 +138,15 @@ def row(k):
         for ce,lab,fn,ln in chk[:8]:
             try: cx=condru.ctx(lab,fn,ln) if lab else 'в файле описания дневника'
             except Exception: cx='в сцене «%s»'%lab
-            h+='<li>%s<br/><span class="muted">%s · <code>%s:%d</code></span><br/><span class="muted"><code>%s</code></span></li>'%(condru.cond_html(ce).replace('<br/>',' '),esc(cx),fn,ln,esc(ce[:110]))
+            cons=consequence(fn,ln) if fn=='Diary_text.rpy' else []
+            if cons:
+                encl,prev=enclosing(fn,ln)
+                extra=''
+                if encl: extra+='<br/><span class="muted">Только если: '+'; '.join(condru.cond_html(e).replace('<br/>',' ') for e in encl)+'</span>'
+                if prev: extra+='<br/><span class="muted">И если не сработал ни один из предыдущих вариантов этой цепочки (%s)</span>'%esc('; '.join(p.split(' ',1)[1].rstrip(':') for p in reversed(prev)))
+                h+='<li><b>Когда метка стоит:</b> %s%s<br/>%s<br/><span class="muted">%s · <code>%s:%d</code> · <code>%s</code></span></li>'%(condru.cond_html(ce).replace('<br/>',' '),extra,'<br/>'.join(cons),esc(cx),fn,ln,esc(ce[:110]))
+            else:
+                h+='<li>%s<br/><span class="muted">%s · <code>%s:%d</code></span><br/><span class="muted"><code>%s</code></span></li>'%(condru.cond_html(ce).replace('<br/>',' '),esc(cx),fn,ln,esc(ce[:110]))
         if len(chk)>8: h+='<li class="muted">…и ещё %d</li>'%(len(chk)-8)
         h+='</ul>'
     else: h+='<p class="muted">Проверок этой метки по коду не найдено (возможно, читается другим способом).</p>'
