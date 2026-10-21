@@ -121,8 +121,8 @@ function build(){
   }
   // --- H3 ---
   if(EXP.has('H3')){
-    E('H3 --> C3A["'+mk('«П...Подожди!»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: mood ≥ 0</span>')+'"]:::h3', c3); E('C3A --> H4', c3);
-    E('H3 --> C3B["'+mk('«П...Подожди!»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: mood &lt; 0</span>')+'"]:::h3', c3); E('C3B --> H9', c3);
+    E('H3 --> C3A["'+mk('«П...Подожди!»')+'"]:::h3', c3); E('C3A --> Q3["mood ≥ 0?"]:::h3', c3);
+    E('Q3 -->|да| H4', c3); E('Q3 -->|нет| H9', c3);
     E('H3 --> C3C["'+mk('«Дать уйти.»')+'"]:::h3', c3); E('C3C --> H9', c3);
     E('H3 --> C3D["'+mk('«Схватить за плечо.»')+'"]:::h3', c3); E('C3D --> H8', c3);
   } else {
@@ -136,8 +136,9 @@ function build(){
     E('H4 --> C4B["'+mk('«Лесс? Странное имя»')+'"]:::h4', c4); E('C4B --> SN1["'+mk('«По-моему, отличное имя!»',[[C_MAD,1]])+'"]:::h4', c4); E('SN1 --> H5', c4);
     E('C4B --> SN2["'+mk('«В смысле, лес?»',[[C_LOG,1]])+'"]:::h4', c4); E('SN2 --> SN3["'+mk('«Раздраженно» безумие −1, настроение +1 ⚠ знаки<br/>«Каменное лицо» настроение −1, логика +1')+'"]:::h4', c4);
     E('SN3 --> SN4["'+mk('«Не стоит уточнять...»',[[C_LOG,1]])+'"]:::h4', c4); E('SN4 --> H5', c4);
-    E('SN3 --> SN5["'+mk('«Почему смерти?»')+'"]:::h4', c4); E('SN5 --> SN6A["'+mk('«Шаг назад»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: логика ≥ 2</span>',[[C_MOO,2],[C_LOG,1]])+'"]:::h4', c4); E('SN6A --> H5', c4);
-    E('SN5 --> SN6B["'+mk('«Шаг назад»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: логика &lt; 2</span>',[[C_MOO,1],[C_LOG,1]])+'"]:::h4', c4); E('SN6B --> H5', c4);
+    E('SN3 --> SN5["'+mk('«Почему смерти?»')+'"]:::h4', c4); E('SN5 --> SN6["'+mk('«Шаг назад»')+'"]:::h4', c4); E('SN6 --> SNQ["логика ≥ 2?"]:::h4', c4);
+    E('SNQ -->|да| SN6A["'+mk('логика ≥ 2',[[C_MOO,2],[C_LOG,1]])+'"]:::h4', c4); E('SN6A --> H5', c4);
+    E('SNQ -->|нет| SN6B["'+mk('логика < 2',[[C_MOO,1],[C_LOG,1]])+'"]:::h4', c4); E('SN6B --> H5', c4);
     E('SN5 --> SN7["'+mk('«Пожать плечами и подставить горло»',[[C_MAD,1],[C_MOO,1],[C_BLD,1]])+'"]:::h4', c4); E('SN7 --> H5', c4);
     E('H4 --> C4C["'+mk('«Приятно познакомиться...»')+'"]:::h4', c4); E('C4C --> H6', c4);
   } else {
@@ -165,9 +166,9 @@ function build(){
     E('H7 -.->|"перед меню: mood &gt; 0 и безумие ≤ 2 → настроение <span style=\'background:rgb(255,235,235);color:rgb(228,26,28);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span>, метка урзы (urza_less)"| H7', c7);
     E('H7 -.->|"перед меню: без изменений"| H7', c7);
     E('H7 --> C7A["'+mk('«Оставить в покое.»')+'"]:::h7', c7); E('C7A --> GN', c7);
-    E('H7 --> C7B["'+mk('«Остановить.»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: mood &lt; 0</span>')+'"]:::h7', c7); E('C7B --> GN', c7);
-    E('H7 --> C7C["'+mk('«Остановить.»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: mood ≥ 0, безумие ≥ 3</span>')+'"]:::h7', c7); E('C7C --> GN', c7);
-    E('H7 --> C7D["'+mk('«Остановить.»<br/>'+'<span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: mood ≥ 0, безумие ≤ 2 → квест Айрата</span>')+'"]:::h7', c7); E('C7D --> AIR["less_airat_predl"]:::h7', c7);
+    E('H7 --> C7B["'+mk('«Остановить.»')+'"]:::h7', c7); E('C7B --> Q7A["mood ≥ 0?"]:::h7', c7);
+    E('Q7A -->|нет| GN', c7); E('Q7A -->|да| Q7B["безумие ≥ 3?"]:::h7', c7);
+    E('Q7B -->|да| GN', c7); E('Q7B -->|нет| AIR["less_airat_predl"]:::h7', c7);
     E('AIR --> C7E["«Х-хорошо.»"]:::h7', c7); E('C7E --> RW["reward?"]:::h7', c7);
     E('RW -->|да| GN', c7);
     E('RW -->|нет| C7N["'+mk('без «reward»',null,[[C_MOO,1]])+'"]:::h7', c7); E('C7N --> GN', c7);
@@ -182,8 +183,8 @@ function build(){
     E('H8 --> C8A["'+mk('«Отпустить.»',null,[[C_MAD,1]])+'"]:::h8', c8); E('C8A --> H9', c8);
     E('H8 --> C8B["'+mk('«Удержать силой.»<br/><span style="font-size:12px;color:#b91c1c;font-weight:700">усл.: Кровь ≥ 3 → sm_blood</span>',[[C_BLD,1]],[[C_MOO,1]])+'"]:::h8', c8); E('C8B --> STR["strenght"]:::h8', c8);
     E('STR --> C8C["'+mk('«Отчаянно бороться и вырываться.»')+'"]:::h8', c8); E('C8C --> D1', c8);
-    E('STR --> C8D["'+mk('«Расслабиться.»',[[C_MAD,1]],[[C_LOG,1]])+'"]:::h8', c8); E('C8D --> M17["меню conv:1117"]:::h8', c8);
-    E('STR --> C8E["'+mk('«Замереть.»<br/><span style="font-size:12px;color:rgb(106,114,128)">⚠ баг conv:1105</span>',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h8', c8); E('C8E --> M17', c8);
+    E('STR --> C8D["'+mk('«Расслабиться.»',[[C_MAD,1]],[[C_LOG,1]])+'"]:::h8', c8); E('C8D --> M17["меню conv:1088"]:::h8', c8);
+    E('STR --> C8E["'+mk('«Замереть.»',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h8', c8); E('C8E --> M17', c8);
     E('M17 --> C8F["'+mk('«А сами-то!»',[[C_MAD,1],[C_MOO,1]])+'"]:::h8', c8); E('C8F --> H9', c8);
     E('M17 --> C8G["'+mk('«Промолчать»',null,[[C_MAD,1]])+'"]:::h8', c8); E('C8G --> H9', c8);
   } else {
@@ -273,20 +274,20 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <body>
 <header class="site"><div class="wrap">
 <h1>Разговор с Лессом</h1>
-<p>Локация: <a href="location.html?v=199" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script_2_less_conv.rpy (conv) · script_2_less_conv_amul.rpy (amul) · script_3_less_end.rpy (end) · day_1_less_razg.rpy (razg)</p>
-<nav class="crumbs"><a href="index.html?v=197">← Все схемы</a> · <a href="location.html?v=199">Локация «Место пробуждения»</a> · <a href="strel.html?v=194">Экран переходов</a></nav>
+<p>Локация: <a href="location.html?v=107" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script_2_less_conv.rpy (conv) · script_2_less_conv_amul.rpy (amul) · script_3_less_end.rpy (end) · day_1_less_razg.rpy (razg)</p>
+<nav class="crumbs"><a href="index.html?v=107">← Все схемы</a> · <a href="location.html?v=107">Локация «Место пробуждения»</a> · <a href="strel.html?v=107">Экран переходов</a></nav>
 </div></header>
 <main>
 <div class="card">
 <h2>Статы по сцене (мин/макс, по коду)</h2>
 <table class="stats">
 <tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Типичный путь (суждение)*</th></tr>
-<tr><td class="mad">Безумие</td><td>−6</td><td>+7</td><td>−2</td></tr>
+<tr><td class="mad">Безумие</td><td>−6</td><td>+6</td><td>−2</td></tr>
 <tr><td class="logic">Логика</td><td>−2</td><td>+9</td><td>+1</td></tr>
 <tr><td class="blood">Кровь</td><td>0</td><td>+2</td><td>0</td></tr>
 <tr><td class="mood">Настроение Лесса</td><td>−7</td><td>+10</td><td>+4</td></tr>
 </table>
-<p class="muted">*Типичный путь: один путь из схемы, выбранный по самым вероятным выборам (суждение, не среднее). Путь: вход сразу в разговор («Его имя?»): «Не надо меня есть! Я не вкусная!» → «П...Подожди!» → «Видимо мы... Знакомы?» → «Как же так! Значит будут.» → ввод своего имени → «Оставить в покое.». Кровь +2 в максимуме только при входе с Кровью 0 (из сцены руки вход с Кровью 1, там предел +1). Все края подтверждены полной трассировкой b9: мин Безумия −6 (amul 157+283 + «Подожди» 469/632/709/892; ветка strenght несовместима — альтернатива в who_i_am, hand только из who_i_am, road_begin кончается strel 956); макс Безумия +7 (amul dress 244 + strenght 1067/1090 + less_end 17 + korn_menu 143/167, script_3_less_end.rpy); мин Лесса −7 (wrong_name 244 → not_remember2 283 → hand 959 → «Удержать» 995 → «Ударить» less_end:20 → «вырваться» less_end:212); макс Лесса +10 (45 − amul 21 (−4 обязательный) + 75 + 162 + 285 + 475 + 566 + 625 + 723 + 890; +15 не воспроизводится). Стартовое настроение в коде не задано, считалось 0.</p>
+<p class="muted">*Типичный путь: один путь из схемы, выбранный по самым вероятным выборам (суждение, не среднее). Путь: вход сразу в разговор («Его имя?»): «Не надо меня есть! Я не вкусная!» → «П...Подожди!» → «Видимо мы... Знакомы?» → «Как же так! Значит будут.» → ввод своего имени → «Оставить в покое.». Кровь +2 в максимуме только при входе с Кровью 0 (из сцены руки вход с Кровью 1, там предел +1). Сайты Крови: 184 XOR 282 (меню conv_2) и 581 XOR 1027 (ветки who_i_am), максимум по одному из каждой пары. Все края подтверждены полной трассировкой b9: мин Безумия −6 (amul 157+283 + «Подожди» 469/632/709/892; ветка strenght несовместима — альтернатива в who_i_am, hand только из who_i_am, road_begin кончается strel 956); макс Безумия +6 (amul dress 244 + strenght 1067/1090 + less_end 17 + korn_menu 143/167 = шесть +1, script_3_less_end.rpy; седьмого совместимого сайта нет: 182 XOR amul-путь в conv_2, 431 XOR 579, 681 XOR 701, окончания less_go взаимоисключающи); мин Лесса −7 (wrong_name 244 → not_remember2 283 → hand 959 → «Удержать» 995 → «Ударить» less_end:20 → «вырваться» less_end:212); макс Лесса +10 (45 − amul 21 (−4 обязательный) + 75 + 162 + 285 + 475 + 566 + 625 + 723 + 890; +15 не воспроизводится). Стартовое настроение в коде не задано, считалось 0.</p>
 </div>
 
 <div class="card">
@@ -350,25 +351,25 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <li>«Как же так! Значит будут.» <span class="mood">mood +1</span>, <span class="mad">mad −1</span> → Хаб 6.</li>
 <li>«Что вообще такое друзья?» <span class="mad">mad +1</span> → Хаб 6.</li>
 </ul></div>
-<div class="hub"><h3>Хаб 6. Имя героини — i_dont_know_name (conv:651), меню conv:675</h3>
+<div class="hub"><h3>Хаб 6. Имя героини — i_dont_know_name (conv:651), меню conv:674</h3>
 <ul>
 <li>«Еще чего!» <span class="mad">mad +1</span>, имя «Вий» → Хаб 7.</li>
 <li>«Хорошая идея...» — ввод имени: пусто/«Вий» <span class="mad">mad +1</span>; своё имя <span class="logic">logic +1</span>, <span class="mad">mad −1</span>, <span class="mood">mood +1</span> → Хаб 7.</li>
 </ul></div>
-<div class="hub"><h3>Хаб 7. Прощание — less_end (conv:734), меню conv:775</h3>
+<div class="hub"><h3>Хаб 7. Прощание — less_end (conv:733), меню conv:774</h3>
 <ul>
 <li><span class="mood">mood &gt; 0</span>: благодушная ветка (<span class="mood">mood +1</span>, Урза узнаёт имя).</li>
 <li>«Попытаться его остановить.»: настроение Лесса меньше 0 → уходит (gone); если 0 и выше → продолжение: при безумии ≥ 3 (уровень Безумия 1) → уходит; при меньшем безумии - квест Айрата (less_airat_predl): «Х-хорошо.» (без «reward» <span class="mood">mood −1</span>) → gone; «А что мне за это будет?» <span class="mood">mood +1</span>, <span class="logic">logic +1</span>, <span class="mad">mad −1</span> (повтор меню); «Еще чего!» <span class="mood">mood −2</span> → gone.</li>
 <li>«Оставить в покое.» → gone.</li>
 </ul></div>
-<div class="hub"><h3>Хаб 8. Хватание — less_hand (conv:986) и strenght (conv:1026)</h3>
+<div class="hub"><h3>Хаб 8. Хватание — less_hand (conv:958) и strenght (conv:998)</h3>
 <ul>
 <li><span class="mood">mood −2</span>; «Отпустить.» <span class="mad">mad −1</span> → Хаб 9; «Удержать силой.» <span class="mood">mood −1</span> → strenght: <span class="blood">blood +1</span> (возможен скрытый выход sm_blood при Крови ≥ 3).</li>
 <li>«Отчаянно бороться...» → <span class="death">BAD END «Тщетная борьба...»</span>.</li>
-<li>«Расслабиться.» <span class="mad">mad +1</span>, <span class="logic">logic −1</span> → меню conv:1117. «Замереть.» <span class="mad">mad −1</span>, <span class="logic">logic +1</span> → меню conv:1117 (⚠️ conv:1105 персонаж «мь» не определён — ошибка).</li>
-<li>Меню conv:1117: «А сами-то!» <span class="mad">mad +1</span>, <span class="mood">mood +1</span> → Хаб 9; «Промолчать» <span class="mad">mad −1</span> → Хаб 9.</li>
+<li>«Расслабиться.» <span class="mad">mad +1</span>, <span class="logic">logic −1</span> → меню conv:1088. «Замереть.» <span class="mad">mad −1</span>, <span class="logic">logic +1</span> → меню conv:1088.</li>
+<li>Меню conv:1088: «А сами-то!» <span class="mad">mad +1</span>, <span class="mood">mood +1</span> → Хаб 9; «Промолчать» <span class="mad">mad −1</span> → Хаб 9.</li>
 </ul></div>
-<div class="hub"><h3>Хаб 9. Уход Лесса — script_3_less_go (end:1), меню end:9</h3>
+<div class="hub"><h3>Хаб 9. Уход Лесса — script_3_less_go (end:1), меню end:8</h3>
 <ul>
 <li>«Ударить дерево» <span class="logic">logic −1</span>, <span class="mad">mad +1</span>, <span class="mood">mood −2</span> → корни (less_korn_menu): «Не шевелиться» <span class="mad">mad +1</span> (цикл); «Обмякнуть» <span class="mad">mad −1</span>, <span class="logic">logic +1</span>, <span class="mood">mood +1</span> → ushel; «Поспать» <span class="mad">mad +1</span>, <span class="mood">mood +2</span> → <span class="end">END? «Мирный сон...»</span>; «Бороться до конца» → <span class="death">BAD END «Подкормка...»</span>; «Вырваться» <span class="logic">logic +1</span>, <span class="mood">mood −1</span> (цикл); «Извиниться» (если знает имя) <span class="logic">logic +1</span>, <span class="mood">mood +2</span> → ushel.</li>
 <li>«Чертовски опасно...» (blood &gt; 0) / «Что произошло?» (blood == 0) <span class="logic">logic +1</span>, <span class="mad">mad −1</span> → ushel → road_begin (экран strel).</li>
@@ -379,7 +380,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <li>less_razg_menu (повторные разговоры): вопросы-ветки назад в Хабы 4/7/5; «Конец» перезапускает меню, выход автоматический, когда остаётся один пункт → экран strel.</li>
 </ul></div>
 </div>
-<p class="muted">Скрытые переходы: <code>setblood(x)</code> при Крови ≥ 3 прыгает в sm_blood из любой строки с blood+1. Имя героини переспрашивается в end:68 и end:112, даже если уже задано. Полный список найденных ошибок — на странице <a href="stats.html?v=198">«Статы»</a>.</p>
+<p class="muted">Скрытые переходы: <code>setblood(x)</code> при Крови ≥ 3 прыгает в sm_blood из любой строки с blood+1. Имя героини переспрашивается в end:65 и end:107, даже если уже задано. Полный список найденных ошибок — на странице <a href="stats.html?v=107">«Статы»</a>.</p>
 </div>
 </div>
 <div id="panel-short" style="position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:100%">
