@@ -2,7 +2,7 @@
 import re,glob,html,sys,collections
 sys.path.insert(0,'/tmp/sch')
 import condru,trees
-V=312
+V=313
 QN=condru.QN
 FILES={}
 for f in sorted(glob.glob('/tmp/viy/game/*.rpy')):
@@ -85,7 +85,7 @@ def card(q):
         h+='<details><summary class="muted">Прочие обращения (%d)</summary><ul>'%len(e['other'])+''.join(li('<code>%s</code> <span class="muted">%s · %s</span>'%(esc(t),esc(c),w)) for t,c,w in e['other'][:30])+'</ul></details>'
     if not any(e[k] for k in e) and not PT[q]: h+='<p class="muted">В коде нет обращений к этому квесту, кроме определения.</p>'
     return h+'</div></details>'
-CSS='''<style>.qc{background:#fff;border:1px solid #d9dee8;border-radius:12px;padding:10px 14px;margin:10px 0;box-shadow:0 1px 2px rgba(0,0,0,.04)}.qc>summary{cursor:pointer;font-size:17px;display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}.qn{font-weight:700}.b{font-size:12px;background:#ede9fe;color:#5b21b6;border-radius:10px;padding:1px 8px}.qb h4{margin:14px 0 4px;color:#374151}.qb ul,.qb ol{margin:4px 0 4px 20px}.qb li{margin:4px 0}.parts li{list-style:none}.qc code{font-size:11px;color:#6b7280;word-break:break-all}.qhow{background:#f5f3ff;border-left:3px solid #7048E8;padding:10px 14px;border-radius:6px;margin:10px 0}.tocq a{display:inline-block;margin:3px 8px 3px 0;padding:2px 10px;border:1px solid #d9dee8;border-radius:14px;text-decoration:none;background:#fff}</style>'''
+CSS='''<style>.qc{background:#fff;border:1px solid #d9dee8;border-radius:12px;padding:10px 14px;margin:10px 0;box-shadow:0 1px 2px rgba(0,0,0,.04)}.qc>summary{cursor:pointer;font-size:17px;display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}.qn{font-weight:700}.b{font-size:12px;background:#ede9fe;color:#5b21b6;border-radius:10px;padding:1px 8px}.qb h4{margin:14px 0 4px;color:#374151}.qb ul,.qb ol{margin:4px 0 4px 20px}.qb li{margin:4px 0}.parts{margin-left:0!important;padding-left:0}.parts li{list-style:none}.qc code{font-size:11px;color:#6b7280;word-break:break-all}.qhow{background:#f5f3ff;border-left:3px solid #7048E8;padding:10px 14px;border-radius:6px;margin:10px 0}.tocq a{display:inline-block;margin:3px 8px 3px 0;padding:2px 10px;border:1px solid #d9dee8;border-radius:14px;text-decoration:none;background:#fff}</style>'''
 def page():
     order=list(QN)
     withtext=[q for q in order if PT[q]]
