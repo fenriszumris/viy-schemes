@@ -19,13 +19,16 @@ function build(){
   if(EXP.has(id)){const h=D.hubs[id];h.exp.forEach(function(l){L.push(l);});h.targets.forEach(function(t){q.push(t);});}}
  [['hub','fill:#fef3c7,stroke:#b45309,stroke-width:2px,color:#0f172a'],['op','fill:#fffbeb,stroke:#d97706,color:#0f172a'],['cd','fill:#ede9fe,stroke:#7c3aed,color:#0f172a'],['ex','fill:#e5e7eb,stroke:#6b7280,color:#374151'],['an','fill:#dcfce7,stroke:#15803d,color:#0f172a'],['jn','fill:#fff,stroke:#9ca3af']].forEach(function(c){L.push('classDef '+c[0]+' '+c[1]);});
  return L.join('\\n');}
+let FIRST=true;
 async function render(){
- const f=document.getElementById('hubchart');f.removeAttribute('data-processed');f.textContent=build();
+ const f=document.getElementById('hubchart');const wc=f.parentElement;const keep=wc.scrollLeft;f.removeAttribute('data-processed');f.textContent=build();
  await mermaid.run({nodes:[f]});
  for(const ss of document.styleSheets){let r;try{r=ss.cssRules;}catch(e){continue;}
   for(let i=r.length-1;i>=0;i--){const x=r[i];if(x.selectorText&&/\\.(hub|op|cd|ex|an|jn)( span| > \\*)$/.test(x.selectorText)&&x.style&&x.style.getPropertyPriority('color')==='important')x.style.removeProperty('color');}}
  document.querySelectorAll('#hubchart g.node').forEach(function(g){const m=/^flowchart-(H\\d+)-\\d+$/.exec(g.id||'');
-  if(m){g.style.cursor='pointer';g.addEventListener('click',function(){if(EXP.has(m[1]))EXP.delete(m[1]);else EXP.add(m[1]);render();});}});}
+  if(m){g.style.cursor='pointer';g.addEventListener('click',function(){if(EXP.has(m[1]))EXP.delete(m[1]);else EXP.add(m[1]);render();});}});
+ if(FIRST){FIRST=false;const st=[...document.querySelectorAll('#hubchart g.node')].filter(function(g){return /^flowchart-START-/.test(g.id);})[0];
+  if(st){const a=st.getBoundingClientRect(),b=wc.getBoundingClientRect();wc.scrollLeft=Math.max(0,wc.scrollLeft+(a.left+a.width/2)-(b.left+b.width/2));}}else{wc.scrollLeft=keep;}}
 window.hubAll=function(on){EXP.clear();if(on)Object.keys(D.hubs).forEach(function(h){EXP.add(h);});render();};
 render();
 </script>'''
