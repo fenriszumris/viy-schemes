@@ -37,7 +37,7 @@ L={
 'tgavan_gar_house_big':("Дом Гарбока (вблизи)","подпись стрелки «Отойти от дома» (script _define.rpy:475)",[('gar.html','Дом Гарбока')]),
 'tgavan_corridor_sar':("Коридор дома Сареброса","сцены кабинета Сареброса (script_4_tgavan_adro.rpy)",[('adro.html','Адро: ворота, допрос, контракт')]),
 'tgavan_corridor2_sar':("Второй коридор дома Сареброса","второй участок коридора (script _define.rpy:508)",[('adro.html','Адро')]),
-'tgavan_sar_cab':("Кабинет Сареброса (Лиассона)","сцены sar_cab_paper и sar_cab_kamletter (script_4_tgavan_adro.rpy:98, 121)",[('adro2.html','Адро: кабинет Лиассона')]),
+'tgavan_sar_cab':("Кабинет Адро (кабинет Лиассона в доме Сареброса)","сцены sar_cab_paper и sar_cab_kamletter (script_4_tgavan_adro.rpy:98, 121)",[('adro2.html','Адро: кабинет Лиассона')]),
 'chaos_enter':("Вход в хаос (разлом)","заголовок страницы «Вход в хаос»; в коде название chaos_enter",[('chaos.html','Вход в хаос (разлом)')]),
 'chaos_enter2':("Хаос: второй уровень входа","в коде chaos_enter2 ведёт в chaos_enter; русского названия нет",[('chaos.html','Вход в хаос')]),
 }
