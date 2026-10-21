@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>Адриан: разговор о деле — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style7.css?v=330">
+<link rel="stylesheet" href="style7.css?v=331">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -44,7 +44,7 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#0f766e', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
-  L.push('ST["<a href=\'gavan.html?v=330\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:280px;white-space:normal\'>Героиня возвращается к Адриану у двери Гавани<br/><small>adrian_conv_door</small></div></a>"]:::ex');
+  L.push('ST["<a href=\'gavan.html?v=331\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:280px;white-space:normal\'>Героиня возвращается к Адриану у двери Гавани<br/><small>adrian_conv_door</small></div></a>"]:::ex');
   L.push('EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex');
   L.push('END["<div style=\'width:260px;white-space:normal\'>Конец демоверсии (перезапуск игры)</div>"]:::bad');
   E('ST --> A1', cG);
@@ -104,7 +104,7 @@ function build(){
   L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
   L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
   L.push('classDef stub fill:#f3f4f6,stroke:#6b7280,stroke-dasharray:5 4,color:#6b7280');
-  /*XD_PATCH*/ (function(){var XD={'EXS':'EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex'};var tx=L.join('\n');for(var id in XD){if(!new RegExp('\\b'+id+'\\s*[\\[(]').test(tx)&&new RegExp('(-->\\s*'+id+'(\\s|$)|(^|\\n)'+id+'\\s*-->)').test(tx))L.push(XD[id]);}})();
+  /*XD_PATCH*/ (function(){var XD={'EXS':'EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex','END':'END["<div style=\'width:260px;white-space:normal\'>Конец демоверсии (перезапуск игры)</div>"]:::bad','Z0':'Z0["<div style=\'width:260px;white-space:normal\'>Адриан: «Вам что-то нужно?» (1257-1259)</div>"]:::sc','Z1':'Z1["<div style=\'width:340px;white-space:normal\'>Адриан: «Не прошло и пяти минут... Научитесь молчать о том, что думаете» — даёт возможность показать значок снова (1264-1282)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Адриан в курсе ссоры» → открывает второй показ значка Адро (oh_d false1)</span></div>"]:::sc','R0':'R0["<div style=\'width:320px;white-space:normal\'>Адриан: «Как продвигается расследование?» (1291-1292)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>пока в заглушке: в script3_tgavan_oh.rpy перехода на метку adrian_conv_door_white нет (метка на 1291)</span></div>"]:::stub','R1':'R1["<div style=\'width:300px;white-space:normal\'>Героиня знает про суицид; стоит ли говорить Адриану? (1293-1295)</div>"]:::stub','R2':'R2["<div style=\'width:300px;white-space:normal\'>Адриан: «Это меняет все дело... Что если это ошибка?» (1301-1316)</div>"]:::stub','R3':'R3["<div style=\'width:260px;white-space:normal\'>Адро просил молчать: героиня промолчала (1322-1324)</div>"]:::stub','R4':'R4["<div style=\'width:320px;white-space:normal\'>Адро велел вернуться без улик; Адриан: «Скорее всего начнётся война» (1327-1332)</div>"]:::stub','R5':'R5["<div style=\'width:340px;white-space:normal\'>Героиня рассказывает Адриану находки (1335-1539)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 каждый рассказ записывается: яд, дневник, письмо Камилле, чай, бумаги, анализ и т.д. (adrian_dialog)</span></div>"]:::stub','RP':'RP["<div style=\'width:300px;white-space:normal\'>Бумаги Лиассона: контрабанда и заказные убийства (1386-1391)</div>"]:::stub','RA':'RA["<div style=\'width:300px;white-space:normal\'>Адриан узнаёт, что Лиассон заказал убийство брата Адро (1413-1417)</div>"]:::stub','RB':'RB["<div style=\'width:240px;white-space:normal\'>Адриан: «Вы уверены?» (1426)</div>"]:::stub','R6':'R6["<div style=\'width:260px;white-space:normal\'>Что ещё рассказать Адриану? (1454, 1456)</div>"]:::stub','RF':'RF["<div style=\'width:300px;white-space:normal\'>Письма отца Лиассона: «Это мог быть его отец?» (1456-1463)</div>"]:::stub','RG':'RG["<div style=\'width:260px;white-space:normal\'>Адриан: «Ты считаешь, это плохо?» (1471)</div>"]:::stub'};var tx=L.join('\n');for(var id in XD){if(!new RegExp('\\b'+id+'\\s*[\\[(]').test(tx)&&new RegExp('(-->\\s*'+id+'(\\s|$)|(^|\\n)'+id+'\\s*-->)').test(tx))L.push(XD[id]);}})();
   return L.concat(ST).join('\n');
 }
 async function render(){
@@ -135,7 +135,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Адриан: разговор о деле</h1>
 <p>script3_tgavan_oh.rpy:1257-1550: Адриан у двери после Адро, доклад по расследованию.</p>
-<nav class="crumbs"><a href="index.html?v=330">← Все схемы</a> · <a href="adro2.html?v=330">Адро: кабинет</a> · <a href="stats.html?v=330">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=331">← Все схемы</a> · <a href="adro2.html?v=331">Адро: кабинет</a> · <a href="stats.html?v=331">Статы</a></nav>
 </div></header>
 <main>
 <div class="card" style="border:2px dashed #6b7280;background:#f3f4f6"><b>⚠ Серые пунктирные блоки: пока в заглушке (не достижимо в демо).</b> Весь доклад Адриану (блок «adrian_conv_door_white», строки 1291-1550) в демо не подключён.</div>

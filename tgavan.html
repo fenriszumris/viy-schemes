@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>Дверь Адриана — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style7.css?v=330">
+<link rel="stylesheet" href="style7.css?v=331">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -46,8 +46,8 @@ function build(){
   const cG='#9aa3b2', c1='#166534', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
   L.push('ST["<div style=\'width:260px;white-space:normal\'>Лес у двери Адриана<br/><small>script_3_tgavan_door (1)</small></div>"]:::ex');
   L.push('EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex');
-  L.push('EN["<a href=\'gavan.html?v=330\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Вход в Тёмную Гавань → экран переходов (1089)<br/><small>script_3_tgavan_enter; продолжение на странице «Тёмная Гавань»</small></div></a>"]:::ex');
-  L.push('GV["<a href=\'gavan.html?v=330\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Дальше: страница «Тёмная Гавань» (script3_tgavan_oh): меню «Может, мы можем договориться?»</div></a>"]:::ex');
+  L.push('EN["<a href=\'gavan.html?v=331\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Вход в Тёмную Гавань → экран переходов (1089)<br/><small>script_3_tgavan_enter; продолжение на странице «Тёмная Гавань»</small></div></a>"]:::ex');
+  L.push('GV["<a href=\'gavan.html?v=331\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Дальше: страница «Тёмная Гавань» (script3_tgavan_oh): меню «Может, мы можем договориться?»</div></a>"]:::ex');
   L.push(hub('H1','У двери<br/><small>script_3_tgavan_door, 1-133</small>','hhn',[[C_MAD, '0…+1'], [C_MOO, '−1…0'], [C_DEV, '−1…0'], [C_ADR, '−2…0']]));
   if(EXP.has('H1')){
     L.push('IN["<div style=\'width:280px;white-space:normal\'>Дверь в лесу; факел мог погаснуть (1-10)</div>"]:::sc');
@@ -215,7 +215,7 @@ function build(){
   L.push('classDef sc fill:#E4EEF9,stroke:#7a9cc6,color:#1f2430');
   L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
   L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
-  /*XD_PATCH*/ (function(){var XD={'ST':'ST["<div style=\'width:260px;white-space:normal\'>Лес у двери Адриана<br/><small>script_3_tgavan_door (1)</small></div>"]:::ex','EXS':'EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex'};var tx=L.join('\n');for(var id in XD){if(!new RegExp('\\b'+id+'\\s*[\\[(]').test(tx)&&new RegExp('(-->\\s*'+id+'(\\s|$)|(^|\\n)'+id+'\\s*-->)').test(tx))L.push(XD[id]);}})();
+  /*XD_PATCH*/ (function(){var XD={'ST':'ST["<div style=\'width:260px;white-space:normal\'>Лес у двери Адриана<br/><small>script_3_tgavan_door (1)</small></div>"]:::ex','EXS':'EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex','IN':'IN["<div style=\'width:280px;white-space:normal\'>Дверь в лесу; факел мог погаснуть (1-10)</div>"]:::sc','KN':'KN["<div style=\'width:260px;white-space:normal\'>Вы у двери: «Постучать» / «Окликнуть» / «Уйти»</div>"]:::sc','LU':'LU["<div style=\'width:280px;white-space:normal\'>Луиза рядом: «Кажется, это какая-то дверь?» (18)</div>"]:::sc','LK':'LK["<div style=\'width:300px;white-space:normal\'>Луиза стучит; Адриан гонит обратно к развилке («налево, не возвращайтесь») → экран переходов (60-67)</div>"]:::sc','LI':'LI["<div style=\'width:300px;white-space:normal\'>Луиза отказывается идти («я туда ни ногой»), уходит и больше не рядом; вы снова у двери (35-51)</div>"]:::sc','RZ':'RZ["<div style=\'width:300px;white-space:normal\'>Свет в Гавани включён, расследование взято, открыты подсказки про Белую Стражу и Адриана (12-17)</div>"]:::sc','D1':'D1["<div style=\'width:280px;white-space:normal\'>Адриан из-за двери: «Стойте и не двигайтесь» (134)</div>"]:::sc','D2':'D2["<div style=\'width:260px;white-space:normal\'>Адриан: «Будете слушать?» (200)</div>"]:::sc','B1x':'B1x["<div style=\'width:280px;white-space:normal\'>Если Логика не ниже 1 уровня: «Незнание правил не освобождает...» (205)</div>"]:::sc','R':'R["<div style=\'width:280px;white-space:normal\'>Адриан: «Я глава Белой Стражи... Но кто вы?» (231)</div>"]:::sc','NM':'NM["<div style=\'width:240px;white-space:normal\'>Адриан: «Ваше имя?» (271)</div>"]:::sc','C3':'C3["<div style=\'width:260px;white-space:normal\'>Адриан: «Это не имя...» (296)</div>"]:::sc','NAn':'NAn["<div style=\'width:300px;white-space:normal\'>Адриан гасит свет и открывает дверь (395)<br/>настроение Адриана −3</div>"]:::bad','ND':'ND["<div style=\'width:260px;white-space:normal\'>Что делать у открытой двери? (409)</div>"]:::sc','AR':'AR["<div style=\'width:300px;white-space:normal\'>Адриан рассказывает правила города (458)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>только если нет чёрного амулета</span></div>"]:::sc','M':'M["<div style=\'width:260px;white-space:normal\'>Меню разговора с Адрианом (500)</div>"]:::sc','M1p':'M1p["<div style=\'width:280px;white-space:normal\'>Если Безумие не ниже 2 уровня: Адриан хмурится (531)</div>"]:::sc','AB':'AB["<div style=\'width:260px;white-space:normal\'>Расспросить Адриана о нём самом (657)</div>"]:::sc','OV':'OV["<div style=\'width:260px;white-space:normal\'>Адриан рассказывает о вас (638)</div>"]:::sc','VH':'VH["<div style=\'width:260px;white-space:normal\'>Адриан: «Так что вы решили?» (703)</div>"]:::sc','PM':'PM["<div style=\'width:280px;white-space:normal\'>Адриан протягивает фиал: зелье, чтобы видеть город (790)</div>"]:::sc','VR':'VR["<div style=\'width:260px;white-space:normal\'>Адриан о Вие (892)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>Адриан огорчён</span></div>"]:::sc','VM':'VM["<div style=\'width:260px;white-space:normal\'>Адриан: «Что вы помните о себе?» (907)</div>"]:::sc','SN':'SN["<div style=\'width:260px;white-space:normal\'>Адриан: «Вы уверены, что Вий?» (961)</div>"]:::sc','VP':'VP["<div style=\'width:260px;white-space:normal\'>Адриан просит держаться подальше от Вия (1014)</div>"]:::sc'};var tx=L.join('\n');for(var id in XD){if(!new RegExp('\\b'+id+'\\s*[\\[(]').test(tx)&&new RegExp('(-->\\s*'+id+'(\\s|$)|(^|\\n)'+id+'\\s*-->)').test(tx))L.push(XD[id]);}})();
   return L.concat(ST).join('\n');
 }
 async function render(){
@@ -246,7 +246,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Дверь Адриана (Тёмная Гавань)</h1>
 <p>script3_tgavan_begin.rpy, 1-1107: лес у двери, разговор с Адрианом, правила города, имя, зелье, ветка про Вия</p>
-<nav class="crumbs"><a href="index.html?v=330">← Все схемы</a> · <a href="gavan.html?v=330">Тёмная Гавань</a> · <a href="stats.html?v=330">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=331">← Все схемы</a> · <a href="gavan.html?v=331">Тёмная Гавань</a> · <a href="stats.html?v=331">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
