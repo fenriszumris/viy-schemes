@@ -46,3 +46,4 @@ footer{max-width:none;margin:0 0 40px;padding:0 20px;color:var(--muted);font-siz
 .panel-hidden{position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:100%}
 .lid{font-size:11px;color:#6b7280}.stats td:nth-child(2){font-size:11px;color:#6b7280}
 .use{margin:8px 0 0;font-size:13px}.use ul{margin:4px 0 0 18px}.use code{font-size:11px;color:#6b7280}
+.tr{margin:4px 0 4px 16px}.sp{font-size:13px;margin:2px 0}.eff code,.cond>.muted code{font-size:11px;color:#6b7280}.cond{margin:4px 0 4px 10px;padding-left:8px;border-left:2px solid #e5e7eb}details{margin:4px 0}
