@@ -3,7 +3,13 @@ import re,html,json,collections
 import trees
 from trees import LAB,body,ind,SKIP,KEY
 import condru
-from condru import cond_html,cond_plain
+import condru
+def fx(t):
+    t=re.sub(r'в сцене, начинающейся словами «Из-за монументального стола[^»]*»','в сцене первой встречи с Лени (он выглядывает из-за стола)',t)
+    t=re.sub(r'в сцене, начинающейся словами «([^»]{0,34})[^»]*»',lambda m:'в сцене, начинающейся словами «'+m.group(1)+'…»',t)
+    return t
+def cond_html(e): return fx(condru.cond_html(e))
+def cond_plain(e): return fx(condru.cond_plain(e))
 def clean(x): return re.sub(r'\{/?[a-z]+(=[^}]*)?\}','',x).replace('\\n',' ')
 def q(x): return html.escape(x,quote=False).replace('"','&quot;')
 def sh(x,n):
