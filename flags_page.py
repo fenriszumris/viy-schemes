@@ -2,7 +2,7 @@
 import re,glob,html,sys,collections
 sys.path.insert(0,'/tmp/sch')
 import condru
-V=312
+V=313
 condru._scan()
 SET=condru._SET;RESET=condru._RESET
 FILES={}
