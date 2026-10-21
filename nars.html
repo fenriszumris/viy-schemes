@@ -47,83 +47,83 @@ function build(){
   L.push('ST["<div style=\'width:260px;white-space:normal\'>Тёмная Гавань: герой идёт к бару Нарси<br/><small>bar_nar_label</small></div>"]:::ex');
   L.push('EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex');
   L.push('END["<div style=\'width:280px;white-space:normal\'>Конец демоверсии «Good End» (перезапуск игры)</div>"]:::bad');
-  L.push('BAD["<div style=\'width:280px;white-space:normal\'>BAD END «Убить Нарси» (перезапуск игры, 896-899)</div>"]:::bad');
-  L.push('ADRP["<div style=\'width:280px;white-space:normal\'>Страница «Тёмная Гавань: Адриан» (если Адриан рядом, зелье у него, 965-1002)</div>"]:::ex');
+  L.push('BAD["<div style=\'width:280px;white-space:normal\'>BAD END «Убить Нарси» (перезапуск игры, 842-845)</div>"]:::bad');
+  L.push('ADRP["<div style=\'width:280px;white-space:normal\'>Страница «Тёмная Гавань: Адриан» (если Адриан рядом, зелье у него, 910-947)</div>"]:::ex');
   E('ST --> N1', cG);
-  L.push(hub('N1','Знакомство с Нарси<br/><small>bar_nar_label, 1-126</small>','hhn',[]));
+  L.push(hub('N1','Знакомство с Нарси<br/><small>bar_nar_label, 1-105</small>','hhn',[]));
   if(EXP.has('N1')){
-    L.push('M0["<div style=\'width:300px;white-space:normal\'>Нарси хватает героиню за руку и затаскивает в бар (4-31)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если зелья ещё нет: герой врезается в Нарси в темноте (15)</span></div>"]:::sc');
+    L.push('M0["<div style=\'width:300px;white-space:normal\'>Нарси хватает героиню за руку и затаскивает в бар (2-29)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если зелья ещё нет: герой врезается в Нарси в темноте (13)</span></div>"]:::sc');
     E('N1 --> M0', c1);
-    L.push('M1["<div style=\'width:280px;white-space:normal\'>Нарси: «Многоуважаемая гильдия воров и убийц! Добро пожаловать!» (40-72)</div>"]:::sc');
-    L.push('M2["<div style=\'width:300px;white-space:normal\'>Нарси: «Ты слепая? У тебя нет зелья!» — объясняет про зелье (73-97)</div>"]:::sc');
-    L.push('MR["<div style=\'width:260px;white-space:normal\'>Герой снова в баре; Нарси встречает у стойки (100-125)</div>"]:::sc');
+    L.push('M1["<div style=\'width:280px;white-space:normal\'>Нарси: «Многоуважаемая гильдия воров и убийц! Добро пожаловать!» (38-70)</div>"]:::sc');
+    L.push('M2["<div style=\'width:300px;white-space:normal\'>Нарси: «Ты слепая? У тебя нет зелья!» — объясняет про зелье (71-94)</div>"]:::sc');
+    L.push('MR["<div style=\'width:260px;white-space:normal\'>Герой снова в баре; Нарси встречает у стойки (98-102)</div>"]:::sc');
     E('M0 --> M0a["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня здесь впервые:'+flag('запоминает «встретились» (meet)'),null,null)+'</div>"]:::hhn', c1); E('M0a --> M1', c1);
     E('M0 --> M0b["<div style=\'width:290px;white-space:normal\'>'+mk('Если уже знакомы:',null,null)+'</div>"]:::hhn', c1); E('M0b --> MR', c1);
-    E('M1 --> M1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если зелья ещё нет (73):'+cond('если про зелье уже не рассказывали: объяснение про зелье (83-96)'),null,null)+'</div>"]:::hhn', c1); E('M1a --> M2', c1);
+    E('M1 --> M1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если зелья ещё нет (71):'+cond('если про зелье уже не рассказывали: объяснение про зелье (81-94)'),null,null)+'</div>"]:::hhn', c1); E('M1a --> M2', c1);
     E('M1 --> M1b["<div style=\'width:290px;white-space:normal\'>'+mk('Если зелье уже выпито:',null,null)+'</div>"]:::hhn', c1); E('M1b --> N2', c1);
     E('M2 --> N2', c1);
     E('MR --> N2', c1);
   } else {
     E('N1 --> N2', c1);
   }
-  L.push(hub('N2','Разговор с Нарси<br/><small>bar_nar_no_svet_menu, 127-282</small>','hhl',[[C_MAD, '−1…0'], [C_NAR, '0…+2']]));
+  L.push(hub('N2','Разговор с Нарси<br/><small>bar_nar_no_svet_menu, 106-259</small>','hhl',[[C_MAD, '−1…0'], [C_NAR, '0…+2']]));
   if(EXP.has('N2')){
-    L.push('NM["<div style=\'width:260px;white-space:normal\'>Нарси ждёт: «Ну? Ещё что-то хочешь?» (131)</div>"]:::sc');
+    L.push('NM["<div style=\'width:260px;white-space:normal\'>Нарси ждёт: «Ну? Ещё что-то хочешь?» (110)</div>"]:::sc');
     E('N2 --> NM', c2);
-    L.push('WHO["<div style=\'width:300px;white-space:normal\'>Нарси: «Я — Нарси» (152-175)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Адриан уже назвал героине имя: Нарси отвечает по имени; если не назвал - спрашивает его (экран «Имя»)</span></div>"]:::sc');
-    L.push('WHO2["<div style=\'width:260px;white-space:normal\'>Нарси: «Лучший Вор, Гильдмастер...» (178)</div>"]:::sc');
-    L.push('JB["<div style=\'width:260px;white-space:normal\'>Нарси: «Милочка, ты уверена, что тебе ЭТО нужно?» (206-210)</div>"]:::sc');
-    L.push('JB2["<div style=\'width:300px;white-space:normal\'>Нарси: «Мне скучно. Найди что-нибудь интересное» (219-231)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «задание Нарси взято» → в дневнике открыт пункт</span></div>"]:::sc');
-    L.push('WT["<div style=\'width:260px;white-space:normal\'>Нарси хвастается иглой с ядом (264-269)</div>"]:::sc');
-    E('NM --> A1["<div style=\'width:290px;white-space:normal\'>'+mk('«Можете помочь с зельем?»'+cond('один раз (132)'),null,null)+'</div>"]:::hhl', c2); E('A1 --> N3', c2);
-    E('NM --> A2["<div style=\'width:290px;white-space:normal\'>'+mk('«А вы, собственно, кто?»'+cond('пока героиня не знает имя Нарси (151)')+flag('запоминает «знаю имя»'),null,null)+'</div>"]:::hhl', c2); E('A2 --> WHO', c2);
+    L.push('WHO["<div style=\'width:300px;white-space:normal\'>Нарси: «Я — Нарси» (129-152)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Адриан уже назвал героине имя: Нарси отвечает по имени; если не назвал - спрашивает его (экран «Имя»)</span></div>"]:::sc');
+    L.push('WHO2["<div style=\'width:260px;white-space:normal\'>Нарси: «Лучший Вор, Гильдмастер...» (155)</div>"]:::sc');
+    L.push('JB["<div style=\'width:260px;white-space:normal\'>Нарси: «Милочка, ты уверена, что тебе ЭТО нужно?» (183-187)</div>"]:::sc');
+    L.push('JB2["<div style=\'width:300px;white-space:normal\'>Нарси: «Мне скучно. Найди что-нибудь интересное» (196-208)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «задание Нарси взято» → в дневнике открыт пункт</span></div>"]:::sc');
+    L.push('WT["<div style=\'width:260px;white-space:normal\'>Нарси хвастается иглой с ядом (241-246)</div>"]:::sc');
+    E('NM --> A1["<div style=\'width:290px;white-space:normal\'>'+mk('«Можете помочь с зельем?»'+cond('один раз (111)'),null,null)+'</div>"]:::hhl', c2); E('A1 --> N3', c2);
+    E('NM --> A2["<div style=\'width:290px;white-space:normal\'>'+mk('«А вы, собственно, кто?»'+cond('пока героиня не знает имя Нарси (128)')+flag('запоминает «знаю имя»'),null,null)+'</div>"]:::hhl', c2); E('A2 --> WHO', c2);
     E('WHO --> WHO2', c2);
-    L.push('AC["<div style=\'width:260px;white-space:normal\'>Нарси оценивает ответ: «Он явно был очень доволен» (187)</div>"]:::sc');
-    E('WHO2 --> A2a["<div style=\'width:290px;white-space:normal\'>'+mk('«Гильдия воров и убийц? Вы преступник?»'+cond('один раз (179)'),null,null)+'</div>"]:::hhl', c2); E('A2a --> AC', c2);
-    E('AC --> A2c["<div style=\'width:290px;white-space:normal\'>'+mk('Если Безумие не ниже 1 уровня (190):',[[C_NAR, 1]],null)+'</div>"]:::hhl', c2); E('A2c --> NM', c2);
-    E('AC --> A2d["<div style=\'width:290px;white-space:normal\'>'+mk('Если Логика не ниже 1 уровня (193):',null,[[C_NAR, 1]])+'</div>"]:::hhl', c2); E('A2d --> NM', c2);
+    L.push('AC["<div style=\'width:260px;white-space:normal\'>Нарси оценивает ответ: «Он явно был очень доволен» (164)</div>"]:::sc');
+    E('WHO2 --> A2a["<div style=\'width:290px;white-space:normal\'>'+mk('«Гильдия воров и убийц? Вы преступник?»'+cond('один раз (156)'),null,null)+'</div>"]:::hhl', c2); E('A2a --> AC', c2);
+    E('AC --> A2c["<div style=\'width:290px;white-space:normal\'>'+mk('Если Безумие не ниже 1 уровня (167):',[[C_NAR, 1]],null)+'</div>"]:::hhl', c2); E('A2c --> NM', c2);
+    E('AC --> A2d["<div style=\'width:290px;white-space:normal\'>'+mk('Если Логика не ниже 1 уровня (170):',null,[[C_NAR, 1]])+'</div>"]:::hhl', c2); E('A2d --> NM', c2);
     E('AC --> A2e["<div style=\'width:290px;white-space:normal\'>'+mk('Если Безумие и Логика ниже 1 уровня:',null,null)+'</div>"]:::hhl', c2); E('A2e --> NM', c2);
     E('WHO2 --> A2b["<div style=\'width:290px;white-space:normal\'>'+mk('«Не уточнять»',null,[[C_MAD, 1]])+'</div>"]:::hhl', c2); E('A2b --> NM', c2);
-    E('NM --> A3["<div style=\'width:290px;white-space:normal\'>'+mk('«Есть какая-то работа?»'+cond('если зелье выпито и задание ещё не взято (205)'),null,null)+'</div>"]:::hhl', c2); E('A3 --> JB', c2);
+    E('NM --> A3["<div style=\'width:290px;white-space:normal\'>'+mk('«Есть какая-то работа?»'+cond('если зелье выпито и задание ещё не взято (182)'),null,null)+'</div>"]:::hhl', c2); E('A3 --> JB', c2);
     E('JB --> A3a["<div style=\'width:290px;white-space:normal\'>'+mk('«Забудьте, что я сказала!»',null,null)+'</div>"]:::hhl', c2); E('A3a --> NM', c2);
     E('JB --> A3b["<div style=\'width:290px;white-space:normal\'>'+mk('«Да, уверена.»',null,null)+'</div>"]:::hhl', c2); E('A3b --> JB2', c2);
     E('JB2 --> NM', c2);
-    E('NM --> A4["<div style=\'width:290px;white-space:normal\'>'+mk('«Так что ты от меня хотел?»'+cond('если задание взято, но подробности ещё не звучали (235); повторяет условия'),null,null)+'</div>"]:::hhl', c2); E('A4 --> NM', c2);
-    E('NM --> A5["<div style=\'width:290px;white-space:normal\'>'+mk('«Вы действительно Гильдмастер?»'+cond('после вопроса «А вы кто?»; один раз (255)'),null,null)+'</div>"]:::hhl', c2); E('A5 --> WT', c2);
+    E('NM --> A4["<div style=\'width:290px;white-space:normal\'>'+mk('«Так что ты от меня хотел?»'+cond('если задание взято, но подробности ещё не звучали (212); повторяет условия'),null,null)+'</div>"]:::hhl', c2); E('A4 --> NM', c2);
+    E('NM --> A5["<div style=\'width:290px;white-space:normal\'>'+mk('«Вы действительно Гильдмастер?»'+cond('после вопроса «А вы кто?»; один раз (232)'),null,null)+'</div>"]:::hhl', c2); E('A5 --> WT', c2);
     E('WT --> A5a["<div style=\'width:290px;white-space:normal\'>'+mk('Дальше: игла Нарси',null,null)+'</div>"]:::hhl', c2); E('A5a --> N4', c2);
-    E('NM --> A6["<div style=\'width:290px;white-space:normal\'>'+mk('«Уйти.»'+cond('если героиня знает имя Нарси (274); если задание взято: «Не забудь о нашем деле!»'),null,null)+'</div>"]:::hhl', c2); E('A6 --> EXS', c2);
+    E('NM --> A6["<div style=\'width:290px;white-space:normal\'>'+mk('«Уйти.»'+cond('если героиня знает имя Нарси (251); если задание взято: «Не забудь о нашем деле!»'),null,null)+'</div>"]:::hhl', c2); E('A6 --> EXS', c2);
   } else {
     E('N2 --> N3', c2);
     E('N2 --> N4', c2);
     E('N2 --> EXS', c2);
   }
-  L.push(hub('N3','Дело Нарси<br/><small>bar_nar_delo_menu, 284-357</small>','hhp',[[C_MAD, '0…+1'], [C_LOG, '−1…+1'], [C_NAR, '−3…+4']]));
+  L.push(hub('N3','Дело Нарси<br/><small>bar_nar_delo_menu, 261-334</small>','hhp',[[C_MAD, '0…+1'], [C_LOG, '−1…+1'], [C_NAR, '−3…+4']]));
   if(EXP.has('N3')){
-    L.push('DM["<div style=\'width:280px;white-space:normal\'>Нарси: «Мы помогаем друг другу или нет?» (146-149)</div>"]:::sc');
+    L.push('DM["<div style=\'width:280px;white-space:normal\'>Нарси: «Мы помогаем друг другу или нет?» (125-126)</div>"]:::sc');
     E('N3 --> DM', c3);
-    L.push('DQ["<div style=\'width:260px;white-space:normal\'>Нарси не раскрывает, какое дело (289-292)</div>"]:::sc');
-    L.push('KO["<div style=\'width:260px;white-space:normal\'>Нарси выставляет героиню на улицу (321-329)</div>"]:::bad');
-    L.push('YY["<div style=\'width:300px;white-space:normal\'>Нарси даёт зелье и ставит его справа от героини в баре (338-355)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: зелье лежит в баре → открывает предмет «зелье»</span></div>"]:::sc');
-    E('DM --> DQ1["<div style=\'width:290px;white-space:normal\'>'+mk('«Каком деле?»'+cond('один раз (286)'),null,null)+'</div>"]:::hhp', c3); E('DQ1 --> DQ', c3);
+    L.push('DQ["<div style=\'width:260px;white-space:normal\'>Нарси не раскрывает, какое дело (266-269)</div>"]:::sc');
+    L.push('KO["<div style=\'width:260px;white-space:normal\'>Нарси выставляет героиню на улицу (298-306)</div>"]:::bad');
+    L.push('YY["<div style=\'width:300px;white-space:normal\'>Нарси даёт зелье и ставит его справа от героини в баре (315-332)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: зелье лежит в баре → открывает предмет «зелье»</span></div>"]:::sc');
+    E('DM --> DQ1["<div style=\'width:290px;white-space:normal\'>'+mk('«Каком деле?»'+cond('один раз (263)'),null,null)+'</div>"]:::hhp', c3); E('DQ1 --> DQ', c3);
     E('DQ --> DQ2["<div style=\'width:290px;white-space:normal\'>'+mk('«Ха! Так действительно намного интереснее.»',[[C_MAD, 1], [C_NAR, 2], [C_LOG, 1]],null)+'</div>"]:::hhp', c3); E('DQ2 --> DM', c3);
-    E('DQ --> DQ3["<div style=\'width:290px;white-space:normal\'>'+mk('«Я просто пытаюсь разобраться, что происходит.»'+cond('Безумие −1 и сразу +1 (300-301): итог 0'),[[C_LOG, 1]],[[C_NAR, 1]])+'</div>"]:::hhp', c3); E('DQ3 --> DM', c3);
+    E('DQ --> DQ3["<div style=\'width:290px;white-space:normal\'>'+mk('«Я просто пытаюсь разобраться, что происходит.»'+cond('Безумие −1 и сразу +1 (277-278): итог 0'),[[C_LOG, 1]],[[C_NAR, 1]])+'</div>"]:::hhp', c3); E('DQ3 --> DM', c3);
     E('DQ --> DQ4["<div style=\'width:290px;white-space:normal\'>'+mk('«С улыбкой пожать плечами.»',[[C_MAD, 1], [C_NAR, 1], [C_LOG, 1]],null)+'</div>"]:::hhp', c3); E('DQ4 --> DM', c3);
     E('DM --> DN["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет, звучит не очень.»'+flag('записывает «задание Нарси провалено»'),null,[[C_NAR, 2]])+'</div>"]:::hhp', c3); E('DN --> KO', c3);
-    E('DM --> DY["<div style=\'width:290px;white-space:normal\'>'+mk('«Да, я согласна.»'+cond('если «Каком деле?» не спрашивала: Безумие +1, Логика −1 (335)'),[[C_NAR, 2]],null)+'</div>"]:::hhp', c3); E('DY --> YY', c3);
+    E('DM --> DY["<div style=\'width:290px;white-space:normal\'>'+mk('«Да, я согласна.»'+cond('если «Каком деле?» не спрашивала: Безумие +1, Логика −1 (311-312)'),[[C_NAR, 2]],null)+'</div>"]:::hhp', c3); E('DY --> YY', c3);
     E('KO --> EXS', c3);
     E('YY --> EXS', c3);
   } else {
     E('N3 --> EXS', c3);
   }
-  L.push(hub('N4','Игла Нарси<br/><small>bar_nar_igl_menu, 358-504</small>','hhk',[[C_BLD, '0…+1'], [C_NAR, '−3…+1']]));
+  L.push(hub('N4','Игла Нарси<br/><small>bar_nar_igl_menu, 335-479</small>','hhk',[[C_BLD, '0…+1'], [C_NAR, '−3…+1']]));
   if(EXP.has('N4')){
-    L.push('IG["<div style=\'width:260px;white-space:normal\'>Нарси показывает иглу и спрашивает «нравится?» (358)</div>"]:::sc');
+    L.push('IG["<div style=\'width:260px;white-space:normal\'>Нарси показывает иглу и спрашивает «нравится?» (335)</div>"]:::sc');
     E('N4 --> IG', c4);
-    L.push('IG2["<div style=\'width:240px;white-space:normal\'>Нарси кидает иглу героине (368-369)</div>"]:::sc');
-    L.push('PO["<div style=\'width:320px;white-space:normal\'>Игла впивается в ладонь: яд, герой почти умирает, Нарси вкалывает противоядие (395-434)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>Кровь +1</span></div>"]:::bad');
-    L.push('AF["<div style=\'width:280px;white-space:normal\'>Нарси: «Что, любишь экспериментировать на себе?» (434)</div>"]:::sc');
-    L.push('AF2["<div style=\'width:300px;white-space:normal\'>Нарси: «Я кинул тупой стороной... где моё спасибо?» (446-458)</div>"]:::sc');
-    L.push('TH["<div style=\'width:280px;white-space:normal\'>Нарси: «Какие мы вежливые, боишься, что могу нажаловаться?» (463)</div>"]:::sc');
+    L.push('IG2["<div style=\'width:240px;white-space:normal\'>Нарси кидает иглу героине (344)</div>"]:::sc');
+    L.push('PO["<div style=\'width:320px;white-space:normal\'>Игла впивается в ладонь: яд, герой почти умирает, Нарси вкалывает противоядие (371-410)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>Кровь +1</span></div>"]:::bad');
+    L.push('AF["<div style=\'width:280px;white-space:normal\'>Нарси: «Что, любишь экспериментировать на себе?» (409)</div>"]:::sc');
+    L.push('AF2["<div style=\'width:300px;white-space:normal\'>Нарси: «Я кинул тупой стороной... где моё спасибо?» (422-434)</div>"]:::sc');
+    L.push('TH["<div style=\'width:280px;white-space:normal\'>Нарси: «Какие мы вежливые, боишься, что могу нажаловаться?» (438)</div>"]:::sc');
     E('IG --> I1["<div style=\'width:290px;white-space:normal\'>'+mk('«Посмотреть поближе.»',null,null)+'</div>"]:::hhk', c4); E('I1 --> IG2', c4);
     E('IG --> I2["<div style=\'width:290px;white-space:normal\'>'+mk('«Отшатнуться назад.»',null,[[C_NAR, 3]])+'</div>"]:::hhk', c4); E('I2 --> N2', c4);
     E('IG2 --> I3["<div style=\'width:290px;white-space:normal\'>'+mk('«Дать ей упасть на пол.»'+flag('запоминает «игла упала на пол»'),null,null)+'</div>"]:::hhk', c4); E('I3 --> N2', c4);
@@ -133,43 +133,43 @@ function build(){
     E('AF --> I6["<div style=\'width:290px;white-space:normal\'>'+mk('«Зачем ты это сделал?»',null,null)+'</div>"]:::hhk', c4); E('I6 --> AF2', c4);
     E('AF --> I7["<div style=\'width:290px;white-space:normal\'>'+mk('«Выбежать оттуда.»',null,[[C_NAR, 2]])+'</div>"]:::hhk', c4); E('I7 --> EXS', c4);
     E('AF2 --> I8["<div style=\'width:290px;white-space:normal\'>'+mk('«Спасибо.»',null,null)+'</div>"]:::hhk', c4); E('I8 --> TH', c4);
-    E('AF2 --> I9["<div style=\'width:290px;white-space:normal\'>'+mk('«Послать его.»'+cond('строка 490: «+1» без присваивания, настроение Нарси не меняется (опечатка, исправлена)'),[[C_NAR, 1]],null)+'</div>"]:::hhk', c4); E('I9 --> N2', c4);
+    E('AF2 --> I9["<div style=\'width:290px;white-space:normal\'>'+mk('«Послать его.»'+cond('настроение Нарси +1 (465). До исправления в ветке (старая строка 490) стояло «+1» без присваивания'),[[C_NAR, 1]],null)+'</div>"]:::hhk', c4); E('I9 --> N2', c4);
     E('TH --> I10["<div style=\'width:290px;white-space:normal\'>'+mk('«Промолчать.»',null,null)+'</div>"]:::hhk', c4); E('I10 --> N2', c4);
-    E('TH --> I11["<div style=\'width:290px;white-space:normal\'>'+mk('«Не боюсь!»'+cond('строка 474: «+1» без присваивания, настроение Нарси не меняется (опечатка, исправлена)'),[[C_NAR, 1]],null)+'</div>"]:::hhk', c4); E('I11 --> N2', c4);
+    E('TH --> I11["<div style=\'width:290px;white-space:normal\'>'+mk('«Не боюсь!»'+cond('настроение Нарси +1 (449). До исправления в ветке (старая строка 474) стояло «+1» без присваивания'),[[C_NAR, 1]],null)+'</div>"]:::hhk', c4); E('I11 --> N2', c4);
   } else {
     E('N4 --> N2', c4);
     E('N4 --> EXS', c4);
   }
-  L.push(hub('N5','Показать вещь Нарси<br/><small>diary_nars, hat_nars, kapik_nars, table_chaos_nars, igla_nars, 511-950</small>','hhr',[[C_NAR, '−3…+1']]));
+  L.push(hub('N5','Показать вещь Нарси<br/><small>diary_nars, hat_nars, kapik_nars, table_chaos_nars, igla_nars, 485-895</small>','hhr',[[C_NAR, '−3…+1']]));
   if(EXP.has('N5')){
     L.push('IT["<div style=\'width:280px;white-space:normal\'>Героиня показывает Нарси найденную вещь (из рюкзака)</div>"]:::sc');
     E('N5 --> IT', c5);
-    L.push('IT1["<div style=\'width:280px;white-space:normal\'>Дневник: Нарси «зачарованная дрянь!», возвращает героине (511-551)</div>"]:::sc');
-    L.push('IT2["<div style=\'width:280px;white-space:normal\'>Цилиндр Айрата: Нарси просит отдать (565-579)</div>"]:::sc');
-    L.push('IT3["<div style=\'width:260px;white-space:normal\'>Капибара-игрушка: «Откуда?» (610-618)</div>"]:::sc');
-    L.push('IT4["<div style=\'width:260px;white-space:normal\'>Табличка Хаоса: «Отдай мне?» (702-723)</div>"]:::sc');
-    L.push('IT5["<div style=\'width:240px;white-space:normal\'>Игла на столе (798-805)</div>"]:::sc');
-    L.push('IT6["<div style=\'width:240px;white-space:normal\'>Игла в рюкзаке (816)</div>"]:::sc');
+    L.push('IT1["<div style=\'width:280px;white-space:normal\'>Дневник: Нарси «зачарованная дрянь!», возвращает героине (485-523)</div>"]:::sc');
+    L.push('IT2["<div style=\'width:280px;white-space:normal\'>Цилиндр Айрата: Нарси просит отдать (538-552)</div>"]:::sc');
+    L.push('IT3["<div style=\'width:260px;white-space:normal\'>Капибара-игрушка: «Откуда?» (583-591)</div>"]:::sc');
+    L.push('IT4["<div style=\'width:260px;white-space:normal\'>Табличка Хаоса: «Отдай мне?» (675-696)</div>"]:::sc');
+    L.push('IT5["<div style=\'width:240px;white-space:normal\'>Игла на столе (771-778)</div>"]:::sc');
+    L.push('IT6["<div style=\'width:240px;white-space:normal\'>Игла в рюкзаке (789)</div>"]:::sc');
     E('IT --> S1["<div style=\'width:290px;white-space:normal\'>'+mk('Если показан дневник:',null,null)+'</div>"]:::hhr', c5); E('S1 --> IT1', c5);
     E('IT --> S2["<div style=\'width:290px;white-space:normal\'>'+mk('Если показан цилиндр:',null,null)+'</div>"]:::hhr', c5); E('S2 --> IT2', c5);
     E('IT --> S3["<div style=\'width:290px;white-space:normal\'>'+mk('Если показана капибара:',null,null)+'</div>"]:::hhr', c5); E('S3 --> IT3', c5);
     E('IT --> S4["<div style=\'width:290px;white-space:normal\'>'+mk('Если показана табличка:',null,null)+'</div>"]:::hhr', c5); E('S4 --> IT4', c5);
     E('IT --> S5["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня нашла иглу на столе:',null,null)+'</div>"]:::hhr', c5); E('S5 --> IT5', c5);
     E('IT --> S6["<div style=\'width:290px;white-space:normal\'>'+mk('Если показана игла:',null,null)+'</div>"]:::hhr', c5); E('S6 --> IT6', c5);
-    E('IT1 --> D1["<div style=\'width:290px;white-space:normal\'>'+mk('«Да.» (принесла как что-то интересное; если задание взято, 521)'+flag('записывает «дневник показан Нарси» → открывает дневник-квест'),null,null)+'</div>"]:::hhr', c5); E('D1 --> EXS', c5);
+    E('IT1 --> D1["<div style=\'width:290px;white-space:normal\'>'+mk('«Да.» (принесла как что-то интересное; если задание взято, 494)'+flag('записывает «дневник показан Нарси» → открывает дневник-квест'),null,null)+'</div>"]:::hhr', c5); E('D1 --> EXS', c5);
     E('IT1 --> D2["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет.»',null,null)+'</div>"]:::hhr', c5); E('D2 --> EXS', c5);
-    E('IT2 --> H1["<div style=\'width:290px;white-space:normal\'>'+mk('«Он твой.»'+cond('если задание взято (579): задание выполнено, демоверсия заканчивается (599)'),null,null)+'</div>"]:::hhr', c5); E('H1 --> END', c5);
+    E('IT2 --> H1["<div style=\'width:290px;white-space:normal\'>'+mk('«Он твой.»'+cond('если задание взято (552): задание выполнено, демоверсия заканчивается (572)'),null,null)+'</div>"]:::hhr', c5); E('H1 --> END', c5);
     E('IT2 --> H2["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет.»',null,null)+'</div>"]:::hhr', c5); E('H2 --> EXS', c5);
-    L.push('KP["<div style=\'width:260px;white-space:normal\'>Нарси: «Может сходим в Кап и Бар?» (623-632)</div>"]:::sc');
-    E('IT3 --> K1["<div style=\'width:290px;white-space:normal\'>'+mk('«Из Кап и Бара.»'+cond('если «Кап и Бар» ещё не обсуждали (623)'),null,null)+'</div>"]:::hhr', c5); E('K1 --> KP', c5);
+    L.push('KP["<div style=\'width:260px;white-space:normal\'>Нарси: «Может сходим в Кап и Бар?» (596-605)</div>"]:::sc');
+    E('IT3 --> K1["<div style=\'width:290px;white-space:normal\'>'+mk('«Из Кап и Бара.»'+cond('если «Кап и Бар» ещё не обсуждали (593)'),null,null)+'</div>"]:::hhr', c5); E('K1 --> KP', c5);
     E('IT3 --> K2["<div style=\'width:290px;white-space:normal\'>'+mk('«Промолчать.»',null,null)+'</div>"]:::hhr', c5); E('K2 --> EXS', c5);
     E('KP --> K3["<div style=\'width:290px;white-space:normal\'>'+mk('«Хорошо!»'+flag('записывает «Нарси идёт со мной» (near = 1) → у героини 20 минут игрового времени дойти до Кап и Бара'),[[C_NAR, 1]],null)+'</div>"]:::hhr', c5); E('K3 --> EXS', c5);
     E('KP --> K4["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет.»'+flag('записывает «поход в Кап и Бар провален»'),null,[[C_NAR, 1]])+'</div>"]:::hhr', c5); E('K4 --> EXS', c5);
-    E('IT4 --> T1["<div style=\'width:290px;white-space:normal\'>'+mk('«Она твоя.»'+cond('если задание взято (756): задание выполнено, демоверсия заканчивается; если не взято - Нарси «должен», табличка уходит к нему (763)'),null,null)+'</div>"]:::hhr', c5); E('T1 --> END', c5);
+    E('IT4 --> T1["<div style=\'width:290px;white-space:normal\'>'+mk('«Она твоя.»'+cond('если задание взято (728): задание выполнено, демоверсия заканчивается; если не взято - Нарси «должен», табличка уходит к нему (735)'),null,null)+'</div>"]:::hhr', c5); E('T1 --> END', c5);
     E('IT4 --> T2["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет.»',null,[[C_NAR, 3]])+'</div>"]:::hhr', c5); E('T2 --> EXS', c5);
     E('IT5 --> E1["<div style=\'width:290px;white-space:normal\'>'+mk('«Конечно!»'+flag('записывает: игла теперь у героини'),null,null)+'</div>"]:::hhr', c5); E('E1 --> EXS', c5);
     E('IT5 --> E2["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет, не стоит»',null,null)+'</div>"]:::hhr', c5); E('E2 --> EXS', c5);
-    E('IT6 --> G1["<div style=\'width:290px;white-space:normal\'>'+mk('«Воткнуть в него»'+cond('если Безумие не ниже 1 уровня или есть разрешение (818)'),null,null)+'</div>"]:::hhr', c5); E('G1 --> BAD', c5);
+    E('IT6 --> G1["<div style=\'width:290px;white-space:normal\'>'+mk('«Воткнуть в него»'+cond('если Безумие не ниже 1 уровня или есть разрешение (790)'),null,null)+'</div>"]:::hhr', c5); E('G1 --> BAD', c5);
     E('IT6 --> G2["<div style=\'width:290px;white-space:normal\'>'+mk('«Показать ему.»'+cond('внутренние ответы: «Просто хотела показать!» +1; «Вернуть» −1 и игла остаётся у Нарси; «Ты просил найти что-то редкое» без изменений'),[[C_NAR, 1]],null)+'</div>"]:::hhr', c5); E('G2 --> EXS', c5);
     E('IT6 --> G3["<div style=\'width:290px;white-space:normal\'>'+mk('«Назад.»',null,null)+'</div>"]:::hhr', c5); E('G3 --> EXS', c5);
   } else {
@@ -177,31 +177,31 @@ function build(){
     E('N5 --> END', c5);
     E('N5 --> BAD', c5);
   }
-  L.push(hub('N6','Зелье в баре<br/><small>script_4_tgavan_potion, 953-1140</small>','hhg',[[C_MAD, '0…+1']]));
+  L.push(hub('N6','Зелье в баре<br/><small>script_4_tgavan_potion, 899-1080</small>','hhg',[[C_MAD, '0…+1']]));
   if(EXP.has('N6')){
-    L.push('PV["<div style=\'width:220px;white-space:normal\'>Фиал с зельем (953)</div>"]:::sc');
+    L.push('PV["<div style=\'width:220px;white-space:normal\'>Фиал с зельем (899)</div>"]:::sc');
     E('N6 --> PV', c6);
-    L.push('PD["<div style=\'width:320px;white-space:normal\'>Зелье выпито, зрение возвращается: Нарси шутит «это яд» (1097-1138); либо у Адриана (965-1002)</div>"]:::sc');
-    L.push('PB["<div style=\'width:220px;white-space:normal\'>Фиал разбит (1011)</div>"]:::sc');
-    E('PV --> V1["<div style=\'width:290px;white-space:normal\'>'+mk('«Взять очень осторожно.»'+cond('если рядом Адриан: он объясняет зелье и возвращает героиню на страницу «Адриан» (1002)'),null,null)+'</div>"]:::hhg', c6); E('V1 --> PD', c6);
+    L.push('PD["<div style=\'width:320px;white-space:normal\'>Зелье выпито, зрение возвращается: Нарси шутит «это яд» (1039-1077); либо у Адриана (910-947)</div>"]:::sc');
+    L.push('PB["<div style=\'width:220px;white-space:normal\'>Фиал разбит (954)</div>"]:::sc');
+    E('PV --> V1["<div style=\'width:290px;white-space:normal\'>'+mk('«Взять очень осторожно.»'+cond('если рядом Адриан: он объясняет зелье и возвращает героиню на страницу «Адриан» (946)'),null,null)+'</div>"]:::hhg', c6); E('V1 --> PD', c6);
     E('PV --> V2["<div style=\'width:290px;white-space:normal\'>'+mk('«Наплевать на предупреждение.»',[[C_MAD, 1]],null)+'</div>"]:::hhg', c6); E('V2 --> PB', c6);
     E('PV --> V3["<div style=\'width:290px;white-space:normal\'>'+mk('«Я не буду это пить!»',null,null)+'</div>"]:::hhg', c6); E('V3 --> EXS', c6);
-    E('PB --> V4["<div style=\'width:290px;white-space:normal\'>'+mk('Если Нарси рядом и настроение Нарси выше 3 (1052):'+cond('Открыть рот и сказать «А-а-а»: герой слушается → выпивает зелье из рук Нарси; «Я не стану!» — Нарси отправляет искать зелье у стражи (1063-1074)'),null,null)+'</div>"]:::hhg', c6); E('V4 --> PD', c6);
-    E('PB --> V5["<div style=\'width:290px;white-space:normal\'>'+mk('Если Нарси не рядом или настроение Нарси не выше 3:'+cond('если рядом Адриан: даёт ещё зелье до трёх раз, потом отказывает (1016-1043)'),null,null)+'</div>"]:::hhg', c6); E('V5 --> EXS', c6);
+    E('PB --> V4["<div style=\'width:290px;white-space:normal\'>'+mk('Если Нарси рядом и настроение Нарси выше 3 (994):'+cond('Открыть рот и сказать «А-а-а»: герой слушается → выпивает зелье из рук Нарси; «Я не стану!» — Нарси отправляет искать зелье у стражи (1005-1015)'),null,null)+'</div>"]:::hhg', c6); E('V4 --> PD', c6);
+    E('PB --> V5["<div style=\'width:290px;white-space:normal\'>'+mk('Если Нарси не рядом или настроение Нарси не выше 3:'+cond('если рядом Адриан: даёт ещё зелье до трёх раз, потом отказывает (959-985)'),null,null)+'</div>"]:::hhg', c6); E('V5 --> EXS', c6);
     E('PD --> N2', c6);
   } else {
     E('N6 --> N2', c6);
     E('N6 --> EXS', c6);
   }
-  L.push(hub('N7','Имя героини<br/><small>name_nars, 1141-1192</small>','hhs',[[C_NAR, '0…+1']]));
+  L.push(hub('N7','Имя героини<br/><small>name_nars, 1081-1131</small>','hhs',[[C_NAR, '0…+1']]));
   if(EXP.has('N7')){
-    L.push('NN["<div style=\'width:260px;white-space:normal\'>Нарси: «Так как тебя звать-то?» (1142)</div>"]:::sc');
+    L.push('NN["<div style=\'width:260px;white-space:normal\'>Нарси: «Так как тебя звать-то?» (1081)</div>"]:::sc');
     E('N7 --> NN', c7);
-    L.push('NV["<div style=\'width:280px;white-space:normal\'>Нарси: «Знаешь, а раньше ты не так выглядела» (1177-1189)</div>"]:::sc');
-    E('NN --> Y1["<div style=\'width:290px;white-space:normal\'>'+mk('«Меня зовут [v].»'+cond('если имя героини «Вий»: Нарси говорит про Вия (1176-1189)')+flag('записывает: Нарси знает имя героини'),null,null)+'</div>"]:::hhs', c7); E('Y1 --> N2', c7);
+    L.push('NV["<div style=\'width:280px;white-space:normal\'>Нарси: «Знаешь, а раньше ты не так выглядела» (1115-1128)</div>"]:::sc');
+    E('NN --> Y1["<div style=\'width:290px;white-space:normal\'>'+mk('«Меня зовут [v].»'+cond('если имя героини «Вий»: Нарси говорит про Вия (1115-1128)')+flag('записывает: Нарси знает имя героини'),null,null)+'</div>"]:::hhs', c7); E('Y1 --> N2', c7);
     E('NN --> Y2["<div style=\'width:290px;white-space:normal\'>'+mk('«Я... Миранда.»',null,null)+'</div>"]:::hhs', c7); E('Y2 --> N2', c7);
     E('NN --> Y3["<div style=\'width:290px;white-space:normal\'>'+mk('«Сапуля Те Ля Камоле Каптуче Холе.»',[[C_NAR, 1]],null)+'</div>"]:::hhs', c7); E('Y3 --> N2', c7);
-    E('NN --> Y4["<div style=\'width:290px;white-space:normal\'>'+mk('«Вий.»'+cond('если героиня знает, что она Вий, и имя не «Вий» (1174)'),null,null)+'</div>"]:::hhs', c7); E('Y4 --> NV', c7);
+    E('NN --> Y4["<div style=\'width:290px;white-space:normal\'>'+mk('«Вий.»'+cond('если героиня знает, что она Вий, и имя не «Вий» (1113)'),null,null)+'</div>"]:::hhs', c7); E('Y4 --> NV', c7);
     E('NV --> N2', c7);
   } else {
     E('N7 --> N2', c7);
@@ -245,8 +245,8 @@ render();
 <body>
 <header class="site"><div class="wrap">
 <h1>Нарси и бар (Тёмная Гавань)</h1>
-<p>script_4_tgavan_nars.rpy, 1-1192: знакомство, задание, игла, показ вещей, зелье, имя.</p>
-<nav class="crumbs"><a href="index.html?v=197">← Все схемы</a> · <a href="gavan.html?v=125">Тёмная Гавань: Адриан</a> · <a href="stats.html?v=198">Статы</a></nav>
+<p>script_4_tgavan_nars.rpy, 1-1131: знакомство, задание, игла, показ вещей, зелье, имя.</p>
+<nav class="crumbs"><a href="index.html?v=197">← Все схемы</a> · <a href="gavan.html?v=207">Тёмная Гавань: Адриан</a> · <a href="stats.html?v=198">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">

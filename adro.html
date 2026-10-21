@@ -44,17 +44,17 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#0e7490', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
-  L.push('ST["<a href=\'gavan.html?v=125\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Тёмная Гавань: герой идёт к центральному зданию (посольство эльфов)<br/><small>script_4_tgavan_adro</small></div></a>"]:::ex');
+  L.push('ST["<a href=\'gavan.html?v=207\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Тёмная Гавань: герой идёт к центральному зданию (посольство эльфов)<br/><small>script_4_tgavan_adro</small></div></a>"]:::ex');
   L.push('EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex');
-  L.push('NS["<a href=\'less.html?v=193\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:260px;white-space:normal\'>Лесс вытаскивает героиню: метка nesm (1267)</div></a>"]:::ex');
-  L.push('BAD["<div style=\'width:280px;white-space:normal\'>BAD END «Забытая» (1275-1278, перезапуск игры)</div>"]:::bad');
-  L.push('NEXT["<a href=\'adro2.html?v=189\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Дальше: кабинет Лиассона (страница «Адро 2», script_4_tgavan_begin_adro)</div></a>"]:::ex');
+  L.push('NS["<a href=\'less.html?v=193\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:260px;white-space:normal\'>Лесс вытаскивает героиню: метка nesm (1243)</div></a>"]:::ex');
+  L.push('BAD["<div style=\'width:280px;white-space:normal\'>BAD END «Забытая» (1251-1254, перезапуск игры)</div>"]:::bad');
+  L.push('NEXT["<a href=\'adro2.html?v=208\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Дальше: кабинет Лиассона (страница «Адро 2», script_4_tgavan_begin_adro)</div></a>"]:::ex');
   E('ST --> D1', cG);
-  L.push(hub('D1','Адро у ворот<br/><small>script_4_tgavan_adro, adro_menu, 709-785</small>','hhn',[[C_MAD, '0…+1'], [C_LOG, '−1…+1'], [C_ADO, '−1…0']]));
+  L.push(hub('D1','Адро у ворот<br/><small>script_4_tgavan_adro, adro_menu, 696-771</small>','hhn',[[C_MAD, '0…+1'], [C_LOG, '−1…+1'], [C_ADO, '−1…0']]));
   if(EXP.has('D1')){
-    L.push('G0["<div style=\'width:300px;white-space:normal\'>Адро преграждает проход: «Проход запрещён» (714-738)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если героиня в Белой Страже: текст про значок; если не в Белой Страже - она идёт «по поводу...»</span></div>"]:::sc');
+    L.push('G0["<div style=\'width:300px;white-space:normal\'>Адро преграждает проход: «Проход запрещён» (700-724)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если героиня в Белой Страже: текст про значок; если не в Белой Страже - она идёт «по поводу...»</span></div>"]:::sc');
     E('D1 --> G0', c1);
-    L.push('GM["<div style=\'width:240px;white-space:normal\'>Адро не замечает героиню (748)</div>"]:::sc');
+    L.push('GM["<div style=\'width:240px;white-space:normal\'>Адро не замечает героиню (734)</div>"]:::sc');
     E('G0 --> GM', c1);
     E('GM --> R1["<div style=\'width:290px;white-space:normal\'>'+mk('«Окликнуть его.»',null,[[C_ADO, 1]])+'</div>"]:::hhn', c1); E('R1 --> EXS', c1);
     E('GM --> R2["<div style=\'width:290px;white-space:normal\'>'+mk('«Попрыгать перед его носом и показать язык»',[[C_MAD, 1]],[[C_LOG, 1], [C_ADO, 1]])+'</div>"]:::hhn', c1); E('R2 --> EXS', c1);
@@ -62,20 +62,20 @@ function build(){
   } else {
     E('D1 --> EXS', c1);
   }
-  L.push(hub('D2','Показать значок Адро<br/><small>adro_wg_zn, adro_adr_zn, 1583-1651</small>','hhl',[]));
+  L.push(hub('D2','Показать значок Адро<br/><small>adro_wg_zn, adro_adr_zn, 1557-1624</small>','hhl',[]));
   if(EXP.has('D2')){
-    L.push('B0["<div style=\'width:260px;white-space:normal\'>Героиня показывает Адро значок (1583)</div>"]:::sc');
+    L.push('B0["<div style=\'width:260px;white-space:normal\'>Героиня показывает Адро значок (1557)</div>"]:::sc');
     E('D2 --> B0', c2);
-    L.push('B1["<div style=\'width:300px;white-space:normal\'>Адро: «Стража сочла разумным делегировать... вас?» (1592-1602)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: Адро согласился пустить героиню (пункт расследования 1)</span></div>"]:::sc');
-    L.push('B2["<div style=\'width:280px;white-space:normal\'>Адро: «Ещё. Один. Последний значок» (1607-1614)</div>"]:::sc');
-    L.push('B3["<div style=\'width:280px;white-space:normal\'>Адро: «Ваша настойчивость граничит с неблагоразумием» (1620-1622)</div>"]:::sc');
-    L.push('B4["<div style=\'width:280px;white-space:normal\'>Адро: «Вы просто решили его показать?» (1625-1634)</div>"]:::sc');
-    L.push('B5["<div style=\'width:260px;white-space:normal\'>Адро: «Он уже запомнил моё лицо» (1585)</div>"]:::sc');
-    L.push('B6["<div style=\'width:300px;white-space:normal\'>Героиня показывает значок Адриана; Адро не впечатлён (1637-1651)</div>"]:::sc');
-    E('B0 --> BB1["<div style=\'width:290px;white-space:normal\'>'+mk('Если запись про Адро (6) уже есть:',null,null)+'</div>"]:::hhl', c2); E('BB1 --> B5', c2);
-    E('B0 --> BB2["<div style=\'width:290px;white-space:normal\'>'+mk('Если расследование взято и значок ещё не показывали (1589):',null,null)+'</div>"]:::hhl', c2); E('BB2 --> B1', c2);
-    E('B0 --> BB3["<div style=\'width:290px;white-space:normal\'>'+mk('Если после ссоры Адриан дал второй значок (1606):',null,null)+'</div>"]:::hhl', c2); E('BB3 --> B2', c2);
-    E('B0 --> BB4["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адро уже ссорился с героиней (1619):',null,null)+'</div>"]:::hhl', c2); E('BB4 --> B3', c2);
+    L.push('B1["<div style=\'width:300px;white-space:normal\'>Адро: «Стража сочла разумным делегировать... вас?» (1566-1576)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: Адро согласился пустить героиню (пункт расследования 1)</span></div>"]:::sc');
+    L.push('B2["<div style=\'width:280px;white-space:normal\'>Адро: «Ещё. Один. Последний значок» (1581-1588)</div>"]:::sc');
+    L.push('B3["<div style=\'width:280px;white-space:normal\'>Адро: «Ваша настойчивость граничит с неблагоразумием» (1594-1596)</div>"]:::sc');
+    L.push('B4["<div style=\'width:280px;white-space:normal\'>Адро: «Вы просто решили его показать?» (1598-1607)</div>"]:::sc');
+    L.push('B5["<div style=\'width:260px;white-space:normal\'>Адро: «Он уже запомнил моё лицо» (1559)</div>"]:::sc');
+    L.push('B6["<div style=\'width:300px;white-space:normal\'>Героиня показывает значок Адриана; Адро не впечатлён (1610-1624)</div>"]:::sc');
+    E('B0 --> BB1["<div style=\'width:290px;white-space:normal\'>'+mk('Если в дневнике уже есть запись про Адро (invest_quest, часть 6) (1559):',null,null)+'</div>"]:::hhl', c2); E('BB1 --> B5', c2);
+    E('B0 --> BB2["<div style=\'width:290px;white-space:normal\'>'+mk('Если расследование взято и значок ещё не показывали (1563):',null,null)+'</div>"]:::hhl', c2); E('BB2 --> B1', c2);
+    E('B0 --> BB3["<div style=\'width:290px;white-space:normal\'>'+mk('Если после ссоры Адриан дал второй значок (1580):',null,null)+'</div>"]:::hhl', c2); E('BB3 --> B2', c2);
+    E('B0 --> BB4["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адро уже ссорился с героиней (1593):',null,null)+'</div>"]:::hhl', c2); E('BB4 --> B3', c2);
     E('B0 --> BB5["<div style=\'width:290px;white-space:normal\'>'+mk('Если записи про Адро нет, расследование не взято и ссоры не было:',null,null)+'</div>"]:::hhl', c2); E('BB5 --> B4', c2);
     E('B3 --> EXS', c2);
     E('B4 --> EXS', c2);
@@ -88,13 +88,13 @@ function build(){
     E('D2 --> D4', c2);
     E('D2 --> EXS', c2);
   }
-  L.push(hub('D3','Первая встреча с Адро<br/><small>script_3_noproblems_adro_tgavan, 792-849</small>','hhp',[[C_MAD, '0…+2'], [C_LOG, '−1…+1'], [C_ADO, '−2…+1']]));
+  L.push(hub('D3','Первая встреча с Адро<br/><small>script_3_noproblems_adro_tgavan, 778-835</small>','hhp',[[C_MAD, '0…+2'], [C_LOG, '−1…+1'], [C_ADO, '−2…+1']]));
   if(EXP.has('D3')){
-    L.push('P0["<div style=\'width:260px;white-space:normal\'>Адро: «Ну что, вы будете мешать?» (792)</div>"]:::sc');
+    L.push('P0["<div style=\'width:260px;white-space:normal\'>Адро: «Ну что, вы будете мешать?» (778)</div>"]:::sc');
     E('D3 --> P0', c3);
-    L.push('P1["<div style=\'width:300px;white-space:normal\'>Адро: «Вам не хватит жизни научиться этому» → допускает (799-811)</div>"]:::sc');
-    L.push('P2["<div style=\'width:300px;white-space:normal\'>Героиня говорит про левый глаз Адро; он сбит с толку и допускает к записям (816-832)</div>"]:::sc');
-    L.push('P3["<div style=\'width:300px;white-space:normal\'>Адро: «Мы разберёмся без помощи Стражи», уходит (835-848)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «ссора с Адро» → в дневнике пункт 2</span></div>"]:::bad');
+    L.push('P1["<div style=\'width:300px;white-space:normal\'>Адро: «Вам не хватит жизни научиться этому» → допускает (785-797)</div>"]:::sc');
+    L.push('P2["<div style=\'width:300px;white-space:normal\'>Героиня говорит про левый глаз Адро; он сбит с толку и допускает к записям (802-818)</div>"]:::sc');
+    L.push('P3["<div style=\'width:300px;white-space:normal\'>Адро: «Мы разберёмся без помощи Стражи», уходит (821-834)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «ссора с Адро» → в дневнике пункт 2</span></div>"]:::bad');
     E('P0 --> P11["<div style=\'width:290px;white-space:normal\'>'+mk('«Никаких проблем! Я здесь чтобы помочь!»',[[C_LOG, 1], [C_ADO, 1]],null)+'</div>"]:::hhp', c3); E('P11 --> P1', c3);
     E('P0 --> P12["<div style=\'width:290px;white-space:normal\'>'+mk('«Сказать что-то совершенно неуместное.»',[[C_MAD, 2]],[[C_LOG, 1], [C_ADO, 2]])+'</div>"]:::hhp', c3); E('P12 --> P2', c3);
     E('P0 --> P13["<div style=\'width:290px;white-space:normal\'>'+mk('«Как грубо!»',null,[[C_ADO, 2]])+'</div>"]:::hhp', c3); E('P13 --> P3', c3);
@@ -105,65 +105,65 @@ function build(){
     E('D3 --> D4', c3);
     E('D3 --> EXS', c3);
   }
-  L.push(hub('D4','Допрос Адро<br/><small>noproblems2, menu1, 850-1047</small>','hhk',[[C_ADO, '−2…+3']]));
+  L.push(hub('D4','Допрос Адро<br/><small>noproblems2, menu1, 836-1026</small>','hhk',[[C_ADO, '−2…+3']]));
   if(EXP.has('D4')){
-    L.push('Q0["<div style=\'width:300px;white-space:normal\'>Адро представляется, называет имя Лиассона (850-883)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Адро знает имя героини»; пункт расследования 6</span></div>"]:::sc');
+    L.push('Q0["<div style=\'width:300px;white-space:normal\'>Адро представляется, называет имя Лиассона (836-869)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Адро знает имя героини»; пункт расследования 6</span></div>"]:::sc');
     E('D4 --> Q0', c4);
-    L.push('QM["<div style=\'width:260px;white-space:normal\'>Что спросить у Адро? (884-887)</div>"]:::sc');
+    L.push('QM["<div style=\'width:260px;white-space:normal\'>Что спросить у Адро? (870-873)</div>"]:::sc');
     E('Q0 --> QM', c4);
-    L.push('QO["<div style=\'width:260px;white-space:normal\'>Адро: «Отношения были сложные» (890-896)</div>"]:::sc');
-    L.push('QO2["<div style=\'width:280px;white-space:normal\'>Адро: «Мне безразлично, жив ли он» (904-918)</div>"]:::sc');
-    L.push('QE["<div style=\'width:300px;white-space:normal\'>Адро: «Вопрос сложный. Вы знакомы с психологией Светлых и Тёмных?» (934-958)</div>"]:::sc');
-    L.push('QY["<div style=\'width:280px;white-space:normal\'>Адро: «Желания не имеют значения. Только действия» (967-975)</div>"]:::sc');
-    L.push('QD["<div style=\'width:260px;white-space:normal\'>Адро: «Это было убийство» (980-997)</div>"]:::sc');
-    L.push('QW["<div style=\'width:300px;white-space:normal\'>Адро: «Мне это тоже не по душе» (1003-1019)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «война/дело Гарбока» (adro_war) → открывает пункт «гарбок»</span></div>"]:::sc');
-    L.push('QK["<div style=\'width:280px;white-space:normal\'>Адро: «Ненависть — вульгарное чувство» (1026-1033)</div>"]:::sc');
-    E('QM --> Q1["<div style=\'width:290px;white-space:normal\'>'+mk('«Какие у вас с ним были отношения?»'+cond('один раз (888)'),null,null)+'</div>"]:::hhk', c4); E('Q1 --> QO', c4);
-    E('QO --> Q1a["<div style=\'width:290px;white-space:normal\'>'+mk('«И все же...?»'+cond('один раз (898)'),null,[[C_ADO, 1]])+'</div>"]:::hhk', c4); E('Q1a --> QO2', c4);
+    L.push('QO["<div style=\'width:260px;white-space:normal\'>Адро: «Отношения были сложные» (877-882)</div>"]:::sc');
+    L.push('QO2["<div style=\'width:280px;white-space:normal\'>Адро: «Мне безразлично, жив ли он» (890-904)</div>"]:::sc');
+    L.push('QE["<div style=\'width:300px;white-space:normal\'>Адро: «Вопрос сложный. Вы знакомы с психологией Светлых и Тёмных?» (921-944)</div>"]:::sc');
+    L.push('QY["<div style=\'width:280px;white-space:normal\'>Адро: «Желания не имеют значения. Только действия» (953-961)</div>"]:::sc');
+    L.push('QD["<div style=\'width:260px;white-space:normal\'>Адро: «Это было убийство» (966-983)</div>"]:::sc');
+    L.push('QW["<div style=\'width:300px;white-space:normal\'>Адро: «Мне это тоже не по душе» (989-998)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «война/дело Гарбока» (adro_war) → открывает пункт «гарбок»</span></div>"]:::sc');
+    L.push('QK["<div style=\'width:280px;white-space:normal\'>Адро: «Ненависть — вульгарное чувство» (1005-1012)</div>"]:::sc');
+    E('QM --> Q1["<div style=\'width:290px;white-space:normal\'>'+mk('«Какие у вас с ним были отношения?»'+cond('один раз (874)'),null,null)+'</div>"]:::hhk', c4); E('Q1 --> QO', c4);
+    E('QO --> Q1a["<div style=\'width:290px;white-space:normal\'>'+mk('«И все же...?»'+cond('один раз (884)'),null,[[C_ADO, 1]])+'</div>"]:::hhk', c4); E('Q1a --> QO2', c4);
     E('QO2 --> QM', c4);
     E('QO --> Q1b["<div style=\'width:290px;white-space:normal\'>'+mk('«Отступить.»',null,null)+'</div>"]:::hhk', c4); E('Q1b --> QM', c4);
-    E('QM --> Q2["<div style=\'width:290px;white-space:normal\'>'+mk('«У него были враги?»'+cond('один раз (930)'),[[C_ADO, 1]],null)+'</div>"]:::hhk', c4); E('Q2 --> QE', c4);
+    E('QM --> Q2["<div style=\'width:290px;white-space:normal\'>'+mk('«У него были враги?»'+cond('один раз (916)'),[[C_ADO, 1]],null)+'</div>"]:::hhk', c4); E('Q2 --> QE', c4);
     E('QE --> QM', c4);
-    E('QM --> Q3["<div style=\'width:290px;white-space:normal\'>'+mk('«То есть вы хотели его убить?»'+cond('после «И все же...?»; один раз (964)'),null,[[C_ADO, 1]])+'</div>"]:::hhk', c4); E('Q3 --> QY', c4);
+    E('QM --> Q3["<div style=\'width:290px;white-space:normal\'>'+mk('«То есть вы хотели его убить?»'+cond('после «И все же...?»; один раз (950)'),null,[[C_ADO, 1]])+'</div>"]:::hhk', c4); E('Q3 --> QY', c4);
     E('QY --> QM', c4);
-    E('QM --> Q4["<div style=\'width:290px;white-space:normal\'>'+mk('«Что вы знаете о его смерти?»'+cond('один раз (977)'),[[C_ADO, 1]],null)+'</div>"]:::hhk', c4); E('Q4 --> QD', c4);
+    E('QM --> Q4["<div style=\'width:290px;white-space:normal\'>'+mk('«Что вы знаете о его смерти?»'+cond('один раз (963)'),[[C_ADO, 1]],null)+'</div>"]:::hhk', c4); E('Q4 --> QD', c4);
     E('QD --> QM', c4);
-    E('QM --> Q5["<div style=\'width:290px;white-space:normal\'>'+mk('«Я не понимаю, почему Адриан послал меня, если дело так важно...»'+cond('после «Что вы знаете о его смерти?»; один раз (999)'),[[C_ADO, 1]],null)+'</div>"]:::hhk', c4); E('Q5 --> QW', c4);
+    E('QM --> Q5["<div style=\'width:290px;white-space:normal\'>'+mk('«Я не понимаю, почему Адриан послал меня, если дело так важно...»'+cond('после «Что вы знаете о его смерти?»; один раз (985)'),[[C_ADO, 1]],null)+'</div>"]:::hhk', c4); E('Q5 --> QW', c4);
     E('QW --> QM', c4);
-    E('QM --> Q6["<div style=\'width:290px;white-space:normal\'>'+mk('«Вы... Действительно ненавидите Каерносов?»'+cond('после «Что вы знаете о его смерти?»; один раз (1022)'),null,null)+'</div>"]:::hhk', c4); E('Q6 --> QK', c4);
+    E('QM --> Q6["<div style=\'width:290px;white-space:normal\'>'+mk('«Вы... Действительно ненавидите Каерносов?»'+cond('после «Что вы знаете о его смерти?»; один раз (1001)'),null,null)+'</div>"]:::hhk', c4); E('Q6 --> QK', c4);
     E('QK --> QM', c4);
-    L.push('QX["<div style=\'width:300px;white-space:normal\'>Адро ведёт героиню в центральное здание (1039-1047)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Адро в коридоре» → открывает вход в здание (adro_begin)</span></div>"]:::sc');
+    L.push('QX["<div style=\'width:300px;white-space:normal\'>Адро ведёт героиню в центральное здание (1018-1026)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Адро в коридоре» → открывает вход в здание (adro_begin)</span></div>"]:::sc');
     E('QM --> Q7["<div style=\'width:290px;white-space:normal\'>'+mk('«Я узнала что хотела и теперь хотела бы осмотреть его вещи.»',null,null)+'</div>"]:::hhk', c4); E('Q7 --> QX', c4);
     E('QX --> NEXT', c4);
   } else {
     E('D4 --> NEXT', c4);
   }
-  L.push(hub('D5','Контракт Чёрной Печати<br/><small>script_3_cab_adro_tgavan, seal_adro_tgavan, 1059-1278</small>','hhr',[[C_MAD, '−2…+3'], [C_LOG, '−3…+2'], [C_ADO, '−3…0']]));
+  L.push(hub('D5','Контракт Чёрной Печати<br/><small>script_3_cab_adro_tgavan, seal_adro_tgavan, 1038-1254</small>','hhr',[[C_MAD, '−2…+3'], [C_LOG, '−3…+2'], [C_ADO, '−3…0']]));
   if(EXP.has('D5')){
-    L.push('SE["<div style=\'width:320px;white-space:normal\'>Кабинет Лиассона. Адро протягивает бумагу: контракт Чёрной Печати (1059-1074)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Логика не ниже 1 уровня: героиня замечает запах цветов и чая</span></div>"]:::sc');
+    L.push('SE["<div style=\'width:320px;white-space:normal\'>Кабинет Лиассона. Адро протягивает бумагу: контракт Чёрной Печати (1038-1053)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Логика не ниже 1 уровня: героиня замечает запах цветов и чая</span></div>"]:::sc');
     E('D5 --> SE', c5);
-    L.push('SM["<div style=\'width:260px;white-space:normal\'>Подписывать контракт? (1076)</div>"]:::sc');
+    L.push('SM["<div style=\'width:260px;white-space:normal\'>Подписывать контракт? (1055)</div>"]:::sc');
     E('SE --> SM', c5);
-    L.push('SG["<div style=\'width:300px;white-space:normal\'>Героиня подписывает не глядя (1078-1090)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «подписала Чёрную Печать» → открывает расследование (black_seal_adro)</span></div>"]:::sc');
-    E('SM --> SC1["<div style=\'width:290px;white-space:normal\'>'+mk('«Подписать не глядя.»'+cond('если контракт ещё не читали (1077)'),null,null)+'</div>"]:::hhr', c5); E('SC1 --> SG', c5);
-    E('SM --> SC2["<div style=\'width:290px;white-space:normal\'>'+mk('«Внимательно прочитать.»'+cond('один раз (1091)')+flag('записывает «контракт прочитан»'),[[C_LOG, 1]],[[C_MAD, 1]])+'</div>"]:::hhr', c5); E('SC2 --> SM', c5);
-    E('SM --> SC3["<div style=\'width:290px;white-space:normal\'>'+mk('«Что это за контракт? И где пункт о наказании?»'+cond('после чтения; один раз (1110)')+flag('записывает: контракт понят → открывает заметку про Чёрную Печать (black_seal)'),[[C_LOG, 1]],[[C_MAD, 1]])+'</div>"]:::hhr', c5); E('SC3 --> SM', c5);
-    L.push('SY["<div style=\'width:300px;white-space:normal\'>Героиня подписывает после чтения (1127-1133)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «подписала Чёрную Печать» → открывает заметку «Чёрная Печать» (3)</span></div>"]:::sc');
-    E('SM --> SC4["<div style=\'width:290px;white-space:normal\'>'+mk('«Подписать контракт.»'+cond('если контракт уже прочитан (1126)'),null,null)+'</div>"]:::hhr', c5); E('SC4 --> SY', c5);
-    L.push('SR["<div style=\'width:300px;white-space:normal\'>Адро: «Аудиенция окончена. Вы отстранены» — выставляет героиню (1135-1150)</div>"]:::bad');
+    L.push('SG["<div style=\'width:300px;white-space:normal\'>Героиня подписывает не глядя (1057-1069)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «подписала Чёрную Печать» → открывает расследование (black_seal_adro)</span></div>"]:::sc');
+    E('SM --> SC1["<div style=\'width:290px;white-space:normal\'>'+mk('«Подписать не глядя.»'+cond('если контракт ещё не читали (1056)'),null,null)+'</div>"]:::hhr', c5); E('SC1 --> SG', c5);
+    E('SM --> SC2["<div style=\'width:290px;white-space:normal\'>'+mk('«Внимательно прочитать.»'+cond('один раз (1070)')+flag('записывает «контракт прочитан»'),[[C_LOG, 1]],[[C_MAD, 1]])+'</div>"]:::hhr', c5); E('SC2 --> SM', c5);
+    E('SM --> SC3["<div style=\'width:290px;white-space:normal\'>'+mk('«Что это за контракт? И где пункт о наказании?»'+cond('после чтения; один раз (1087)')+flag('записывает: контракт понят → открывает заметку про Чёрную Печать (black_seal)'),[[C_LOG, 1]],[[C_MAD, 1]])+'</div>"]:::hhr', c5); E('SC3 --> SM', c5);
+    L.push('SY["<div style=\'width:300px;white-space:normal\'>Героиня подписывает после чтения (1104-1110)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «подписала Чёрную Печать» → открывает заметку «Чёрная Печать» (3)</span></div>"]:::sc');
+    E('SM --> SC4["<div style=\'width:290px;white-space:normal\'>'+mk('«Подписать контракт.»'+cond('если контракт уже прочитан (1103)'),null,null)+'</div>"]:::hhr', c5); E('SC4 --> SY', c5);
+    L.push('SR["<div style=\'width:300px;white-space:normal\'>Адро: «Аудиенция окончена. Вы отстранены» — выставляет героиню (1112-1127)</div>"]:::bad');
     E('SM --> SC5["<div style=\'width:290px;white-space:normal\'>'+mk('«Отказаться подписывать.»',null,null)+'</div>"]:::hhr', c5); E('SC5 --> SR', c5);
-    L.push('SR2["<div style=\'width:240px;white-space:normal\'>Что делать у двери? (1151)</div>"]:::sc');
+    L.push('SR2["<div style=\'width:240px;white-space:normal\'>Что делать у двери? (1128)</div>"]:::sc');
     E('SR --> SR2', c5);
-    L.push('SL["<div style=\'width:300px;white-space:normal\'>Героиня уходит; расследование провалено (1153-1163)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «расследование провалено» → Адро больше не принимает</span></div>"]:::bad');
+    L.push('SL["<div style=\'width:300px;white-space:normal\'>Героиня уходит; расследование провалено (1130-1140)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «расследование провалено» → Адро больше не принимает</span></div>"]:::bad');
     E('SR2 --> SC6["<div style=\'width:290px;white-space:normal\'>'+mk('«Спокойно уйти.»',null,null)+'</div>"]:::hhr', c5); E('SC6 --> SL', c5);
-    L.push('SBK["<div style=\'width:280px;white-space:normal\'>Адро передумал после «Я подпишу!» (1166-1175)</div>"]:::sc');
-    E('SR2 --> SC7["<div style=\'width:290px;white-space:normal\'>'+mk('«Я, я подпишу!»'+cond('если героиня ещё не подписывала (1164)'),null,null)+'</div>"]:::hhr', c5); E('SC7 --> SBK', c5);
-    L.push('SPR["<div style=\'width:300px;white-space:normal\'>Адро парализует героиню и уносит в подвал (1183-1226)</div>"]:::bad');
+    L.push('SBK["<div style=\'width:280px;white-space:normal\'>Адро передумал после «Я подпишу!» (1143-1152)</div>"]:::sc');
+    E('SR2 --> SC7["<div style=\'width:290px;white-space:normal\'>'+mk('«Я, я подпишу!»'+cond('если героиня ещё не подписывала (1141)'),null,null)+'</div>"]:::hhr', c5); E('SC7 --> SBK', c5);
+    L.push('SPR["<div style=\'width:300px;white-space:normal\'>Адро парализует героиню и уносит в подвал (1160-1203)</div>"]:::bad');
     E('SR2 --> SC8["<div style=\'width:290px;white-space:normal\'>'+mk('«Сопротивляться.»',null,null)+'</div>"]:::hhr', c5); E('SC8 --> SPR', c5);
     E('SBK --> NEXT', c5);
     E('SL --> EXS', c5);
-    E('SPR --> SC9["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Лесса не ниже 5 (1227):',null,null)+'</div>"]:::hhr', c5); E('SC9 --> NS', c5);
-    E('SPR --> SC10["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Лесса ниже 5 (1227):',null,null)+'</div>"]:::hhr', c5); E('SC10 --> BAD', c5);
+    E('SPR --> SC9["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Лесса не ниже 5 (1204):',null,null)+'</div>"]:::hhr', c5); E('SC9 --> NS', c5);
+    E('SPR --> SC10["<div style=\'width:290px;white-space:normal\'>'+mk('Если настроение Лесса ниже 5 (1204):',null,null)+'</div>"]:::hhr', c5); E('SC10 --> BAD', c5);
     E('SG --> NEXT', c5);
     E('SY --> NEXT', c5);
   } else {
@@ -209,16 +209,16 @@ render();
 <body>
 <header class="site"><div class="wrap">
 <h1>Адро: ворота, допрос, контракт</h1>
-<p>script3_tgavan_oh.rpy:709-1278 и 1583-1651: эльф Адро у посольства, значок, допрос, контракт Чёрной Печати.</p>
-<nav class="crumbs"><a href="index.html?v=197">← Все схемы</a> · <a href="nars.html?v=176">Нарси</a> · <a href="stats.html?v=198">Статы</a></nav>
+<p>script3_tgavan_oh.rpy:696-1254 и 1557-1624: эльф Адро у посольства, значок, допрос, контракт Чёрной Печати.</p>
+<nav class="crumbs"><a href="index.html?v=197">← Все схемы</a> · <a href="nars.html?v=209">Нарси</a> · <a href="stats.html?v=198">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
 <h2>Типичный путь (суждение, не измерение)</h2>
 <p><b>Как иду:</b> «Показать значок Стражи»; «Никаких проблем! Я здесь чтобы помочь!»; допрос: «Какие отношения?», «У него были враги?», «Что вы знаете о его смерти?»; «Я узнала что хотела...»; в кабинете: «Внимательно прочитать» → «Подписать контракт.»</p>
-<p class="muted">Числа взяты из присваиваний в script3_tgavan_oh.rpy:709-1278, 1583-1651. Настроение Адро (adro.mood) — стат страницы; цвет индиго выбран мной.</p>
+<p class="muted">Числа взяты из присваиваний в script3_tgavan_oh.rpy:696-1254, 1583-1651. Настроение Адро (adro.mood) — стат страницы; цвет индиго выбран мной.</p>
 </div>
-<div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>от <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> до <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+5</span></td><td><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></td></tr><tr><td>Логика</td><td>от <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−4</span> до <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+3</span></td><td><span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span></td></tr><tr><td>Кровь</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение Адро</td><td>от <span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▼−7</span> до <span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▲+5</span></td><td><span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▲+3</span></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше.</p></div>
+<div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>от <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> до <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+4</span></td><td><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−1</span></td></tr><tr><td>Логика</td><td>от <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−4</span> до <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+3</span></td><td><span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span></td></tr><tr><td>Кровь</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение Адро</td><td>от <span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▼−5</span> до <span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▲+4</span></td><td><span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▲+3</span></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше.</p></div>
 
 <div class="card">
 <h2>Схема</h2>
