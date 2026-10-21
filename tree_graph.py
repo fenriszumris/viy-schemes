@@ -14,8 +14,8 @@ class G:
         s.n=0;s.L=['flowchart TD'];s.entry={};s.maxd=maxd;s.cls=[];s.rets={};s.opts=[]
     def node(s,html_,kind='sc'):
         s.n+=1;i='N%d'%s.n
-        if kind=='cd': s.L.append('%s(["<div style=\'width:280px;white-space:normal;text-align:left;padding:12px 20px\'>%s</div>"]):::cd'%(i,html_))
-        else: s.L.append('%s["<div style=\'width:%dpx;white-space:normal\'>%s</div>"]:::%s'%(i,300 if kind=='sc' else 260,html_,kind))
+        if kind=='cd': s.L.append('%s(["<div style=\'width:240px;white-space:normal;text-align:left;padding:12px 18px\'>%s</div>"]):::cd'%(i,html_))
+        else: s.L.append('%s["<div style=\'width:%dpx;white-space:normal\'>%s</div>"]:::%s'%(i,270 if kind=='sc' else 240,html_,kind))
         return i
     def edge(s,a,b,lab=''):
         if lab: s.L.append('%s -->|"<div style=\'width:200px;white-space:normal;text-align:left\'>%s</div>"| %s'%(a,lab,b))

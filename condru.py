@@ -182,6 +182,14 @@ def atom(a):
         if op=='==': return 'уровень %s героини равен %d (%s %s)'%(w,n,p,('от %d до %d'%(lo[n],hi[n])) if hi[n] is not None else '%d и больше'%lo[n])
         if op=='!=': return 'уровень %s героини не равен %d'%(w,n)
     if re.fullmatch(r'not (mad_l|logic_l)\(\)',a): pass
+    mm=re.fullmatch(r'"(\w+)" in inv_list\["(\w+)"\]\.note',a)
+    if mm: return 'в заметках предмета «%s» есть запись «%s»'%(mm.group(2),mm.group(1))
+    mm=re.fullmatch(r'not "(\w+)" in inv_list\["(\w+)"\]\.note',a)
+    if mm: return 'в заметках предмета «%s» нет записи «%s»'%(mm.group(2),mm.group(1))
+    mm=re.fullmatch(r'(\w+)\.lock\s*==\s*(\w+)\.lock',a)
+    if mm: return '%s и %s сейчас в одном месте (у персонажей поле «lock» = место)'%(PERS.get(mm.group(1),mm.group(1)),PERS.get(mm.group(2),mm.group(2)))
+    mm=re.fullmatch(r'(\w+)\.lock\s*==\s*"([^"]+)"',a)
+    if mm: return '%s сейчас в месте «%s»'%(PERS.get(mm.group(1),mm.group(1)),mm.group(2))
     return _atom2(a)
 def _split_top(e,word):
     out=[];d=0;cur='';i=0
