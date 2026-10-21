@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import re,json,html
 exec(open('loc_names.py',encoding='utf8').read())
-V=280
+V=281
 st=json.load(open('clk_story.json',encoding='utf8'))
 CH={'tash':'tash','bonny':'bonny','sova':'sova','leni':'leni','nars':'narsi','guard1':'starichok','guard2':'parenek','kap':'kap','cat':'cat_statue','girl_air':'devushka_airat','dev_button':'luiza','dev_sleep':'luiza','adro_screen':'adro','blu':'blu','fen_button':'fenrira'}
 REL={'karralak':['kar_air'],'tash':['tash_cards','mant','bonny_1'],'bonny':['b_head','bonny_x','b_find','head','full_bones'],'luiza':['dev_door','dev_door2'],'kap':['cap_ch']}
-NAME={'tash':'Ташир (Таш)','bonny':'Бонни','sova':'Сова','leni':'Лени','narsi':'Нарси','starichok':'Горран (старший страж)','parenek':'Алекс (страж)','kap':'Капибара','cat_statue':'Статуя кошки','devushka_airat':'Девушка в церкви Айрата','luiza':'Луиза','adro':'Адро','blu':'Блу','fenrira':'Фенрира'}
+NAME={'tash':'Ташир (Таш)','bonny':'Бонни','sova':'Сова','leni':'Лени','narsi':'Нарси','starichok':'Горран (старший страж)','parenek':'Алекс (страж)','kap':'Капибара','cat_statue':'Статуя кошки','devushka_airat':'Девушка в церкви Айрата','luiza':'Луиза','adro':'Адро','blu':'Блю','fenrira':'Фенрира'}
 NOT='ветка не разобрана: известно только условие запуска (предмет брошен на этот объект)'
 DROP={
 'tash':[('diary','script_inv.rpy:18','Таш: «Я не читаю чужие вещи!». Если он знает, что «Вий» это её псевдоним (<code>tash.zn_vpotpam</code>, квест viy_quest, часть 5), вспоминает это; иначе: «С каких пор ты носишь дневник?».'),

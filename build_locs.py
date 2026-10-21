@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import re,html
 exec(open('loc_names.py',encoding='utf8').read())
-V=280
+V=281
 DIR={'left':'налево','right':'направо','up':'вперёд (вверх)','bottom':'назад (вниз)'}
 edges={}
 for l in open('/tmp/locgraph.txt',encoding='utf8'):
@@ -47,6 +47,7 @@ for i,(ru,src,pages) in L.items():
         c+='<h3>Сцены</h3><ul>'+''.join('<li><a href="%s?v=%d">%s</a></li>'%(p,V,html.escape(cap)) for p,cap in pages)+'</ul>'
     if not es and not inc: c+='<p class="muted">Переходов в коде не найдено (в графе локация не используется).</p>'
     if i=='tgavan_alh': c+='<p class="muted">Эта локация объявлена, но в игре нигде не используется.</p>'
+    if i=='tgavan_sar_cab': c+=open('sarcab_block.html',encoding='utf8').read()
     out.append(c+'</div>')
 page='''<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Локации</title>
 <link rel="stylesheet" href="style7.css?v=%d"><style>code{font-size:11px;color:#6b7280}h3{font-size:14px;margin:10px 0 4px}</style></head><body>
