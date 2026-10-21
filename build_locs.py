@@ -20,7 +20,7 @@ ck=open('clickables.html',encoding='utf8').read()
 objs={}
 def addid(m):
     return m.group(0)
-rows=re.findall(r'<tr>(.*?)</tr>',ck,re.S)
+rows=re.findall(r'<tr[^>]*>(.*?)</tr>',ck,re.S)
 for r in rows:
     tds=re.findall(r'<td[^>]*>(.*?)</td>',r,re.S)
     if len(tds)<3: continue
