@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>Адро: кабинет Лиассона — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style7.css?v=269">
+<link rel="stylesheet" href="style7.css?v=270">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -44,10 +44,10 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#0e7490', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
-  L.push('ST["<a href=\'adro.html?v=269\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Из страницы «Адро: ворота, допрос, контракт»: героиня подписала контракт<br/><small>script_4_tgavan_begin_adro</small></div></a>"]:::ex');
+  L.push('ST["<a href=\'adro.html?v=270\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Из страницы «Адро: ворота, допрос, контракт»: героиня подписала контракт<br/><small>script_4_tgavan_begin_adro</small></div></a>"]:::ex');
   L.push('EXS["<div style=\'width:260px;white-space:normal\'>Экран переходов (кабинет Лиассона, карта)</div>"]:::ex');
   L.push('END["<div style=\'width:260px;white-space:normal\'>Конец демоверсии (перезапуск игры)</div>"]:::bad');
-  L.push('NXT["<a href=\'adrc.html?v=269\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:280px;white-space:normal\'>Дальше: разговор с Адрианом о деле (страница «Адриан о деле»)</div></a>"]:::ex');
+  L.push('NXT["<a href=\'adrc.html?v=270\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:280px;white-space:normal\'>Дальше: разговор с Адрианом о деле (страница «Адриан о деле»)</div></a>"]:::ex');
   E('ST --> K1', cG);
   L.push(hub('K1','Кабинет Лиассона: начало<br/><small>script_4_tgavan_begin_adro, 1-39</small>','hhn',[]));
   if(EXP.has('K1')){
@@ -222,7 +222,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Адро: кабинет Лиассона</h1>
 <p>script_4_tgavan_adro.rpy, 1-539: осмотр вещей, расспросы Адро, яд, Камилла, итоги.</p>
-<nav class="crumbs"><a href="index.html?v=269">← Все схемы</a> · <a href="adro.html?v=269">Адро: ворота</a> · <a href="stats.html?v=269">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=270">← Все схемы</a> · <a href="adro.html?v=270">Адро: ворота</a> · <a href="stats.html?v=270">Статы</a></nav>
 </div></header>
 <main>
 <div class="card" style="border:2px dashed #6b7280;background:#f3f4f6"><b>⚠ Серые пунктирные блоки: пока в заглушке (не достижимо в демо).</b> Блок «Заглушка демо» внизу схемы: код после «КОНЕЦ ДЕМОВЕРСИИ» (86-92, 420-422, 444-448, 535-539).</div>
