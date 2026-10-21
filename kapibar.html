@@ -97,20 +97,20 @@ function build(){
     E('H0 --> HM', c1);
     E('H0 --> END', c1);
   }
-  L.push(hub('HM','Меню Капа<br/><small>script4_kapibar_start_menu, 168-328</small>','hhp',[[C_FEN, '0…+1'], [C_MOR, '0…+1']]));
+  L.push(hub('HM','Меню Капа<br/><small>script4_kapibar_start_menu, 168-327</small>','hhp',[[C_FEN, '0…+1'], [C_MOR, '0…+1']]));
   if(EXP.has('HM')){
     L.push('M0["<div style=\'width:200px;white-space:normal\'>Меню Капа (169)</div>"]:::sc');
     E('HM --> M0', c2);
     L.push('M1["<div style=\'width:380px;white-space:normal\'>Кап даёт случайный совет из 8 (по одному, пока список не кончится): про игры, вкусняшки, мимиков, книги, вежливость, завтрак, телепорты, друзей (172-210)</div>"]:::sc');
     L.push('M2["<div style=\'width:360px;white-space:normal\'>Героиня: «Я бы хотела вздремнуть.» Кап: «Можешь поспать за стойкой.» Затемнение, наступает день (216-234)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 сон куплен: использован</span></div>"]:::sc');
-    L.push('M3["<div style=\'width:380px;white-space:normal\'>Феня: «Лапка болит.» Кап перевязывает: «Сейчас... Где там мои бинты?» Феня: «Большое спасибо, мистер...» (242-262)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Феня перевязана</span></div>"]:::sc');
-    L.push('M3b["<div style=\'width:400px;white-space:normal\'>Кап рассказывает про Кая: «Думаю, вы можете пройти через мой бар. Но для этого мне кое-что нужно. Любой артефакт.» «КОНЕЦ ДЕМОВЕРСИИ. GOOD WAY. Фенрира. Зацепка в поисках» (263-298)</div>"]:::bad');
-    L.push('M4["<div style=\'width:240px;white-space:normal\'>Кап: «Конечно, конечно!» (318-320)</div>"]:::sc');
-    L.push('M5["<div style=\'width:320px;white-space:normal\'>Героиня: «До свидания!» Кап: «Пока-пока! Удачи! Приходи еще!» (322-327)</div>"]:::sc');
+    L.push('M3["<div style=\'width:380px;white-space:normal\'>Феня: «Лапка болит.» Кап перевязывает: «Сейчас... Где там мои бинты?» Феня: «Большое спасибо, мистер...» (241-261)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Феня перевязана</span></div>"]:::sc');
+    L.push('M3b["<div style=\'width:400px;white-space:normal\'>Кап рассказывает про Кая: «Думаю, вы можете пройти через мой бар. Но для этого мне кое-что нужно. Любой артефакт.» «КОНЕЦ ДЕМОВЕРСИИ. GOOD WAY. Фенрира. Зацепка в поисках» (262-297)</div>"]:::bad');
+    L.push('M4["<div style=\'width:240px;white-space:normal\'>Кап: «Конечно, конечно!» (317-319)</div>"]:::sc');
+    L.push('M5["<div style=\'width:320px;white-space:normal\'>Героиня: «До свидания!» Кап: «Пока-пока! Удачи! Приходи еще!» (321-326)</div>"]:::sc');
     E('M0 --> Mm1["<div style=\'width:290px;white-space:normal\'>'+mk('«Совет?»',null,null)+'</div>"]:::hhp', c2); E('Mm1 --> M1', c2);
     E('M0 --> Mm2["<div style=\'width:290px;white-space:normal\'>'+mk('«Я хочу поспать тут!»'+cond('если ночлег куплен и сейчас ночь или сумерки (215)'),null,null)+'</div>"]:::hhp', c2); E('Mm2 --> M2', c2);
     E('M0 --> Mm3["<div style=\'width:290px;white-space:normal\'>'+mk('«Я бы хотела помочь.»',null,null)+'</div>"]:::hhp', c2); E('Mm3 --> HH', c2);
-    E('M0 --> Mm4["<div style=\'width:290px;white-space:normal\'>'+mk('«Фенрира ранена.»'+cond('если задание «Найти врача» взято, Феню не бинтовали и она рядом (241)'),null,null)+'</div>"]:::hhp', c2); E('Mm4 --> M3', c2);
+    E('M0 --> Mm4["<div style=\'width:290px;white-space:normal\'>'+mk('«Фенрира ранена.»'+cond('если задание «Найти врача» взято, Феню не бинтовали и она рядом (240)'),null,null)+'</div>"]:::hhp', c2); E('Mm4 --> M3', c2);
     E('M0 --> Mm5["<div style=\'width:290px;white-space:normal\'>'+mk('«Можно у вас что-то купить?»',null,null)+'</div>"]:::hhp', c2); E('Mm5 --> M4', c2);
     E('M0 --> Mm6["<div style=\'width:290px;white-space:normal\'>'+mk('«До свидания!»',null,null)+'</div>"]:::hhp', c2); E('Mm6 --> M5', c2);
     E('M1 --> M0', c2);
@@ -126,59 +126,59 @@ function build(){
     E('HM --> EXS', c2);
     E('HM --> END', c2);
   }
-  L.push(hub('HB','Покупки у Капа<br/><small>kap_bye, 329-479</small>','hhk',[[C_BLD, '−1…0']]));
+  L.push(hub('HB','Покупки у Капа<br/><small>kap_bye, 328-477</small>','hhk',[[C_BLD, '−1…0']]));
   if(EXP.has('HB')){
-    L.push('B0["<div style=\'width:400px;white-space:normal\'>Кап: «Но! Мы тут не торгуем за золото!» «Мы живем на системе пожертвований.» «Капики ты получишь за помощь мне или другим посетителям» (332-340)</div>"]:::sc');
+    L.push('B0["<div style=\'width:400px;white-space:normal\'>Кап: «Но! Мы тут не торгуем за золото!» «Мы живем на системе пожертвований.» «Капики ты получишь за помощь мне или другим посетителям» (331-339)</div>"]:::sc');
     E('HB --> B0', c3);
-    L.push('B1["<div style=\'width:380px;white-space:normal\'>Кап: «Если хочешь, всего за два Капика!» Героиня платит два капика. «Как захочешь - гамак за стойкой твой!» (343-383)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 ночлег куплен</span></div>"]:::sc');
-    L.push('B1n["<div style=\'width:340px;white-space:normal\'>Героиня: «У меня нет денег.» Кап: «Выполнишь парочку поручений» (349-353)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Кап обещал поручения</span></div>"]:::sc');
-    L.push('B2["<div style=\'width:380px;white-space:normal\'>Кап: «Напиток Богов! Всего Капик!» Героиня платит один капик, Кап подбрасывает монету: «Настоящая!» (385-425)</div>"]:::sc');
-    L.push('B2n["<div style=\'width:360px;white-space:normal\'>Героиня: «У меня нет денег.» Кап: «Выполнишь парочку поручений, и он в твоём кармане!» (389-394)</div>"]:::sc');
-    L.push('B2a["<div style=\'width:340px;white-space:normal\'>Героиня выпивает: «Миленько...» Кап: «Из моей большой любви! Шучу!» (433-440)</div>"]:::sc');
-    L.push('B2b["<div style=\'width:340px;white-space:normal\'>Героиня берёт напиток с собой; Кап: «Конечно-конечно!» (443-445)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 «Сливочная Капибара» в инвентаре</span></div>"]:::sc');
-    L.push('B3["<div style=\'width:360px;white-space:normal\'>Кап: «Спасибо! Без таких как ты, это место бы не выжило! Сколько?» Героиня вводит сумму (449-454)</div>"]:::sc');
-    L.push('B3b["<div style=\'width:280px;white-space:normal\'>Кап: «Спасибо большое!» Деньги списаны (477-478)</div>"]:::sc');
-    L.push('B3c["<div style=\'width:280px;white-space:normal\'>Героиня: «Я передумала.» Кап: «Как хочешь!» (470-473)</div>"]:::sc');
-    E('B0 --> Bm1["<div style=\'width:290px;white-space:normal\'>'+mk('«Купить место на ночь»'+cond('если ночлег ещё не куплен (342)'),null,null)+'</div>"]:::hhk', c3); E('Bm1 --> B1', c3);
+    L.push('B1["<div style=\'width:380px;white-space:normal\'>Кап: «Если хочешь, всего за два Капика!» Героиня платит два капика. «Как захочешь - гамак за стойкой твой!» (342-382)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 ночлег куплен</span></div>"]:::sc');
+    L.push('B1n["<div style=\'width:340px;white-space:normal\'>Героиня: «У меня нет денег.» Кап: «Выполнишь парочку поручений» (348-352)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Кап обещал поручения</span></div>"]:::sc');
+    L.push('B2["<div style=\'width:380px;white-space:normal\'>Кап: «Напиток Богов! Всего Капик!» Героиня платит один капик, Кап подбрасывает монету: «Настоящая!» (384-424)</div>"]:::sc');
+    L.push('B2n["<div style=\'width:360px;white-space:normal\'>Героиня: «У меня нет денег.» Кап: «Выполнишь парочку поручений, и он в твоём кармане!» (388-393)</div>"]:::sc');
+    L.push('B2a["<div style=\'width:340px;white-space:normal\'>Героиня выпивает: «Миленько...» Кап: «Из моей большой любви! Шучу!» (432-438)</div>"]:::sc');
+    L.push('B2b["<div style=\'width:340px;white-space:normal\'>Героиня берёт напиток с собой; Кап: «Конечно-конечно!» (441-443)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 «Сливочная Капибара» в инвентаре</span></div>"]:::sc');
+    L.push('B3["<div style=\'width:360px;white-space:normal\'>Кап: «Спасибо! Без таких как ты, это место бы не выжило! Сколько?» Героиня вводит сумму (447-452)</div>"]:::sc');
+    L.push('B3b["<div style=\'width:280px;white-space:normal\'>Кап: «Спасибо большое!» Деньги списаны (475-476)</div>"]:::sc');
+    L.push('B3c["<div style=\'width:280px;white-space:normal\'>Героиня: «Я передумала.» Кап: «Как хочешь!» (468-471)</div>"]:::sc');
+    E('B0 --> Bm1["<div style=\'width:290px;white-space:normal\'>'+mk('«Купить место на ночь»'+cond('если ночлег ещё не куплен (341)'),null,null)+'</div>"]:::hhk', c3); E('Bm1 --> B1', c3);
     E('B0 --> Bm2["<div style=\'width:290px;white-space:normal\'>'+mk('«Сливочная Капибара»',null,null)+'</div>"]:::hhk', c3); E('Bm2 --> B2', c3);
-    E('B0 --> Bm3["<div style=\'width:290px;white-space:normal\'>'+mk('«Дать пожертвование»'+cond('если есть деньги (449)'),null,null)+'</div>"]:::hhk', c3); E('Bm3 --> B3', c3);
+    E('B0 --> Bm3["<div style=\'width:290px;white-space:normal\'>'+mk('«Дать пожертвование»'+cond('если есть деньги (447)'),null,null)+'</div>"]:::hhk', c3); E('Bm3 --> B3', c3);
     E('B0 --> Bm4["<div style=\'width:290px;white-space:normal\'>'+mk('«Назад»',null,null)+'</div>"]:::hhk', c3); E('Bm4 --> HM', c3);
     E('B1 --> B0', c3);
     E('B1n --> B0', c3);
-    E('B2 --> Bs1["<div style=\'width:290px;white-space:normal\'>'+mk('Если капиков меньше 1 (389):',null,null)+'</div>"]:::hhk', c3); E('Bs1 --> B2n', c3);
+    E('B2 --> Bs1["<div style=\'width:290px;white-space:normal\'>'+mk('Если капиков меньше 1 (388):',null,null)+'</div>"]:::hhk', c3); E('Bs1 --> B2n', c3);
     E('B2 --> Bs2["<div style=\'width:290px;white-space:normal\'>'+mk('«Выпить сразу» (после покупки)',null,null)+'</div>"]:::hhk', c3); E('Bs2 --> B2a', c3);
     E('B2 --> Bs3["<div style=\'width:290px;white-space:normal\'>'+mk('«Взять с собой» (после покупки)',null,null)+'</div>"]:::hhk', c3); E('Bs3 --> B2b', c3);
     E('B2n --> B0', c3);
     E('B2a --> HM', c3);
     E('B2b --> B0', c3);
     E('B3 --> Bt1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я передумала» (сумма 0, 470)',null,null)+'</div>"]:::hhk', c3); E('Bt1 --> B3c', c3);
-    E('B3 --> Bt2["<div style=\'width:290px;white-space:normal\'>'+mk('Сумма больше нуля и не больше денег (474)',null,null)+'</div>"]:::hhk', c3); E('Bt2 --> B3b', c3);
+    E('B3 --> Bt2["<div style=\'width:290px;white-space:normal\'>'+mk('Сумма больше нуля и не больше денег (472)',null,null)+'</div>"]:::hhk', c3); E('Bt2 --> B3b', c3);
     E('B3b --> HM', c3);
     E('B3c --> HM', c3);
   } else {
     E('HB --> B0', c3);
     E('HB --> HM', c3);
   }
-  L.push(hub('HH','Помощь Капу: танец, растения, шляпка<br/><small>kap_help / kap_paints / kap_dance / script4_kapibar_main, 480-671</small>','hhs',[]));
+  L.push(hub('HH','Помощь Капу: танец, растения, шляпка<br/><small>kap_help / kap_paints / kap_dance / script4_kapibar_main, 478-667</small>','hhs',[]));
   if(EXP.has('HH')){
-    L.push('H1["<div style=\'width:380px;white-space:normal\'>Кап: «У меня тут что-то спина болит.» «Потанцуй со мной!» «Это очень важное и очень ответственное задание!» (482-494)</div>"]:::sc');
+    L.push('H1["<div style=\'width:380px;white-space:normal\'>Кап: «У меня тут что-то спина болит.» «Потанцуй со мной!» «Это очень важное и очень ответственное задание!» (480-492)</div>"]:::sc');
     E('HH --> H1', c4);
-    L.push('H2["<div style=\'width:380px;white-space:normal\'>Танец: игра со стрелками дважды. Кап: «Прекрасно! Прекрасно!» «Просто молодец!» «Держи Капик!» (564-598)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 танец сыгран</span></div>"]:::sc');
-    L.push('H3["<div style=\'width:340px;white-space:normal\'>Героиня играет с растениями; Кап: «Держи капик!» (528-561)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 растения очищены</span></div>"]:::sc');
-    L.push('H4["<div style=\'width:320px;white-space:normal\'>Героиня: «Хватит!» Кап: «Ну и ладно!» «Он выглядит грустно» (603-616)</div>"]:::sc');
-    L.push('H5["<div style=\'width:400px;white-space:normal\'>Кап: «Ох-хо! Ты действительно хочешь помочь!» «Я потерял свою шляпку.» «Понимаешь, эту шляпку подарила мне мама.» (618-643)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Кап рассказал про шляпку</span></div>"]:::sc');
-    L.push('H5b["<div style=\'width:380px;white-space:normal\'>Героиня: «Я помогу! Найду вашу шляпку!» Кап: «Она выглядит как маленький черный цилиндр.» (648-661)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 задание «Найти шляпку» взято</span></div>"]:::sc');
-    L.push('H5c["<div style=\'width:340px;white-space:normal\'>Героиня: «В другой раз...» Кап: «Я понимаю, мало времени и все такое.» (665-669)</div>"]:::sc');
-    L.push('H0a["<div style=\'width:240px;white-space:normal\'>Кап: «Потанцуем или что-то новое?» (496)</div>"]:::sc');
+    L.push('H2["<div style=\'width:380px;white-space:normal\'>Танец: игра со стрелками дважды. Кап: «Прекрасно! Прекрасно!» «Просто молодец!» «Держи Капик!» (561-594)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 танец сыгран</span></div>"]:::sc');
+    L.push('H3["<div style=\'width:340px;white-space:normal\'>Героиня играет с растениями; Кап: «Держи капик!» (525-557)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 растения очищены</span></div>"]:::sc');
+    L.push('H4["<div style=\'width:320px;white-space:normal\'>Героиня: «Хватит!» Кап: «Ну и ладно!» «Он выглядит грустно» (599-612)</div>"]:::sc');
+    L.push('H5["<div style=\'width:400px;white-space:normal\'>Кап: «Ох-хо! Ты действительно хочешь помочь!» «Я потерял свою шляпку.» «Понимаешь, эту шляпку подарила мне мама.» (614-639)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Кап рассказал про шляпку</span></div>"]:::sc');
+    L.push('H5b["<div style=\'width:380px;white-space:normal\'>Героиня: «Я помогу! Найду вашу шляпку!» Кап: «Она выглядит как маленький черный цилиндр.» (644-657)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 задание «Найти шляпку» взято</span></div>"]:::sc');
+    L.push('H5c["<div style=\'width:340px;white-space:normal\'>Героиня: «В другой раз...» Кап: «Я понимаю, мало времени и все такое.» (661-665)</div>"]:::sc');
+    L.push('H0a["<div style=\'width:240px;white-space:normal\'>Кап: «Потанцуем или что-то новое?» (494)</div>"]:::sc');
     L.push('HQ1["<div style=\'width:200px;white-space:normal\'>Танец уже был?</div>"]:::sc');
     L.push('HQ2["<div style=\'width:280px;white-space:normal\'>Кап: «Тебе надо в точности повторить за мной!» «Готова?»</div>"]:::sc');
-    L.push('HQ3["<div style=\'width:260px;white-space:normal\'>Кап: «Я уж было настроился.» (520-526)</div>"]:::sc');
+    L.push('HQ3["<div style=\'width:260px;white-space:normal\'>Кап: «Я уж было настроился.» (517-523)</div>"]:::sc');
     E('H1 --> HQ1', c4);
-    E('HQ1 --> Ha1["<div style=\'width:290px;white-space:normal\'>'+mk('Если в танец ещё не играли (484):',null,null)+'</div>"]:::hhs', c4); E('Ha1 --> HQ2', c4);
-    E('HQ1 --> Ha2["<div style=\'width:290px;white-space:normal\'>'+mk('Если танец уже был (495):',null,null)+'</div>"]:::hhs', c4); E('Ha2 --> H0a', c4);
+    E('HQ1 --> Ha1["<div style=\'width:290px;white-space:normal\'>'+mk('Если в танец ещё не играли (482):',null,null)+'</div>"]:::hhs', c4); E('Ha1 --> HQ2', c4);
+    E('HQ1 --> Ha2["<div style=\'width:290px;white-space:normal\'>'+mk('Если танец уже был (493):',null,null)+'</div>"]:::hhs', c4); E('Ha2 --> H0a', c4);
     E('H0a --> Hb1["<div style=\'width:290px;white-space:normal\'>'+mk('«Что-то новое!» / «Поиграть с растениями!»',null,null)+'</div>"]:::hhs', c4); E('Hb1 --> H3', c4);
-    E('H0a --> Hb2["<div style=\'width:290px;white-space:normal\'>'+mk('«Подожди... А есть что-то важное?»'+cond('если о шляпке ещё не говорили (502)'),null,null)+'</div>"]:::hhs', c4); E('Hb2 --> H5', c4);
-    E('H0a --> Hb3["<div style=\'width:290px;white-space:normal\'>'+mk('«По поводу шляпки...»'+cond('если о шляпке говорили, но задание не взято (504)'),null,null)+'</div>"]:::hhs', c4); E('Hb3 --> H5', c4);
+    E('H0a --> Hb2["<div style=\'width:290px;white-space:normal\'>'+mk('«Подожди... А есть что-то важное?»'+cond('если о шляпке ещё не говорили (500)'),null,null)+'</div>"]:::hhs', c4); E('Hb2 --> H5', c4);
+    E('H0a --> Hb3["<div style=\'width:290px;white-space:normal\'>'+mk('«По поводу шляпки...»'+cond('если о шляпке говорили, но задание не взято (502)'),null,null)+'</div>"]:::hhs', c4); E('Hb3 --> H5', c4);
     E('H0a --> Hb4["<div style=\'width:290px;white-space:normal\'>'+mk('«Потанцуем!»',null,null)+'</div>"]:::hhs', c4); E('Hb4 --> HQ2', c4);
     E('HQ2 --> Hc1["<div style=\'width:290px;white-space:normal\'>'+mk('«Конечно!»',null,null)+'</div>"]:::hhs', c4); E('Hc1 --> H2', c4);
     E('HQ2 --> Hc2["<div style=\'width:290px;white-space:normal\'>'+mk('«Эээ. Нет.»',null,null)+'</div>"]:::hhs', c4); E('Hc2 --> HQ3', c4);
@@ -193,23 +193,23 @@ function build(){
   } else {
     E('HH --> HM', c4);
   }
-  L.push(hub('HD','Шляпка возвращена<br/><small>hat_kap, 717-830</small>','hhr',[[C_MOR, '0…+1']]));
+  L.push(hub('HD','Шляпка возвращена<br/><small>hat_kap, 713-825</small>','hhr',[[C_MOR, '0…+1']]));
   if(EXP.has('HD')){
-    L.push('D0["<div style=\'width:280px;white-space:normal\'>Героиня отдаёт Капу шляпку (717-720)</div>"]:::sc');
+    L.push('D0["<div style=\'width:280px;white-space:normal\'>Героиня отдаёт Капу шляпку (713-716)</div>"]:::sc');
     E('HD --> D0', c5);
-    L.push('D1["<div style=\'width:380px;white-space:normal\'>Героиня: «Как вам шляпка?» Кап: «МОЙ ЦИЛЛИНДР!» «Пожалуйста! Отдай мне ее!» (720-731)</div>"]:::sc');
-    L.push('D2["<div style=\'width:360px;white-space:normal\'>Героиня: «Нет.» Кап: «Но если передумаешь...» Возврат на экран переходов (733-742)</div>"]:::sc');
-    L.push('D3["<div style=\'width:280px;white-space:normal\'>Героиня: «Хорошо, она ваша.» (743-744)</div>"]:::sc');
-    L.push('D4["<div style=\'width:260px;white-space:normal\'>Героиня: «Я нашла шляпку!» (747-748)</div>"]:::sc');
-    L.push('D5["<div style=\'width:400px;white-space:normal\'>Кап: «Я очень, очень рад!» Обнимает героиню. Награда: 3 капика и ещё 10 капиков (756-786)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 задание «Найти шляпку» выполнено</span></div>"]:::sc');
-    L.push('D6["<div style=\'width:380px;white-space:normal\'>Кап: «Но это единственное, что осталось у меня от мамы...» Надевает шляпку: «Я выгляжу глупо, да?» (788-802)</div>"]:::sc');
-    L.push('D6a["<div style=\'width:320px;white-space:normal\'>Героиня: «Вы выглядите глупо.» Кап: «Я знал...» (805-808)</div>"]:::sc');
-    L.push('D6b["<div style=\'width:320px;white-space:normal\'>Героиня: «Вы выглядите превосходно!» Кап: «Ха! Спасибо!» (811-815)</div>"]:::sc');
-    L.push('D7["<div style=\'width:380px;white-space:normal\'>Кап: «Завтра ночью, тебе лучше быть здесь.» «Просто перед сном зайди в бар.» (818-829)</div>"]:::sc');
-    L.push('D7a["<div style=\'width:340px;white-space:normal\'>Кап: «Послезавтра ночью, тебе лучше быть здесь.» (825)</div>"]:::sc');
+    L.push('D1["<div style=\'width:380px;white-space:normal\'>Героиня: «Как вам шляпка?» Кап: «МОЙ ЦИЛЛИНДР!» «Пожалуйста! Отдай мне ее!» (716-726)</div>"]:::sc');
+    L.push('D2["<div style=\'width:360px;white-space:normal\'>Героиня: «Нет.» Кап: «Но если передумаешь...» Возврат на экран переходов (728-737)</div>"]:::sc');
+    L.push('D3["<div style=\'width:280px;white-space:normal\'>Героиня: «Хорошо, она ваша.» (738-739)</div>"]:::sc');
+    L.push('D4["<div style=\'width:260px;white-space:normal\'>Героиня: «Я нашла шляпку!» (742-743)</div>"]:::sc');
+    L.push('D5["<div style=\'width:400px;white-space:normal\'>Кап: «Я очень, очень рад!» Обнимает героиню. Награда: 3 капика и ещё 10 капиков (751-781)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 задание «Найти шляпку» выполнено</span></div>"]:::sc');
+    L.push('D6["<div style=\'width:380px;white-space:normal\'>Кап: «Но это единственное, что осталось у меня от мамы...» Надевает шляпку: «Я выгляжу глупо, да?» (783-797)</div>"]:::sc');
+    L.push('D6a["<div style=\'width:320px;white-space:normal\'>Героиня: «Вы выглядите глупо.» Кап: «Я знал...» (800-803)</div>"]:::sc');
+    L.push('D6b["<div style=\'width:320px;white-space:normal\'>Героиня: «Вы выглядите превосходно!» Кап: «Ха! Спасибо!» (806-810)</div>"]:::sc');
+    L.push('D7["<div style=\'width:380px;white-space:normal\'>Кап: «Завтра ночью, тебе лучше быть здесь.» «Просто перед сном зайди в бар.» (813-824)</div>"]:::sc');
+    L.push('D7a["<div style=\'width:340px;white-space:normal\'>Кап: «Послезавтра ночью, тебе лучше быть здесь.» (820)</div>"]:::sc');
     E('D0 --> D1', c5);
-    E('D1 --> Dc0["<div style=\'width:290px;white-space:normal\'>'+mk('Если задание «Найти шляпку» взято (718):',null,null)+'</div>"]:::hhr', c5); E('Dc0 --> D4', c5);
-    E('D1 --> Dc1["<div style=\'width:290px;white-space:normal\'>'+mk('Если задание не взято (718):',null,null)+'</div>"]:::hhr', c5); E('Dc1 --> D1m', c5);
+    E('D1 --> Dc0["<div style=\'width:290px;white-space:normal\'>'+mk('Если задание «Найти шляпку» взято (714):',null,null)+'</div>"]:::hhr', c5); E('Dc0 --> D4', c5);
+    E('D1 --> Dc1["<div style=\'width:290px;white-space:normal\'>'+mk('Если задание не взято (714):',null,null)+'</div>"]:::hhr', c5); E('Dc1 --> D1m', c5);
     L.push('D1m["<div style=\'width:200px;white-space:normal\'>Выбор героини</div>"]:::sc');
     E('D1m --> Dm1["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет...»',null,null)+'</div>"]:::hhr', c5); E('Dm1 --> D2', c5);
     E('D1m --> Dm2["<div style=\'width:290px;white-space:normal\'>'+mk('«Хорошо.»',null,null)+'</div>"]:::hhr', c5); E('Dm2 --> D3', c5);
@@ -220,21 +220,21 @@ function build(){
     E('D6 --> Dm4["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет! Вы выглядите прекрасно!»',null,null)+'</div>"]:::hhr', c5); E('Dm4 --> D6b', c5);
     E('D6a --> D7', c5);
     E('D6b --> D7', c5);
-    E('D7 --> Dn1["<div style=\'width:290px;white-space:normal\'>'+mk('Если сейчас день (822):',null,null)+'</div>"]:::hhr', c5); E('Dn1 --> D7', c5);
+    E('D7 --> Dn1["<div style=\'width:290px;white-space:normal\'>'+mk('Если сейчас день (817):',null,null)+'</div>"]:::hhr', c5); E('Dn1 --> D7', c5);
     E('D7 --> EXS', c5);
     E('D2 --> EXS', c5);
   } else {
     E('HD --> EXS', c5);
   }
-  L.push(hub('HI','Предметы Капу<br/><small>kap_kap_sliv, kap_kapik, diary_kap, 831-908</small>','hhs',[]));
+  L.push(hub('HI','Предметы Капу<br/><small>kap_kap_sliv, kap_kapik, diary_kap, 826-903</small>','hhs',[]));
   if(EXP.has('HI')){
-    L.push('J0["<div style=\'width:280px;white-space:normal\'>Героиня даёт Капу предмет (831-908)</div>"]:::sc');
+    L.push('J0["<div style=\'width:280px;white-space:normal\'>Героиня даёт Капу предмет (826-903)</div>"]:::sc');
     E('HI --> J0', c6);
     L.push('J1["<div style=\'width:280px;white-space:normal\'>Сливочная Капибара: Кап: «Отлчиная штука!» (так в коде, 834)</div>"]:::sc');
-    L.push('J1a["<div style=\'width:320px;white-space:normal\'>Героиня: «Большое спасибо!» Кап: «Всегда пожалуйста!» (836-839)</div>"]:::sc');
-    L.push('J1b["<div style=\'width:380px;white-space:normal\'>Героиня: «А может быть вы сами выпьете?» Кап пьёт: «Честно говоря, давно мне никто не предлагал что-то п...» (840-865)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 напиток отдан Капу</span></div>"]:::sc');
-    L.push('J2["<div style=\'width:380px;white-space:normal\'>Капик: героиня спрашивает: «А почему вы продаете именно за эту валюту?» Кап рассказывает историю (871-884)</div>"]:::sc');
-    L.push('J3["<div style=\'width:340px;white-space:normal\'>Дневник: Кап: «Я не умею читать.» «Так что прости.» (893-903)</div>"]:::sc');
+    L.push('J1a["<div style=\'width:320px;white-space:normal\'>Героиня: «Большое спасибо!» Кап: «Всегда пожалуйста!» (831-834)</div>"]:::sc');
+    L.push('J1b["<div style=\'width:380px;white-space:normal\'>Героиня: «А может быть вы сами выпьете?» Кап пьёт: «Честно говоря, давно мне никто не предлагал что-то п...» (835-860)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 напиток отдан Капу</span></div>"]:::sc');
+    L.push('J2["<div style=\'width:380px;white-space:normal\'>Капик: героиня спрашивает: «А почему вы продаете именно за эту валюту?» Кап рассказывает историю (866-879)</div>"]:::sc');
+    L.push('J3["<div style=\'width:340px;white-space:normal\'>Дневник: Кап: «Я не умею читать.» «Так что прости.» (888-898)</div>"]:::sc');
     E('J0 --> Jm1["<div style=\'width:290px;white-space:normal\'>'+mk('Предмет: «Сливочная Капибара»',null,null)+'</div>"]:::hhs', c6); E('Jm1 --> J1', c6);
     E('J0 --> Jm2["<div style=\'width:290px;white-space:normal\'>'+mk('Предмет: капик',null,null)+'</div>"]:::hhs', c6); E('Jm2 --> J2', c6);
     E('J0 --> Jm3["<div style=\'width:290px;white-space:normal\'>'+mk('Предмет: дневник',null,null)+'</div>"]:::hhs', c6); E('Jm3 --> J3', c6);
@@ -286,16 +286,16 @@ render();
 <body>
 <header class="site"><div class="wrap">
 <h1>Кафе «Кап»: Капибара</h1>
-<p>script_4_kapibar.rpy, 1-908: вход, меню, покупки, помощь, шляпка, предметы.</p>
-<nav class="crumbs"><a href="index.html?v=197">← Все схемы</a> · <a href="airat1.html?v=105">Айрат</a> · <a href="strel.html?v=194">Экран переходов</a> · <a href="stats.html?v=198">Статы</a></nav>
+<p>script_4_kapibar.rpy, 1-903: вход, меню, покупки, помощь, шляпка, предметы.</p>
+<nav class="crumbs"><a href="index.html?v=197">← Все схемы</a> · <a href="airat1.html?v=155">Айрат</a> · <a href="strel.html?v=194">Экран переходов</a> · <a href="stats.html?v=198">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
 <h2>Типичный путь (суждение, не измерение)</h2>
 <p><b>Как иду:</b> вхожу в кафе, Кап бинтует героиню (Кровь −1), в меню беру «Сливочную Капибару» и пью сразу (Кровь −1), помогаю с растениями и танцем, соглашаюсь искать шляпку и позже возвращаю её (Мораль +1).</p>
-<p class="muted">Числа взяты из script_4_kapibar.rpy (76, 142, 163, 259-260, 430, 745). Капики, деньги и Нарси-настроение учтены только как отметки. Кровь: ночлег (222-223, 383) можно покупать снова и снова, каждое пробуждение даёт -1 (164), поэтому минимум зависит от числа ночей, показан с ограничением кругов. Вызов этой сцены в найденных файлах не обнаружен.</p>
+<p class="muted">Числа взяты из script_4_kapibar.rpy (76, 142, 163, 258-259, 429, 740). Капики, деньги и Нарси-настроение учтены только как отметки. Кровь: ночлег (222-223, 382) можно покупать снова и снова, каждое пробуждение даёт -1 (163), поэтому минимум зависит от числа ночей, показан с ограничением кругов. Вызов этой сцены в найденных файлах не обнаружен.</p>
 </div>
-<div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Логика</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Кровь</td><td>от <span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−3</span> до <b>0</b></td><td><span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение Нарси</td><td>от <span style='background:rgb(236,252,203);color:rgb(101,163,13);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> до <span style='background:rgb(236,252,203);color:rgb(101,163,13);font-weight:700;border-radius:5px;padding:0 3px'>▲+4</span></td><td><b>0</b></td></tr><tr><td>Мораль</td><td>от <b>0</b> до <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td><td><span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td></tr><tr><td>Настроение Фени</td><td>от <b>0</b> до <span style='background:rgb(254,226,232);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td><td><b>0</b></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше.</p></div>
+<div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Логика</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Кровь</td><td>от <span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−4</span> до <b>0</b></td><td><span style='background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение Нарси</td><td>от <span style='background:rgb(236,252,203);color:rgb(101,163,13);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> до <span style='background:rgb(236,252,203);color:rgb(101,163,13);font-weight:700;border-radius:5px;padding:0 3px'>▲+4</span></td><td><b>0</b></td></tr><tr><td>Мораль</td><td>от <b>0</b> до <span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span></td><td><span style='background:rgb(241,245,249);color:rgb(71,85,105);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td></tr><tr><td>Настроение Фени</td><td>от <b>0</b> до <span style='background:rgb(254,226,232);color:rgb(190,18,60);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span></td><td><b>0</b></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше.</p></div>
 
 <div class="card">
 <h2>Схема</h2>
