@@ -2,7 +2,7 @@
 import re,glob,html,sys,collections
 sys.path.insert(0,'/tmp/sch')
 import condru
-V=320
+V=321
 condru._scan()
 SET=condru._SET;RESET=condru._RESET
 FILES={}
@@ -148,6 +148,36 @@ MANUAL={
   where='в самом начале рассказа Капа про оплату (прямо перед его первой репликой)',
   sites=[('script_4_kapibar.rpy',329)],norep=True),
 }
+
+MANUAL.update({
+ '"kap_osm" in kap_dialog':dict(title='Героиня уже знакома с Капом (была в его кафе)',yes='героиня уже была у Капа',no='героиня ещё не была у Капа',
+  what='Метка ставится после того, как Кап поприветствовал героиню, представился и предложил ночлег, коктейль или совет. Дальше по ней меняются реплики: описание кафе и знакомство играются только в первый приход, а при повторном Кап говорит иначе. Список kap_dialog живёт в текущем прохождении.',
+  where='в первом разговоре с Капом, после его шутки про драконов и кредиторов',
+  eff={2:'Описание уютного кафе, увитого растениями, и Капибары на стойке показывается только в первый приход.',
+   18:'Первый приход: Кап радостно здоровается, называет себя «Мистер Кап» и владельцем заведения. Если героиня уже была: он говорит «С вашей спутницей мы уже виделись. А с вами нет», потом снова представляется.',
+   52:'Первый приход: Кап шутит, что за героиней гнались драконы или кредиторы, затем предлагает переночевать, коктейль «Сливочный Кап» или совет. Здесь же ставится метка.',
+   122:'Если героиня ранена и Кап её перевязывает: при первом визите он удивляется «Что-то не так. Эти самые драконы все же покусали?», при повторном сам бросается навстречу «Стой, стой! Что случилось?».'}),
+ '"kap_rana" in kap_dialog':dict(title='Кап уже перевязал героиню',yes='Кап уже перевязывал героиню',no='Кап ещё не перевязывал героиню',norep=True,
+  what='Один раз, когда у героини два и больше ранений (blood >= 2), Кап бежит за бинтами и перевязывает её (одно ранение снимается). Метка нужна, чтобы эта сцена случилась только один раз; других чтений не найдено.',
+  where='в начале сцены перевязки',eff={119:'Если ранений два и больше и Кап ещё не перевязывал: он пугается, приносит бинты, перевязывает героиню (ранений становится на одно меньше), экран на секунду темнеет. Не срабатывает, пока с героиней идёт квест Нарси к Капу.'}),
+ '"sleep" in kap_dialog':dict(title='Героиня купила у Капа ночлег и ещё не воспользовалась',yes='ночлег у Капа куплен и ещё не использован',no='ночлег у Капа не куплен',
+  what='Ставится после покупки места на ночь за два Капика. Открывает пункт «Я хочу поспать тут!» (только ночью или летом) и убирает пункт покупки. Когда героиня спит, метка снимается и ставится sleep2.',
+  where='сразу после оплаты двух Капиков',eff={215:'Пункт «Я хочу поспать тут!»: Кап говорит, что уже куплено, можно спать за стойкой. Экран темнеет, наступает день, метка снимается, ставится «поспала».',341:'Пункт «Купить место на ночь» показывается, только пока ночлег не куплен.'}),
+ '"sleep2" in kap_dialog':dict(title='Героиня только что поспала у Капа',yes='героиня только что поспала у Капа',no='героиня не спала у Капа',
+  what='Ставится, когда героиня легла спать у Капа. При следующем входе в кафе Кап здоровается с ней утром, одно ранение снимается и метка убирается.',
+  where='когда героиня ложится спать за стойкой',eff={155:'Кап говорит «Доброе утро! Надеюсь, хорошо спалось?», героиня удивляется, что он не спал; ранений становится на одно меньше; метка убирается.'}),
+ '"dance" in kap_dialog':dict(title='Героиня уже танцевала с Капом',yes='героиня уже выполняла задание Капа «потанцевать»',no='героиня ещё не выполняла задание Капа «потанцевать»',
+  what='Ставится после первого задания Капа «потанцуй со мной»: героиня получает один Капик. Метка меняет разговор при просьбе о помощи: в первый раз Кап объясняет задание, потом предлагает на выбор потанцевать или что-то новое.',
+  where='в конце танца, перед выдачей Капика',eff={482:'Первый раз: Кап жалуется на спину и просит потанцевать («очень важное и ответственное задание»). Потом: «Потанцуем или что-то новое?» и меню: растения, важное дело, шляпка, потанцевать.'}),
+ '"rast" in kap_dialog':dict(title='Героиня уже занималась с растениями Капа',yes='героиня уже занималась с растениями Капа',no='героиня ещё не занималась с растениями Капа',
+  what='Ставится после задания с растениями (экран ухода за растениями): Кап выдаёт Капик. Дальше пункт меню называется «Поиграть с растениями!» вместо «Что-то новое!», ведёт он в то же место.',
+  where='после ухода за растениями, когда Кап даёт Капик',eff={496:'До задания пункт называется «Что-то новое!», ведёт к заданию с растениями.',498:'После задания пункт называется «Поиграть с растениями!», ведёт туда же.'}),
+ '"job" in kap_dialog':dict(title='Кап предлагал героине отработать поручения (не хватало Капиков)',yes='Кап уже предлагал поручения вместо оплаты',no='Кап ещё не предлагал поручения вместо оплаты',
+  what='Ставится, когда героине не хватает Капиков на ночлег (меньше двух) или на коктейль (меньше одного): Кап говорит «выполнишь парочку поручений, и Капик в твоём кармане». Чтений метки не найдено, она только запоминается.',
+  where='в ответе Капа «Не беда!», если нет денег',eff={}),
+})
+for _k,_v in MANUAL.items():
+    if 'eff' in _v: _v['sites']=[]
 def choice_of(k):
     mm=meaning(k)
     if mm:
@@ -264,11 +294,13 @@ def row(k):
     short=m.group(1) if m else k
     gd0=None if choice_of(k) else guard_of(k)
     if k in MANUAL and MANUAL[k].get('norep'): gd0=gd0 if gd0 is not None else ''
-    if gd0 is not None: badge='<span class="b">'+ICON+' не повторяется</span>'
-    elif not chk: badge='<span class="b">нигде не читается</span>'
+    if gd0 is not None and k in MANUAL and MANUAL[k].get('norep'): badge='<span class="b">'+ICON+' не повторяется</span>'
+    elif k in MANUAL and chk: badge='<span class="b">проверок: %d</span>'%len(chk)
+    elif gd0 is not None: badge='<span class="b">единственное чтение - защита своего блока (назначение не разобрано)</span>'
+    elif not chk: badge='<span class="b">чтений не найдено</span>'
     else: badge='<span class="b">проверок: %d</span>'%len(chk)
     h='<details class="fl"><summary><span class="ft">%s</span> <span class="muted"><code>%s</code></span> <span class="b">ставится: %d</span> %s</summary><div class="fb">'%(title,esc(k),len(sets),badge)
-    if mm and not ch and gd_ is None: h+='<p class="muted">Смысл выведен по месту, где метка ставится (в коде не подписан).</p>'
+    if mm and not ch and gd_ is None and k not in MANUAL: h+='<p class="muted">Смысл выведен по месту, где метка ставится (в коде не подписан).</p>'
     mq=re.fullmatch(r'"[^"]+" in mem:(\w+)',k)
     if mq and mq.group(1) in condru.QN: h+='<p>Квест: <a href="quests.html?v=%d#q_%s">«%s»</a></p>'%(V,mq.group(1),esc(condru.QN[mq.group(1)]))
     if k in MANUAL: h+='<p><b>Что это (разобрано по коду вручную):</b> %s</p>'%esc(MANUAL[k]['what'])
@@ -289,6 +321,7 @@ def row(k):
         for ce,lab,fn,ln in chk[:8]:
             try: cx=condru.ctx(lab,fn,ln) if lab else 'в файле описания дневника'
             except Exception: cx='в сцене «%s»'%lab
+            if k in MANUAL and fn=='script_4_kapibar.rpy': cx='в кафе Капа'
             cons=consequence(fn,ln) if fn=='Diary_text.rpy' else []
             if cons:
                 encl,prev=enclosing(fn,ln)
@@ -306,18 +339,19 @@ def row(k):
                 try: se=scene_effects(fn,ln)
                 except Exception: se=[]
                 eff=('<br/><b>Первые действия ветки (не все последствия):</b> '+'; '.join(se)) if se else ''
-                if k in MANUAL and (fn,ln) in MANUAL[k]['sites']: eff='<br/><b>Что происходит:</b> '+esc(MANUAL[k]['effect'])
+                if k in MANUAL and 'eff' in MANUAL[k] and ln in MANUAL[k]['eff'] and fn=='script_4_kapibar.rpy': eff='<br/><b>Что происходит:</b> '+esc(MANUAL[k]['eff'][ln])
+                if k in MANUAL and (fn,ln) in MANUAL[k].get('sites',[]): eff='<br/><b>Что происходит:</b> '+esc(MANUAL[k]['effect'])
                 pe=plain_expr(ce)
                 h+='<li>%s%s<br/><span class="muted">%s · <code>%s:%d</code></span><br/><span class="muted"><code>%s</code></span></li>'%(esc(pe[0].upper()+pe[1:]) if pe else condru.cond_html(ce).replace('<br/>',' '),eff,esc(cx),fn,ln,esc(ce[:110]))
         if len(chk)>8: h+='<li class="muted">…и ещё %d</li>'%(len(chk)-8)
         h+='</ul>'
-    else: h+='<p>Эту метку ничего не читает. Проверено по всему коду игры: нет ни одного условия с её именем, нет обращений через переменное имя (getattr/eval/globals - они есть в игре, но только для картинок, музыки и стрелок перехода, не для меток), а общий код дневника читает у записей памяти только числа и «keep», строковые метки не читает. Значит, метка только запоминается и сама ничего не включает и не запрещает повторять.</p>'
+    else: h+='<p>Чтений этой метки не найдено. Проверено по всему коду игры: нет ни одного условия с её именем, нет обращений через переменное имя (getattr/eval/globals - они есть в игре, но только для картинок, музыки и стрелок перехода, не для меток), а общий код дневника читает у записей памяти только числа и «keep», строковые метки не читает. Значит, по найденному, метка только запоминается; полнота всех возможных динамических чтений не доказана.</p>'
     return h+'</div></details>'
 CSS='''<style>.fl{background:#fff;border:1px solid #d9dee8;border-radius:10px;padding:6px 12px;margin:6px 0}.fl>summary{cursor:pointer;display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}.ft{font-weight:600}.b{font-size:12px;background:#ede9fe;color:#5b21b6;border-radius:10px;padding:1px 8px}.norep{vertical-align:-2px}.fb h5{margin:10px 0 3px;color:#374151}.fb ul{margin:4px 0 4px 20px}.fb code,.fl code{font-size:11px;color:#6b7280;word-break:break-all}.sg{margin:14px 0 4px;font-size:16px;color:#4338ca}.gtoc a{display:inline-block;margin:3px 8px 3px 0;padding:3px 12px;border:1px solid #d9dee8;border-radius:14px;background:#fff;text-decoration:none}</style>'''
 def page():
     n=sum(len(v) for g in G.values() for v in g.values())
     h='<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, must-revalidate"><title>Игровые метки</title><link rel="stylesheet" href="style7.css?v=%d">%s</head><body><header class="site"><div class="wrap"><h1>Игровые метки</h1><p>%d меток, которые игра ставит и потом проверяет. Сгруппированы по тому, как они устроены в коде. Смысл у большинства в коде не подписан: здесь он выведен по месту, где метка ставится, и помечен так.</p><nav class="crumbs"><a href="index.html?v=%d">← Все схемы</a> · <a href="quests.html?v=%d">Квесты</a></nav></div></header><main>'%(V,CSS,n,V,V)
-    h+='<div class="card"><p class="gtoc">'+''.join('<a href="#g_%s">%s <span class="muted">(%d)</span></a>'%(gk,esc(gt),sum(len(v) for v in G[(gk,gt,gd)].values())) for gk,gt,gd in ORD)+'</p><p class="muted">Значок <svg class="norep" viewBox="0 0 16 16" width="14" height="14"><path d="M13 8a5 5 0 1 1-1.6-3.7" fill="none" stroke="#5b21b6" stroke-width="1.6" stroke-linecap="round"/><path d="M13.4 1.8v3.4H10" fill="none" stroke="#5b21b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 13.5L13.5 2.5" stroke="#dc2626" stroke-width="1.8" stroke-linecap="round"/></svg> «не повторяется»: метка нужна только для того, чтобы этот кусок не показывался второй раз (её единственное чтение - защита в том же блоке). «Нигде не читается»: ни одно условие игры метку не проверяет. Память «в этом прохождении» (<code>vrem_memory</code>) очищается в блоке начальной настройки игры (script _define.rpy:529), память «навсегда» (<code>persistent.memory</code>) нет.</p><p class="muted">Квесты (взят, выполнен, записи дневника) - отдельная страница, это другой механизм: объект <code>quests[…]</code>. Метки здесь - строки в списках и числовые флаги; не путать с метками переходов <code>label</code> в Ren\'Py.</p></div>'
+    h+='<div class="card"><p class="gtoc">'+''.join('<a href="#g_%s">%s <span class="muted">(%d)</span></a>'%(gk,esc(gt),sum(len(v) for v in G[(gk,gt,gd)].values())) for gk,gt,gd in ORD)+'</p><p class="muted">Значок <svg class="norep" viewBox="0 0 16 16" width="14" height="14"><path d="M13 8a5 5 0 1 1-1.6-3.7" fill="none" stroke="#5b21b6" stroke-width="1.6" stroke-linecap="round"/><path d="M13.4 1.8v3.4H10" fill="none" stroke="#5b21b6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 13.5L13.5 2.5" stroke="#dc2626" stroke-width="1.8" stroke-linecap="round"/></svg> «не повторяется»: назначение разобрано по содержимому блока: метка нужна только чтобы этот кусок не показывался второй раз. «Чтений не найдено»: ни одно найденное условие игры метку не проверяет. Память «в этом прохождении» (<code>vrem_memory</code>) очищается в блоке начальной настройки игры (script _define.rpy:529), память «навсегда» (<code>persistent.memory</code>) нет.</p><p class="muted">Квесты (взят, выполнен, записи дневника) - отдельная страница, это другой механизм: объект <code>quests[…]</code>. Метки здесь - строки в списках и числовые флаги; не путать с метками переходов <code>label</code> в Ren\'Py.</p></div>'
     for gk,gt,gd in ORD:
         g=G[(gk,gt,gd)]
         h+='<div class="card" id="g_%s"><h2>%s</h2><p class="muted">%s</p>'%(gk,esc(gt),gd)
