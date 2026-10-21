@@ -2,7 +2,8 @@
 import re,html,zlib
 import trees
 from trees import LAB,body,ind,SKIP,KEY,SP
-from condru import cond_ru
+import condru
+from condru import cond_ru,cond_html
 def clean(x): return re.sub(r'\{/?[a-z]+(=[^}]*)?\}','',x)
 def q(x): return html.escape(x,quote=False).replace('"','&quot;')
 def sh(x,n): 
@@ -13,7 +14,7 @@ class G:
         s.n=0;s.L=['flowchart TD'];s.entry={};s.maxd=maxd;s.cls=[];s.rets={};s.opts=[]
     def node(s,html_,kind='sc'):
         s.n+=1;i='N%d'%s.n
-        if kind=='cd': s.L.append('%s{{"<div style=\'width:300px;white-space:normal;text-align:left\'>%s</div>"}}:::cd'%(i,html_))
+        if kind=='cd': s.L.append('%s(["<div style=\'width:300px;white-space:normal;text-align:left\'>%s</div>"]):::cd'%(i,html_))
         else: s.L.append('%s["<div style=\'width:%dpx;white-space:normal\'>%s</div>"]:::%s'%(i,340 if kind=='sc' else 280,html_,kind))
         return i
     def edge(s,a,b,lab=''):
@@ -80,16 +81,19 @@ class G:
                     while z<e and not lines[z].strip(): z+=1
                 conds=[(kd,ce) for kd,ce,_,_ in chain if kd!='else']
                 if len(conds)==1:
-                    dt='<b>Если</b> %s<br/><small style=\'color:#9ca3af\'>%s</small>'%(q(sh(cond_ru(conds[0][1]),300)),q(sh(conds[0][1],90)))
+                    dt='<b>Если:</b><br/>%s<br/><small style=\'color:#9ca3af\'>%s</small>'%(cond_html(conds[0][1]),q(sh(conds[0][1],90)))
                 else:
-                    dt='<b>Проверяется по порядку:</b>'+''.join('<br/><b>%d)</b> %s<br/><small style=\'color:#9ca3af\'>%s</small>'%(n+1,q(sh(cond_ru(ce),240)),q(sh(ce,80))) for n,(kd,ce) in enumerate(conds))
+                    dt='<b>Проверяется по порядку:</b>'+''.join('<br/><b>%d)</b> %s<br/><small style=\'color:#9ca3af\'>%s</small>'%(n+1,cond_html(ce),q(sh(ce,80))) for n,(kd,ce) in enumerate(conds))
                 d=s.node(dt,'cd'); s.link(pend,d)
                 ex=[];has_else=False;cn=0
                 for kind,ce,z0,z1 in chain:
                     if kind=='else': has_else=True;lab='иначе'
                     else:
                         cn+=1;lab=('да' if len(conds)==1 else str(cn))
-                    ex+=s.blk(lines,z0+1,z1,[(d,lab)],depth)
+                    r_=s.blk(lines,z0+1,z1,[(d,lab)],depth)
+                    if r_==[(d,lab)]:
+                        en=s.node('<i>в этой ветке только показ картинок, звук или служебные действия, без реплик и записей (на схему не вынесены)</i>','ex'); s.edge(d,en,lab); r_=[(en,'')]
+                    ex+=r_
                 if not has_else: ex.append((d,'нет' if len(conds)==1 else 'ни одно'))
                 pend=ex; k=chain[-1][3] if chain else j
                 while k<e and not lines[k].strip(): k+=1
@@ -120,7 +124,7 @@ def graph(lab,title,maxd=3):
     out=[];seen={lab:0};queue=[(lab,None,0)];DP={}
     CL=('ret fill:#fff7ed,stroke:#ea580c,color:#7c2d12','sc fill:#f0f9ff,stroke:#0369a1,color:#0f172a','ch fill:#fef3c7,stroke:#b45309,color:#0f172a','cd fill:#ede9fe,stroke:#7c3aed,color:#0f172a','an fill:#dcfce7,stroke:#15803d,color:#0f172a','ex fill:#e5e7eb,stroke:#6b7280,color:#0f172a','gap fill:#fff,stroke:#b91c1c,stroke-dasharray:4 3,color:#7f1d1d')
     while queue:
-        key,opt,dp=queue.pop(0);g=G()
+        key,opt,dp=queue.pop(0);g=G();condru.LEG.clear()
         if opt is None:
             g.run(key);ttl='Ветка <code>%s</code>'%key
         else:
@@ -136,5 +140,5 @@ def graph(lab,title,maxd=3):
                 else: seen[t]=-1
             rets[r]=t if seen[t]>=0 else None
         for (k2,t2,ls,z2,e2) in g.opts: queue.append((k2,(t2,ls,z2,e2),dp))
-        out.append((key,ttl,'\n'.join(g.L),rets))
+        out.append((key,ttl,'\n'.join(g.L),rets,dict(condru.LEG)))
     return out
