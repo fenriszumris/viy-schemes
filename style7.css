@@ -45,3 +45,4 @@ footer{max-width:none;margin:0 0 40px;padding:0 20px;color:var(--muted);font-siz
 .panel-rel{position:relative}
 .panel-hidden{position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:100%}
 .lid{font-size:11px;color:#6b7280}.stats td:nth-child(2){font-size:11px;color:#6b7280}
+.use{margin:8px 0 0;font-size:13px}.use ul{margin:4px 0 0 18px}.use code{font-size:11px;color:#6b7280}
