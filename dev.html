@@ -118,8 +118,8 @@ function build(){
     L.push('MY["<div style=\'width:300px;white-space:normal\'>Луиза называет своё имя, вы называетесь: «Приятно познакомиться!» (1163)</div>"]:::sc');
     L.push('VN["<div style=\'width:280px;white-space:normal\'>Луиза в ужасе: это имя нельзя произносить (1241)</div>"]:::bad');
     E('H4 --> NM', c4);
-    E('NM --> K1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я не помню... пока называй меня [v].»',null,null)+'</div>"]:::hhp', c4); E('K1 --> AMX', c4);
-    E('NM --> K2["<div style=\'width:290px;white-space:normal\'>'+mk('«Я – [v].»',null,null)+'</div>"]:::hhp', c4); E('K2 --> MY', c4);
+    E('NM --> K1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я не помню... пока называй меня [v].»',[[C_DEV, 1]],null)+'</div>"]:::hhp', c4); E('K1 --> AMX', c4);
+    E('NM --> K2["<div style=\'width:290px;white-space:normal\'>'+mk('«Я – [v].»',[[C_DEV, 1]],null)+'</div>"]:::hhp', c4); E('K2 --> MY', c4);
     E('NM --> K3["<div style=\'width:290px;white-space:normal\'>'+mk('«Ээ... Сапуля Те Ля Камоле Каптуче Холе.»',null,null)+'</div>"]:::hhp', c4); E('K3 --> MY', c4);
     E('NM --> K4["<div style=\'width:290px;white-space:normal\'>'+mk('«Эээ... Миранда.»',[[C_DEV, 1]],null)+'</div>"]:::hhp', c4); E('K4 --> MY', c4);
     E('NM --> K5["<div style=\'width:290px;white-space:normal\'>'+mk('Если имя героини «Вий» (первые два варианта):',null,[[C_DEV, 2]])+'</div>"]:::hhp', c4); E('K5 --> VN', c4);
@@ -144,7 +144,7 @@ function build(){
     E('H4 --> AMX', c4);
     E('H4 --> EXS', c4);
   }
-  L.push(hub('H5','Потеря памяти, Лес Смерти, Хаос<br/><small>строки 655-929</small>','hhk',[[C_MAD, '−2…+5'], [C_LOG, '−4…+2'], [C_DEV, '−10…+2']]));
+  L.push(hub('H5','Потеря памяти, Лес Смерти, Хаос<br/><small>строки 655-929</small>','hhk',[[C_MAD, '−2…+5'], [C_LOG, '−4…+2'], [C_DEV, '−10…+3']]));
   if(EXP.has('H5')){
     L.push('AM0["<div style=\'width:260px;white-space:normal\'>Луиза спрашивает про память (655)</div>"]:::sc');
     L.push('AL["<div style=\'width:320px;white-space:normal\'>Луиза: «Ты знаешь, где мы?»; рассказ про Лес Смерти и Хаос (707-782)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если Лесс называл имя места: «Лес Смерти»; если не называл - Луиза называет сама; при Безумии не ниже 1 уровня настроение Луизы −1 (736)</span></div>"]:::sc');
