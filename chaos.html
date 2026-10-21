@@ -44,25 +44,25 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#475569', c2='#be123c', c3='#7c3aed', c4='#b45309', c5='#0f766e', c6='#0369a1', c7='#475569', c8='#b91c1c';
-  L.push('ST["<div style=\'width:300px;white-space:normal\'>Вход: героиня с Таширом доходит до разлома (script3_nazad.rpy:1085), локация становится «Вход в хаос»<br/><a href=\'tasha.html?v=105\'>← страница «Назад: Таша»</a></div>"]:::ex');
-  L.push('EXS["<div style=\'width:300px;white-space:normal\'>Экран «Вход в хаос»: табличка, стрелка вверх «В разлом?», стрелка вниз<br/><small>script _define.rpy:561-574, script_newscreens.rpy:343-344</small></div>"]:::ex');
+  L.push('ST["<div style=\'width:300px;white-space:normal\'>Вход: героиня с Таширом доходит до разлома (script3_nazad.rpy:1042), локация становится «Вход в хаос»<br/><a href=\'tasha.html?v=153\'>← страница «Назад: Таша»</a></div>"]:::ex');
+  L.push('EXS["<div style=\'width:300px;white-space:normal\'>Экран «Вход в хаос»: табличка, стрелка вверх «В разлом?», стрелка вниз<br/><small>script _define.rpy:266-279, script_newscreens.rpy:312-313</small></div>"]:::ex');
   L.push('RET["<div style=\'width:260px;white-space:normal\'>Дорога к Таше (локация): стрелка вниз «Назад»</div>"]:::ex');
-  L.push('RZ["<div style=\'width:280px;white-space:normal\'>Разлом (локация «Вход в хаос», дальше): единственная стрелка вниз возвращает ко входу<br/><small>script _define.rpy:574</small></div>"]:::ex');
+  L.push('RZ["<div style=\'width:280px;white-space:normal\'>Разлом (локация «Вход в хаос», дальше): единственная стрелка вниз возвращает ко входу<br/><small>script _define.rpy:279</small></div>"]:::ex');
   E('ST --> EXS', cG);
-  L.push(hub('H1','Что можно делать на входе в хаос<br/><small>script3_gubert.rpy:346-411</small>','hhn',[]));
+  L.push(hub('H1','Что можно делать на входе в хаос<br/><small>script3_gubert.rpy:336-401</small>','hhn',[]));
   if(EXP.has('H1')){
     L.push('L0["<div style=\'width:260px;white-space:normal\'>Героиня на экране «Вход в хаос»</div>"]:::sc');
     E('H1 --> L0', c3);
-    L.push('TB["<div style=\'width:320px;white-space:normal\'>Табличка: старая, подгнившая. «Закрыто в... Демо версии?» Героиня ничего не понимает (371-381)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: табличка осмотрена; повторно текст не повторяется</span></div>"]:::sc');
-    L.push('TM["<div style=\'width:280px;white-space:normal\'>Табличка предлагает забрать её с собой (382-389)</div>"]:::sc');
-    L.push('TY["<div style=\'width:260px;white-space:normal\'>Героиня берёт табличку (383-386)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 табличка теперь в инвентаре, исчезает с экрана</span></div>"]:::sc');
-    L.push('TN["<div style=\'width:260px;white-space:normal\'>Героиня не берёт табличку (387-388)</div>"]:::sc');
-    L.push('U1["<div style=\'width:320px;white-space:normal\'>Блу: если Блу ещё не встречена, героиня видит её, место кажется странным, экран темнеет (390-401)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: вход в разлом посещён</span></div>"]:::sc');
-    L.push('U2["<div style=\'width:300px;white-space:normal\'>Если Блу уже встречена: разлом «заколочен намертво», героиня удивлена (402-410)</div>"]:::sc');
-    L.push('D1["<div style=\'width:300px;white-space:normal\'>Таша рядом и помогает: спрашивает «Ты куда?» (346-355)</div>"]:::sc');
-    L.push('D2["<div style=\'width:280px;white-space:normal\'>«Я передумала.»: Таша уходит (356-363)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Таша больше не рядом и не помогает</span></div>"]:::sc');
-    L.push('D3["<div style=\'width:280px;white-space:normal\'>«Ой. Не в ту сторону»: Таша: «Нам вперед!» (364-368)</div>"]:::sc');
-    E('L0 --> K1["<div style=\'width:290px;white-space:normal\'>'+mk('Клик по табличке (script_newscreens.rpy:398-422)'+cond('пока таблички нет в инвентаре'),null,null)+'</div>"]:::hhn', c3); E('K1 --> TB', c3);
+    L.push('TB["<div style=\'width:320px;white-space:normal\'>Табличка: старая, подгнившая. «Закрыто в... Демо версии?» Героиня ничего не понимает (361-371)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: табличка осмотрена; повторно текст не повторяется</span></div>"]:::sc');
+    L.push('TM["<div style=\'width:280px;white-space:normal\'>Табличка предлагает забрать её с собой (372-379)</div>"]:::sc');
+    L.push('TY["<div style=\'width:260px;white-space:normal\'>Героиня берёт табличку (373-376)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 табличка теперь в инвентаре, исчезает с экрана</span></div>"]:::sc');
+    L.push('TN["<div style=\'width:260px;white-space:normal\'>Героиня не берёт табличку (377-378)</div>"]:::sc');
+    L.push('U1["<div style=\'width:320px;white-space:normal\'>Блу: если Блу ещё не встречена, героиня видит её, место кажется странным, экран темнеет (380-392)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает: вход в разлом посещён</span></div>"]:::sc');
+    L.push('U2["<div style=\'width:300px;white-space:normal\'>Если Блу уже встречена: разлом «заколочен намертво», героиня удивлена (394-401)</div>"]:::sc');
+    L.push('D1["<div style=\'width:300px;white-space:normal\'>Таша рядом и помогает: спрашивает «Ты куда?» (336-345)</div>"]:::sc');
+    L.push('D2["<div style=\'width:280px;white-space:normal\'>«Я передумала.»: Таша уходит (346-353)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Таша больше не рядом и не помогает</span></div>"]:::sc');
+    L.push('D3["<div style=\'width:280px;white-space:normal\'>«Ой. Не в ту сторону»: Таша: «Нам вперед!» (354-358)</div>"]:::sc');
+    E('L0 --> K1["<div style=\'width:290px;white-space:normal\'>'+mk('Клик по табличке (script_newscreens.rpy:364-387)'+cond('пока таблички нет в инвентаре'),null,null)+'</div>"]:::hhn', c3); E('K1 --> TB', c3);
     E('TB --> K1a["<div style=\'width:290px;white-space:normal\'>'+mk('Если таблички ещё нет в инвентаре:',null,null)+'</div>"]:::hhn', c3); E('K1a --> TM', c3);
     E('TM --> K1b["<div style=\'width:290px;white-space:normal\'>'+mk('«Можно.»',null,null)+'</div>"]:::hhn', c3); E('K1b --> TY', c3);
     E('TM --> K1c["<div style=\'width:290px;white-space:normal\'>'+mk('«Но зачем?»',null,null)+'</div>"]:::hhn', c3); E('K1c --> TN', c3);
@@ -116,14 +116,14 @@ render();
 <body>
 <header class="site"><div class="wrap">
 <h1>Вход в хаос (разлом)</h1>
-<p>Локация chaos_enter: табличка, разлом, возврат на дорогу к Таше. Код: script3_gubert.rpy:346-411.</p>
-<nav class="crumbs"><a href="index.html?v=197">← Все схемы</a> · <a href="tasha.html?v=105">Назад: Таша</a> · <a href="stats.html?v=198">Статы</a></nav>
+<p>Локация chaos_enter: табличка, разлом, возврат на дорогу к Таше. Код: script3_gubert.rpy:336-401.</p>
+<nav class="crumbs"><a href="index.html?v=197">← Все схемы</a> · <a href="tasha.html?v=153">Назад: Таша</a> · <a href="stats.html?v=198">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
 <h2>Типичный путь (суждение, не измерение)</h2>
 <p><b>Как иду:</b> осмотреть табличку и взять её; затем стрелка вниз на дорогу к Таше.</p>
-<p class="muted">Все числа взяты из присваиваний в script3_gubert.rpy:346-411. Статы здесь не меняются.</p>
+<p class="muted">Все числа взяты из присваиваний в script3_gubert.rpy:336-401. Статы здесь не меняются.</p>
 </div>
 <div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Логика</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Кровь</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше.</p></div>
 
