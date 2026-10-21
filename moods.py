@@ -4,7 +4,7 @@ sys.path.insert(0,'/tmp/sch')
 import condru
 from condru import cond_html
 from trees import SP
-V=322
+V=323
 SL={'less':'less','dev':'luiza','oh':'adrian','nars':'narsi','tash':'tash','adro':'adro','girl_air':'devushka_airat','fenya':'fenrira','bonny':'bonny','urza':'urza','kap':'kap'}
 NAME={'less':'Лесс','dev':'Луиза','oh':'Адриан (Страж)','nars':'Нарси','tash':'Таш','adro':'Адро','girl_air':'Девушка в церкви Айрата','fenya':'Феня','bonny':'Бонни','urza':'Урза','kap':'Капибара'}
 THR={'less':(8,-5),'dev':(8,-10),'oh':(8,-10),'tash':(8,-10),'adro':(8,-10),'girl_air':(8,-10),'urza':(100,-100)}
