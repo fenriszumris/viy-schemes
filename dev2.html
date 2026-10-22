@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>Луиза: повторные разговоры — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style7.css?v=363">
+<link rel="stylesheet" href="style7.css?v=364">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -43,7 +43,7 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#be123c', c2='#166534', c3='#b45309';
-  L.push('ST["<a href=\'dev.html?v=363\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Кнопка «Поговорить» с Луизой<br/><small>меню разговора с Луизой (1): идёт разговор с Луизой</small></div></a>"]:::ex');
+  L.push('ST["<a href=\'dev.html?v=364\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Кнопка «Поговорить» с Луизой<br/><small>меню разговора с Луизой (1): идёт разговор с Луизой</small></div></a>"]:::ex');
   L.push('EXS["<div style=\'width:240px;white-space:normal\'>Выход на экран переходов</div>"]:::ex');
   L.push(hub('H1','Луиза обижена<br/><small>строки 1-60</small>','hhk',[[C_DEV, '−1…0']]));
   if(EXP.has('H1')){
@@ -116,7 +116,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Луиза: повторные разговоры</h1>
 <p>day_1_dev_razg.rpy: меню разговора с Луизой, разговор об отце, белая стена (белая стена). Файл 208 строк</p>
-<nav class="crumbs"><a href="index.html?v=363">← Все схемы</a> · <a href="dev.html?v=363">Луиза на дороге</a> · <a href="stats.html?v=363">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=364">← Все схемы</a> · <a href="dev.html?v=364">Луиза на дороге</a> · <a href="stats.html?v=364">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -128,7 +128,7 @@ render();
 <tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>не меняется</td></tr>
 <tr><td style="color:#16a34a">Настроение Луизы</td><td>−2</td><td>0</td><td>«Что ты так на меня взъелась?» −1 (32; этот пункт, один раз, только после «Увязаться»); «не до тебя» −1 (82; разговор об отце)</td></tr>
 </table>
-<p class="muted">В этом файле Логика используется как уровень: <code>Логика&gt;=2</code>, <code>if Логика:</code> — это lambda: sanity.get_level(«logic») (script.rpy:211). Ссылки: <a href="dev.html?v=363">Луиза на дороге</a>.</p>
+<p class="muted">В этом файле Логика используется как уровень: <code>Логика&gt;=2</code>, <code>if Логика:</code> — это lambda: sanity.get_level(«logic») (script.rpy:211). Ссылки: <a href="dev.html?v=364">Луиза на дороге</a>.</p>
 </div>
 <div class="card">
 <h2>Типичный путь (суждение, не измерение)</h2>

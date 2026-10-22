@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>Разговор с Лессом — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style7.css?v=363">
+<link rel="stylesheet" href="style7.css?v=364">
 <style>.widechart{overflow-x:auto}.widechart svg{max-width:none !important}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -59,12 +59,12 @@ function build(){
   L.push(hub('H7','Хаб 7. Прощание<br/>less_end','h7',[[C_MAD,'−1…0'],[C_LOG,'0…+1'],[C_MOO,'−2…+2']]));
   L.push(hub('H8','Хаб 8. Хватание<br/>less_hand','h8',[[C_MAD,'−2…+2'],[C_LOG,'−1…+1'],[C_BLD,'0…+1'],[C_MOO,'−3…−2']]));
   L.push(hub('H9','Хаб 9. Уход Лесса<br/>script_3_less_go','h9',[[C_MAD,'−1…+3'],[C_LOG,'−1…+1'],[C_MOO,'−2…0']]));
-  L.push('VH["<a href=\'road.html?v=363\' style=\'color:rgb(11,94,215);text-decoration:underline\'>Вход: стрелки<br/>script3_road / script3_nazad</a>"]:::ext');
+  L.push('VH["<a href=\'road.html?v=364\' style=\'color:rgb(11,94,215);text-decoration:underline\'>Вход: стрелки<br/>script3_road / script3_nazad</a>"]:::ext');
   L.push('RUKA["Сцена руки<br/>script_1_less_hand"]:::ext');
   L.push('RZG["Дневник razg:<br/>входы в Хабы 4, 5, 7"]:::ext');
   L.push('RB["Дальше: дорога<br/><small>road_begin → экран переходов (strel)</small>"]:::term');
   L.push('GN["Лесс ушёл<br/><small>script_3_less_gone</small>"]:::term');
-  L.push('SLC["<a href=\'road.html?v=363\' style=\'color:rgb(11,94,215);text-decoration:underline\'>Переход на страницу «Дорога»: Лесс убежал, Алиса идёт наугад<br/><small>sluc: случайно или снова перекрёсток, или назад к Таше</small></a>"]:::ext');
+  L.push('SLC["<a href=\'road.html?v=364\' style=\'color:rgb(11,94,215);text-decoration:underline\'>Переход на страницу «Дорога»: Лесс убежал, Алиса идёт наугад<br/><small>sluc: случайно или снова перекрёсток, или назад к Таше</small></a>"]:::ext');
   L.push('D1["BAD END<br/>«Тщетная борьба...»"]:::die');
   L.push('D1A["BAD END<br/>«Шутка...»"]:::die');
   L.push('D2["BAD END<br/>«Подкормка...»"]:::die');
@@ -274,8 +274,8 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <body>
 <header class="site"><div class="wrap">
 <h1>Разговор с Лессом</h1>
-<p>Локация: <a href="location.html?v=363" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script_2_less_conv.rpy (conv) · script_2_less_conv_amul.rpy (amul) · script_3_less_end.rpy (end) · day_1_less_razg.rpy (razg)</p>
-<nav class="crumbs"><a href="index.html?v=363">← Все схемы</a> · <a href="location.html?v=363">Локация «Место пробуждения»</a> · <a href="strel.html?v=363">Экран переходов</a></nav>
+<p>Локация: <a href="location.html?v=364" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script_2_less_conv.rpy (conv) · script_2_less_conv_amul.rpy (amul) · script_3_less_end.rpy (end) · day_1_less_razg.rpy (razg)</p>
+<nav class="crumbs"><a href="index.html?v=364">← Все схемы</a> · <a href="location.html?v=364">Локация «Место пробуждения»</a> · <a href="strel.html?v=364">Экран переходов</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -380,7 +380,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <li>less_razg_menu (повторные разговоры): вопросы-ветки назад в Хабы 4/7/5; «Конец» перезапускает меню, выход автоматический, когда остаётся один пункт → экран strel.</li>
 </ul></div>
 </div>
-<p class="muted">Скрытые переходы: <code>setblood(x)</code> при Крови ≥ 3 прыгает в sm_blood из любой строки с blood+1. Имя героини переспрашивается в end:65 и end:107, даже если уже задано. Полный список найденных ошибок — на странице <a href="stats.html?v=363">«Статы»</a>.</p>
+<p class="muted">Скрытые переходы: <code>setblood(x)</code> при Крови ≥ 3 прыгает в sm_blood из любой строки с blood+1. Имя героини переспрашивается в end:65 и end:107, даже если уже задано. Полный список найденных ошибок — на странице <a href="stats.html?v=364">«Статы»</a>.</p>
 </div>
 </div>
 <div id="panel-short" style="position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:100%">
