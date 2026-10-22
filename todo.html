@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>TODO по сценарию</title>
-<link rel="stylesheet" href="style7.css?v=416">
+<link rel="stylesheet" href="style7.css?v=417">
 <style>.tmood{color:#D97706}</style>
 <style>.omood{color:#0d9488}</style>
 </head>
@@ -19,6 +19,7 @@
 <main>
 <div class="card"><div style="overflow-x:auto"><table class="stats"><tr><th>Что сделать</th><th>Что есть в коде сейчас</th><th>Статус</th></tr>
 <tr><td>Если игрок пришёл к стражницам (с Луизой) и говорит, что ищет Элеона, Луиза должна вмешаться.</td><td>Сцены, где игрок спрашивает стражу про Элеона, в <code>script_4_airat.rpy</code> не найдено. Стража упоминается только в пересказе Луизы: «там в конце сидела стража, сказала, что мой отец не доступен» (<code>script_4_airat.rpy:1359</code>) и в сценах со статуей (<code>:975</code>, <code>:1165</code>). Про Элеона спрашивают служку Лени (<code>:877</code>, пункт «Я ищу Элеона Ара.»). Нужно уточнить, где именно эта сцена.</td><td>Не начато. Текст реплик Луизы не написан, нужен от автора.</td></tr>
+<tr><td>При первом приходе к Лени он сам выныривает из-под стола с анимацией, без нажатия на него.</td><td>Анимация уже есть в <code>script_4_airat.rpy:658</code> (метка <code>script_4_airat_leni_dialog</code>, флаг <code>leni_meet2</code>), но запускалась кликом по Лени (<code>script_npc_items.rpy:893</code>).</td><td>Сделано в ветке feat/less-screen-oct22 по коду, в игре не проверено.</td></tr>
 </table></div></div>
 </main>
 </body>
