@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>TODO по сценарию</title>
-<link rel="stylesheet" href="style7.css?v=436">
+<link rel="stylesheet" href="style7.css?v=437">
 <style>.tmood{color:#D97706}</style>
 <style>.omood{color:#0d9488}</style>
 </head>
@@ -26,6 +26,7 @@
 <tr><td>Дневник не должен перекрывать шкатулку во время осмотров.</td><td>Замечено при тестировании: во время осмотра дневник перекрывает шкатулку. Место в коде не локализовано.</td><td>Не начато. Записано как ошибка, исправление пока не запрошено.</td></tr>
 <tr><td>Дописать реакцию Капа на отдачу амулета.</td><td>Кап принимает амулет без единого слова: метки <code>kap_amul</code> нет ни в одном файле (<code>script_inv_text.rpy</code>, <code>script_newscreens.rpy</code>).</td><td>решено: отдача временно отключена комментированием (ветка fix/amul-nodrop-oct22, в main не перенесено); реакцию дописать</td></tr>
 <tr><td>Дописать действие по клику на пустую кружку в инвентаре.</td><td>Пустая кружка (cap) появляется после выпитого чая; клик ведёт на отсутствующую метку <code>cap</code> (<code>script_inv_text.rpy:38</code>, <code>script_5_airat.rpy:838</code>).</td><td>решено временно: переход по клику отключён в ветке (в main не перенесено); действие дописать</td></tr>
+<tr><td>Определить, куда должен вести клик по карте Таша в инвентаре.</td><td>Клик ведёт на отсутствующую метку <code>tash_card_osm</code> (<code>script_inv_text.rpy:35</code>): в коде есть только <code>tash_cards_osm</code> (<code>script3_nazad.rpy:1741</code>). В сцене у Таша клик по той же карте использует правильное имя (<code>script_npc_items.rpy:171</code>).</td><td>решено временно: переход по клику из инвентаря отключён комментированием (ветка fix/tash-card-oct23, в main не перенесено); назначение клика определяет автор</td></tr>
 </table></div></div>
 </main>
 </body>
