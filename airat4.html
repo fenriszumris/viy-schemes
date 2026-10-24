@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>Айрат: дом Луизы — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style7.css?v=449">
+<link rel="stylesheet" href="style7.css?v=450">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -48,7 +48,7 @@ function build(){
   L.push('EXS["<div style=\'width:200px;white-space:normal\'>Экран переходов</div>"]:::ex');
   L.push('END["<div style=\'width:280px;white-space:normal\'>Перезапуск игры после «КОНЕЦ ДЕМОВЕРСИИ»</div>"]:::bad');
   E('ST --> A', c1);
-  L.push(hub('A','Дверь дома Луизы<br/><small>dev_door_label, 1482-1528</small>','hhn',[]));
+  L.push(hub('A','Дверь дома Луизы<br/><small>dev_door_label, 1504-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">1528</span></small>','hhn',[]));
   if(EXP.has('A')){
     L.push('A0["<div style=\'width:320px;white-space:normal\'>Героиня у двери: «Эт дверь.» «Ладно.» «И что мне с ней делать?» (1482-1486)</div>"]:::sc');
     E('A --> A0', c1);
@@ -71,7 +71,7 @@ function build(){
     E('A --> EXS', c1);
     E('A --> B', c1);
   }
-  L.push(hub('B','Вход в дом Луизы<br/><small>airat_house_luiza, 1540-1652</small>','hhl',[[C_DEV, '−1…0']]));
+  L.push(hub('B','Вход в дом Луизы<br/><small>airat_house_luiza, 1562-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">1652</span></small>','hhl',[[C_DEV, '−1…0']]));
   if(EXP.has('B')){
     L.push('B0["<div style=\'width:260px;white-space:normal\'>Героиня в доме Луизы (1540-1547)</div>"]:::sc');
     E('B --> B0', c2);
@@ -151,7 +151,7 @@ function build(){
     E('B --> D', c2);
     E('B --> F', c2);
   }
-  L.push(hub('C','Феня и бинты<br/><small>airat_house_fenya_bint, 1653-1684</small>','hhk',[[C_FEN, '+1'], [C_MOR, '+1']]));
+  L.push(hub('C','Феня и бинты<br/><small>airat_house_fenya_bint, 1704-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">1684</span></small>','hhk',[[C_FEN, '+1'], [C_MOR, '+1']]));
   if(EXP.has('C')){
     L.push('C0["<div style=\'width:340px;white-space:normal\'>Героиня: «Я нашла бинты.» Луиза: «Отлично! Неси сюда!» Феня: «А ты... Умеешь?» (1655-1658)</div>"]:::sc');
     E('C --> C0', c3);
@@ -167,7 +167,7 @@ function build(){
     E('C --> EXS', c3);
     E('C --> D', c3);
   }
-  L.push(hub('D','Выбор об отце<br/><small>airat_house_luiza_next, 1685-1765</small>','hhp',[[C_MAD, '0…+1'], [C_LOG, '0…+1'], [C_DEV, '−2…+1'], [C_MOR, '−1…+1']]));
+  L.push(hub('D','Выбор об отце<br/><small>airat_house_luiza_next, 1724-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">1765</span></small>','hhp',[[C_MAD, '0…+1'], [C_LOG, '0…+1'], [C_DEV, '−2…+1'], [C_MOR, '−1…+1']]));
   if(EXP.has('D')){
     L.push('D0["<div style=\'width:380px;white-space:normal\'>Луиза: «Знаешь, папа мне мало что говорил о своей работе.» «Только то, что лечит людей.» «Не хочу думать о плохом.» «А ты что думаешь?» (1688-1694)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 разговор об отце начат</span></div>"]:::sc');
     E('D --> D0', c4);
@@ -191,7 +191,7 @@ function build(){
     E('D --> EXS', c4);
     E('D --> E', c4);
   }
-  L.push(hub('E','Осмотр дома<br/><small>airat_house_priest_menu, 1805-1825 · с 25.10 кнопка входа (лупа) убрана из main, меню недостижимо (88fbb96)</small>','hhr',[]));
+  L.push(hub('E','Осмотр дома<br/><small>airat_house_priest_menu, 1823-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">1825</span> · с 25.10 кнопка входа (лупа) убрана из main, меню недостижимо (88fbb96)</small>','hhr',[]));
   if(EXP.has('E')){
     L.push('E0["<div style=\'width:240px;white-space:normal\'>Меню осмотра дома (1770)</div>"]:::sc');
     E('E --> E0', c5);
@@ -208,7 +208,7 @@ function build(){
   } else {
     E('E --> EXS', c5);
   }
-  L.push(hub('F','Концовки демоверсии<br/><small>airat_end_dev, 1801-1852 · с 25.10 вход: перенос записок с кодами на Луизу, авто-вход при входе в дом убран (88fbb96)</small>','hhk',[]));
+  L.push(hub('F','Концовки демоверсии<br/><small>airat_end_dev, 1893-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">1852</span> · с 25.10 вход: перенос записок с кодами на Луизу, авто-вход при входе в дом убран (88fbb96)</small>','hhk',[]));
   if(EXP.has('F')){
     L.push('F0["<div style=\'width:380px;white-space:normal\'>Луиза читает записку: «Подожди-подожди.» «Что это?» «Что за записи? КОД?» «Это странно. Действительно странно.» «Я не понимаю, что это все значит» (1874-1878)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записка прочитана</span></div>"]:::sc');
     E('F --> F0', c7);
@@ -229,7 +229,7 @@ function build(){
   } else {
     E('F --> END', c7);
   }
-  L.push(hub('G','Сон в доме<br/><small>airat_sleep, 1856-1860</small>','hhs',[]));
+  L.push(hub('G','Сон в доме<br/><small>airat_sleep, 1948-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">1860</span></small>','hhs',[]));
   if(EXP.has('G')){
     L.push('G0["<div style=\'width:340px;white-space:normal\'>Луиза: «Сейчас глубокая ночь.» «Стоит поспать, да и отец должен быть дома.» (1857-1858)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 задание «Где жрец?» взято</span></div>"]:::sc');
     E('G --> G0', c6);
@@ -281,7 +281,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Айрат: дом Луизы</h1>
 <p>script_4_airat.rpy, 1482-1860: дверь, дом, бинты Фени, выбор об отце, осмотр, концовки демо.</p>
-<nav class="crumbs"><a href="index.html?v=449">← Все схемы</a> · <a href="airat3.html?v=449">Карралак</a> · <a href="airat5.html?v=449">Стража</a> · <a href="stats.html?v=449">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=450">← Все схемы</a> · <a href="airat3.html?v=450">Карралак</a> · <a href="airat5.html?v=450">Стража</a> · <a href="stats.html?v=450">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">

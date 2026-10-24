@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>Тёмная Гавань: Адриан — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style7.css?v=449">
+<link rel="stylesheet" href="style7.css?v=450">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -44,11 +44,11 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#166534', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
-  L.push('ST["<a href=\'tgavan.html?v=449\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Из страницы «Дверь Адриана»: «Взять очень осторожно» (после зелья)<br/><small>script_3_tgavan_adr_after_door</small></div></a>"]:::ex');
+  L.push('ST["<a href=\'tgavan.html?v=450\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Из страницы «Дверь Адриана»: «Взять очень осторожно» (после зелья)<br/><small>script_3_tgavan_adr_after_door</small></div></a>"]:::ex');
   L.push('EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex');
-  L.push('NS["<a href=\'less.html?v=449\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:280px;white-space:normal\'>Лесс спасает героиню: переход на метку nesm (206)</div></a>"]:::ex');
+  L.push('NS["<a href=\'less.html?v=450\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:280px;white-space:normal\'>Лесс спасает героиню: переход на метку nesm (206)</div></a>"]:::ex');
   L.push('BAD["<div style=\'width:280px;white-space:normal\'>BAD END «У самурая нет цели» (208)</div>"]:::bad');
-  L.push('AD["<a href=\'adro.html?v=449\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Дальше: страница «Адро» (script_4_tgavan_adro) — Адриан ведёт к зданию эльфов (689-693)</div></a>"]:::ex');
+  L.push('AD["<a href=\'adro.html?v=450\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Дальше: страница «Адро» (script_4_tgavan_adro) — Адриан ведёт к зданию эльфов (689-693)</div></a>"]:::ex');
   E('ST --> G1', cG);
   L.push(hub('G1','Договориться с Адрианом<br/><small>script_3_tgavan_adr_after_door, with_adr, 1-77</small>','hhn',[[C_MAD, '−2…+1'], [C_LOG, '−1…0'], [C_ADR, '0…+1']]));
   if(EXP.has('G1')){
@@ -72,7 +72,7 @@ function build(){
     E('G1 --> G3', c1);
     E('G1 --> EXS', c1);
   }
-  L.push(hub('G2','Гнев Адриана<br/><small>script_3_tgavan_wrong_adr, 79-210</small>','hhr',[[C_LOG, '−1…0'], [C_ADR, '−5…0']]));
+  L.push(hub('G2','Гнев Адриана<br/><small>script_3_tgavan_wrong_adr, 79-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">210</span></small>','hhr',[[C_LOG, '−1…0'], [C_ADR, '−5…0']]));
   if(EXP.has('G2')){
     L.push('WM["<div style=\'width:260px;white-space:normal\'>Адриан: «Наслаждайтесь правами в одиночестве» (79)</div>"]:::sc');
     E('G2 --> WM', c8);
@@ -116,7 +116,7 @@ function build(){
     E('G3 --> G4', c2);
     E('G3 --> EXS', c2);
   }
-  L.push(hub('G4','Предложение Адриана<br/><small>script_3_tgavan_guardbegin_adr, 425-612</small>','hhp',[[C_MAD, '0…+1'], [C_ADR, '+2…+4']]));
+  L.push(hub('G4','Предложение Адриана<br/><small>script_3_tgavan_guardbegin_adr, 425-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">612</span></small>','hhp',[[C_MAD, '0…+1'], [C_ADR, '+2…+4']]));
   if(EXP.has('G4')){
     L.push('GB["<div style=\'width:300px;white-space:normal\'>Адриан даёт личный белый жетон и предлагает вступить в Белую Стражу (425-452)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 открывает предмет «жетон Адриана»; Адриан знает вас лучше</span></div>"]:::sc');
     E('G4 --> GB', c3);
@@ -132,7 +132,7 @@ function build(){
     E('G4 --> G5', c3);
     E('G4 --> EXS', c3);
   }
-  L.push(hub('G5','Расследование: вопросы<br/><small>script_3_tgavan_guardbegin_menu, 613-693</small>','hhk',[]));
+  L.push(hub('G5','Расследование: вопросы<br/><small>script_3_tgavan_guardbegin_menu, 613-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">693</span></small>','hhk',[]));
   if(EXP.has('G5')){
     L.push('SM["<div style=\'width:240px;white-space:normal\'>Что расследуем? (613)</div>"]:::sc');
     E('G5 --> SM', c4);
@@ -183,18 +183,18 @@ window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} rende
 window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
 render();
 </script>
-</head>
+<style>.stale-cite{opacity:.55;border-bottom:1px dotted #a33}</style></head>
 <body>
 <header class="site"><div class="wrap">
 <h1>Тёмная Гавань: Адриан</h1>
 <p>script3_tgavan_oh.rpy, 1-693: Адриан соглашается помочь, расспрашивает, берёт в Белую Стражу, рассказывает про дело посла.</p>
-<nav class="crumbs"><a href="index.html?v=449">← Все схемы</a> · <a href="tgavan.html?v=449">Дверь Адриана</a> · <a href="stats.html?v=449">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=450">← Все схемы</a> · <a href="tgavan.html?v=450">Дверь Адриана</a> · <a href="stats.html?v=450">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
 <h2>Типичный путь (суждение, не измерение)</h2>
 <p><b>Как иду:</b> «Может, мы можем договориться?» (настроение Адриана после двери выше −2); «Я согласна.»; «Я потеряла память...» (Вий не узнана: Адриан советует Айрат); «Нет, я хотя бы знакома с вами, я останусь здесь.»; «Я с вами!»; «Нет, как-то не доводилось.»; вопросы про подозреваемых, орудие и улики; «Я узнала все что хотела.»</p>
-<p class="muted">Все числа взяты из присваиваний в script3_tgavan_oh.rpy:1-706. Диапазоны на хабах считаются по всем путям.</p>
+<p class="muted">Все числа взяты из присваиваний в <span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">script3_tgavan_oh.rpy:1</span>-706. Диапазоны на хабах считаются по всем путям.</p>
 </div>
 <div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>от <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−3</span> до <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+3</span></td><td><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▼−3</span></td></tr><tr><td>Логика</td><td>от <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> до <b>0</b></td><td><b>0</b></td></tr><tr><td>Кровь</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение Адриана</td><td>от <span style='background:rgb(204,244,240);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▼−5</span> до <span style='background:rgb(204,244,240);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+5</span></td><td><span style='background:rgb(204,244,240);color:rgb(13,148,136);font-weight:700;border-radius:5px;padding:0 3px'>▲+5</span></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше.</p></div>
 

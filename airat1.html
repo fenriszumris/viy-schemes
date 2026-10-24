@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>Айрат: вход, церковь снаружи, Миранда — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style7.css?v=449">
+<link rel="stylesheet" href="style7.css?v=450">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -44,10 +44,10 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#4d7c0f', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
-  L.push('ST["<a href=\'strel.html?v=449\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Экран переходов: стрелка «вверх» от Белой стены и стрелки города Айрат</div></a>"]:::ex');
+  L.push('ST["<a href=\'strel.html?v=450\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:300px;white-space:normal\'>Экран переходов: стрелка «вверх» от Белой стены и стрелки города Айрат</div></a>"]:::ex');
   L.push('EXS["<div style=\'width:240px;white-space:normal\'>Экран переходов (дальше по городу)</div>"]:::ex');
   L.push('DEATH["<div style=\'width:320px;white-space:normal\'>BAD END «Ошибка мироздания» (62-65): запись о смерти и перезапуск игры</div>"]:::bad');
-  L.push('SLEEP["<a href=\'airat4.html?v=449\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:260px;white-space:normal\'>Ночь: переход к сну в доме Луизы (см. «Айрат 4»)</div></a>"]:::ex');
+  L.push('SLEEP["<a href=\'airat4.html?v=450\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:260px;white-space:normal\'>Ночь: переход к сну в доме Луизы (см. «Айрат 4»)</div></a>"]:::ex');
   E('ST --> W', c1);
   E('ST --> B', c2);
   E('ST --> U', c3);
@@ -55,7 +55,7 @@ function build(){
   E('ST --> IN', c5);
   E('ST --> GA', c6);
   E('ST --> RT', c7);
-  L.push(hub('W','Белая стена, вход в город<br/><small>script_4_airat_in_wall, 1-135</small>','hhn',[]));
+  L.push(hub('W','Белая стена, вход в город<br/><small>script_4_airat_in_wall, 1-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">135</span></small>','hhn',[]));
   if(EXP.has('W')){
     L.push('W0["<div style=\'width:280px;white-space:normal\'>Героиня идёт вверх через Белую стену в Айрат (1)</div>"]:::sc');
     E('W --> W0', c1);
@@ -102,7 +102,7 @@ function build(){
     E('W --> SLEEP', c1);
     E('W --> DEATH', c1);
   }
-  L.push(hub('B','Вниз с площади: прощание с Луизой<br/><small>airat_main_bottom, 136-194</small>','hhl',[]));
+  L.push(hub('B','Вниз с площади: прощание с Луизой<br/><small>airat_main_bottom, 136-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">194</span></small>','hhl',[]));
   if(EXP.has('B')){
     L.push('B0["<div style=\'width:280px;white-space:normal\'>Героиня идёт вниз с площади (к Белой стене) (136-137)</div>"]:::sc');
     E('B --> B0', c2);
@@ -123,7 +123,7 @@ function build(){
   } else {
     E('B --> EXS', c2);
   }
-  L.push(hub('U','Вверх с площади: подход к церкви<br/><small>airat_main_up, 195-234</small>','hhp',[]));
+  L.push(hub('U','Вверх с площади: подход к церкви<br/><small>airat_main_up, 195-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">234</span></small>','hhp',[]));
   if(EXP.has('U')){
     L.push('U0["<div style=\'width:260px;white-space:normal\'>Героиня идёт вверх, к церкви (195-196)</div>"]:::sc');
     E('U --> U0', c3);
@@ -153,7 +153,7 @@ function build(){
     L.push('CHOL["<div style=\'width:300px;white-space:normal\'>Если Луиза рядом: «Я прихожу сюда с самого детства. Люблю это место»</div>"]:::sc');
     L.push('CHWL["<div style=\'width:300px;white-space:normal\'>Если Луиза рядом: «Так древние мастера изображали защитные чары»</div>"]:::sc');
     E('CH0 --> C1["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня смотрит на щит:'+cond('уровень Логики ≥ 1: «Символика военного ордена»; уровень Безумия ≥ 1: шутка про зубочистку (237-242)'),null,null)+'</div>"]:::hhk', c4); E('C1 --> CHS', c4);
-    E('CH0 --> C2["<div style=\'width:290px;white-space:normal\'>'+mk('Если смотрит на здание (лупа):'+cond('только один раз (script_newscreens.rpy:722)'),null,null)+'</div>"]:::hhk', c4); E('C2 --> CHO', c4);
+    E('CH0 --> C2["<div style=\'width:290px;white-space:normal\'>'+mk('Если смотрит на здание (лупа):'+cond('только один раз (<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">script_newscreens.rpy:722</span>)'),null,null)+'</div>"]:::hhk', c4); E('C2 --> CHO', c4);
     E('CH0 --> C3["<div style=\'width:290px;white-space:normal\'>'+mk('Если смотрит на окно:'+cond('уровень Логики ≥ 1: «фокус защитного заклинания»; уровень Безумия ≥ 1: «застывшая молния» (286-293)'),null,null)+'</div>"]:::hhk', c4); E('C3 --> CHW', c4);
     E('CHS --> CHSL', c4);
     E('CHO --> CHOL', c4);
@@ -164,7 +164,7 @@ function build(){
   } else {
     E('CH --> EXS', c4);
   }
-  L.push(hub('IN','Вход в церковь<br/><small>airat_church_up, 305-358</small>','hhs',[]));
+  L.push(hub('IN','Вход в церковь<br/><small>airat_church_up, 305-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">358</span></small>','hhs',[]));
   if(EXP.has('IN')){
     L.push('I0["<div style=\'width:260px;white-space:normal\'>Героиня входит в церковь (305)</div>"]:::sc');
     E('IN --> I0', c5);
@@ -184,7 +184,7 @@ function build(){
   } else {
     E('IN --> EXS', c5);
   }
-  L.push(hub('GA','Девушка в церкви (Миранда)<br/><small>script_4_airat_girl_air, 359-495</small>','hhp',[[C_DEV, '−1…+1']]));
+  L.push(hub('GA','Девушка в церкви (Миранда)<br/><small>script_4_airat_girl_air, 369-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">495</span></small>','hhp',[[C_DEV, '−1…+1']]));
   if(EXP.has('GA')){
     L.push('G0["<div style=\'width:260px;white-space:normal\'>Героиня окликает девушку-горожанку (359)</div>"]:::sc');
     E('GA --> G0', c6);
@@ -215,7 +215,7 @@ function build(){
   } else {
     E('GA --> EXS', c6);
   }
-  L.push(hub('RT','Правая сторона церкви<br/><small>script_4_airat_right, 496-514</small>','hhs',[]));
+  L.push(hub('RT','Правая сторона церкви<br/><small>script_4_airat_right, 510-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">514</span></small>','hhs',[]));
   if(EXP.has('RT')){
     L.push('R0["<div style=\'width:280px;white-space:normal\'>Героиня идёт направо по коридору (496)</div>"]:::sc');
     E('RT --> R0', c7);
@@ -260,12 +260,12 @@ window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} rende
 window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
 render();
 </script>
-</head>
+<style>.stale-cite{opacity:.55;border-bottom:1px dotted #a33}</style></head>
 <body>
 <header class="site"><div class="wrap">
 <h1>Айрат: вход, церковь снаружи, Миранда</h1>
 <p>script_4_airat.rpy, 1-514: Белая стена, площадь, церковь снаружи, вход, девушка, правый коридор.</p>
-<nav class="crumbs"><a href="index.html?v=449">← Все схемы</a> · <a href="airat2.html?v=449">Лени</a> · <a href="airat3.html?v=449">Карралак</a> · <a href="stats.html?v=449">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=450">← Все схемы</a> · <a href="airat2.html?v=450">Лени</a> · <a href="airat3.html?v=450">Карралак</a> · <a href="stats.html?v=450">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
