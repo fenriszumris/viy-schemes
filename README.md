@@ -13,7 +13,7 @@
 1. Текст страниц — обычный HTML в файлах выше.
 2. Диаграммы — блоки `<pre class="mermaid">...</pre>`: это текст Mermaid (https://mermaid.js.org),
    правится прямо в файле; можно вставить текст в https://mermaid.live для визуальной правки.
-3. После коммита в ветку `main` сайт обновляется автоматически (GitHub Pages).
+3. После коммита в ветку `main` сайт публикуется вручную: `npx wrangler pages deploy . --project-name=viy-schemes` (Cloudflare Pages; токен в vault, `cloudflare-viy-pages-upload`). Без заливки live не меняется.
 
 ## Проверка
 Схемы выверены по коду 14–15.10.2026. Источники: `script.rpy`, `script_1_less_begin.rpy`,
