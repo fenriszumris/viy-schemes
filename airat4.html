@@ -191,7 +191,7 @@ function build(){
     E('D --> EXS', c4);
     E('D --> E', c4);
   }
-  L.push(hub('E','Осмотр дома<br/><small>airat_house_priest_menu, 1805-1825</small>','hhr',[]));
+  L.push(hub('E','Осмотр дома<br/><small>airat_house_priest_menu, 1805-1825 · с 25.10 кнопка входа (лупа) убрана из main, меню недостижимо (88fbb96)</small>','hhr',[]));
   if(EXP.has('E')){
     L.push('E0["<div style=\'width:240px;white-space:normal\'>Меню осмотра дома (1770)</div>"]:::sc');
     E('E --> E0', c5);
@@ -208,7 +208,7 @@ function build(){
   } else {
     E('E --> EXS', c5);
   }
-  L.push(hub('F','Концовки демоверсии<br/><small>airat_end_dev, 1801-1852</small>','hhk',[]));
+  L.push(hub('F','Концовки демоверсии<br/><small>airat_end_dev, 1801-1852 · с 25.10 вход: перенос записок с кодами на Луизу, авто-вход при входе в дом убран (88fbb96)</small>','hhk',[]));
   if(EXP.has('F')){
     L.push('F0["<div style=\'width:380px;white-space:normal\'>Луиза читает записку: «Подожди-подожди.» «Что это?» «Что за записи? КОД?» «Это странно. Действительно странно.» «Я не понимаю, что это все значит» (1874-1878)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записка прочитана</span></div>"]:::sc');
     E('F --> F0', c7);
