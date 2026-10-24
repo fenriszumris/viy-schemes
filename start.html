@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>Сцена «Старт» — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style7.css?v=450">
+<link rel="stylesheet" href="style7.css?v=451">
 <style>.widechart{overflow-x:auto}.widechart svg{max-width:none !important}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -112,7 +112,7 @@ function build(){
     L.push('ZR["Бегство в панике<br/><small>zeml_ran</small>"]:::h3');
     E('H3 --> C3A["'+mk('«Хватит экспериментов.»',[[C_LOG,1]],[[C_MAD,1]])+'"]:::h3', c3); E('C3A --> ST', c3);
     E('H3 --> C3B["'+mk('«Укусить еще сильнее. Для верности.»',[[C_MAD,1],[C_BLD,1]])+'"]:::h3', c3); E('C3B --> HN', c3);
-    E('C3B --> BLD3["'+mk('Если Кровь достигла 3 (watcher, <span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">script.rpy:250</span>-253) → sm_blood (hand:358)')+'"]:::h3', c3);
+    E('C3B --> BLD3["'+mk('Если Кровь достигла 3 (watcher, script.rpy:<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">250</span>-253) → sm_blood (hand:358)')+'"]:::h3', c3);
     E('BLD3 --> NESM["<div style=\'width:290px;white-space:normal\'>'+mk('Лесс спасает (411-414): замок совпал или «Темная Гавань», и (Настроение ≥ 5 или Лесс добрый), и не ld1.d6 → «Ты решила подкормить лес?» (nesm, 421) → jump less_visit (468), см. less.html')+'</div>"]:::h3', c3);
     E('BLD3 --> D3', c3);
     E('HN --> ZM', c3);
@@ -181,8 +181,8 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <body>
 <header class="site"><div class="wrap">
 <h1>Сцена «Старт»</h1>
-<p>От начала игры до разговора с Лессом · Локация: <a href="location.html?v=450" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script.rpy, script_1_less_begin.rpy (begin), script_memory.rpy (mem), script_1_less_hand.rpy (hand)</p>
-<nav class="crumbs"><a href="index.html?v=450">← Все схемы</a> · <a href="location.html?v=450">Локация «Место пробуждения»</a> · <a href="strel.html?v=450">Экран переходов</a></nav>
+<p>От начала игры до разговора с Лессом · Локация: <a href="location.html?v=451" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script.rpy, script_1_less_begin.rpy (begin), script_memory.rpy (mem), script_1_less_hand.rpy (hand)</p>
+<nav class="crumbs"><a href="index.html?v=451">← Все схемы</a> · <a href="location.html?v=451">Локация «Место пробуждения»</a> · <a href="strel.html?v=451">Экран переходов</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -199,7 +199,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 </div>
 <div class="card">
 <h2>Как читать</h2>
-<p class="muted">«Хаб» — кусок сцены с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение (в этой сцене не меняется). «Экран стрелок» — переход на экран перемещения: дальше игра идёт по экрану, а не по коду метки. Ветка руки и корней входит в разговор с Лессом напрямую (conv_2), минуя гляделки; остальные выходы — через экран стрелок (conv_0/conv_1). Сам разговор — на странице <a href="less.html?v=450">«Разговор с Лессом»</a>.</p>
+<p class="muted">«Хаб» — кусок сцены с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение (в этой сцене не меняется). «Экран стрелок» — переход на экран перемещения: дальше игра идёт по экрану, а не по коду метки. Ветка руки и корней входит в разговор с Лессом напрямую (conv_2), минуя гляделки; остальные выходы — через экран стрелок (conv_0/conv_1). Сам разговор — на странице <a href="less.html?v=451">«Разговор с Лессом»</a>.</p>
 </div>
 <div class="viewtoggle">
 <button id="btn-full" class="active" onclick="toggleView('start',1)">Детальнее</button>
@@ -218,7 +218,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <h2>Детали по хабам</h2>
 <div class="hub"><h3>Сцены 0–1. Вход (hard, start3)</h3>
 <ul>
-<li><code>hard</code> (<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">script.rpy:846</span>): обучение и вопрос про HARDMODE (без отката, автосохранений и истории). На 7-й отказ включается принудительно. Статов нет.</li>
+<li><code>hard</code> (script.rpy:<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">846</span>): обучение и вопрос про HARDMODE (без отката, автосохранений и истории). На 7-й отказ включается принудительно. Статов нет.</li>
 <li><code>start3</code> (begin:6): меню разработчика. <code>razr = 1</code> стоит жёстко, поэтому меню видит каждый игрок. «Игра» → tash_game (мини-игра, вне схемы), «Обучение» → назад в начало, «Без разработчика» / «Все, кроме Лесса.» → стартовое меню, «С.» → меню локаций (экран стрелок).</li>
 </ul></div>
 <div class="hub"><h3>Хаб 1. Стартовое меню (start_menu, begin:152)</h3>
@@ -248,7 +248,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <li><b>Табличка «Территория Лесса»</b> (<code>script_1_less_tabl</code>, begin:286-321, вход npc_items:614). «Взять с собой.» — корешок хлещет (blood_effect, Кровь не меняется); «Оставить на месте» — выход. Статов нет.</li>
 <li><b>Кровавый отпечаток на дереве</b> (<code>script_1_hand_blood</code>, begin:528-552, вход npc_items:557): реплики по уровням Логики/Безумия. Статов нет.</li>
 <li><b>Кремень</b> (<code>kremen_action_osm</code>, begin:553-590, вход npc_items:585): меняет <code>inv_list["kremen"]._text</code> (гравировка «РДС», связка с факелом при <code>facel._active</code>). Статов нет.</li>
-<li><b>Пять луп-направлений</b> (begin:430-527: less_start_left/right_osm_label, less_per_left/right/up_osm_label): метки собираются динамически <code>namee+napr+"_osm_label"</code> (<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">script.rpy:439</span>-443), раскрывают подписи стрелок «???» → имя, доп. реплики по уровням Логики/Безумия. Статов нет.</li>
+<li><b>Пять луп-направлений</b> (begin:430-527: less_start_left/right_osm_label, less_per_left/right/up_osm_label): метки собираются динамически <code>namee+napr+"_osm_label"</code> (script.rpy:<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">439</span>-443), раскрывают подписи стрелок «???» → имя, доп. реплики по уровням Логики/Безумия. Статов нет.</li>
 <li><code>prop_memory</code> / <code>prop_memory2</code> (script_memory:230, 245): вызывающий не найден в проверенном наборе файлов. Не мёртвый код: вызов может быть в файлах вне набора — не подтверждено.</li>
 </ul></div>
 </div>

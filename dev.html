@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <title>Луиза на дороге — Схемы игры «Вий»</title>
-<link rel="stylesheet" href="style7.css?v=450">
+<link rel="stylesheet" href="style7.css?v=451">
 <style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}</style>
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -43,7 +43,7 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#166534', c2='#0369a1', c3='#b45309', c4='#7c3aed', c5='#be123c', c6='#475569', c7='#b91c1c';
-  L.push('ST["<a href=\'road.html?v=450\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:260px;white-space:normal\'>Дорога: «Дальше по дороге»<br/><small>строки 91</small></div></a>"]:::ex');
+  L.push('ST["<a href=\'road.html?v=451\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:260px;white-space:normal\'>Дорога: «Дальше по дороге»<br/><small>строки 91</small></div></a>"]:::ex');
   L.push('EXS["<div style=\'width:200px;white-space:normal\'>Экран переходов</div>"]:::ex');
   L.push(hub('H1','Встреча с Луизой<br/><small>строки 91-257</small>','hhn',[]));
   if(EXP.has('H1')){
@@ -239,7 +239,7 @@ render();
 <header class="site"><div class="wrap">
 <h1>Луиза на дороге</h1>
 <p>script3_airat.rpy, строки 1-1381: встреча с Луизой, вопросы, имя, память, Лес Смерти</p>
-<nav class="crumbs"><a href="index.html?v=450">← Все схемы</a> · <a href="dev2.html?v=450">Разговоры по кнопке</a> · <a href="airat1.html?v=450">Айрат</a> · <a href="stats.html?v=450">Статы</a></nav>
+<nav class="crumbs"><a href="index.html?v=451">← Все схемы</a> · <a href="dev2.html?v=451">Разговоры по кнопке</a> · <a href="airat1.html?v=451">Айрат</a> · <a href="stats.html?v=451">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -249,7 +249,7 @@ render();
 <tr><td class="mad">Безумие</td><td>−3…+9</td><td>−1…+3</td><td>0</td><td>Безумие в типичном пути не меняется</td></tr>
 <tr><td class="logic">Логика</td><td>−4…+6</td><td>0…+4</td><td>+2</td><td>одинаковая причина Логики засчитывается один раз; исключение: «Паршивая ситуация.»</td></tr>
 <tr><td class="blood">Кровь</td><td>0</td><td>0…+1</td><td>0</td><td>+1 только «Пытаться догнать изо всех сил» (1304)</td></tr>
-<tr><td class="dmood">Настроение Луизы (dev.mood)</td><td>без низа…+8</td><td>−29…+4</td><td>+2</td><td>новый стат, цвет зелёный (выбран мной). Нижнего предела нет: циклы без флагов «Вий» −2/круг (<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">script3_airat.rpy:1081</span>-1183) и «Сапуля» −1/круг (1103); одноразовый проход мин −22 (вход −2 (1087) + выбор −20 (1168)), ровно −21 не существует. Макс +8 подтверждён цепочкой одного визита: 282 +1 → 475 +1 → 1041 +2 (W2 «хорошие ребята») → 625 +1 → 782 +2 → 573 +1 (имя «Миранда»); 550/559 — альтернативы того же меню имени, 1008/834 — несовместимые ветки. Атрибуция W-хаба исправлена: W1 без dev.mood, W2 +2 (1041), W3 −4 (1055)</td></tr>
+<tr><td class="dmood">Настроение Луизы (dev.mood)</td><td>без низа…+8</td><td>−29…+4</td><td>+2</td><td>новый стат, цвет зелёный (выбран мной). Нижнего предела нет: циклы без флагов «Вий» −2/круг (script3_airat.rpy:<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">1081</span>-1183) и «Сапуля» −1/круг (1103); одноразовый проход мин −22 (вход −2 (1087) + выбор −20 (1168)), ровно −21 не существует. Макс +8 подтверждён цепочкой одного визита: 282 +1 → 475 +1 → 1041 +2 (W2 «хорошие ребята») → 625 +1 → 782 +2 → 573 +1 (имя «Миранда»); 550/559 — альтернативы того же меню имени, 1008/834 — несовместимые ветки. Атрибуция W-хаба исправлена: W1 без dev.mood, W2 +2 (1041), W3 −4 (1055)</td></tr>
 </table>
 <p class="muted">Типичный путь: один путь из схемы, описан в карточке выше (суждение, не среднее). Мин и макс: перебор 64 стартовых набора (Безумие 0/3/6/9 × Логика 0/2/4/6 × Лесс назвал имя места да/нет × имя Вий да/нет), равновероятные выборы, ~40-53 тыс. путей на набор (базовый 3/2, имя не Вий: 53 241 путь). Ветки ratio() считаются по абсолютным значениям Безумия/Логики. Доли исходов (база 3/2): перезапуск игры без концовки 35%, вместе идут 46%, разошлись (не по пути / оставить) 19%.</p>
 <p class="muted"><span class="warn">Проверено:</span> Уровень Безумия 1 начинается с 3 очков, уровень Логики 1 с 2 очков. Условия «Безумие ≥ 3 и Лесс не назвал имя места» (736) учитываются в mood. Цикл «Шутка» (имя Вий) считан один раз; каждый лишний круг даёт ещё dev.mood −2 без границы. Начальное значение dev.mood в коде не найдено — принято 0. Вход «Девочка спит на траве» (girl_osm, 65) даёт отдельно Логику <span style="background:rgb(224,238,251);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px">▲+1</span> и ведёт в strel (в схему не входит).</p>
