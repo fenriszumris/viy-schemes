@@ -123,12 +123,16 @@ ROUTE_COL={'route_gavan.html':{
  },
 }
 
+ROUTE_POINT_NOTE={}
 def route_time_cell(effs):
     if not effs:
         return '<td>0 сценарно</td>'
-    tot=sum(e[3] for e in effs)
-    small='; '.join('%+d %s:%d'%(e[3],e[0],e[1]) for e in effs)
-    return '<td><b>%+d</b> сценарно<br/><span class="muted" style="font-size:11px">%s</span></td>'%(tot,small)
+    parts=[]
+    for e in effs:
+        d='%+d %s:%d'%(e[3],e[0],e[1])
+        n=ROUTE_POINT_NOTE.get((e[0],e[1]))
+        parts.append(d+(' - '+n if n else ''))
+    return '<td>по точкам:<br/><span class="muted" style="font-size:11px">%s</span></td>'%('; '.join(parts))
 
 def patch_route(fn,chunks):
     t=open(fn,encoding='utf8').read()
@@ -146,7 +150,7 @@ def patch_route(fn,chunks):
         m=re.search(r'<td[^>]*>(.*?)</td>',r,re.S)
         name=re.sub(r'<[^>]+>','',m.group(1)).strip() if m else ''
         if name.startswith('Итого'):
-            cell='<td><b>%+d</b> сценарно<br/><span class="muted" style="font-size:11px">плюс +1 за каждое перемещение стрелкой</span></td>'%total
+            cell='<td>по выбранным веткам<br/><span class="muted" style="font-size:11px">суммы одного прохождения нет - см. условия точек выше; плюс +1 за каждое перемещение стрелкой</span></td>'
         else:
             effs=eff_in(chunks.get(name,[]))
             total+=sum(e[3] for e in effs)
@@ -154,7 +158,7 @@ def patch_route(fn,chunks):
         k=r.find('</td>')+len('</td>')
         body+=r[:k]+cell+r[k:]
     tbl_new=tbl2[:tbl2.find('</tr>')+len('</tr>')]+body+'</table>'
-    note='<p style="font-size:12px;color:#6b7280">Столбец «Время»: сценарные изменения счётчика gametime в сценах раздела (каждая со строкой кода). Сюда не входят +1 за каждое перемещение стрелкой (script.rpy:453) и +5 за ночёвку у Капибара (change_day, script_4_kapibar.rpy:227).</p>'
+    note='<p style="font-size:12px;color:#6b7280">Столбец «Время»: сценарные изменения счётчика gametime в сценах раздела - строка кода и условие; точки относятся к разным веткам, это не стоимость одного прохождения. Сюда не входят +1 за каждое перемещение стрелкой (script.rpy:453) и ночёвка у Капибара +5 (script_4_kapibar.rpy:227) - она вне этих маршрутов.</p>'
     t=t[:i]+tbl_new+'\n'+note+t[j:]
     return t
 
