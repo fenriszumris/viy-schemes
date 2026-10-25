@@ -76,7 +76,7 @@ function build(){
     L.push('O5["<div style=\'width:340px;white-space:normal\'>Розовая книга и записка Камилле (212-256)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 «Открыть» книгу, потом «Открыть» записку: записывает «письмо Камилле найдено» (toKP_letter); в любом случае «розовая книга осмотрена»</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>при Логике выше 1 уровня: героиня замечает ещё одну деталь</span></div>"]:::sc');
     E('MAP --> O5c["<div style=\'width:290px;white-space:normal\'>'+mk('Осмотреть: Розовая книга и записка Камилле',null,null)+'</div>"]:::hhl', c2); E('O5c --> O5', c2);
     E('O5 --> EXS', c2);
-    L.push('O6["<div style=\'width:340px;white-space:normal\'>Бутылочка яда Скорпикоры (257-278)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 «Осмотреть бутылочку» → «яд закрыт нетронутым» (poison_closed_osm); в любом случае «яд осмотрен» (poison_osm)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>при Логике выше 1 уровня: героиня замечает ещё одну деталь</span></div>"]:::sc');
+    L.push('O6["<div style=\'width:340px;white-space:normal\'>Бутылочка яда Скорпикоры (<a href="replics.html?v=539#r-script3_tgavan_oh-258">257-278</a>)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 «Осмотреть бутылочку» → «яд закрыт нетронутым» (poison_closed_osm); в любом случае «яд осмотрен» (poison_osm)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>при Логике выше 1 уровня: героиня замечает ещё одну деталь</span></div>"]:::sc');
     E('MAP --> O6c["<div style=\'width:290px;white-space:normal\'>'+mk('Осмотреть: Бутылочка яда Скорпикоры',null,null)+'</div>"]:::hhl', c2); E('O6c --> O6', c2);
     E('O6 --> EXS', c2);
     L.push('O7["<div style=\'width:340px;white-space:normal\'>Чайные чашки (279-300): две чашки наполовину полные<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «чашка осмотрена» (tea1_osm, tea_osm)</span><br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>при Логике выше 1 уровня: героиня замечает ещё одну деталь</span></div>"]:::sc');
@@ -247,5 +247,6 @@ render();
 </div>
 </main>
 <footer>Схемы игры «Вий» · script_4_tgavan_adro.rpy · выверено по коду 20.10.2026</footer>
+<script>addEventListener('load',function(){var h=location.hash;if(h.indexOf('#n-')===0){var id=h.substring(3);var tries=0;var tm=setInterval(function(){var g=document.querySelector('[id^="flowchart-"][id*="-'+id+'-"]');if(g){clearInterval(tm);g.scrollIntoView({block:'center',inline:'center'});var r=g.querySelector('rect,ellipse,polygon,path');if(r){r.style.stroke='#e11d48';r.style.strokeWidth='3px';}}else if(++tries>20)clearInterval(tm);},150);}});</script>
 </body>
 </html>

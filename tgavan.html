@@ -53,7 +53,7 @@ function build(){
     L.push('IN["<div style=\'width:280px;white-space:normal\'>Дверь в лесу; факел мог погаснуть (1-10)</div>"]:::sc');
     E('H1 --> IN', c1);
     L.push('KN["<div style=\'width:260px;white-space:normal\'>Вы у двери: «Постучать» / «Окликнуть» / «Уйти»</div>"]:::sc');
-    L.push('LU["<div style=\'width:280px;white-space:normal\'>Луиза рядом: «Кажется, это какая-то дверь?» (18)</div>"]:::sc');
+    L.push('LU["<div style=\'width:280px;white-space:normal\'>Луиза рядом: «Кажется, это какая-то дверь?» (<a href="replics.html?v=539#r-day_1_dev_razg-18">18</a>)</div>"]:::sc');
     L.push('LK["<div style=\'width:300px;white-space:normal\'>Луиза стучит; Адриан гонит обратно к развилке («налево, не возвращайтесь») → экран переходов (60-67)</div>"]:::sc');
     L.push('LI["<div style=\'width:300px;white-space:normal\'>Луиза отказывается идти («я туда ни ногой»), уходит и больше не рядом; вы снова у двери (35-51)</div>"]:::sc');
     L.push('RZ["<div style=\'width:300px;white-space:normal\'>Свет в Гавани включён, расследование взято, открыты подсказки про Белую Стражу и Адриана (12-17)</div>"]:::sc');
@@ -282,5 +282,6 @@ render();
 </div>
 </main>
 <footer>Схемы игры «Вий» · script3_tgavan_begin.rpy · выверено по коду 20.10.2026</footer>
+<script>addEventListener('load',function(){var h=location.hash;if(h.indexOf('#n-')===0){var id=h.substring(3);var tries=0;var tm=setInterval(function(){var g=document.querySelector('[id^="flowchart-"][id*="-'+id+'-"]');if(g){clearInterval(tm);g.scrollIntoView({block:'center',inline:'center'});var r=g.querySelector('rect,ellipse,polygon,path');if(r){r.style.stroke='#e11d48';r.style.strokeWidth='3px';}}else if(++tries>20)clearInterval(tm);},150);}});</script>
 </body>
 </html>

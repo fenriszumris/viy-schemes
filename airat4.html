@@ -50,13 +50,13 @@ function build(){
   E('ST --> A', c1);
   L.push(hub('A','Дверь дома Луизы<br/><small>dev_door_label, 1504-1560</small>','hhn',[]));
   if(EXP.has('A')){
-    L.push('A0["<div style=\'width:320px;white-space:normal\'>Героиня у двери: «Эт дверь.» «Ладно.» «И что мне с ней делать?» (1482-1486)</div>"]:::sc');
+    L.push('A0["<div style=\'width:320px;white-space:normal\'>Героиня у двери: «Эт дверь.» «Ладно.» «И что мне с ней делать?» (<a href="replics.html?v=539#r-script3_tgavan_oh-1485">1482-1486</a>)</div>"]:::sc');
     E('A --> A0', c1);
-    L.push('AK["<div style=\'width:280px;white-space:normal\'>Героиня стучит: «Я решила постучаться.» (1492-1493)</div>"]:::sc');
+    L.push('AK["<div style=\'width:280px;white-space:normal\'>Героиня стучит: «Я решила постучаться.» (<a href="replics.html?v=539#r-script3_tgavan_oh-1492">1492-1493</a>)</div>"]:::sc');
     L.push('AB["<div style=\'width:320px;white-space:normal\'>Героиня отходит влево. Голос Луизы: «Уходите! Я занята!» (1497-1501)</div>"]:::sc');
     L.push('AF["<div style=\'width:360px;white-space:normal\'>Феня: «Я ранена. Можете помочь.» Луиза: «Боги, ребенок. Хорошо. Но заходи только ты.» Через несколько минут Феня выходит: «Меня перевязали! Спасибо!» (1502-1517)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Феня перевязана</span></div>"]:::sc');
-    L.push('AE["<div style=\'width:300px;white-space:normal\'>Героиня: «Тишина.» «И пустота.» «Бесполезное занятие.» (1520-1523)</div>"]:::sc');
-    L.push('AH["<div style=\'width:220px;white-space:normal\'>Героиня входит в дом</div>"]:::sc');     L.push('A8["<div style=\'width:330px;white-space:normal\'>Осмотр двери: «Самый обычный дом.» «Висит небольшая табличка - \"Элеон Ар\"» Если Луиза дома (1533): «Похоже, внутри кто-то есть.» Иначе: «Оттуда не доносится ни звука.» (1530-1538)</div>"]:::sc');     E('A0 --> A8', c1); E('A8 --> A0', c1);
+    L.push('AE["<div style=\'width:300px;white-space:normal\'>Героиня: «Тишина.» «И пустота.» «Бесполезное занятие.» (<a href="replics.html?v=539#r-script3_tgavan_oh-1520">1520-1523</a>)</div>"]:::sc');
+    L.push('AH["<div style=\'width:220px;white-space:normal\'>Героиня входит в дом</div>"]:::sc');     L.push('A8["<div style=\'width:330px;white-space:normal\'>Осмотр двери: «Самый обычный дом.» «Висит небольшая табличка - \"Элеон Ар\"» Если Луиза дома (1533): «Похоже, внутри кто-то есть.» Иначе: «Оттуда не доносится ни звука.» (<a href="replics.html?v=539#r-script3_tgavan_oh-1530">1530-1538</a>)</div>"]:::sc');     E('A0 --> A8', c1); E('A8 --> A0', c1);
     E('A0 --> A1["<div style=\'width:290px;white-space:normal\'>'+mk('«Войти»'+cond('если Луиза рядом (1488)'),null,null)+'</div>"]:::hhn', c1); E('A1 --> AH', c1);
     E('A0 --> A2["<div style=\'width:290px;white-space:normal\'>'+mk('«Постучаться»'+cond('если Луизы нет рядом (1491)'),null,null)+'</div>"]:::hhn', c1); E('A2 --> AK', c1);
     E('A0 --> A3["<div style=\'width:290px;white-space:normal\'>'+mk('«Конец»',null,null)+'</div>"]:::hhn', c1); E('A3 --> EXS', c1);
@@ -73,7 +73,7 @@ function build(){
   }
   L.push(hub('B','Вход в дом Луизы<br/><small>airat_house_luiza, 1562-1678</small>','hhl',[[C_DEV, '−1…0']]));
   if(EXP.has('B')){
-    L.push('B0["<div style=\'width:260px;white-space:normal\'>Героиня в доме Луизы (1540-1547)</div>"]:::sc');
+    L.push('B0["<div style=\'width:260px;white-space:normal\'>Героиня в доме Луизы (<a href="replics.html?v=539#r-script3_nazad-1547">1540-1547</a>)</div>"]:::sc');
     E('B --> B0', c2);
     L.push('B1["<div style=\'width:300px;white-space:normal\'>Луиза: «Все же решила вернуться?» «Заходи.» (1549-1551)</div>"]:::sc');
     L.push('B2["<div style=\'width:340px;white-space:normal\'>Луиза: «Вот мы и дома.» «Ау! Папа?» «Ты еще не вернлуся?» «Тишина.» «Жаль, что его нет.» «Хотя он часто задерживается.» «Говорит, множество пациентов, и все такое.» «Но ведь не на целый день же!» (1555-1568)</div>"]:::sc');
@@ -91,7 +91,7 @@ function build(){
     L.push('BV["<div style=\'width:280px;white-space:normal\'>В церкви ещё не были («dev_church» нет в arrows_per)? (1627, 1635)</div>"]:::sc');
     L.push('BV2["<div style=\'width:280px;white-space:normal\'>Луиза ещё не звала («dev_priest_home2» нет в airat_sp)? (1627)</div>"]:::sc');
     L.push('BV3["<div style=\'width:280px;white-space:normal\'>В заметке задания нет «node2», но есть «node»? (1648)</div>"]:::sc');
-    L.push('BV4["<div style=\'width:260px;white-space:normal\'>«dev_priest_home4» ещё нет в airat_sp? (1650)</div>"]:::sc');
+    L.push('BV4["<div style=\'width:260px;white-space:normal\'>«dev_priest_home4» ещё нет в airat_sp? (<a href="replics.html?v=539#r-script3_tgavan_oh-1650">1650</a>)</div>"]:::sc');
     E('B0 --> BQ', c2);
     E('B1 --> BQh["<div style=\'width:260px;white-space:normal\'>героиня заходит в дом впервые (нет «home_luiza»)? (1555)</div>"]:::sc', c2);
     E('BQ --> BQcy["да"]:::sc', c2); E('BQcy --> B1', c2);
@@ -156,7 +156,7 @@ function build(){
     L.push('C0["<div style=\'width:340px;white-space:normal\'>Героиня: «Я нашла бинты.» Луиза: «Отлично! Неси сюда!» Феня: «А ты... Умеешь?» (1655-1658)</div>"]:::sc');
     E('C --> C0', c3);
     L.push('C1["<div style=\'width:380px;white-space:normal\'>Луиза: «Папа показывал, как перевязывать экстренные раны.» «Зелья я использовать не рискну.» «Давай лапку...» Перевязывает Феню: «Ну вот! Теперь можно и лекарей дождаться.» (1659-1667)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 Феня перевязана</span></div>"]:::sc');
-    L.push('C2["<div style=\'width:340px;white-space:normal\'>Героиня: «Что теперь будешь делать?» Феня: «Мне все еще нужен лекарь. Так что я с вами... Если можно.» Луиза: «Хорошо! Конечно!» (1670-1676)</div>"]:::sc');
+    L.push('C2["<div style=\'width:340px;white-space:normal\'>Героиня: «Что теперь будешь делать?» Феня: «Мне все еще нужен лекарь. Так что я с вами... Если можно.» Луиза: «Хорошо! Конечно!» (<a href="replics.html?v=539#r-script3_tgavan_oh-1672">1670-1676</a>)</div>"]:::sc');
     L.push('C3["<div style=\'width:340px;white-space:normal\'>Феня: «Не знаю. Я пойду его искать. Ты ведь обещала мне помочь...» Героиня: «Да.» Феня: «Тогда пойдем.» (1679-1683)</div>"]:::sc');
     E('C0 --> C1', c3);
     E('C1 --> Cc1["<div style=\'width:290px;white-space:normal\'>'+mk('Если задание «Где жрец?» взято (1673):',null,null)+'</div>"]:::hhk', c3); E('Cc1 --> C2', c3);
@@ -171,12 +171,12 @@ function build(){
   if(EXP.has('D')){
     L.push('D0["<div style=\'width:380px;white-space:normal\'>Луиза: «Знаешь, папа мне мало что говорил о своей работе.» «Только то, что лечит людей.» «Не хочу думать о плохом.» «А ты что думаешь?» (1688-1694)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 разговор об отце начат</span></div>"]:::sc');
     E('D --> D0', c4);
-    L.push('D1["<div style=\'width:400px;white-space:normal\'>Героиня: «Не хочу тебя расстраивать, но он мог лгать.» Далее доводы: девушка в церкви, Военник, Глава военного (1697-1705). Луиза: «Действительно» (1706). «Я думаю, он правда врал, если честно.» (1708-1709)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 жрец лгал</span></div>"]:::sc');
-    L.push('D2["<div style=\'width:400px;white-space:normal\'>Героиня: «Не думаю, что он мог лгать.» Луиза: «Очень на это надеюсь.» «Я боюсь за него.» «У меня больше никого.» Если в заметках задания есть «in_gavan» (1716): Героиня: «Глава военного упомянул, что он на секретном задании в Темной Гавани.» «Может он там просто кого-то лечит?» Луиза: «Д-да. Да, ты права.» «Хотя мне сложно быть уверенной, но если ты...» Героиня: «Я уверена.» «Это просто ошибка.» «Он не мог лгать дочери.» Луиза: «Точно...» «Спасибо!» (1712-1727)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 жрец не лгал</span></div>"]:::sc');
-    L.push('D3["<div style=\'width:380px;white-space:normal\'>Героиня: «Мне плевать.» «Мне все равно.» «Я вообще не уверена что тут делаю.» Луиза: «Ты можешь вообще уйти.» (1731-1739)</div>"]:::sc');
-    L.push('D3a["<div style=\'width:280px;white-space:normal\'>Героиня: «Я останусь.» Луиза: «Л-ладно?» (1742-1743)</div>"]:::sc');
+    L.push('D1["<div style=\'width:400px;white-space:normal\'>Героиня: «Не хочу тебя расстраивать, но он мог лгать.» Далее доводы: девушка в церкви, Военник, Глава военного (1697-1705). Луиза: «Действительно» (<a href="replics.html?v=539#r-script_4_airat-1706">1706</a>). «Я думаю, он правда врал, если честно.» (1708-1709)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 жрец лгал</span></div>"]:::sc');
+    L.push('D2["<div style=\'width:400px;white-space:normal\'>Героиня: «Не думаю, что он мог лгать.» Луиза: «Очень на это надеюсь.» «Я боюсь за него.» «У меня больше никого.» Если в заметках задания есть «in_gavan» (1716): Героиня: «Глава военного упомянул, что он на секретном задании в Темной Гавани.» «Может он там просто кого-то лечит?» Луиза: «Д-да. Да, ты права.» «Хотя мне сложно быть уверенной, но если ты...» Героиня: «Я уверена.» «Это просто ошибка.» «Он не мог лгать дочери.» Луиза: «Точно...» «Спасибо!» (<a href="replics.html?v=539#r-script_4_airat-1713">1712-1727</a>)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 жрец не лгал</span></div>"]:::sc');
+    L.push('D3["<div style=\'width:380px;white-space:normal\'>Героиня: «Мне плевать.» «Мне все равно.» «Я вообще не уверена что тут делаю.» Луиза: «Ты можешь вообще уйти.» (<a href="replics.html?v=539#r-script_4_airat-1735">1731-1739</a>)</div>"]:::sc');
+    L.push('D3a["<div style=\'width:280px;white-space:normal\'>Героиня: «Я останусь.» Луиза: «Л-ладно?» (<a href="replics.html?v=539#r-script_4_airat-1743">1742-1743</a>)</div>"]:::sc');
     L.push('D3b["<div style=\'width:380px;white-space:normal\'>Героиня: «Ага, пока.» Луиза: «Пока.» Задания «Где жрец?», «Найти врача» и «узнать о жреце» провалены, Луиза переходит на главную улицу (1745-1759)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 отношения с Луизой испорчены</span></div>"]:::sc');
-    L.push('D4["<div style=\'width:360px;white-space:normal\'>Луиза: «В любом случае. Я... Я должна знать, понимаешь? Он мой отец.» «Поможешь мне осмотреть дом? Пожалуйста.» (1760-1763)</div>"]:::sc');
+    L.push('D4["<div style=\'width:360px;white-space:normal\'>Луиза: «В любом случае. Я... Я должна знать, понимаешь? Он мой отец.» «Поможешь мне осмотреть дом? Пожалуйста.» (<a href="replics.html?v=539#r-script_4_airat-1760">1760-1763</a>)</div>"]:::sc');
     E('D0 --> Dm1["<div style=\'width:290px;white-space:normal\'>'+mk('«Не хочу тебя расстраивать, но он мог лгать.»'+cond('если есть повод усомниться: девушка в церкви, Военник или Тёмная Гавань (1697)'),null,null)+'</div>"]:::hhp', c4); E('Dm1 --> D1', c4);
     E('D0 --> Dm2["<div style=\'width:290px;white-space:normal\'>'+mk('«Не думаю, что он мог лгать. Может мы как-то не так поняли»',null,null)+'</div>"]:::hhp', c4); E('Dm2 --> D2', c4);
     E('D0 --> Dm3["<div style=\'width:290px;white-space:normal\'>'+mk('«Мне плевать.»',null,null)+'</div>"]:::hhp', c4); E('Dm3 --> D3', c4);
@@ -210,7 +210,7 @@ function build(){
   }
   L.push(hub('F','Концовки демоверсии<br/><small>airat_end_dev, 1893-1944 · с 25.10 вход: перенос записок с кодами на Луизу, авто-вход при входе в дом убран (88fbb96)</small>','hhk',[]));
   if(EXP.has('F')){
-    L.push('F0["<div style=\'width:380px;white-space:normal\'>Луиза читает записку: «Подожди-подожди.» «Что это?» «Что за записи? КОД?» «Это странно. Действительно странно.» «Я не понимаю, что это все значит» (1874-1878)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записка прочитана</span></div>"]:::sc');
+    L.push('F0["<div style=\'width:380px;white-space:normal\'>Луиза читает записку: «Подожди-подожди.» «Что это?» «Что за записи? КОД?» «Это странно. Действительно странно.» «Я не понимаю, что это все значит» (<a href="replics.html?v=539#r-script3_nazad-1874">1874-1878</a>)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записка прочитана</span></div>"]:::sc');
     E('F --> F0', c7);
     L.push('F1["<div style=\'width:340px;white-space:normal\'>Героиня: «Я тоже». «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Без понятия что тут творится.» (1809-1812)</div>"]:::bad');
     L.push('F2["<div style=\'width:380px;white-space:normal\'>Героиня: «Церковь действительно не так чиста?» «Они точно не невинные овечки.» Луиза: «Я уже ни в чем не уверена.» «КОНЕЦ ДЕМОВЕРСИИ. Айрат. Что-то творится в светлом королевстве.» (1815-1829)</div>"]:::bad');
@@ -305,5 +305,6 @@ render();
 
 </main>
 <footer>Схемы игры «Вий» · script_4_airat.rpy · выверено по коду 20.10.2026</footer>
+<script>addEventListener('load',function(){var h=location.hash;if(h.indexOf('#n-')===0){var id=h.substring(3);var tries=0;var tm=setInterval(function(){var g=document.querySelector('[id^="flowchart-"][id*="-'+id+'-"]');if(g){clearInterval(tm);g.scrollIntoView({block:'center',inline:'center'});var r=g.querySelector('rect,ellipse,polygon,path');if(r){r.style.stroke='#e11d48';r.style.strokeWidth='3px';}}else if(++tries>20)clearInterval(tm);},150);}});</script>
 </body>
 </html>

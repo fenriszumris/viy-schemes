@@ -54,7 +54,7 @@ function build(){
   if(EXP.has('G1')){
     L.push('Q["<div style=\'width:280px;white-space:normal\'>Адриан у двери: «Может, мы можем договориться?» (2)</div>"]:::sc');
     E('G1 --> Q', c1);
-    L.push('QC["<div style=\'width:240px;white-space:normal\'>Адриан отвечает на «договориться» (9)</div>"]:::sc');
+    L.push('QC["<div style=\'width:240px;white-space:normal\'>Адриан отвечает на «договориться» (<a href="replics.html?v=539#r-script_inv-9">9</a>)</div>"]:::sc');
     L.push('QD["<div style=\'width:240px;white-space:normal\'>Адриан отвечает на «не можете бросить» (27)</div>"]:::sc');
     L.push('WA["<div style=\'width:260px;white-space:normal\'>Адриан: «Но вы должны будете меня слушать» (49)</div>"]:::sc');
     E('Q --> Q1["<div style=\'width:290px;white-space:normal\'>'+mk('«Может, мы можем договориться?»',null,null)+'</div>"]:::hhn', c1); E('Q1 --> QC', c1);
@@ -134,10 +134,10 @@ function build(){
   }
   L.push(hub('G5','Расследование: вопросы<br/><small>script_3_tgavan_guardbegin_menu, 613-680</small>','hhk',[]));
   if(EXP.has('G5')){
-    L.push('SM["<div style=\'width:240px;white-space:normal\'>Что расследуем? (613)</div>"]:::sc');
+    L.push('SM["<div style=\'width:240px;white-space:normal\'>Что расследуем? (<a href="replics.html?v=539#r-script_2_less_conv-613">613</a>)</div>"]:::sc');
     E('G5 --> SM', c4);
     L.push('S1x["<div style=\'width:260px;white-space:normal\'>Подозреваемые: у посла почти не было врагов (620-637)</div>"]:::sc');
-    L.push('S2x["<div style=\'width:260px;white-space:normal\'>Орудие: яд Скорпикоры в чае (642-651)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «яд» в память расследования</span></div>"]:::sc');
+    L.push('S2x["<div style=\'width:260px;white-space:normal\'>Орудие: яд Скорпикоры в чае (<a href="replics.html?v=539#r-script_4_kapibar-649">642-651</a>)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «яд» в память расследования</span></div>"]:::sc');
     L.push('S3x["<div style=\'width:280px;white-space:normal\'>Улики: нужен контракт Чёрной Печати (656-683)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает флаг «Чёрная Печать» → открывает заметку про Чёрную Печать (black_seal_zn)</span></div>"]:::sc');
     E('SM --> S1["<div style=\'width:290px;white-space:normal\'>'+mk('«Есть еще подозреваемые?»'+cond('один раз (616)'),null,null)+'</div>"]:::hhk', c4); E('S1 --> S1x', c4);
     E('SM --> S2["<div style=\'width:290px;white-space:normal\'>'+mk('«Какое было орудие убийства?»'+cond('один раз (639)'),null,null)+'</div>"]:::hhk', c4); E('S2 --> S2x', c4);
@@ -211,5 +211,6 @@ render();
 </div>
 </main>
 <footer>Схемы игры «Вий» · script3_tgavan_oh.rpy · выверено по коду 20.10.2026</footer>
+<script>addEventListener('load',function(){var h=location.hash;if(h.indexOf('#n-')===0){var id=h.substring(3);var tries=0;var tm=setInterval(function(){var g=document.querySelector('[id^="flowchart-"][id*="-'+id+'-"]');if(g){clearInterval(tm);g.scrollIntoView({block:'center',inline:'center'});var r=g.querySelector('rect,ellipse,polygon,path');if(r){r.style.stroke='#e11d48';r.style.strokeWidth='3px';}}else if(++tries>20)clearInterval(tm);},150);}});</script>
 </body>
 </html>

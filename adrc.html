@@ -50,7 +50,7 @@ function build(){
   E('ST --> A1', cG);
   L.push(hub('A1','Адриан у двери<br/><small>adrian_conv_door, 1257-1290</small>','hhn',[]));
   if(EXP.has('A1')){
-    L.push('Z0["<div style=\'width:260px;white-space:normal\'>Адриан: «Вам что-то нужно?» (1257-1259)</div>"]:::sc');
+    L.push('Z0["<div style=\'width:260px;white-space:normal\'>Адриан: «Вам что-то нужно?» (<a href="replics.html?v=539#r-script3_tgavan_oh-1259">1257-1259</a>)</div>"]:::sc');
     E('A1 --> Z0', c1);
     L.push('Z1["<div style=\'width:340px;white-space:normal\'>Адриан: «Не прошло и пяти минут... Научитесь молчать о том, что думаете» — даёт возможность показать значок снова (1264-1282)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Адриан в курсе ссоры» → открывает второй показ значка Адро (oh_d false1)</span></div>"]:::sc');
     E('Z0 --> Z1c["<div style=\'width:290px;white-space:normal\'>'+mk('«Кажется, мы не поладили с эльфом.»'+cond('если героиня поссорилась с Адро и Адриан ещё не знает (1262)'),null,null)+'</div>"]:::hhn', c1); E('Z1c --> Z1', c1);
@@ -61,7 +61,7 @@ function build(){
   }
   L.push(hub('A2','Доклад Адриану<br/><small>adrian_conv_door_white, 1291-1550</small>','stub',[[C_ADR, '−1…+2'], [C_MOR, '−2…+2']]));
   if(EXP.has('A2')){
-    L.push('R0["<div style=\'width:320px;white-space:normal\'>Адриан: «Как продвигается расследование?» (1291-1292)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>пока в заглушке: в script3_tgavan_oh.rpy перехода на метку adrian_conv_door_white нет (метка на 1291)</span></div>"]:::stub');
+    L.push('R0["<div style=\'width:320px;white-space:normal\'>Адриан: «Как продвигается расследование?» (<a href="replics.html?v=539#r-script3_tgavan_oh-1292">1291-1292</a>)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>пока в заглушке: в script3_tgavan_oh.rpy перехода на метку adrian_conv_door_white нет (метка на 1291)</span></div>"]:::stub');
     E('A2 --> R0', c2);
     L.push('R1["<div style=\'width:300px;white-space:normal\'>Героиня знает про суицид; стоит ли говорить Адриану? (1293-1295)</div>"]:::stub');
     L.push('R2["<div style=\'width:300px;white-space:normal\'>Адриан: «Это меняет все дело... Что если это ошибка?» (1301-1316)</div>"]:::stub');
@@ -158,5 +158,6 @@ render();
 </div>
 </main>
 <footer>Схемы игры «Вий» · script3_tgavan_oh.rpy · выверено по коду 20.10.2026</footer>
+<script>addEventListener('load',function(){var h=location.hash;if(h.indexOf('#n-')===0){var id=h.substring(3);var tries=0;var tm=setInterval(function(){var g=document.querySelector('[id^="flowchart-"][id*="-'+id+'-"]');if(g){clearInterval(tm);g.scrollIntoView({block:'center',inline:'center'});var r=g.querySelector('rect,ellipse,polygon,path');if(r){r.style.stroke='#e11d48';r.style.strokeWidth='3px';}}else if(++tries>20)clearInterval(tm);},150);}});</script>
 </body>
 </html>

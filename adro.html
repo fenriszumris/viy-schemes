@@ -152,7 +152,7 @@ function build(){
     E('SM --> SC4["<div style=\'width:290px;white-space:normal\'>'+mk('«Подписать контракт.»'+cond('если контракт уже прочитан (1103)'),null,null)+'</div>"]:::hhr', c5); E('SC4 --> SY', c5);
     L.push('SR["<div style=\'width:300px;white-space:normal\'>Адро: «Аудиенция окончена. Вы отстранены» — выставляет героиню (1112-1127)</div>"]:::bad');
     E('SM --> SC5["<div style=\'width:290px;white-space:normal\'>'+mk('«Отказаться подписывать.»',null,null)+'</div>"]:::hhr', c5); E('SC5 --> SR', c5);
-    L.push('SR2["<div style=\'width:240px;white-space:normal\'>Что делать у двери? (1128)</div>"]:::sc');
+    L.push('SR2["<div style=\'width:240px;white-space:normal\'>Что делать у двери? (<a href="replics.html?v=539#r-script_4_tgavan_nars-1128">1128</a>)</div>"]:::sc');
     E('SR --> SR2', c5);
     L.push('SL["<div style=\'width:300px;white-space:normal\'>Героиня уходит; расследование провалено (1130-1140)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «расследование провалено» → Адро больше не принимает</span></div>"]:::bad');
     E('SR2 --> SC6["<div style=\'width:290px;white-space:normal\'>'+mk('«Спокойно уйти.»',null,null)+'</div>"]:::hhr', c5); E('SC6 --> SL', c5);
@@ -234,5 +234,6 @@ render();
 </div>
 </main>
 <footer>Схемы игры «Вий» · script3_tgavan_oh.rpy · выверено по коду 20.10.2026</footer>
+<script>addEventListener('load',function(){var h=location.hash;if(h.indexOf('#n-')===0){var id=h.substring(3);var tries=0;var tm=setInterval(function(){var g=document.querySelector('[id^="flowchart-"][id*="-'+id+'-"]');if(g){clearInterval(tm);g.scrollIntoView({block:'center',inline:'center'});var r=g.querySelector('rect,ellipse,polygon,path');if(r){r.style.stroke='#e11d48';r.style.strokeWidth='3px';}}else if(++tries>20)clearInterval(tm);},150);}});</script>
 </body>
 </html>

@@ -64,7 +64,7 @@ function build(){
   }
   L.push(hub('H2','Идти ли с Луизой<br/><small>строки 275-374</small>','hhl',[[C_MAD, '0…+1'], [C_LOG, '0…+1'], [C_DEV, '−3…+1']]));
   if(EXP.has('H2')){
-    L.push('M2A["<div style=\'width:260px;white-space:normal\'>Луиза: «Пойдём со мной!» (329)</div>"]:::sc');
+    L.push('M2A["<div style=\'width:260px;white-space:normal\'>Луиза: «Пойдём со мной!» (<a href="replics.html?v=539#r-script_2_less_conv_amul-329">329</a>)</div>"]:::sc');
     E('H2 --> M2A', c2);
     E('M2A --> AG["<div style=\'width:290px;white-space:normal\'>'+mk('«Еще чего! Хочу пока побыть здесь.»',[[C_MAD, 1]],[[C_DEV, 3]])+'</div>"]:::hhl', c2); E('AG --> IL', c2);
     E('M2A --> OK["<div style=\'width:290px;white-space:normal\'>'+mk('«Абсолютно согласна.»',[[C_LOG, 1], [C_DEV, 1]],null)+'</div>"]:::hhl', c2); E('OK --> P1', c2);
@@ -75,7 +75,7 @@ function build(){
   }
   L.push(hub('H3','Ловушка, побег и вопросы<br/><small>строки 377-588, 934-1005</small>','hhs',[[C_MAD, '−1…+1'], [C_LOG, '0…+3'], [C_DEV, '−5…+3']]));
   if(EXP.has('H3')){
-    L.push('P1["<div style=\'width:280px;white-space:normal\'>Луиза боится: «Здесь ловушка...» (934)</div>"]:::sc');
+    L.push('P1["<div style=\'width:280px;white-space:normal\'>Луиза боится: «Здесь ловушка...» (<a href="replics.html?v=539#r-script_2_less_conv-934">934</a>)</div>"]:::sc');
     L.push('P2["<div style=\'width:280px;white-space:normal\'>Луиза рассказывает про ловушки и побег из дома</div>"]:::sc');
     L.push('M2["<div style=\'width:240px;white-space:normal\'>Что дальше с Луизой?</div>"]:::sc');
     L.push('Q["<div style=\'width:260px;white-space:normal\'>Вопросы к Луизе: каждый пункт один раз</div>"]:::sc');
@@ -273,5 +273,6 @@ render();
 </div>
 </main>
 <footer>Схемы игры «Вий» · script3_airat.rpy · выверено по коду 20.10.2026</footer>
+<script>addEventListener('load',function(){var h=location.hash;if(h.indexOf('#n-')===0){var id=h.substring(3);var tries=0;var tm=setInterval(function(){var g=document.querySelector('[id^="flowchart-"][id*="-'+id+'-"]');if(g){clearInterval(tm);g.scrollIntoView({block:'center',inline:'center'});var r=g.querySelector('rect,ellipse,polygon,path');if(r){r.style.stroke='#e11d48';r.style.strokeWidth='3px';}}else if(++tries>20)clearInterval(tm);},150);}});</script>
 </body>
 </html>
