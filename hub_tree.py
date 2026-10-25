@@ -239,8 +239,10 @@ class B:
             if t.startswith('return'): items.append(('end','возврат из сцены'));return items,True
             if 'call_screen_strel' in t:
                 items.append(('end','возврат на экран переходов'));return items,True
-            if t.startswith('$') and not SKIP.match(t) and KEY.search(t):
-                items.append(('eff',eff(t,s.owner)))
+            if t.startswith('$') and not SKIP.match(t):
+                te=trees.time_eff(t)
+                if te: items.append(('eff',('txt','⏱ '+te)))
+                elif KEY.search(t): items.append(('eff',eff(t,s.owner)))
             k=j if t.startswith('$') else k+1
             if not t.startswith('$'): k=k
         return items,False

@@ -21,6 +21,20 @@ def body(lab):
     return fn,i,out
 SKIP=re.compile(r'^(show|hide|with|play|stop|pause|scene|window|queue|voice|image|transform|\$ (set_|show_|change_music|play|renpy\.transition|sleep|persistent_append\("[^"]*", *"diary)|\$ razg|\$ screens|\$ blood_effect)')
 KEY=re.compile(r'(mood|sanity|add_mad|add_logic|moral|blood|quests|persistent|inv_list|\.near|\.lock|\.zn_|\.d\d|\.bad|\.good|renpy\.full_restart|money|_note|memory)')
+def time_eff(t):
+    s=t[1:].strip() if t.startswith('$') else t.strip()
+    m=re.match(r'gametime\.gametime\s*\+=\s*(\w+)',s)
+    if m: return 'время +%s'%m.group(1)
+    m=re.match(r'gametime\.gametime\s*-=\s*(\w+)',s)
+    if m: return 'время −%s'%m.group(1)
+    m=re.match(r'gametime\.gametime\s*=\s*(\w+)',s)
+    if m: return 'время = %s (сброс)'%m.group(1)
+    m=re.match(r'my_location\.name\s*=\s*(\w+)',s)
+    if m: return 'переход «%s»: время +1'%m.group(1)
+    m=re.match(r'change_day\("([^"]*)",\s*(-?\d+)\s*\)',s)
+    if m:
+        n=int(m.group(2)); return 'время %s%d (новый день)'%('+' if n>=0 else '−',abs(n))
+    return None
 def esc(x): return html.escape(re.sub(r'\{/?[a-z]+(=[^}]*)?\}','',x))
 def render(lab,depth=0,seen=None,maxd=3):
     seen=set() if seen is None else seen
@@ -82,6 +96,9 @@ def blk(lines,s,e,seen,depth,maxd):
             k+=1;continue
         if 'call_screen_strel' in t: out.append('<div class="muted">Возврат на экран переходов.</div>');k+=1;continue
         if SKIP.match(t): k+=1;continue
-        if t.startswith('$') and KEY.search(t): out.append('<div class="eff"><code>%s</code></div>'%html.escape(t[1:].strip()));k+=1;continue
+        if t.startswith('$'):
+            te=time_eff(t)
+            if te: out.append('<div class="eff">⏱ <b>%s</b> <code>%s</code></div>'%(te,html.escape(t[1:].strip())));k+=1;continue
+            if KEY.search(t): out.append('<div class="eff"><code>%s</code></div>'%html.escape(t[1:].strip()));k+=1;continue
         k+=1
     return ''.join(out),k

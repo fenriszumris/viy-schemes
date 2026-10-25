@@ -116,7 +116,10 @@ class G:
                 pend=s.flush(buf,pend);buf=[]
                 x=s.node('Возврат на экран переходов','ex'); s.link(pend,x); pend=[]; k+=1;continue
             if SKIP.match(t): k+=1;continue
-            if t.startswith('$') and KEY.search(t): buf.append(('e','<code>%s</code>'%q(sh(t[1:].strip(),90))));k+=1;continue
+            if t.startswith('$'):
+                te=trees.time_eff(t)
+                if te: buf.append(('e','⏱ <b>%s</b> <code>%s</code>'%(te,q(sh(t[1:].strip(),70)))));k+=1;continue
+                if KEY.search(t): buf.append(('e','<code>%s</code>'%q(sh(t[1:].strip(),90))));k+=1;continue
             k+=1
         return s.flush(buf,pend)
 def graph(lab,title,maxd=3):
