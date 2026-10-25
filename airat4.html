@@ -48,7 +48,7 @@ function build(){
   L.push('EXS["<div style=\'width:200px;white-space:normal\'>Экран переходов</div>"]:::ex');
   L.push('END["<div style=\'width:280px;white-space:normal\'>Перезапуск игры после «КОНЕЦ ДЕМОВЕРСИИ»</div>"]:::bad');
   E('ST --> A', c1);
-  L.push(hub('A','Дверь дома Луизы<br/><small>dev_door_label, 1504-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">1528</span></small>','hhn',[]));
+  L.push(hub('A','Дверь дома Луизы<br/><small>dev_door_label, 1504-1560</small>','hhn',[]));
   if(EXP.has('A')){
     L.push('A0["<div style=\'width:320px;white-space:normal\'>Героиня у двери: «Эт дверь.» «Ладно.» «И что мне с ней делать?» (1482-1486)</div>"]:::sc');
     E('A --> A0', c1);
@@ -71,7 +71,7 @@ function build(){
     E('A --> EXS', c1);
     E('A --> B', c1);
   }
-  L.push(hub('B','Вход в дом Луизы<br/><small>airat_house_luiza, 1562-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">1652</span></small>','hhl',[[C_DEV, '−1…0']]));
+  L.push(hub('B','Вход в дом Луизы<br/><small>airat_house_luiza, 1562-1678</small>','hhl',[[C_DEV, '−1…0']]));
   if(EXP.has('B')){
     L.push('B0["<div style=\'width:260px;white-space:normal\'>Героиня в доме Луизы (1540-1547)</div>"]:::sc');
     E('B --> B0', c2);
@@ -151,7 +151,7 @@ function build(){
     E('B --> D', c2);
     E('B --> F', c2);
   }
-  L.push(hub('C','Феня и бинты<br/><small>airat_house_fenya_bint, 1704-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">1684</span></small>','hhk',[[C_FEN, '+1'], [C_MOR, '+1']]));
+  L.push(hub('C','Феня и бинты<br/><small>airat_house_fenya_bint, 1704-1723</small>','hhk',[[C_FEN, '+1'], [C_MOR, '+1']]));
   if(EXP.has('C')){
     L.push('C0["<div style=\'width:340px;white-space:normal\'>Героиня: «Я нашла бинты.» Луиза: «Отлично! Неси сюда!» Феня: «А ты... Умеешь?» (1655-1658)</div>"]:::sc');
     E('C --> C0', c3);
@@ -167,7 +167,7 @@ function build(){
     E('C --> EXS', c3);
     E('C --> D', c3);
   }
-  L.push(hub('D','Выбор об отце<br/><small>airat_house_luiza_next, 1724-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">1765</span></small>','hhp',[[C_MAD, '0…+1'], [C_LOG, '0…+1'], [C_DEV, '−2…+1'], [C_MOR, '−1…+1']]));
+  L.push(hub('D','Выбор об отце<br/><small>airat_house_luiza_next, 1724-1804</small>','hhp',[[C_MAD, '0…+1'], [C_LOG, '0…+1'], [C_DEV, '−2…+1'], [C_MOR, '−1…+1']]));
   if(EXP.has('D')){
     L.push('D0["<div style=\'width:380px;white-space:normal\'>Луиза: «Знаешь, папа мне мало что говорил о своей работе.» «Только то, что лечит людей.» «Не хочу думать о плохом.» «А ты что думаешь?» (1688-1694)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 разговор об отце начат</span></div>"]:::sc');
     E('D --> D0', c4);
@@ -208,7 +208,7 @@ function build(){
   } else {
     E('E --> EXS', c5);
   }
-  L.push(hub('F','Концовки демоверсии<br/><small>airat_end_dev, 1893-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">1852</span> · с 25.10 вход: перенос записок с кодами на Луизу, авто-вход при входе в дом убран (88fbb96)</small>','hhk',[]));
+  L.push(hub('F','Концовки демоверсии<br/><small>airat_end_dev, 1893-1944 · с 25.10 вход: перенос записок с кодами на Луизу, авто-вход при входе в дом убран (88fbb96)</small>','hhk',[]));
   if(EXP.has('F')){
     L.push('F0["<div style=\'width:380px;white-space:normal\'>Луиза читает записку: «Подожди-подожди.» «Что это?» «Что за записи? КОД?» «Это странно. Действительно странно.» «Я не понимаю, что это все значит» (1874-1878)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записка прочитана</span></div>"]:::sc');
     E('F --> F0', c7);
@@ -229,7 +229,7 @@ function build(){
   } else {
     E('F --> END', c7);
   }
-  L.push(hub('G','Сон в доме<br/><small>airat_sleep, 1948-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">1860</span></small>','hhs',[]));
+  L.push(hub('G','Сон в доме<br/><small>airat_sleep, 1948-1952</small>','hhs',[]));
   if(EXP.has('G')){
     L.push('G0["<div style=\'width:340px;white-space:normal\'>Луиза: «Сейчас глубокая ночь.» «Стоит поспать, да и отец должен быть дома.» (1857-1858)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 задание «Где жрец?» взято</span></div>"]:::sc');
     E('G --> G0', c6);
