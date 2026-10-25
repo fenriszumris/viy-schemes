@@ -47,7 +47,7 @@ function build(){
   L.push('ST["<div style=\'width:300px;white-space:normal\'>Экран переходов: правый коридор церкви (налево, к двери)</div>"]:::ex');
   L.push('EXS["<div style=\'width:200px;white-space:normal\'>Экран переходов</div>"]:::ex');
   E('ST --> D', c1);
-  L.push(hub('D','Дверь коридора<br/><small>airat_church_corridor_door, 529-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">543</span></small>','hhn',[]));
+  L.push(hub('D','Дверь коридора<br/><small>airat_church_corridor_door, 529-589</small>','hhn',[]));
   if(EXP.has('D')){
     L.push('D0["<div style=\'width:320px;white-space:normal\'>Деревянная дверь в конце правого коридора: «Вид у неё такой, будто она очень стара» (518)</div>"]:::sc');
     E('D --> D0', c1);
@@ -119,7 +119,7 @@ function build(){
   } else {
     E('L2 --> MENU', c4);
   }
-  L.push(hub('M','Меню Лени<br/><small>script_4_airat_leni_dialog, 590-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">1069</span></small>','hhl',[[C_MAD, '0…+2'], [C_LOG, '−3…+3'], [C_KAR, '−1…0'], [C_LEN, '−1…0'], [C_MOR, '−1…0']]));
+  L.push(hub('M','Меню Лени<br/><small>script_4_airat_leni_dialog, 590-1082</small>','hhl',[[C_MAD, '0…+2'], [C_LOG, '−3…+3'], [C_KAR, '−1…0'], [C_LEN, '−1…0'], [C_MOR, '−1…0']]));
   if(EXP.has('M')){
     L.push('LM["<div style=\'width:340px;white-space:normal\'>Меню Лени: «Парень с круглыми глазами, опираясь на стол, пытается удержаться» (757-758)</div>"]:::sc');
     E('M --> LM', c5);
