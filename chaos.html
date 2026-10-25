@@ -44,12 +44,12 @@ function build(){
   function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
   L.push('flowchart TD');
   const cG='#9aa3b2', c1='#475569', c2='#be123c', c3='#7c3aed', c4='#b45309', c5='#0f766e', c6='#0369a1', c7='#475569', c8='#b91c1c';
-  L.push('ST["<div style=\'width:300px;white-space:normal\'>Вход: героиня с Таширом доходит до разлома (script3_nazad.rpy:<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">1042</span>), локация становится «Вход в хаос»<br/><a href=\'tasha.html?v=449\'>← страница «Назад: Таша»</a></div>"]:::ex');
+  L.push('ST["<div style=\'width:300px;white-space:normal\'>Вход: героиня с Таширом доходит до разлома (script3_nazad.rpy:999), локация становится «Вход в хаос»<br/><a href=\'tasha.html?v=449\'>← страница «Назад: Таша»</a></div>"]:::ex');
   L.push('EXS["<div style=\'width:300px;white-space:normal\'>Экран «Вход в хаос»: табличка, стрелка вверх «В разлом?», стрелка вниз<br/><small>script _define.rpy:266-279, script_newscreens.rpy:<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">312</span>-<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">313</span></small></div>"]:::ex');
   L.push('RET["<div style=\'width:260px;white-space:normal\'>Дорога к Таше (локация): стрелка вниз «Назад»</div>"]:::ex');
   L.push('RZ["<div style=\'width:280px;white-space:normal\'>Разлом (локация «Вход в хаос», дальше): единственная стрелка вниз возвращает ко входу<br/><small>script _define.rpy:279</small></div>"]:::ex');
   E('ST --> EXS', cG);
-  L.push(hub('H1','Что можно делать на входе в хаос<br/><small>script3_gubert.rpy:<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">336</span>-390</small>','hhn',[]));
+  L.push(hub('H1','Что можно делать на входе в хаос<br/><small>script3_gubert.rpy:326-390</small>','hhn',[]));
   if(EXP.has('H1')){
     L.push('L0["<div style=\'width:260px;white-space:normal\'>Героиня на экране «Вход в хаос»</div>"]:::sc');
     E('H1 --> L0', c3);
@@ -117,14 +117,14 @@ render();
 <body>
 <header class="site"><div class="wrap">
 <h1>Вход в хаос (разлом)</h1>
-<p>Локация chaos_enter: табличка, разлом, возврат на дорогу к Таше. Код: script3_gubert.rpy:<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">336</span>-<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">401</span>.</p>
+<p>Локация chaos_enter: табличка, разлом, возврат на дорогу к Таше. Код: script3_gubert.rpy:326-<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">401</span>.</p>
 <nav class="crumbs"><a href="index.html?v=449">← Все схемы</a> · <a href="tasha.html?v=449">Назад: Таша</a> · <a href="stats.html?v=449">Статы</a></nav>
 </div></header>
 <main>
 <div class="card">
 <h2>Типичный путь (суждение, не измерение)</h2>
 <p><b>Как иду:</b> осмотреть табличку и взять её; затем стрелка вниз на дорогу к Таше.</p>
-<p class="muted">Все числа взяты из присваиваний в script3_gubert.rpy:<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">336</span>-<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">401</span>. Статы здесь не меняются.</p>
+<p class="muted">Все числа взяты из присваиваний в script3_gubert.rpy:326-<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">401</span>. Статы здесь не меняются.</p>
 </div>
 <div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Логика</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Кровь</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше.</p></div>
 
