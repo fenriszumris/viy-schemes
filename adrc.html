@@ -48,7 +48,7 @@ function build(){
   L.push('EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex');
   L.push('END["<div style=\'width:260px;white-space:normal\'>Конец демоверсии (перезапуск игры)</div>"]:::bad');
   E('ST --> A1', cG);
-  L.push(hub('A1','Адриан у двери<br/><small>adrian_conv_door, 1257-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">1290</span></small>','hhn',[]));
+  L.push(hub('A1','Адриан у двери<br/><small>adrian_conv_door, 1257-1290</small>','hhn',[]));
   if(EXP.has('A1')){
     L.push('Z0["<div style=\'width:260px;white-space:normal\'>Адриан: «Вам что-то нужно?» (1257-1259)</div>"]:::sc');
     E('A1 --> Z0', c1);
@@ -59,7 +59,7 @@ function build(){
   } else {
     E('A1 --> EXS', c1);
   }
-  L.push(hub('A2','Доклад Адриану<br/><small>adrian_conv_door_white, 1291-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">1550</span></small>','stub',[[C_ADR, '−1…+2'], [C_MOR, '−2…+2']]));
+  L.push(hub('A2','Доклад Адриану<br/><small>adrian_conv_door_white, 1291-1550</small>','stub',[[C_ADR, '−1…+2'], [C_MOR, '−2…+2']]));
   if(EXP.has('A2')){
     L.push('R0["<div style=\'width:320px;white-space:normal\'>Адриан: «Как продвигается расследование?» (1291-1292)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>пока в заглушке: в script3_tgavan_oh.rpy перехода на метку adrian_conv_door_white нет (метка на 1291)</span></div>"]:::stub');
     E('A2 --> R0', c2);
@@ -134,7 +134,7 @@ render();
 <body>
 <header class="site"><div class="wrap">
 <h1>Адриан: разговор о деле</h1>
-<p>script3_tgavan_oh.rpy:1257-<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">1550</span>: Адриан у двери после Адро, доклад по расследованию.</p>
+<p>script3_tgavan_oh.rpy:1257-1550: Адриан у двери после Адро, доклад по расследованию.</p>
 <nav class="crumbs"><a href="index.html?v=449">← Все схемы</a> · <a href="adro2.html?v=449">Адро: кабинет</a> · <a href="stats.html?v=449">Статы</a></nav>
 </div></header>
 <main>
