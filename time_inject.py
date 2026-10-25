@@ -123,7 +123,39 @@ ROUTE_COL={'route_gavan.html':{
  },
 }
 
-ROUTE_POINT_NOTE={}
+ROUTE_POINT_NOTE={
+ ('script_4_tgavan_nars.rpy',3):'первый визит к бару (ветка not "meet")',
+ ('script_4_tgavan_nars.rpy',29):'тот же первый визит, вход внутрь - сразу после :3',
+ ('script_4_tgavan_nars.rpy',305):'выход на улицу по ветке сцены',
+ ('script_4_tgavan_nars.rpy',475):'выбор ухода из бара в меню',
+ ('script_4_tgavan_nars.rpy',936):'+1 без смены локации (приём self-assign в сцене света)',
+ ('script_4_airat.rpy',3):'при чёрном амулете - к белой стене',
+ ('script_4_airat.rpy',139):'если с героиней Дева',
+ ('script_4_airat.rpy',145):'ветка с раненой Фенией',
+ ('script_4_airat.rpy',186):'ветка Фении к белой стене',
+ ('script_4_airat.rpy',206):'выбор «Я пойду к тебе»',
+ ('script_4_airat.rpy',586):'вход в коридор, только если ещё не там',
+ ('script_4_airat.rpy',1461):'квест жреца до встречи с Девой',
+ ('script_4_airat.rpy',1483):'ветка Девы в церкви',
+ ('script_4_airat.rpy',1520):'Дева у Луизы после ссоры',
+ ('script_4_airat.rpy',1563):'сценарный вход в дом Луизы (безусловно в метке)',
+ ('script_4_airat.rpy',1648):'ночёвка у Луизы (при night/sumer)',
+ ('script_4_airat.rpy',1660):'ветка Девы к церкви',
+ ('script_4_airat.rpy',1675):'поиски жреца с Девой - переход к церкви после осмотров',
+ ('script_4_airat.rpy',1797):'ссора: Дева уходит, переход на главную улицу',
+ ('script_5_airat.rpy',449):'после ветки квеста статуи - к кошке',
+ ('script3_tgavan_begin.rpy',759):'вход в Гавань со стражем',
+ ('script3_tgavan_begin.rpy',811):'+1 без смены локации (self-assign)',
+ ('script3_tgavan_begin.rpy',1084):'вход в Гавань с Адрианом',
+ ('script3_tgavan_oh.rpy',703):'первый подход к дому Адро (not vstr)',
+ ('script3_tgavan_oh.rpy',726):'повторный подход (else) - альтернатива :703',
+ ('script3_tgavan_oh.rpy',1130):'выбор «Спокойно уйти» - провал расследования',
+ ('script3_tgavan_oh.rpy',1226):'Лесс тащит героиню, 1-й из 4 переходов подряд (:1226-1232)',
+ ('script3_tgavan_oh.rpy',1228):'2-й из той же цепочки',
+ ('script3_tgavan_oh.rpy',1230):'3-й',
+ ('script3_tgavan_oh.rpy',1232):'4-й',
+ ('script_4_tgavan_adro.rpy',54):'выбор «Вернуться к вещам»',
+}
 def route_time_cell(effs):
     if not effs:
         return '<td>0 сценарно</td>'
