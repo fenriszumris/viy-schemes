@@ -53,7 +53,7 @@ function build(){
   L.push('BAK["<div style=\'width:240px;white-space:normal\'>Вниз: к месту пробуждения</div>"]:::ex');
   L.push('DIE["<div style=\'width:280px;white-space:normal\'>BAD END «Слишком много крови...»<br/><small>смерть при Крови 3: sm_blood, script_1_less_hand.rpy:358-<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">415</span></small></div>"]:::bad');
   E('ST --> R1', cG);
-  L.push(hub('R1','Развилка: день или ночь<br/><small>script_3_road, 1-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">59</span></small>','hhn',[[C_LOG, '0…+1']]));
+  L.push(hub('R1','Развилка: день или ночь<br/><small>script_3_road, 1-59</small>','hhn',[[C_LOG, '0…+1']]));
   if(EXP.has('R1')){
     L.push('A0["<div style=\'width:320px;white-space:normal\'>Героиня на развилке: «И куда мне идти...» (1-17)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>если героиня не знает дорогу: «Я понятия не имею где я...»</span></div>"]:::sc');
     E('R1 --> A0', c1);
