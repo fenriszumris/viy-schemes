@@ -1,8 +1,53 @@
 {
  "char_adrian.html": {
-  "labels": [],
-  "eff": {},
-  "total": 0
+  "labels": [
+   "o_viy_zn",
+   "script_3_tgavan_1door_menu",
+   "script_3_tgavan_2door_menu",
+   "script_3_tgavan_adr_potion_menu",
+   "script_3_tgavan_begin_about_adr_menu",
+   "script_3_tgavan_begin_adr_door_razg",
+   "script_3_tgavan_begin_adr_door_viy_menu",
+   "script_3_tgavan_begin_adr_door_viy_please",
+   "script_3_tgavan_begin_adr_door_viy_razg",
+   "script_3_tgavan_begin_menu",
+   "script_3_tgavan_begin_name_menu",
+   "script_3_tgavan_begin_noadr",
+   "script_3_tgavan_begin_noadr_door",
+   "script_3_tgavan_begin_rools",
+   "script_3_tgavan_door",
+   "tg_dv_amul",
+   "adrian_conv_door",
+   "adrian_conv_door_white",
+   "script_3_tgavan_adr_after_door",
+   "script_3_tgavan_airat_adr_menu2",
+   "script_3_tgavan_guardbegin_adr",
+   "script_3_tgavan_with_adr",
+   "script_3_tgavan_wrong_adr",
+   "script_3_tgavan_yes_adr_menu",
+   "script_3_tgavan_yes_adr_menu2"
+  ],
+  "eff": {
+   "script_3_tgavan_adr_potion_menu": [
+    "script3_tgavan_begin.rpy",
+    [
+     [
+      "+1",
+      811
+     ]
+    ]
+   ],
+   "script_3_tgavan_airat_adr_menu2": [
+    "script3_tgavan_oh.rpy",
+    [
+     [
+      "+1",
+      421
+     ]
+    ]
+   ]
+  },
+  "total": 2
  },
  "char_adro.html": {
   "labels": [
@@ -58,15 +103,15 @@
     [
      [
       "-1",
-      1679
+      1686
      ],
      [
       "+1",
-      1681
+      1688
      ],
      [
       "+1",
-      1693
+      1700
      ]
     ]
    ]
@@ -74,12 +119,17 @@
   "total": 1
  },
  "char_cat_statue.html": {
-  "labels": [],
+  "labels": [
+   "cat_talk",
+   "script_5_airat_statue_2"
+  ],
   "eff": {},
   "total": 0
  },
  "char_chelovek_v_chernom.html": {
-  "labels": [],
+  "labels": [
+   "less_visit"
+  ],
   "eff": {},
   "total": 0
  },
@@ -121,7 +171,11 @@
   "total": 5
  },
  "char_karralak.html": {
-  "labels": [],
+  "labels": [
+   "script_4_airat_kar_dialog",
+   "script_5_airat_statue_2",
+   "kar_money"
+  ],
   "eff": {},
   "total": 0
  },
@@ -218,9 +272,23 @@
   "total": 0
  },
  "char_sluzhka.html": {
-  "labels": [],
-  "eff": {},
-  "total": 0
+  "labels": [
+   "airat_church_corridor_door",
+   "airat_church_corridor_arrows_up_next_label",
+   "script_4_airat_leni_dialog"
+  ],
+  "eff": {
+   "airat_church_corridor_arrows_up_next_label": [
+    "script_4_airat.rpy",
+    [
+     [
+      "+1",
+      586
+     ]
+    ]
+   ]
+  },
+  "total": 1
  },
  "char_sova.html": {
   "labels": [
@@ -290,9 +358,32 @@
   "total": 3
  },
  "char_urza.html": {
-  "labels": [],
-  "eff": {},
-  "total": 0
+  "labels": [
+   "tash_urza_menu",
+   "script3_nazad_tash_canurza",
+   "script3_nazad_tash_urza_question",
+   "script3_nazad_tash_urzamore",
+   "script3_nazad_tash_urza",
+   "script3_nazad_tash_urza2",
+   "script3_nazad_tash_urza3",
+   "script3_nazad_tash_2urza"
+  ],
+  "eff": {
+   "script3_nazad_tash_urza": [
+    "script3_nazad.rpy",
+    [
+     [
+      "+1",
+      1018
+     ],
+     [
+      "+1",
+      1042
+     ]
+    ]
+   ]
+  },
+  "total": 2
  },
  "char_viy.html": {
   "labels": [],
@@ -300,7 +391,13 @@
   "total": 0
  },
  "char_zhrec.html": {
-  "labels": [],
+  "labels": [
+   "script_4_airat_leni_dialog",
+   "script_4_airat_leni_dialog_end",
+   "script_4_airat_kar_dialog",
+   "script_5_airat_statue_2",
+   "kar_money"
+  ],
   "eff": {},
   "total": 0
  }

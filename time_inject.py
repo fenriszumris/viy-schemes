@@ -7,7 +7,7 @@
 # Engine lines excluded: script.rpy:453/537/545, live2d.rpy, screen-layer comparisons.
 import re,glob,os,html,collections,sys
 
-GAME='/tmp/viy/game'
+GAME=sys.argv[1] if len(sys.argv)>1 else '/tmp/viy/game'
 effects=[]  # (file, line, label, delta, kind, detail)
 for fn in sorted(glob.glob(GAME+'/*.rpy')):
     base=os.path.basename(fn)
@@ -30,6 +30,9 @@ for fn in sorted(glob.glob(GAME+'/*.rpy')):
         if m and 'def ' not in s:
             d=int(m.group(2))*(1 if m.group(1)=='+' else -1)
             effects.append((base,i,cur,d,'direct',''))
+            continue
+        if re.search(r'gametime\.gametime\s*=\s*0\b',s):
+            effects.append((base,i,cur,0,'reset','сброс'))
 
 def eff_in(scope):  # scope: list of (file, lo, hi)
     out=[]
@@ -47,7 +50,7 @@ def block_html(effs,extra='',scoped=True):
         body='у этой страницы нет отдельного сценарного учёта времени.'
     elif effs:
         tot=sum(e[3] for e in effs)
-        items='; '.join('%+d - %s:%d (%s)'%(e[3],e[0],e[1],e[2]) for e in effs)
+        items='; '.join(('=0 (сброс) - %s:%d (%s)'%(e[0],e[1],e[2])) if e[4]=='reset' else ('%+d - %s:%d (%s)'%(e[3],e[0],e[1],e[2])) for e in effs)
         body='сценарно в этой части кода: <b>%+d</b> - %s.'%(tot,items)
     else:
         body='сценарных изменений в этой части кода <b>нет</b> (проверено поиском по всем .rpy).'
@@ -170,13 +173,47 @@ def patch_generic(fn):
     t=t[:ins]+'\n'+block+t[ins:]
     return t
 
+CHAR_SPECIAL={
+ 'char_viy.html':'Вий присутствует во всех сценах игры; отдельного счётчика у героини нет - сценарный учёт времени ведётся по сценам (см. <a href="time.html">«Время в игре»</a> и блоки ⏱ на страницах сцен).',
+ 'char_kai.html':'Отдельных реплик и сцен с участием Кая в коде нет (проверено поиском kai / kai2d по всем .rpy); связанных с ним сценарных изменений времени нет.',
+}
+
+def patch_char(fn,entry):
+    t=open(fn,encoding='utf8').read()
+    t=BLOCK_RE.sub('',t)
+    style='margin:8px 0 14px;padding:8px 12px;border:1px solid #d9dee8;border-radius:8px;background:#f8fafc;font-size:13px;color:#374151'
+    head='⏱ <b>Время</b> (счётчик gametime, лимит 50 - <a href="time.html">механика и все сроки</a>): '
+    tail=' Каждый переход стрелкой даёт ещё +1 сверху (script.rpy:453).'
+    if fn in CHAR_SPECIAL:
+        body=CHAR_SPECIAL[fn]
+    elif entry and entry['eff']:
+        parts=[]
+        tot=0
+        for lab,(f,effs) in entry['eff'].items():
+            for val,ln in effs:
+                parts.append('%s - %s:%s (%s)'%(val,f,ln,lab))
+                if val!='=0': tot+=int(val)
+        body='в сценах персонажа: <b>%+d</b> - %s.'%(tot,'; '.join(parts))
+    elif entry and entry['labels']:
+        body='сценарных изменений в сценах персонажа <b>нет</b> (проверено поиском по всем .rpy; метки: %s).'%(', '.join(entry['labels']))
+    else:
+        body='у этой страницы нет отдельного сценарного учёта времени.'
+    block='<div class="timeblock" style="%s">%s</div>\n'%(style,head+body+tail)
+    m=re.search(r'(<p[^>]*>(?:(?!</p>).)*?Все схемы(?:(?!</p>).)*?</p>)',t,re.S)
+    ins=m.end() if m else t.find('<body>')+6
+    return t[:ins]+'\n'+block+t[ins:]
+
 if __name__=='__main__':
     print('effects total:',len(effects))
-    for fn in ROUTE_COL:
-        open(fn,'w',encoding='utf8').write(patch_route(fn,ROUTE_COL[fn]))
-        print('route',fn,'ok')
+    import json as _json
+    analysis=_json.load(open('char_time_analysis.json',encoding='utf8'))
     skip=set(ROUTE_COL)|{'time.html','todo.html'}
     for fn in sorted(glob.glob('*.html')):
         if fn in skip: continue
-        open(fn,'w',encoding='utf8').write(patch_generic(fn))
-    print('generic done')
+        if fn.startswith('char_') and (fn in analysis or fn in CHAR_SPECIAL):
+            content=patch_char(fn,analysis.get(fn))
+        else:
+            content=patch_generic(fn)
+        with open(fn,'w',encoding='utf8') as fh:
+            fh.write(content)
+    print('generic+char done (route pages untouched)')
