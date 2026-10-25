@@ -152,7 +152,7 @@ function build(){
     E('SM --> SC4["<div style=\'width:290px;white-space:normal\'>'+mk('«Подписать контракт.»'+cond('если контракт уже прочитан (1103)'),null,null)+'</div>"]:::hhr', c5); E('SC4 --> SY', c5);
     L.push('SR["<div style=\'width:300px;white-space:normal\'>Адро: «Аудиенция окончена. Вы отстранены» — выставляет героиню (1112-1127)</div>"]:::bad');
     E('SM --> SC5["<div style=\'width:290px;white-space:normal\'>'+mk('«Отказаться подписывать.»',null,null)+'</div>"]:::hhr', c5); E('SC5 --> SR', c5);
-    L.push('SR2["<div style=\'width:240px;white-space:normal\'>Что делать у двери? (<a href="replics.html?v=539#r-script_4_tgavan_nars-1128">1128</a>)</div>"]:::sc');
+    L.push('SR2["<div style=\'width:240px;white-space:normal\'>Что делать у двери? (1128)</div>"]:::sc');
     E('SR --> SR2', c5);
     L.push('SL["<div style=\'width:300px;white-space:normal\'>Героиня уходит; расследование провалено (1130-1140)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «расследование провалено» → Адро больше не принимает</span></div>"]:::bad');
     E('SR2 --> SC6["<div style=\'width:290px;white-space:normal\'>'+mk('«Спокойно уйти.»',null,null)+'</div>"]:::hhr', c5); E('SC6 --> SL', c5);
