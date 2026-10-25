@@ -48,7 +48,7 @@ function build(){
   L.push('EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (локация)</div>"]:::ex');
   E('ST --> B1', cG);
   E('ST --> B3', cG);
-  L.push(hub('B1','Осмотр Бонни<br/><small>bonny_action_osm, 133-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">164</span></small>','hhn',[]));
+  L.push(hub('B1','Осмотр Бонни<br/><small>bonny_action_osm, 131-162</small>','hhn',[]));
   if(EXP.has('B1')){
     L.push('O1["<div style=\'width:340px;white-space:normal\'>Первый осмотр: Бонни оказывается говорящим черепом, называет себя «Бонни» (нет, но пока так зовите), просит о просьбе (135-164)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает флаг «осмотрено» (osm) → в следующие клики сразу открывается меню разговора</span></div>"]:::sc');
     E('B1 --> O1', c1);
@@ -87,7 +87,7 @@ function build(){
   } else {
     E('B2 --> EXS', c2);
   }
-  L.push(hub('B3','Взять Бонни<br/><small>bonny_action_keep, 103-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">132</span></small>','hhn',[]));
+  L.push(hub('B3','Взять Бонни<br/><small>bonny_action_keep, 101-130</small>','hhn',[]));
   if(EXP.has('B3')){
     L.push('K0["<div style=\'width:240px;white-space:normal\'>Клик «взять» по посоху (103)</div>"]:::sc');
     E('B3 --> K0', c3);
