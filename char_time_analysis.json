@@ -1,0 +1,307 @@
+{
+ "char_adrian.html": {
+  "labels": [],
+  "eff": {},
+  "total": 0
+ },
+ "char_adro.html": {
+  "labels": [
+   "adro_wg_zn",
+   "script_4_tgavan_end_adro",
+   "script_4_tgavan_poison_adro",
+   "script_4_tgavan_to_adro",
+   "script_4_tgavan_to_adro_suicide_kill",
+   "script_4_tgavan_women_adro"
+  ],
+  "eff": {
+   "script_4_tgavan_to_adro": [
+    "script_4_tgavan_adro.rpy",
+    [
+     [
+      "+1",
+      54
+     ]
+    ]
+   ]
+  },
+  "total": 1
+ },
+ "char_blu.html": {
+  "labels": [
+   "blu_label"
+  ],
+  "eff": {
+   "blu_label": [
+    "script_av.rpy",
+    [
+     [
+      "+1",
+      69
+     ]
+    ]
+   ]
+  },
+  "total": 1
+ },
+ "char_bonny.html": {
+  "labels": [
+   "bonny_action_keep",
+   "bonny_razg_menu",
+   "bonny_razg_menu_end",
+   "head_bonny_x",
+   "osm_bonny_x",
+   "puzzle_complete"
+  ],
+  "eff": {
+   "puzzle_complete": [
+    "script_npc_items.rpy",
+    [
+     [
+      "-1",
+      1679
+     ],
+     [
+      "+1",
+      1681
+     ],
+     [
+      "+1",
+      1693
+     ]
+    ]
+   ]
+  },
+  "total": 1
+ },
+ "char_cat_statue.html": {
+  "labels": [],
+  "eff": {},
+  "total": 0
+ },
+ "char_chelovek_v_chernom.html": {
+  "labels": [],
+  "eff": {},
+  "total": 0
+ },
+ "char_devushka_airat.html": {
+  "labels": [
+   "script_4_airat_girl_air"
+  ],
+  "eff": {},
+  "total": 0
+ },
+ "char_fenrira.html": {
+  "labels": [
+   "fen_razg_menu"
+  ],
+  "eff": {},
+  "total": 0
+ },
+ "char_kai.html": {
+  "labels": [],
+  "eff": {},
+  "total": 0
+ },
+ "char_kap.html": {
+  "labels": [
+   "script4_kapibar_main",
+   "script4_kapibar_start_menu"
+  ],
+  "eff": {
+   "script4_kapibar_start_menu": [
+    "script_4_kapibar.rpy",
+    [
+     [
+      "+5",
+      227
+     ]
+    ]
+   ]
+  },
+  "total": 5
+ },
+ "char_karralak.html": {
+  "labels": [],
+  "eff": {},
+  "total": 0
+ },
+ "char_leni.html": {
+  "labels": [
+   "script_4_airat_leni_dialog"
+  ],
+  "eff": {},
+  "total": 0
+ },
+ "char_less.html": {
+  "labels": [
+   "less_airat_predl",
+   "less_name",
+   "less_razg_menu",
+   "script_2_less_continue",
+   "script_2_less_i_dont_know_name",
+   "script_2_less_strange_name",
+   "script_2_less_we_meet",
+   "script_3_less_gone",
+   "script_3_poter_v_less_label"
+  ],
+  "eff": {},
+  "total": 0
+ },
+ "char_luiza.html": {
+  "labels": [
+   "dev_father",
+   "dev_razg_menu",
+   "script_3_road_1menu_conv_dev_airat",
+   "script_3_road_amnez_conv_dev_airat",
+   "script_3_road_dev_airat",
+   "script_3_road_dev_airat2",
+   "script_3_road_inless_conv_chaos_dev",
+   "script_3_road_menu_question_conv_dev_airat",
+   "script_3_road_myname_conv_dev_airat",
+   "script_3_road_name_conv_dev_airat",
+   "script_3_road_question_conv_dev_airat",
+   "script_3_road_viyname_conv_dev_airat"
+  ],
+  "eff": {},
+  "total": 0
+ },
+ "char_narsi.html": {
+  "labels": [
+   "bar_nar_label",
+   "diary_nars",
+   "igla_nars",
+   "kapik_nars",
+   "nars_razg_menu",
+   "script_4_tgavan_nars_bar_nar_igl_menu",
+   "table_chaos_nars"
+  ],
+  "eff": {
+   "bar_nar_label": [
+    "script_4_tgavan_nars.rpy",
+    [
+     [
+      "+1",
+      3
+     ],
+     [
+      "+1",
+      29
+     ]
+    ]
+   ],
+   "script_4_tgavan_nars_bar_nar_igl_menu": [
+    "script_4_tgavan_nars.rpy",
+    [
+     [
+      "+1",
+      475
+     ]
+    ]
+   ]
+  },
+  "total": 3
+ },
+ "char_parenek.html": {
+  "labels": [
+   "guard2_diary",
+   "guard2_propusk",
+   "script_5_airat_guard"
+  ],
+  "eff": {},
+  "total": 0
+ },
+ "char_slime.html": {
+  "labels": [
+   "script3_nazad_slime_menu"
+  ],
+  "eff": {},
+  "total": 0
+ },
+ "char_sluzhka.html": {
+  "labels": [],
+  "eff": {},
+  "total": 0
+ },
+ "char_sova.html": {
+  "labels": [
+   "script3_sova_mad",
+   "script3_sova_sova",
+   "script_3_sova_stop"
+  ],
+  "eff": {},
+  "total": 0
+ },
+ "char_starichok.html": {
+  "labels": [
+   "guard1_propusk",
+   "script_5_airat_guard"
+  ],
+  "eff": {},
+  "total": 0
+ },
+ "char_tash.html": {
+  "labels": [
+   "bonny_1_tash",
+   "script3_nazad_tash_2cards",
+   "script3_nazad_tash_2gone",
+   "script3_nazad_tash_2urza",
+   "script3_nazad_tash_canurza",
+   "script3_nazad_tash_end",
+   "script3_nazad_tash_help",
+   "script3_nazad_tash_osm",
+   "script3_nazad_tash_razg_2",
+   "script3_nazad_tash_razg_2menu",
+   "script3_nazad_tash_stop",
+   "script3_nazad_tash_urza",
+   "script3_nazad_tash_urza2",
+   "script3_nazad_tash_urza_question",
+   "script3_nazad_tash_urzamore",
+   "script3_nazad_tash_withyou",
+   "tash_game",
+   "tash_razg_menu",
+   "tash_start_razg",
+   "tash_tash_card",
+   "tash_urza_menu"
+  ],
+  "eff": {
+   "script3_nazad_tash_2gone": [
+    "script3_nazad.rpy",
+    [
+     [
+      "+1",
+      688
+     ]
+    ]
+   ],
+   "script3_nazad_tash_urza": [
+    "script3_nazad.rpy",
+    [
+     [
+      "+1",
+      1018
+     ],
+     [
+      "+1",
+      1042
+     ]
+    ]
+   ]
+  },
+  "total": 3
+ },
+ "char_urza.html": {
+  "labels": [],
+  "eff": {},
+  "total": 0
+ },
+ "char_viy.html": {
+  "labels": [],
+  "eff": {},
+  "total": 0
+ },
+ "char_zhrec.html": {
+  "labels": [],
+  "eff": {},
+  "total": 0
+ }
+}

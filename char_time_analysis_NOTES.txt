@@ -1,0 +1,9 @@
+# Одноразовый расчёт сценарного времени для char-страниц (25 окт).
+# Снимок результатов: char_time_analysis.json (метод: метки дерева/меню/клика +
+# метки из ссылок file:line в секциях Реплики/Дерево/нажать/положить с токеном
+# персонажа; эффекты: my_location.name (+1, script.rpy:453), change_day(_,N),
+# gametime.gametime +=/-= / =0 внутри диапазона метки до следующей метки).
+# ОТКРЫТО: страницы без меток (adrian, kai, karralak, sluzhka, urza, viy,
+# zhrec, cat_statue, chelovek_v_chernom) требуют ручной привязки сцен;
+# мета-страницы (ends, quests, paths, stats, strel и пр.) ещё не посчитаны;
+# end_time/end_time_nar не имеют full_restart - завершение не проверено.
