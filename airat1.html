@@ -123,7 +123,7 @@ function build(){
   } else {
     E('B --> EXS', c2);
   }
-  L.push(hub('U','Вверх с площади: подход к церкви<br/><small>airat_main_up, 195-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">234</span></small>','hhp',[]));
+  L.push(hub('U','Вверх с площади: подход к церкви<br/><small>airat_main_up, 195-234</small>','hhp',[]));
   if(EXP.has('U')){
     L.push('U0["<div style=\'width:260px;white-space:normal\'>Героиня идёт вверх, к церкви (195-196)</div>"]:::sc');
     E('U --> U0', c3);
@@ -153,7 +153,7 @@ function build(){
     L.push('CHOL["<div style=\'width:300px;white-space:normal\'>Если Луиза рядом: «Я прихожу сюда с самого детства. Люблю это место»</div>"]:::sc');
     L.push('CHWL["<div style=\'width:300px;white-space:normal\'>Если Луиза рядом: «Так древние мастера изображали защитные чары»</div>"]:::sc');
     E('CH0 --> C1["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня смотрит на щит:'+cond('уровень Логики ≥ 1: «Символика военного ордена»; уровень Безумия ≥ 1: шутка про зубочистку (237-242)'),null,null)+'</div>"]:::hhk', c4); E('C1 --> CHS', c4);
-    E('CH0 --> C2["<div style=\'width:290px;white-space:normal\'>'+mk('Если смотрит на здание (лупа):'+cond('только один раз (script_newscreens.rpy:<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">722</span>)'),null,null)+'</div>"]:::hhk', c4); E('C2 --> CHO', c4);
+    E('CH0 --> C2["<div style=\'width:290px;white-space:normal\'>'+mk('Если смотрит на здание (лупа):'+cond('только один раз (script_newscreens.rpy:728)'),null,null)+'</div>"]:::hhk', c4); E('C2 --> CHO', c4);
     E('CH0 --> C3["<div style=\'width:290px;white-space:normal\'>'+mk('Если смотрит на окно:'+cond('уровень Логики ≥ 1: «фокус защитного заклинания»; уровень Безумия ≥ 1: «застывшая молния» (286-293)'),null,null)+'</div>"]:::hhk', c4); E('C3 --> CHW', c4);
     E('CHS --> CHSL', c4);
     E('CHO --> CHOL', c4);
@@ -164,7 +164,7 @@ function build(){
   } else {
     E('CH --> EXS', c4);
   }
-  L.push(hub('IN','Вход в церковь<br/><small>airat_church_up, 305-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">358</span></small>','hhs',[]));
+  L.push(hub('IN','Вход в церковь<br/><small>airat_church_up, 305-359</small>','hhs',[]));
   if(EXP.has('IN')){
     L.push('I0["<div style=\'width:260px;white-space:normal\'>Героиня входит в церковь (305)</div>"]:::sc');
     E('IN --> I0', c5);
@@ -184,7 +184,7 @@ function build(){
   } else {
     E('IN --> EXS', c5);
   }
-  L.push(hub('GA','Девушка в церкви (Миранда)<br/><small>script_4_airat_girl_air, 369-<span class="stale-cite" title="конец диапазона не подтверждён после правок 20–25.10, уточняется">495</span></small>','hhp',[[C_DEV, '−1…+1']]));
+  L.push(hub('GA','Девушка в церкви (Миранда)<br/><small>script_4_airat_girl_air, 369-509</small>','hhp',[[C_DEV, '−1…+1']]));
   if(EXP.has('GA')){
     L.push('G0["<div style=\'width:260px;white-space:normal\'>Героиня окликает девушку-горожанку (359)</div>"]:::sc');
     E('GA --> G0', c6);
