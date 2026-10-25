@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 import re,html
 exec(open('/tmp/sch/loc_names.py',encoding='utf8').read())
+LISTNAMES={'adro_dialog':'темы, обсуждённые с Адро','adrian_dialog':'темы, о которых рассказано Стражу Адриану','kar_dialog':'темы в разговоре с Карралаком','kap_dialog':'темы с Капибарой','airat_sp':'события в Айрате','arrows_per':'пройденные переходы','fen_d':'события с Феней','kap_d':'события с Капибарой','vrem_inv':'инвентарь'}
 PERS={'tash':'Таш','fenya':'Феня','dev':'Луиза','nars':'Нарси','less':'Лесс','adro':'Адро','urza':'Урза','bonny':'Бонни','oh':'Адриан (Страж)','girl_air':'Девушка в церкви Айрата','viy':'героиня','kap':'Капибара'}
 ATTR={'near':'идёт рядом с героиней','mood':'настроение','zn_name':'знает имя','zn_vpotpam':'знает, что «Вий» — псевдоним героини','helpp':'обещал помочь','bad':'отношение испорчено','good':'отношение хорошее','lock':'находится в месте','note':'заметки'}
 def atom(a):
-    a=a.strip().strip('()')
+    a=_strip_parens(a.strip())
+    if len(_split_toplvl(a))>1: return cond_ru(a)
     m=re.fullmatch(r'(.+?)\s*==\s*(True|1)',a)
-    if m and not m.group(1).strip().startswith('razg_menu'): return atom(m.group(1))
+    if m and not re.search(r'razg_menu|sovet_kap|lupa_act1',m.group(1)): return atom(m.group(1))
     m=re.fullmatch(r'(.+?)\s*==\s*(False|0)',a)
-    if m and not re.search(r'mood|level',m.group(1)): return atom('not '+m.group(1).strip())
+    if m and not re.search(r'mood|level|kap_money_per|sovet_kap|globals',m.group(1)): return atom('not '+m.group(1).strip())
     m=re.fullmatch(r'(mad_l|logic_l)\(\)\s*(>=|<=|>|<|==)\s*(\d+)',a)
     if m:
         op={'>=':'не ниже','<=':'не выше','>':'выше','<':'ниже','==':'равен'}[m.group(2)]
@@ -17,15 +19,183 @@ def atom(a):
     if m:
         op={'>=':'не меньше','<=':'не больше','>':'больше','<':'меньше'}[m.group(1)]
         return 'доля логики у героини (логика/(логика+безумие)) %s %s'%(op,m.group(2))
+    m=re.fullmatch(r'amulet\(\)\s*==\s*(\d)',a)
+    if m: return {'0':'у героини нет активного чёрного амулета (amulet() == 0)','1':'чёрный амулет активен, но не сохранён в инвентаре (amulet() == 1)','2':'чёрный амулет сохранён в инвентаре героини (amulet() == 2)'}[m.group(1)]
+    m=re.fullmatch(r'amulet\(?\)?',a)
+    if m: return 'у героини есть активный чёрный амулет (amulet() >= 1)'
+    m=re.fullmatch(r'sovet_kap\s*==\s*(\d+)',a)
+    if m: return 'вытянут совет Капибары №%s (советы 0-7 вытягиваются случайно без повторов, script_4_kapibar.rpy:172-175)'%m.group(1)
+    m=re.fullmatch(r'sovet_kap_list',a)
+    if m: return 'в списке остались невытянутые советы Капибары'
+    m=re.fullmatch(r'sovet_kap',a)
+    if m: return 'вытянут ненулевой номер совета Капибары'
+    m=re.fullmatch(r'inv_list\["kapik"\]\.count\s*(>=|<=|>|<|==)\s*(\d+)',a)
+    if m:
+        op={'>=':'не меньше','<=':'не больше','>':'больше','<':'меньше','==':'ровно'}[m.group(1)]
+        return 'у героини %s %s капиков (монеты Кап-и-Бара)'%(op,m.group(2))
+    m=re.fullmatch(r'kap_money_per\s*==\s*0',a)
+    if m: return 'введённая сумма пожертвования равна 0'
+    m=re.fullmatch(r'kap_money_per\s*>\s*money',a)
+    if m: return 'введённая сумма пожертвования больше, чем денег у героини'
+    DT={'day':'день','night':'ночь','sumer':'сумерки'}
+    m=re.fullmatch(r'scene\.daytime\s*==\s*"(\w+)"',a)
+    if m: return 'время суток в текущей сцене: %s'%DT.get(m.group(1),m.group(1))
+    m=re.fullmatch(r'now_daytime\s*==\s*"(\w+)"',a)
+    if m: return 'глобальное время суток: %s'%DT.get(m.group(1),m.group(1))
+    m=re.fullmatch(r'quests\["(\w+)"\]\.diary\._rtext\[(\d+)\](?:\[1\])?(?:\s*==\s*1)?',a)
+    if m:
+        done=a.rstrip().endswith('[1]')
+        return 'в дневнике квеста «%s» подзадача №%s%s'%(m.group(1),m.group(2),' отмечена выполненной' if done else ' заведена')
+    m=re.fullmatch(r'sanity\.logic\s*(>=|<=|>|<|==)\s*(\d+)',a)
+    if m:
+        op={'>=':'не ниже','<=':'не выше','>':'выше','<':'ниже','==':'равна'}[m.group(1)]
+        return 'логика героини %s %s'%(op,m.group(2))
+    m=re.fullmatch(r'sanity\.mad\s*(>=|<=|>|<|==)\s*(\d+)',a)
+    if m:
+        op={'>=':'не ниже','<=':'не выше','>':'выше','<':'ниже','==':'равно'}[m.group(1)]
+        return 'безумие героини %s %s'%(op,m.group(2))
+    m=re.fullmatch(r'sanity\.moral\s*(>=|<=|>|<|==)\s*(\d+)',a)
+    if m:
+        op={'>=':'не ниже','<=':'не выше','>':'выше','<':'ниже','==':'равна'}[m.group(1)]
+        return 'мораль героини %s %s'%(op,m.group(2))
+    m=re.fullmatch(r'"(\w+)" in quests\["(\w+)"\]\._?note',a)
+    if m: return 'в заметках квеста «%s» есть запись «%s»'%(m.group(2),m.group(1))
+    m=re.fullmatch(r'"(\w+)" not in quests\["(\w+)"\]\._?note',a)
+    if m: return 'в заметках квеста «%s» нет записи «%s»'%(m.group(2),m.group(1))
+    m=re.fullmatch(r'len\(persistent\.memory\)\s*>\s*0',a)
+    if m: return 'у героини есть хоть одно воспоминание (persistent.memory непусто)'
+    m=re.fullmatch(r'memory\s*>\s*0',a)
+    if m: return 'memory > 0 (переменная memory нигде в коде не присваивается - факт кода, script3_airat.rpy:756)'
+    m=re.fullmatch(r'tash_game',a)
+    if m: return 'карточная игра с Ташем уже сыграна'
+    m=re.fullmatch(r'script3_tash_cards_per',a)
+    if m: return 'игра в карты с Ташем уже была (признак script3_tash_cards_per)'
+    m=re.fullmatch(r'my_cards',a)
+    if m: return 'у героини остались карты на руке'
+    m=re.fullmatch(r'tash_cards',a)
+    if m: return 'у Таша остались карты на руке'
+    m=re.fullmatch(r'hod_per\s*==\s*hod_per\[1\]',a)
+    if m: return 'сторона монетки сравнивается со второй буквой её названия: по коду это всегда ложно, показывается красная сторона (факт кода, tash_game.rpy:103)'
+    m=re.fullmatch(r'game_hod\s*==\s*"(\w+)"',a)
+    if m: return 'сейчас ход: %s'%({'viy':'героини','tash':'Таша'}.get(m.group(1),m.group(1)))
+    m=re.fullmatch(r'bit\s*==\s*"(\w+)"',a)
+    if m: return 'отбивается: %s (чью карту бьют)'%({'viy':'героиня','tash':'Таш'}.get(m.group(1),m.group(1)))
+    m=re.fullmatch(r'new_card_t',a)
+    if m: return 'Таш выложил карту (new_card_t задана)'
+    m=re.fullmatch(r'cards_sravn\((\w+),\s*"(\w+)"?\)?',a)
+    if m: return 'карта %s старше карты %s той же масти'%({'card_name':'героини','viy':'героини','tash':'Таша'}.get(m.group(1),m.group(1)),{'viy':'героини','tash':'Таша'}.get(m.group(2),m.group(2)))
+    m=re.fullmatch(r'is_moved',a)
+    if m: return 'карта перенесена на стол (служебный флаг переноса)'
+    m=re.fullmatch(r'page_anim\s*==\s*"(\w+)"',a)
+    if m: return 'анимация дневника: %s'%({'idle':'страница на месте','turning_left':'переворот влево','turning_right':'переворот вправо'}.get(m.group(1),m.group(1)))
+    m=re.fullmatch(r'vrem_razdels\s*==\s*"(\w+)"',a)
+    if m: return 'в дневнике открыт раздел «%s»'%({'quests':'Квесты','memory':'Воспоминания','people':'Люди','notes':'Заметки'}.get(m.group(1),m.group(1)))
+    m=re.fullmatch(r'book_t_and_s\s*==\s*"(\w+)"',a)
+    if m: return 'книга о Таше и Слоне: %s'%({'know':'героиня знает содержание','keep':'героня хранит книгу у себя'}.get(m.group(1),m.group(1)))
+    m=re.fullmatch(r'lupa_act1\s*==\s*1',a)
+    if m: return 'лупа активирована'
+    m=re.fullmatch(r'lupa_label\s*==\s*"(\w+)"',a)
+    if m: return 'режим лупы: «%s»'%m.group(1)
+    m=re.fullmatch(r'game_per\s*==\s*need_per',a)
+    if m: return 'нажата нужная стрелка (мини-игра на комбо)'
+    AR={'up':'вверх','down':'вниз','left':'влево','right':'вправо'}
+    m=re.fullmatch(r'need_per\s*==\s*"(\w+)"',a)
+    if m: return 'требуется стрелка: %s'%AR.get(m.group(1),m.group(1))
+    m=re.fullmatch(r'game_per\s*==\s*"(\w+)"',a)
+    if m: return 'нажата стрелка: %s'%AR.get(m.group(1),m.group(1))
+    m=re.fullmatch(r'combo_per\s*(>=|<=|>|<|==)\s*(\w+)',a)
+    if m: return 'серия правильных стрелок (combo_per) %s %s'%(m.group(1),m.group(2))
+    m=re.fullmatch(r'renpy\.get_screen\("([\w]+)"?\)?',a)
+    if m: return 'на экране открыт экран «%s»'%m.group(1)
+    m=re.fullmatch(r'(\w+)\.lock\s*==\s*(\w+)',a)
+    if m and m.group(1) in PERS: return '%s находится: %s'%(PERS[m.group(1)],L[m.group(2)][0] if m.group(2) in L else m.group(2))
+    m=re.fullmatch(r'self\._gametime\s*>\s*quests\["(\w+)"\]\._note_d\["time"\]',a)
+    if m: return 'игровое время прошло момент, записанный в заметке квеста «%s» (время, к которому Нарси ждёт героиню у Капа)'%m.group(1)
+    m=re.fullmatch(r'leni_per_dev_razg',a)
+    if m: return 'у Луизы остались незакрытые темы про Лени (Лени видел её с героиней; вычисляется в day_1_dev_razg.rpy:39)'
+    m=re.fullmatch(r'rana',a)
+    if m: return 'Феня ранена (рана не вылечена сюжетно)'
+    m=re.fullmatch(r'def_razg\(?\)?',a)
+    if m: return 'сейчас идёт разговор или переход (def_razg())'
+    m=re.fullmatch(r'tgavan_svet',a)
+    if m: return 'в Тёмной Гавани светло: видны двери и бар (tgavan_svet)'
+    m=re.fullmatch(r'razg\s*==\s*"(\w+)"',a)
+    if m: return 'сейчас идёт разговор с %s'%({'nars':'Нарси','dev':'Луизой','guards':'стражей','tash':'Ташем','fen':'Феней'}.get(m.group(1),m.group(1)))
+    m=re.fullmatch(r'(td\d|vd\d|ld\d|v\d|devd|nars_d|rand|cycle|\w+_d)\.d(\d+)\s*(>=|<=|>|<)\s*(\d+)',a)
+    if m: return 'счётчик-флаг %s.d%s %s %s'%(m.group(1),m.group(2),m.group(3),m.group(4))
     m=re.fullmatch(r'razg_menu\s*==\s*"(\w+)"',a)
     if m: return 'разговор ведётся из меню персонажа «%s»'%({'tash':'Таш','less':'Лесс','dev':'Луиза','nars':'Нарси','fen':'Феня','bonny':'Бонни'}.get(m.group(1),m.group(1)))
-    m=re.fullmatch(r'blood\s*>\s*0',a)
-    if m: return 'у героини есть кровопотеря (blood > 0)'
+    m=re.fullmatch(r'blood\s*(>=|<=|>|<|==)\s*(\d+)',a)
+    if m:
+        op={'>=':'не меньше','<=':'не больше','>':'больше','<':'меньше','==':'ровно'}[m.group(1)]
+        return 'кровопотеря у героини: %s %s ранений'%(op,m.group(2))
+    m=re.fullmatch(r"globals\(\)\['rana'\]\s*==\s*0",a)
+    if m: return 'Феня не ранена (rana == 0)'
+    m=re.fullmatch(r"globals\(\)\['rana'\]\s*==\s*(\d+)",a)
+    if m: return 'рана Фени: стадия %s'%m.group(1)
+    m=re.fullmatch(r"globals\(\)\['rana'\]",a)
+    if m: return 'Феня ранена (rana)'
+    m=re.fullmatch(r'razr\s*==\s*None',a)
+    if m: return 'режим разработчика отключён полностью (razr = None, вариант «Все, кроме Лесса»)'
+    m=re.fullmatch(r'razr',a)
+    if m: return 'включён режим разработчика (razr)'
+    m=re.fullmatch(r'vrem_inv\s*==\s*(\d+)',a)
+    if m: return 'временный инвентарь: состояние %s (vrem_inv)'%m.group(1)
+    m=re.fullmatch(r'money\s*(>=|<=|>|<|==)\s*(\d+)',a)
+    if m:
+        op={'>=':'не меньше','<=':'не больше','>':'больше','<':'меньше','==':'ровно'}[m.group(1)]
+        return 'у героини %s %s золота'%(op,m.group(2))
+    m=re.fullmatch(r'money',a)
+    if m: return 'у героини есть золото (money)'
+    m=re.fullmatch(r'inv_list\["(\w+)"\]\._?keep',a)
+    if m: return 'предмет «%s» сохранён в инвентаре (keep)'%m.group(1)
+    m=re.fullmatch(r'inv_list\["(\w+)"\]\._?state\s*==\s*"(\w+)"',a)
+    if m: return 'предмет «%s» в состоянии «%s»'%(m.group(1),m.group(2))
+    m=re.fullmatch(r'zndor',a)
+    if m: return 'героиня знает дорогу (zndor)'
+    m=re.fullmatch(r'(?:globals\(\)\.get\(.hovered_drag.\)|hovered_drag)\s*==\s*"(\w+)"',a)
+    if m: return 'наведён объект «%s»'%m.group(1)
+    m=re.fullmatch(r'hasattr\(next_location_vrem,?\s*.+_scene.+\)?',a)
+    if m: return 'у следующей локации задана сцена (_scene)'
+    m=re.fullmatch(r'less_start\._arrows\._(left|right)\._namebottom\s*==\s*"\?\?\?"',a)
+    if m: return 'подпись стрелки %s ещё неизвестна («???»)'%('влево' if m.group(1)=='left' else 'вправо')
+    m=re.fullmatch(r'tpp\s*==\s*2',a)
+    if m: return 'Ташу даны 2 правильные причины из 7 (tpp == 2)'
+    m=re.fullmatch(r't_pr',a)
+    if m: return 'героиня извинилась перед Ташем (t_pr)'
+    m=re.fullmatch(r'gar_stuk\s*==\s*(\d+)',a)
+    if m: return 'стадия предупреждения у дома Гара: %s (gar_stuk)'%m.group(1)
+    m=re.fullmatch(r'gar_stuk',a)
+    if m: return 'предупреждение у дома Гара уже показано (gar_stuk)'
+    m=re.fullmatch(r'sova_meet',a)
+    if m: return 'сова уже встречена (sova_meet)'
+    m=re.fullmatch(r'not\s+vrem_val2\s*==\s*result\[0\]',a)
+    if m: return 'временное значение не совпало с первым результатом (техническая проверка)'
+    m=re.fullmatch(r'(\w+)\.lock_home\s*==\s*(\w+)',a)
+    if m and m.group(1) in PERS: return 'дом %s: %s'%(PERS[m.group(1)],L[m.group(2)][0] if m.group(2) in L else m.group(2))
+    m=re.fullmatch(r'inv_list\["(\w+)"\]\._?active',a)
+    if m: return 'предмет «%s» активен в инвентаре'%m.group(1)
+    m=re.fullmatch(r'main_menu',a)
+    if m: return 'открыто главное меню'
+    m=re.fullmatch(r'hardmode_on',a)
+    if m: return 'включён хардмод'
+    m=re.fullmatch(r'no_save',a)
+    if m: return 'сохранение запрещено (no_save)'
+    m=re.fullmatch(r'screens',a)
+    if m: return 'экраны интерфейса показаны'
+    m=re.fullmatch(r'_menu',a)
+    if m: return 'открыто игровое меню'
+    m=re.fullmatch(r'vrem_inv',a)
+    if m: return 'открыт временный инвентарь (vrem_inv)'
+    m=re.fullmatch(r'tooltip_screen_var',a)
+    if m: return 'подсказка на экране включена (tooltip_screen_var)'
+    m=re.fullmatch(r'(td\d|vd\d|ld\d|v\d|devd|nars_d|rand|cycle|\w+_d)\.d(\d+)\s*==\s*(\d+)',a)
+    if m: return 'флаг %s.d%s равен %s'%(m.group(1),m.group(2),m.group(3))
     m=re.fullmatch(r'v\.name\s*==\s*"(.+)"',a)
     if m: return 'имя героини в игре сейчас «%s»'%m.group(1)
     m=re.fullmatch(r'(\w+)\.zn_name',a)
     if m and m.group(1) in PERS: return '%s знает имя героини или своё (признак zn_name)'%PERS[m.group(1)] if False else 'признак «%s.zn_name» (имя уже известно)'%m.group(1)
-    m=re.fullmatch(r'quests\["(\w+)"\]\.(keep|done|know|false)',a)
+    m=re.fullmatch(r'quests\["(\w+)"\]\._?(keep|done|know|false)',a)
     if m: return 'квест «%s»: %s'%(m.group(1),{'keep':'взят','done':'выполнен','know':'о нём известно','false':'провален'}[m.group(2)])
     m=re.fullmatch(r'not (.+)',a)
     if m:
@@ -39,10 +209,14 @@ def atom(a):
     if m: return 'в заметках «%s» нет записи «%s»'%(PERS.get(m.group(2),m.group(2)),m.group(1))
     m=re.fullmatch(r'"(\w+)" in (?:vrem_memory|persistent\.memory)\["(\w+)"\]',a)
     if m: return 'в памяти «%s» есть запись «%s»'%(m.group(2),m.group(1))
+    m=re.fullmatch(r'"(\w+)"\s*not\s*in\s*(?:vrem_memory|persistent\.memory)\["(\w+)"\]',a)
+    if m: return 'в памяти «%s» нет записи «%s»'%(m.group(2),m.group(1))
     m=re.fullmatch(r'my_location(?:\.name)? == (\w+)',a)
     if m: return 'героиня находится: %s'%(L[m.group(1)][0] if m.group(1) in L else m.group(1))
-    m=re.fullmatch(r'"(\w+)" in ([\w.]+)',a)
-    if m: return 'в списке «%s» есть метка «%s»'%(m.group(2),m.group(1))
+    m=re.fullmatch(r'"(\w+)"\s*in\s*([\w.]+)',a)
+    if m: return 'в списке «%s» есть метка «%s»'%(LISTNAMES.get(m.group(2),m.group(2)),m.group(1))
+    m=re.fullmatch(r'"(\w+)"\s*not\s*in\s*([\w.]+)',a)
+    if m: return 'в списке «%s» нет метки «%s»'%(LISTNAMES.get(m.group(2),m.group(2)),m.group(1))
     m=re.fullmatch(r'(\w+)\.(near|zn_name|zn_vpotpam|helpp|bad|good)',a)
     if m and m.group(1) in PERS: return '%s: %s'%(PERS[m.group(1)],ATTR[m.group(2)])
     m=re.fullmatch(r'(\w+)\.mood\s*(>=|<=|>|<|==)\s*(-?\d+)',a)
@@ -56,8 +230,32 @@ def atom(a):
     m=re.fullmatch(r'(\w+)\.(\w+)',a)
     if m: return 'признак «%s» (смысл в коде не подписан)'%a
     return 'проверка в коде (смысл не расшифрован)'
+def _split_toplvl(expr):
+    parts=[]; depth=0; i=0; n=len(expr); cur=0
+    while i<n:
+        ch=expr[i]
+        if ch=='(': depth+=1; i+=1
+        elif ch==')': depth-=1; i+=1
+        elif depth==0 and expr.startswith(' and ',i): parts.append(expr[cur:i]); parts.append('and'); i+=5; cur=i
+        elif depth==0 and expr.startswith(' or ',i): parts.append(expr[cur:i]); parts.append('or'); i+=4; cur=i
+        else: i+=1
+    parts.append(expr[cur:])
+    return [p.strip() for p in parts if p.strip()]
+def _strip_parens(a):
+    a=a.strip()
+    while a.startswith('(') and a.endswith(')'):
+        d=0; ok=True
+        for i,ch in enumerate(a):
+            if ch=='(': d+=1
+            elif ch==')':
+                d-=1
+                if d==0 and i<len(a)-1: ok=False; break
+        if not ok: break
+        a=a[1:-1].strip()
+    return a
 def cond_ru(expr):
-    parts=re.split(r'\s+(and|or)\s+',expr.strip())
+    parts=_split_toplvl(expr.strip())
+    if len(parts)==1: return atom(parts[0])
     out=[]
     for p in parts:
         if p=='and': out.append('и')
@@ -97,10 +295,10 @@ def where(key):
     return t+'. Смысл флага в коде не назван'
 _old_atom=atom
 def atom(a):
-    a=a.strip().strip('()')
+    a=_strip_parens(a.strip())
     m=re.fullmatch(r'not (.+)',a)
     if m:
-        inner=m.group(1).strip()
+        inner=_strip_parens(m.group(1).strip())
         w=_key(inner)
         if w: return 'ещё не выполнено: %s'%w
         return 'неверно, что: '+atom(inner)
@@ -319,7 +517,7 @@ _QW={'keep':('взят','не взят'),'done':('выполнен','не вып
 _atom_q=atom
 def atom(a):
     a=a.strip()
-    m=re.fullmatch(r'(not\s+)?quests\["(\w+)"\]\.(keep|done|know|false)',a)
+    m=re.fullmatch(r'(not\s+)?quests\["(\w+)"\]\._?(keep|done|know|false)',a)
     if m:
         w=_QW[m.group(3)][1 if m.group(1) else 0]
         return 'Квест %s %s'%(qref(m.group(2)),w)
