@@ -54,7 +54,7 @@ def block_html(effs,extra='',scoped=True):
         body='сценарные точки расхода в этой части кода: %s.%s'%(items,note)
     else:
         body='сценарных изменений в этой части кода <b>нет</b> (проверено поиском по всем .rpy).'
-    tail=' Любая смена локации (стрелкой или сценарием) стоит +1 - единый сеттер my_location.name (script.rpy:447-453); прямых обходов сеттера (my_location._name =) в коде нет.'
+    tail=' Любое перемещение между локациями - по стрелке или по сценарию - стоит +1 (script.rpy:447-453).'
     if extra: tail+=' '+extra
     return '<div class="timeblock" style="%s">%s</div>\n'%(style,head+body+tail)
 
@@ -146,7 +146,7 @@ def patch_route(fn,chunks):
         m=re.search(r'<td[^>]*>(.*?)</td>',r,re.S)
         name=re.sub(r'<[^>]+>','',m.group(1)).strip() if m else ''
         if name.startswith('Итого'):
-            cell='<td><b>%+d</b> сценарно<br/><span class="muted" style="font-size:11px">плюс +1 за каждый переход стрелкой</span></td>'%total
+            cell='<td><b>%+d</b> сценарно<br/><span class="muted" style="font-size:11px">плюс +1 за каждое перемещение стрелкой</span></td>'%total
         else:
             effs=eff_in(chunks.get(name,[]))
             total+=sum(e[3] for e in effs)
@@ -154,7 +154,7 @@ def patch_route(fn,chunks):
         k=r.find('</td>')+len('</td>')
         body+=r[:k]+cell+r[k:]
     tbl_new=tbl2[:tbl2.find('</tr>')+len('</tr>')]+body+'</table>'
-    note='<p style="font-size:12px;color:#6b7280">Столбец «Время»: сценарные изменения счётчика gametime в сценах раздела (каждая со строкой кода). Сюда не входят +1 за каждый переход стрелкой (script.rpy:453) и +5 за сон (change_day).</p>'
+    note='<p style="font-size:12px;color:#6b7280">Столбец «Время»: сценарные изменения счётчика gametime в сценах раздела (каждая со строкой кода). Сюда не входят +1 за каждое перемещение стрелкой (script.rpy:453) и +5 за ночёвку у Капибара (change_day, script_4_kapibar.rpy:227).</p>'
     t=t[:i]+tbl_new+'\n'+note+t[j:]
     return t
 
@@ -195,7 +195,7 @@ def patch_char(fn,entry):
     t=BLOCK_RE.sub('',t)
     style='margin:8px 0 14px;padding:8px 12px;border:1px solid #d9dee8;border-radius:8px;background:#f8fafc;font-size:13px;color:#374151'
     head='⏱ <b>Время</b> (счётчик gametime, лимит 50 - <a href="time.html">механика и все сроки</a>): '
-    tail=' Любая смена локации (стрелкой или сценарием) стоит +1 - единый сеттер my_location.name (script.rpy:447-453); прямых обходов сеттера (my_location._name =) в коде нет.'
+    tail=' Любое перемещение между локациями - по стрелке или по сценарию - стоит +1 (script.rpy:447-453).'
     if fn in CHAR_SPECIAL:
         body=CHAR_SPECIAL[fn]
     elif fn in CHAR_DESC:
