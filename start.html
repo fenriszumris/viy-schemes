@@ -52,7 +52,7 @@ function build(){
   L.push(hub('H1','Хаб 1. Стартовое меню<br/>start_menu','h1',[[C_MAD,'0…+1'],[C_LOG,'0…+1']]));
   L.push(hub('H3','Хаб 3. Рука и корни<br/>c1_hand → zeml','h3',[[C_MAD,'−1…+4'],[C_LOG,'0…+2'],[C_BLD,'0…+1']]));
   L.push('A0["<b>Сцена 0. Выбор сложности</b> (hard)<br/>обучение, вопрос про HARDMODE<br/>статов нет"]:::ext');
-  L.push('A1["<b>Сцена 1. Меню разработчика</b> (start3)<br/>razr = 1 жёстко: меню видит каждый игрок<br/>«Игра» → tash_game (мини-игра, вне схемы)"]:::ext');
+  L.push('A1["<b>Сцена 1. Меню разработчика</b> (start3)<br/>razr = 1 жёстко: меню видит каждый игрок<br/>«Игра» → tash_game (мини-игра, вне схемы)<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 44) · время +1 (переход, 51) · время +1 (переход, 55) · время +1 (переход, 57) · время +1 (пробуждение, 74) · время = 0 (сброс, 75)</span>"]:::ext');
   L.push('ST["<b>Экран стрелок</b><br/>conv_0 / conv_1 → call_screen_strel()"]:::term');
   L.push('PM["prop_memory / prop_memory2 (script_memory:230, 245)<br/>вызывающий не найден в проверенном наборе файлов"]:::ext');
   L.push('L2["<b>Разговор с Лессом</b><br/>прямой вход (conv_2), минуя гляделки"]:::lm');
@@ -76,7 +76,7 @@ function build(){
   }
   // --- СОН ---
   L.push('subgraph DREAM["💤 СОН (c1_sleep → mather_memory → son → head_ache)"]');
-  L.push('DS1["<b style=\'font-size:20px\'>▶ НАЧАЛО СНА</b><br/>c1_sleep (begin:245): чёрный экран и «Это... Сон?» (256-259), call mather_memory (261)<br/>воспоминание о матери mather_memory (script_memory:6-40), без статов"]:::dstart');
+  L.push('DS1["<b style=\'font-size:20px\'>▶ НАЧАЛО СНА</b><br/>c1_sleep (begin:245): чёрный экран и «Это... Сон?» (256-259), call mather_memory (261)<br/>воспоминание о матери mather_memory (script_memory:6-40), без статов<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +5 (новый день, 267)</span>"]:::dstart');
   L.push(hub('H2','Хаб 2. Сон<br/>c1_sleep → head_ache','h2',[[C_MAD,'−1…+2'],[C_LOG,'0…+1'],[C_BLD,'0…+1']]));
   E('DS1 --> H2', c2);
   L.push('DE1["<b>■ КОНЕЦ СНА</b><br/>→ script_2_less_conv_0 → экран стрелок"]:::dend');
@@ -186,8 +186,8 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 
 
 
-<p>От начала игры до разговора с Лессом · Локация: <a href="location.html?v=464" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script.rpy, script_1_less_begin.rpy (begin), script_memory.rpy (mem), script_1_less_hand.rpy (hand)</p>
-<nav class="crumbs"><a href="index.html?v=464">← Все схемы</a> · <a href="location.html?v=464">Локация «Место пробуждения»</a> · <a href="strel.html?v=464">Экран переходов</a></nav>
+<p>От начала игры до разговора с Лессом · Локация: <a href="location.html?v=465" style="color:#b9a7ff">«Место пробуждения» (less_start)</a> · script.rpy, script_1_less_begin.rpy (begin), script_memory.rpy (mem), script_1_less_hand.rpy (hand)</p>
+<nav class="crumbs"><a href="index.html?v=465">← Все схемы</a> · <a href="location.html?v=465">Локация «Место пробуждения»</a> · <a href="strel.html?v=465">Экран переходов</a></nav>
 </div></header>
 <main>
 <div class="card">
@@ -204,7 +204,7 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 </div>
 <div class="card">
 <h2>Как читать</h2>
-<p class="muted">«Хаб» — кусок сцены с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение (в этой сцене не меняется). «Экран стрелок» — переход на экран перемещения: дальше игра идёт по экрану, а не по коду метки. Ветка руки и корней входит в разговор с Лессом напрямую (conv_2), минуя гляделки; остальные выходы — через экран стрелок (conv_0/conv_1). Сам разговор — на странице <a href="less.html?v=464">«Разговор с Лессом»</a>.</p>
+<p class="muted">«Хаб» — кусок сцены с меню выборов. Эффекты: <span class="mad">mad</span> — Безумие, <span class="logic">logic</span> — Логика, <span class="blood">blood</span> — Кровь, <span class="mood">mood</span> — Настроение (в этой сцене не меняется). «Экран стрелок» — переход на экран перемещения: дальше игра идёт по экрану, а не по коду метки. Ветка руки и корней входит в разговор с Лессом напрямую (conv_2), минуя гляделки; остальные выходы — через экран стрелок (conv_0/conv_1). Сам разговор — на странице <a href="less.html?v=465">«Разговор с Лессом»</a>.</p>
 </div>
 <div class="viewtoggle">
 <button id="btn-full" class="active" onclick="toggleView('start',1)">Детальнее</button>
