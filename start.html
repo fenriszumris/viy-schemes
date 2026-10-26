@@ -12,7 +12,7 @@
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 mermaid.initialize({startOnLoad:false, securityLevel:'loose', flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'17px'}});
 
-const HUBS=['H1','H2','H3'];
+const HUBS=['H1','H2','H3','A1'];
 const EXP=new Set();
 // цвета веток = цвета хабов
 const c1='#0f766e', c2='#4f46e5', c3='#0369a1', cG='#9aa3b2';
@@ -52,7 +52,7 @@ function build(){
   L.push(hub('H1','Хаб 1. Стартовое меню<br/>start_menu','h1',[[C_MAD,'0…+1'],[C_LOG,'0…+1']]));
   L.push(hub('H3','Хаб 3. Рука и корни<br/>c1_hand → zeml','h3',[[C_MAD,'−1…+4'],[C_LOG,'0…+2'],[C_BLD,'0…+1']]));
   L.push('A0["<b>Сцена 0. Выбор сложности</b> (hard)<br/>обучение, вопрос про HARDMODE<br/>статов нет"]:::ext');
-  L.push('A1["<b>Сцена 1. Меню разработчика</b> (start3)<br/>razr = 1 жёстко: меню видит каждый игрок<br/>«Игра» → tash_game (мини-игра, вне схемы)<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 44) · время +1 (переход, 51) · время +1 (переход, 55) · время +1 (переход, 57) · время +1 (пробуждение, 74) · время = 0 (сброс, 75)</span>"]:::ext');
+  L.push('A1["<b>Сцена 1. Меню разработчика</b> (start3)<br/>razr = 1 жёстко: меню видит каждый игрок<br/>«Игра» → tash_game (мини-игра, вне схемы)<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (вход в меню переходов, 44)</span>"]:::ext');
   L.push('ST["<b>Экран стрелок</b><br/>conv_0 / conv_1 → call_screen_strel()"]:::term');
   L.push('PM["prop_memory / prop_memory2 (script_memory:230, 245)<br/>вызывающий не найден в проверенном наборе файлов"]:::ext');
   L.push('L2["<b>Разговор с Лессом</b><br/>прямой вход (conv_2), минуя гляделки"]:::lm');
@@ -61,7 +61,18 @@ function build(){
   L.push('D3["BAD END<br/>«Слишком много крови...»<br/>sm_blood (hand:415-420)"]:::die');
   L.push('INS["<b>Кликабельные осмотры экрана стрелок</b> (стартовая локация)<br/>спальники · табличка · отпечаток · кремень · 5 луп-направлений<br/><span style=\'background:rgb(252,228,245);color:rgb(188,24,136);font-weight:700;border-radius:5px;padding:0 3px\'>▲+1</span> <span style=\'background:rgb(243,235,255);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px\'>▼−2</span> (ветка «korn») — список ниже"]:::term');
   E('A0 --> A1', cG);
-  E('A1 --> H1', cG);
+  L.push('WK["<b>Пробуждение</b> (start3, 62-78)<br/>«Темнота. Ни звука, ни шороха» - героиня открывает глаза, место «Место пробуждения»<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (пробуждение, 74)</span><br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время = 0 (сброс, 75)</span>]:::ext');
+  E('A1 --> WK', cG);
+  E('WK --> H1', cG);
+  // --- A1: меню переходов разработчика ---
+  if(EXP.has('A1')){
+    E('A1 --> A1A["'+mk('«Айрат»')+'<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 51)</span>'"]:::ext', cG); E('A1A --> ST', cG);
+    E('A1 --> A1B["'+mk('«Айрат квест» (квест жреца: флаг + dev.near, 52-53)')+'<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 55)</span>'"]:::ext', cG); E('A1B --> ST', cG);
+    E('A1 --> A1C["'+mk('«Гавань»')+'<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 57)</span>'"]:::ext', cG); E('A1C --> ST', cG);
+    E('A1 --> A1D["'+mk('«Лес» (без перехода: pass)')+'"]:::ext', cG); E('A1D --> ST', cG);
+  } else {
+    E('A1 --> ST', cG);
+  }
   E('ST --> INS', cG);
   // --- H1 ---
   if(EXP.has('H1')){
