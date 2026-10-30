@@ -45,14 +45,14 @@
 <h2>Закрытая в демо зона: разлом / Хаос</h2>
 <ul class="pages">
 <li><code>game/script_av.rpy:2</code> (label blu_label), реплика :16 «В демо версии хаоса нет!»; конец :110-111.</li>
-<li><code>game/script3_gubert.rpy:380-380</code> (chaos_enter_up_next_label): при повторном заходе «Закрыто. Точнее заколочено намертво.»</li>
-<li>Табличка «Закрыто в демоверсии»: осмотр <code>game/script3_gubert.rpy:361-370</code> (:366 «Версии чего? И что закрыто?»), предмет table_chaos <code>game/script_inv_text.rpy:83</code>, реакция Таша «Демо-демо-демо...» <code>game/script_inv.rpy:12</code>.</li>
+<li><code>game/script3_gubert.rpy:393-393</code> (chaos_enter_up_next_label): при повторном заходе «Закрыто. Точнее заколочено намертво.»</li>
+<li>Табличка «Закрыто в демоверсии»: осмотр <code>game/script3_gubert.rpy:374-383</code> (:366 «Версии чего? И что закрыто?»), предмет table_chaos <code>game/script_inv_text.rpy:83</code>, реакция Таша «Демо-демо-демо...» <code>game/script_inv.rpy:12</code>.</li>
 </ul>
 </div>
 <div class="card">
 <h2>Предупреждение в начале игры</h2>
 <ul class="pages">
-<li><code>game/script.rpy:1053</code>: «Хотя закончить демоверсию заметно проще, чем полную игру.» (в экране вступления вместе с предупреждениями о переносе вещей между играми).</li>
+<li><code>game/script.rpy:1054</code>: «Хотя закончить демоверсию заметно проще, чем полную игру.» (в экране вступления вместе с предупреждениями о переносе вещей между играми).</li>
 </ul>
 </div>
 <div class="card">
@@ -60,18 +60,18 @@
 <p class="muted">Обычные концовки (BAD END, END?, DEATH END). Из кода нельзя сказать, это ограничение демо или финал истории. Авторскими ограничениями не объявлены.</p>
 <ul class="pages">
 <li><code>game/script3_gubert.rpy:8</code> (END?), :230, :311, :334 (BAD END)</li>
-<li><code>game/script3_tgavan_oh.rpy:202</code>, :1251 (BAD END); :1139 «End? Расследование, провал.» (сразу после него $ renpy.full_restart(), script3_tgavan_oh.rpy:1142 в 9f787c7)</li>
+<li><code>game/script3_tgavan_oh.rpy:202</code>, :1251 (BAD END); :1139 «End? Расследование, провал.» (сразу после него $ renpy.full_restart(), script3_tgavan_oh.rpy:1143 в 9f787c7)</li>
 <li><code>game/script_1_less_hand.rpy:267</code>, :415; <code>game/script_2_less_conv.rpy:1044</code>; <code>game/script_2_less_conv_amul.rpy:364</code>; <code>game/script_3_less_end.rpy:169</code> (END?), :205</li>
 <li><code>game/script_4_tgavan_nars.rpy:844</code> (BAD END. Убить Нарси)</li>
-<li><code>game/script_5_airat.rpy:698</code>, :710, :722, :738 (END? с перезапуском)</li>
+<li><code>game/script_5_airat.rpy:743</code>, :710, :722, :738 (END? с перезапуском)</li>
 <li><code>game/script_memory.rpy:220</code> (BAD END); <code>game/script_4_airat.rpy:61</code> (DEATH END)</li>
 </ul>
 </div>
 <div class="card">
 <h2>Не ограничения, а недостижимые строки и дефекты</h2>
 <ul class="pages">
-<li><code>game/script_4_tgavan_adro.rpy:85-91</code> и :535-539 стоят после перезапуска и не выполняются. Так как автор оставила остановки как ограничение демо, не менялись.</li>
-<li><code>game/script3_tgavan_oh.rpy:1333-1337</code>: ветка «no_evid» («Провал») не срабатывает, потому что отметка no_evid записывается только в недостижимых строках Адро (:89).</li>
+<li><code>game/script_4_tgavan_adro.rpy:85-93</code> и :535-539 стоят после перезапуска и не выполняются. Так как автор оставила остановки как ограничение демо, не менялись.</li>
+<li><code>game/script3_tgavan_oh.rpy:1334-1338</code>: ветка «no_evid» («Провал») не срабатывает, потому что отметка no_evid записывается только в недостижимых строках Адро (:89).</li>
 <li><code>game/script4_tgavan_gar.rpy:34</code>: <code>jump imagemap_tg</code> на несуществующую метку; вход в сцену по коду не найден, живым багом не считается.</li>
 </ul>
 </div>
