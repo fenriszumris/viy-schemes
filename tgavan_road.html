@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<title>Тёмная дорога в Гавань — Схемы игры «Вий»</title>
+<link rel="stylesheet" href="style7.css?v=449">
+<style>.widechart{overflow:auto}.widechart svg{max-width:none !important}.warn{color:#b91c1c;font-weight:700}.sumt{border-collapse:collapse;margin:6px 0}.sumt td,.sumt th{border:1px solid #cbd5e1;padding:3px 9px;text-align:left}.sumt th{background:#f1f5f9}</style>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false, securityLevel:'loose', maxTextSize:900000, flowchart:{htmlLabels:true, curve:'basis', useMaxWidth:false, nodeSpacing:26, rankSpacing:44, diagramPadding:14}, theme:'default', themeVariables:{fontSize:'18px'}});
+const HUBS=[];
+const EXP=new Set();
+const C_MAD='rgb(112,72,232)', C_LOG='rgb(28,126,214)', C_BLD='rgb(188,24,136)', C_MOO='rgb(228,26,28)', C_MOR='rgb(71,85,105)', C_FEN='rgb(190,18,60)', C_TM='rgb(217,119,6)', C_DEV='rgb(22,163,74)', C_KAR='rgb(217,119,6)', C_LEN='rgb(37,99,235)', C_ADR='rgb(13,148,136)', C_NAR='rgb(101,163,13)', C_ADO='rgb(79,70,229)';
+const CHIP_BG2=1;
+const CHIP_BG={}; CHIP_BG[C_MAD]='rgb(237,231,251)'; CHIP_BG[C_LOG]='rgb(227,242,250)'; CHIP_BG[C_BLD]='rgb(252,228,245)'; CHIP_BG[C_MOO]='rgb(255,235,235)'; CHIP_BG[C_MOR]='rgb(241,245,249)'; CHIP_BG[C_FEN]='rgb(254,226,232)'; CHIP_BG[C_TM]='rgb(253,240,221)'; CHIP_BG[C_DEV]='rgb(220,252,231)'; CHIP_BG[C_KAR]='rgb(253,240,221)'; CHIP_BG[C_LEN]='rgb(219,234,254)'; CHIP_BG[C_ADR]='rgb(204,244,240)'; CHIP_BG[C_NAR]='rgb(236,252,203)'; CHIP_BG[C_ADO]='rgb(224,231,255)';
+function up(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▲+'+p[1]+'</span>';}).join(' '); }
+function dn(arr){ return arr.map(function(p){return '<span style="background:'+CHIP_BG[p[0]]+';color:'+p[0]+';font-weight:700;border-radius:5px;padding:0 3px">▼−'+p[1]+'</span>';}).join(' '); }
+function mk(text, ups, downs){
+  const pad='padding:'+(ups?'16px':'3px')+' 10px '+(downs?'16px':'3px')+' 10px';
+  return '<div style="position:relative;display:inline-block;'+pad+'">'+text
+    +(ups?'<span style="position:absolute;top:2px;right:3px;font-size:14px;line-height:1;white-space:nowrap">'+up(ups)+'</span>':'')
+    +(downs?'<span style="position:absolute;bottom:2px;left:3px;font-size:14px;line-height:1;white-space:nowrap">'+dn(downs)+'</span>':'')
+    +'</div>';
+}
+function badge(ranges){
+  if(!ranges.length) return '';
+  const s=ranges.map(function(p){return '<span style="display:inline-block;background:'+CHIP_BG[p[0]]+';border:1.4px solid '+p[0]+';color:'+p[0]+';border-radius:8px;padding:0 6px;font-size:14px;font-weight:700;margin-left:3px">'+p[1]+'</span>';}).join('');
+  return '<span style="display:inline-block;white-space:nowrap">'+s+'</span>';
+}
+function hub(id,label,cls,ranges){
+  const arrow = EXP.has(id) ? '▾' : '▸';
+  const b=badge(ranges||[]);
+  const inner='<div style="display:inline-block;text-align:center;padding:3px 8px">'+(b?'<div style="text-align:right;margin-bottom:1px">'+b+'</div>':'')+'<b>'+label+'</b> '+arrow+'</div>';
+  return id + '["' + inner + '"]:::' + cls;
+}
+const cond=function(t){return '<br/><span style=\'font-size:12px;color:#b91c1c;font-weight:700\'>'+t+'</span>';};
+const note=function(t){return '<br/><span style=\'font-size:12px;color:#475569;font-weight:700\'>'+t+'</span>';};
+const flag=function(t){return '<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>⚑ '+t+'</span>';};
+function build(){
+  const L=[]; const ST=[]; let ei=0;
+  function E(s,color){ L.push(s); ST.push('linkStyle '+ei+' stroke:'+color+',stroke-width:2px'); ei++; const m=/^(\w+) --> (\w+)\["/.exec(s); if(m){ L.push(m[1]+' ~~~ '+m[2]); ei++; } }
+  L.push('flowchart TD');
+  const cG='#9aa3b2', c1='#166534', c2='#0369a1', c3='#7c3aed', c4='#b45309', c5='#be123c', c6='#0f766e', c7='#475569', c8='#b91c1c';
+  L.push('ST["<div style=\'width:250px;white-space:normal\'>Перекрёсток у Лесса / сцена «Дорога»<br/><small>стрелка вправо (script _define.rpy:428-429); метки nezngavan / zngavan (script3_road.rpy:151-153, 186-188)</small></div>"]:::ex');
+  L.push('TASH["<div style=\'width:250px;white-space:normal\'>Если с героиней Таш: он убегает к другу в Гавани<br/><small>tash_label_tgavan (1-13), вызов из change_scene (images.rpy:291-299); статов нет</small></div>"]:::ex');
+  L.push('BEGIN["<div style=\'width:290px;white-space:normal\'><b>Начало тёмной дороги</b> (15-16)'+flag('tgavan_road_intro_seen: вступление один раз за забег')+'<div style=\'text-align:right\'>'+badge([[C_MAD,'−3…+3'],[C_LOG,'−3…+3']])+'</div></div>"]:::hhn');
+  E('ST --> BEGIN', c1);
+  E('ST --> TASH', cG);
+  L.push('INTRO["<div style=\'width:300px;white-space:normal\'>'+mk('Вводное меню (39-63)',null,null)+cond('только если zndor — героиня спросила дорогу у Лесса (script_2_less_conv.rpy:792); иначе сразу проверка света (64-76)')+'</div>"]:::hhn');
+  E('BEGIN --> INTRO', c1);
+  L.push('NOZ["<div style=\'width:230px;white-space:normal\'>zndor = 0: реплики без меню и без записей (64-76)</div>"]:::sc');
+  E('BEGIN --> NOZ', c7);
+  E('INTRO --> A1["<div style=\'width:300px;white-space:normal\'>'+mk('«Пожалуй, лучше выбрать другую дорогу.» (40-55)',null,[[C_MAD,2]])+' '+up([[C_LOG,2]])+'</div>"]:::hhr', c2);
+  L.push('LESP["<div style=\'width:250px;white-space:normal\'>Выход: перекрёсток (less_per) — экран переходов</div>"]:::ex');
+  E('A1 --> LESP', c2);
+  E('INTRO --> A2["<div style=\'width:300px;white-space:normal\'>'+mk('«К черту! Я уже все решила.» (59-63)',[[C_MAD,2]],[[C_LOG,2]])+'</div>"]:::hhr', c3);
+  L.push('LIGHT["<div style=\'width:300px;white-space:normal\'><b>Проверка света</b> (77-114)'+cond('если tgavan_road_risk_seen — сразу: с факелом на road_black, без факела на кость (78)')+flag('tgavan_road_risk_seen ставится при первом заходе без факела (78)')+'</div>"]:::hhn');
+  E('A2 --> LIGHT', c3);
+  E('NOZ --> LIGHT', c7);
+  L.push('TORCH["<div style=\'width:270px;white-space:normal\'>С факелом: «Как хорошо, что я взяла с собой факел!»; стрелка вправо становится «???» (106-114)</div>"]:::sc');
+  E('LIGHT --> TORCH', c4);
+  L.push('DARK["<div style=\'width:300px;white-space:normal\'>'+mk('Меню тьмы (85-105)',null,null)+cond('только без факела и один раз за забег')+'</div>"]:::hhn');
+  E('LIGHT --> DARK', c5);
+  E('DARK --> D1["<div style=\'width:300px;white-space:normal\'>'+mk('«Все равно переться вперед.» (86-100)',[[C_MAD,1]],[[C_LOG,1]])+'</div>"]:::hhr', c5);
+  E('DARK --> D2["<div style=\'width:300px;white-space:normal\'>'+mk('«Это того не стоит» (101-104)',[[C_LOG,1]],[[C_MAD,1]])+'</div>"]:::hhr', c6);
+  L.push('EXS["<div style=\'width:230px;white-space:normal\'>Выход: экран переходов (115)</div>"]:::ex');
+  E('D2 --> EXS', c6);
+  L.push('ATT["<div style=\'width:290px;white-space:normal\'><b>Попытка вслепую</b>: кость 1d20 + бонус &gt; 18 (128-132)<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700\'>⏱ +2 ч за попытку (129)</span>'+note('повторов сколько угодно, статов нет')+'</div>"]:::hhn');
+  E('D1 --> ATT', c5);
+  E('ATT --> ATTF["<div style=\'width:250px;white-space:normal\'>Неудача: «Кажется, я вернулась к перекрестку» (133-141)</div>"]:::hhr', c8);
+  E('ATTF --> LESP', c8);
+  L.push('BLACK["<div style=\'width:280px;white-space:normal\'>Полная темнота, наощупь к двери; обратная стрелка отключается (null_label, 120)<br/><small>script_3_tgavan_road_black (117-125)</small></div>"]:::sc');
+  E('TORCH --> BLACK', c4);
+  E('ATT --> BLACK', c1);
+  L.push('DOOR["<a href=\'tgavan.html?v=465\' style=\'color:rgb(11,94,215);text-decoration:underline\'><div style=\'width:280px;white-space:normal\'>Выход: локация «Дверь Тёмной Гавани» (loc_tgavan_door, 124) → страница «Дверь Адриана»</div></a>"]:::ex');
+  E('BLACK --> DOOR', c1);
+  L.push('classDef ex fill:#f1f5f9,stroke:#64748b,color:#0f172a');
+  L.push('classDef sc fill:#ffffff,stroke:#94a3b8,color:#0f172a');
+  L.push('classDef hhn fill:#eef2ff,stroke:#4f46e5,color:#1e1b4b');
+  L.push('classDef hhr fill:#fff7ed,stroke:#ea580c,color:#431407');
+  return L.join('\n')+'\n'+ST.join('\n');
+}
+async function render(){
+  const f=document.getElementById('fchart');
+  if(!f) return;
+  f.removeAttribute('data-processed');
+  f.textContent=build();
+  await mermaid.run({nodes:[f]});
+  for(const ss of document.styleSheets){
+    let rules; try{rules=ss.cssRules;}catch(e){continue;}
+    for(let i=rules.length-1;i>=0;i--){
+      const r=rules[i];
+      if(r.selectorText && /\.(hh[a-z0-9]*|sc|ex|dd|ok)( span| > \*)$/.test(r.selectorText)
+         && r.style && r.style.getPropertyPriority('color')==='important'){ r.style.removeProperty('color'); }
+    }
+  }
+  document.querySelectorAll('#fchart g.node').forEach(function(g){
+    const m=/^flowchart-([A-Za-z0-9]+)-\d+$/.exec(g.id||'');
+    if(m && HUBS.indexOf(m[1])>=0){ g.style.cursor='pointer'; g.addEventListener('click', function(){ window.th(m[1]); }); }
+  });
+}
+window.th=function(id){ if(EXP.has(id)){EXP.delete(id);}else{EXP.add(id);} render(); };
+window.allHubs=function(on){ EXP.clear(); if(on){HUBS.forEach(function(h){EXP.add(h);});} render(); };
+render();
+</script>
+<style>.stale-cite{opacity:.55;border-bottom:1px dotted #a33}</style><body>
+<header class="site"><div class="wrap">
+<h1>Тёмная дорога в Гавань</h1>
+<p>script3_tgavan_road.rpy, 1-145: вводные реплики, меню тьмы без факела, кость прохода, уход Таши</p>
+<nav class="crumbs"><a href="index.html?v=465">← Все схемы</a> · <a href="tgavan.html?v=465">Дверь Адриана</a> · <a href="stats.html?v=465">Статы</a></nav>
+</div></header>
+<main>
+<div class="card">
+<h2>Статы по сцене за забег (мин/макс по всем вариантам)</h2>
+<table class="stats">
+<tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Типичный путь (суждение)*</th></tr>
+<tr><td class="mad">Безумие</td><td>−3</td><td>+3</td><td>0</td></tr>
+<tr><td class="logic">Логика</td><td>−3</td><td>+3</td><td>0</td></tr>
+<tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>0</td></tr>
+</table>
+<p class="muted">*Типичный путь 0/0: без знания дороги от Лесса (zndor = 0) вводного меню нет (:20, :64-76), с факелом меню тьмы нет (:106-114) — проход без записей. Мин/макс — суммы за забег: вводное меню (один раз, только при zndor) плюс меню тьмы (один раз, только без факела). «Другую дорогу» (▼−2/▲+2) уводит на перекрёсток до проверки света, но вернуться можно: вступление уже пройдено (tgavan_road_intro_seen), а меню тьмы ещё ждёт (tgavan_road_risk_seen не ставился) — поэтому −2 и −1 (равно +2 и +1) складываются в одном забеге. Кость прохода статов не даёт, только +2 часа за попытку (:129). Таш в этой сцене уходит (tash_label_tgavan), числовых эффектов нет.</p>
+</div>
+<div class="card">
+<h2>Источник и входы</h2>
+<ul>
+<li>Файл: <code>game/script3_tgavan_road.rpy</code> (145 строк). База 14ac027, выверено машинно 30.10.2026.</li>
+<li>Вход 1: стрелка вправо с перекрёстка у Лесса (less_per → <code>script_3_tgavan_road_begin</code>; script _define.rpy:428-429).</li>
+<li>Вход 2: сцена «Дорога» (script3_road.rpy): метки <code>nezngavan</code> (:151-153) и <code>zngavan</code> (:186-188) — «не знаю / знаю дорогу в Гавань».</li>
+<li>Вставка: при смене сцены в область Гавани, если рядом Таш, change_scene (images.rpy:291-299) вызывает <code>tash_label_tgavan</code> (:1-13): Таш убегает к другу, статов нет.</li>
+<li>Условия: <code>zndor</code> (script _define.rpy:171; ставится разговором с Лессом, script_2_less_conv.rpy:792) — вводное меню; факел <code>inv_list["facel_fire"]._active</code> — меню тьмы или прямой проход.</li>
+</ul>
+</div>
+<div class="card">
+<h2>Выходы</h2>
+<ul>
+<li>На перекрёсток (less_per): «другую дорогу» (:52-55), «Это того не стоит» (:115), неудачная кость (:135-141). Стрелка влево с дороги — «К перекрестку» (script _define.rpy:431-432).</li>
+<li>К двери Тёмной Гавани: <code>script_3_tgavan_road_black</code> → loc_tgavan_door (:117-125): с факелом сразу; без факела — кость 1d20 + бонус &gt; 18 (:128-132), каждая попытка +2 игрового часа (:129), повторы без статов. После прохода обратная стрелка отключается (:120, null_label).</li>
+</ul>
+</div>
+<div class="card">
+<h2>Флаги и повторы</h2>
+<ul>
+<li><code>tgavan_road_intro_seen</code> (default False, :142): вступление один раз за забег (:16).</li>
+<li><code>tgavan_road_risk_seen</code> (default False, :143): ставится при первом заходе без факела (:78); дальше заходы без факела идут сразу на кость, меню тьмы больше не показывается.</li>
+<li>Причина «Идти в темноту» общая для ▲+1 (:99) и ▼−1 (:104) к Безумию: дедуп причин пропустил бы только первую запись, но меню и так одноразовое.</li>
+<li>Записи вводного меню (:41-42, :62-63) — без причин, но меню одноразовое за забег.</li>
+</ul>
+</div>
+<div class="card">
+<h2>Схема</h2>
+<p class="muted">Блок-схема сцены. На плашке выбора: ▲ прибавка, ▼ убавка. <b style="color:#b91c1c;background:none;border:0;padding:0">Красным</b> условие, ⚑ флаг. Страница шире экрана: схему можно прокручивать.</p>
+<div class="widechart"><div id="fchart" class="mermaid"></div></div>
+</div>
+</main>
+<footer>Схемы игры «Вий» · script3_tgavan_road.rpy · выверено по коду 30.10.2026 (база 14ac027)</footer>
+<script>addEventListener('load',function(){var h=location.hash;if(h.indexOf('#n-')===0){var id=h.substring(3);var tries=0;var tm=setInterval(function(){var g=document.querySelector('[id^="flowchart-"][id*="-'+id+'-"]');if(g){clearInterval(tm);g.scrollIntoView({block:'center',inline:'center'});var r=g.querySelector('rect,ellipse,polygon,path');if(r){r.style.stroke='#e11d48';r.style.strokeWidth='3px';}}else if(++tries>20)clearInterval(tm);},150);}});</script>
+</body>
+</html>
