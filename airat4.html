@@ -48,7 +48,7 @@ function build(){
   L.push('EXS["<div style=\'width:200px;white-space:normal\'>Экран переходов</div>"]:::ex');
   L.push('END["<div style=\'width:280px;white-space:normal\'>Перезапуск игры после «КОНЕЦ ДЕМОВЕРСИИ»</div>"]:::bad');
   E('ST --> A', c1);
-  L.push(hub('A','Дверь дома Луизы<br/><small>dev_door_label, 1504-1560</small>','hhn',[]));
+  L.push(hub('A','Дверь дома Луизы<br/><small>dev_door_label, 1620-1669</small>','hhn',[]));
   if(EXP.has('A')){
     L.push('A0["<div style=\'width:320px;white-space:normal\'>Героиня у двери: «Эт дверь.» «Ладно.» «И что мне с ней делать?» (1624-1628)<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 1483)</span></div>"]:::sc');
     E('A --> A0', c1);
@@ -71,7 +71,7 @@ function build(){
     E('A --> EXS', c1);
     E('A --> B', c1);
   }
-  L.push(hub('B','Вход в дом Луизы<br/><small>airat_house_luiza, 1562-1678</small>','hhl',[[C_DEV, '−1…0']]));
+  L.push(hub('B','Вход в дом Луизы<br/><small>airat_house_luiza, 1680-1802</small>','hhl',[[C_DEV, '−1…0']]));
   if(EXP.has('B')){
     L.push('B0["<div style=\'width:260px;white-space:normal\'>Героиня в доме Луизы (1540-1547)</div>"]:::sc');
     E('B --> B0', c2);
@@ -151,7 +151,7 @@ function build(){
     E('B --> D', c2);
     E('B --> F', c2);
   }
-  L.push(hub('C','Феня и бинты<br/><small>airat_house_fenya_bint, 1704-1723</small>','hhk',[[C_FEN, '+1'], [C_MOR, '+1']]));
+  L.push(hub('C','Феня и бинты<br/><small>airat_house_fenya_bint, 1831-1844</small>','hhk',[[C_FEN, '+1'], [C_MOR, '+1']]));
   if(EXP.has('C')){
     L.push('C0["<div style=\'width:340px;white-space:normal\'>Героиня: «Я нашла бинты.» Луиза: «Отлично! Неси сюда!» Феня: «А ты... Умеешь?» (1809-1812)</div>"]:::sc');
     E('C --> C0', c3);
@@ -167,7 +167,7 @@ function build(){
     E('C --> EXS', c3);
     E('C --> D', c3);
   }
-  L.push(hub('D','Выбор об отце<br/><small>airat_house_luiza_next, 1724-1804</small>','hhp',[[C_MAD, '0…+1'], [C_LOG, '0…+1'], [C_DEV, '−2…+1'], [C_MOR, '−1…+1']]));
+  L.push(hub('D','Выбор об отце<br/><small>airat_house_luiza_next, 1873-1964</small>','hhp',[[C_MAD, '0…+1'], [C_LOG, '0…+1'], [C_DEV, '−2…+1'], [C_MOR, '−1…+1']]));
   if(EXP.has('D')){
     L.push('D0["<div style=\'width:380px;white-space:normal\'>Луиза: «Знаешь, папа мне мало что говорил о своей работе.» «Только то, что лечит людей.» «Не хочу думать о плохом.» «А ты что думаешь?» (1882-1888)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>⚑ разговор об отце начат</span></div>"]:::sc');
     E('D --> D0', c4);
@@ -191,7 +191,7 @@ function build(){
     E('D --> EXS', c4);
     E('D --> E', c4);
   }
-  L.push(hub('E','Осмотр дома<br/><small>airat_house_priest_menu, 1728-1730 · с 25.10 кнопка входа (лупа) убрана из main, меню недостижимо (88fbb96)</small>','hhr',[]));
+  L.push(hub('E','Осмотр дома<br/><small>airat_house_priest_menu, 1982-2003 · с 25.10 кнопка входа (лупа) убрана из main, меню недостижимо (88fbb96)</small>','hhr',[]));
   if(EXP.has('E')){
     L.push('E0["<div style=\'width:240px;white-space:normal\'>Меню осмотра дома (1770)</div>"]:::sc');
     E('E --> E0', c5);
@@ -208,7 +208,7 @@ function build(){
   } else {
     E('E --> EXS', c5);
   }
-  L.push(hub('F','Концовки демоверсии<br/><small>airat_end_dev, 1893-1944 · с 25.10 вход: перенос записок с кодами на Луизу, авто-вход при входе в дом убран (88fbb96)</small>','hhk',[]));
+  L.push(hub('F','Концовки демоверсии<br/><small>airat_end_dev, 2080-2136 · с 25.10 вход: перенос записок с кодами на Луизу, авто-вход при входе в дом убран (88fbb96)</small>','hhk',[]));
   if(EXP.has('F')){
     L.push('F0["<div style=\'width:380px;white-space:normal\'>Луиза читает записку: «Подожди-подожди.» «Что это?» «Что за записи? КОД?» «Это странно. Действительно странно.» «Я не понимаю, что это все значит» (2087-2091)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>⚑ записка прочитана</span></div>"]:::sc');
     E('F --> F0', c7);
@@ -229,7 +229,7 @@ function build(){
   } else {
     E('F --> END', c7);
   }
-  L.push(hub('G','Сон в доме<br/><small>airat_sleep, 1948-1952</small>','hhs',[]));
+  L.push(hub('G','Сон в доме<br/><small>airat_sleep, 2137-2141</small>','hhs',[]));
   if(EXP.has('G')){
     L.push('G0["<div style=\'width:340px;white-space:normal\'>Луиза: «Сейчас глубокая ночь.» «Стоит поспать, да и отец должен быть дома.» (2139-2140)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>⚑ задание «Где жрец?» взято</span></div>"]:::sc');
     E('G --> G0', c6);
@@ -285,7 +285,7 @@ render();
 
 
 
-<p>script_4_airat.rpy, 1482-1860: дверь, дом, бинты Фени, выбор об отце, осмотр, концовки демо.</p>
+<p>script_4_airat.rpy, 1620-2141: дверь, дом, бинты Фени, выбор об отце, осмотр, концовки демо.</p>
 <nav class="crumbs"><a href="index.html?v=465">← Все схемы</a> · <a href="airat3.html?v=465">Карралак</a> · <a href="airat5.html?v=465">Стража</a> · <a href="stats.html?v=465">Статы</a></nav>
 </div></header>
 <main>
