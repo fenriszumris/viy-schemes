@@ -212,8 +212,8 @@ function build(){
   // --- H6: Урза и разлом (nazad:1002-1090) ---
   if(EXP.has('H6')){
     E('H6 --> UR["'+mk('идём к разлому'+cond('tash.near + tash.helpp · заметка «urza»'))+'"]:::h6', c6);
-    E('UR --> U2A["'+mk('«Прекрасно!» (nazad:1055)'+cond('add_mad с reason: повтор не начислится'),[[C_MAD,1]])+'"]:::h6', c6); E('U2A --> EX6', c6);
-    E('UR --> U2B["'+mk('«Сомнительно.» (nazad:1061)'+cond('add_mad с reason: повтор не начислится'),null,[[C_MAD,1]])+'"]:::h6', c6); E('U2B --> EX6', c6);
+    E('UR --> U2A["'+mk('«Прекрасно!» (nazad:1059)'+cond('add_mad с reason: повтор не начислится'),[[C_MAD,1]])+'"]:::h6', c6); E('U2A --> EX6', c6);
+    E('UR --> U2B["'+mk('«Сомнительно.» (nazad:1065)'+cond('add_mad с reason: повтор не начислится'),null,[[C_MAD,-1]])+'"]:::h6', c6); E('U2B --> EX6', c6);
     E('UR --> U3["'+mk('заколоченный тупик'+cond('только если «blu» в avt_d (nazad:1044)'))+'"]:::h6', c6); E('U3 --> EX7', c6);
   } else {
     E('H6 --> EX6', c6);
