@@ -160,7 +160,7 @@ def atom(a):
     m=re.fullmatch(r'less_start\._arrows\._(left|right)\._namebottom\s*==\s*"\?\?\?"',a)
     if m: return 'подпись стрелки %s ещё неизвестна («???»)'%('влево' if m.group(1)=='left' else 'вправо')
     m=re.fullmatch(r'tpp\s*==\s*2',a)
-    if m: return 'Ташу даны 2 правильные причины из 7 (tpp == 2)'
+    if m: return 'Названы 2 причины (tpp == 2, сумма флагов td5.d1-d7; деления на правильные и неправильные причины в .rpy не найдено)'
     m=re.fullmatch(r't_pr',a)
     if m: return 'героиня извинилась перед Ташем (t_pr)'
     m=re.fullmatch(r'gar_stuk\s*==\s*(\d+)',a)
