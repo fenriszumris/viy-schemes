@@ -60,8 +60,8 @@ function build(){
     L.push('TA["<div style=\'width:320px;white-space:normal\'>Таша убеждает Губерта: героиня под её защитой, в коллекции Таши найдётся другая еда; Губерт уходит (74-109)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>⚑ Таша больше не рядом и не помогает; открывает путь вправо на дорогу к Таше; шляпа остаётся лежать на земле</span></div>"]:::sc');
     L.push('AM["<div style=\'width:320px;white-space:normal\'>Губерт видит на героине чёрный амулет от Леса, пугается и убегает (110-142)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>⚑ открывает путь вправо на дорогу к Таше; шляпа остаётся лежать на земле</span></div>"]:::sc');
     E('A0 --> C1["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня ещё не встречала Ташу и Таша не отказалась помогать (12-17):',null,null)+'</div>"]:::hhn', c1); E('C1 --> TS', c1);
-    E('A0 --> C2["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня ещё не говорила Губерту «меня нет в меню» (26-67):'+cond('если уровень Логики не ниже 1: героиня думает, что заблудилась'),null,null)+'</div>"]:::hhn', c1); E('C2 --> FM', c1);
-    E('A0 --> C3["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня уже говорила Губерту «меня нет в меню» (19-25):',null,null)+'</div>"]:::hhn', c1); E('C3 --> RM', c1);
+    E('A0 --> C2["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня ещё не говорила Губерту «меня нет в меню» (240-281):'+cond('если уровень Логики не ниже 1: героиня думает, что заблудилась'),null,null)+'</div>"]:::hhn', c1); E('C2 --> FM', c1);
+    E('A0 --> C3["<div style=\'width:290px;white-space:normal\'>'+mk('Если героиня уже говорила Губерту «меня нет в меню» (240-246):',null,null)+'</div>"]:::hhn', c1); E('C3 --> RM', c1);
     E('FM --> GM', c1);
     E('RM --> GM', c1);
     E('GM --> C4["<div style=\'width:290px;white-space:normal\'>'+mk('Если Таша рядом и помогает героине:',null,null)+'</div>"]:::hhn', c1); E('C4 --> TA', c1);
