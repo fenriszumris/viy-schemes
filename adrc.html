@@ -50,7 +50,7 @@ function build(){
   E('ST --> A1', cG);
   L.push(hub('A1','Адриан у двери<br/><small>adrian_conv_door, 1257-1290</small>','hhn',[]));
   if(EXP.has('A1')){
-    L.push('Z0["<div style=\'width:260px;white-space:normal\'>Адриан: «Вам что-то нужно?» (<a href="replics.html?v=539#r-script3_tgavan_oh-1259">1257-1259</a>)</div>"]:::sc');
+    L.push('Z0["<div style=\'width:260px;white-space:normal\'>Адриан: «Вам что-то нужно?» (<a href="replics.html?v=539#r-script3_tgavan_oh-1262">1257-1259</a>)</div>"]:::sc');
     E('A1 --> Z0', c1);
     L.push('Z1["<div style=\'width:340px;white-space:normal\'>Адриан: «Не прошло и пяти минут... Научитесь молчать о том, что думаете» — даёт возможность показать значок снова (1264-1282)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Адриан в курсе ссоры» → открывает второй показ значка Адро (oh_d false1)</span></div>"]:::sc');
     E('Z0 --> Z1c["<div style=\'width:290px;white-space:normal\'>'+mk('«Кажется, мы не поладили с эльфом.»'+cond('если героиня поссорилась с Адро и Адриан ещё не знает (1262)'),null,null)+'</div>"]:::hhn', c1); E('Z1c --> Z1', c1);

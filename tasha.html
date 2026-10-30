@@ -54,7 +54,7 @@ function build(){
   L.push(hub('H7','Хаб 7. Друзья и конец игры<br/>end · nazad:1324–1487','h7',[[C_MAD,'−1…+1'],[C_LOG,'0…+1']]));
   L.push(hub('H8','Хаб 8. Серьёзный разговор<br/>ser / ser2_men · nazad:1488–1741','h8',[[C_TM,'−5…+3'],[C_MAD,'−1…+1'],[C_LOG,'0…+2']]));
   L.push(hub('RT','Повторные разговоры<br/>razg_menu = «tash» · day_1_tash_razg.rpy','hrt',[[C_TM,'0…+1']]));
-  L.push(hub('DEAD','Мёртвый код<br/>nazadli · меню 909–946 · осмотры<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 4)</span>','hb',[]));
+  L.push(hub('DEAD','Вне основного пути<br/>nazadli · меню 909–946 (после карт) · осмотры<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 4)</span>','hb',[]));
   L.push('VH["<a href=\'road.html?v=465\' style=\'color:rgb(11,94,215);text-decoration:underline\'>Вход: script3_nazad_begin<br/>стрелкой из сцены «Дорога»<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 21) · время +1 (переход, 24) · время +1 (переход, 61) · время +1 (переход, 84) · время +1 (переход, 114) · время +1 (переход, 175) · время +1 (переход, 179)</span></a>"]:::ext');
   L.push('VHR["Вход: razg_menu = «tash»<br/>повторный разговор"]:::ext');
   L.push('GN["'+mk('gone: Таша уходит → 2gone<br/>→ my_location = less_slime',null,[[C_TM,3]])+'<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 688)</span>'+"]:::hb');
@@ -282,11 +282,11 @@ function build(){
     E('RT --> H6', cR);
     E('RT --> EX9', cR);
   }
-  // --- DEAD: мёртвый код ---
+  // --- DEAD: вне основного пути ---
   if(EXP.has('DEAD')){
     E('DEAD --> D1["'+mk('script3_nazadli (nazad:2)'+cond('входящих переходов нет · меню «в самую чащу?»'))+'"]:::hb', cB);
     E('DEAD --> D2["'+mk('меню внутри «Хватит болтать!» (nazad:909–946)'+cond('доступно после партии в карты: script3_tash_cards_per = 1 ставится в tash_game_end (tash_game.rpy:204), тогда условие nazad:893 перестаёт выполняться; присваиваний tash_game кроме обнуления (script _define.rpy:165) прямым поиском не найдено')+cond('«Давай сыграем!» (910) / «не буду...» (922) / «Спросить об Урзе» (933)'),[[C_TM,10]],[[C_TM,10]])+'"]:::hb', cB);
-    E('DEAD --> D3["'+mk('осмотры и инвентарь'+cond('вызовов в доступном коде не найдено (inv_list — в недоступном файле)'))+'"]:::hb', cB);
+    E('DEAD --> D3["'+mk('осмотры и инвентарь'+cond('вызовов прямым поиском не найдено (inv_list — в недоступном файле)'))+'"]:::hb', cB);
     E('D3 --> D31["'+mk('tash_tash_card: «Сыграем?» (nazad:1867)',[[C_TM,1]])+'"]:::hb', cB);
     E('D3 --> D32["'+mk('bonny_1_tash: «Окей, забирай.» (nazad:1927)',[[C_TM,1]])+'"]:::hb', cB);
     E('D3 --> D33["'+mk('mant_osm: «Осторожно снять с сучка» (nazad:1970)',[[C_TM,1]])+'"]:::hb', cB);
@@ -452,11 +452,11 @@ if(o){ o.removeAttribute('data-processed'); mermaid.run({nodes:[o]}); }
 <li>Вход при razg_menu = «tash» (Таша рядом, разговор через strel): «По поводу этого Урзы...» (заметка «urza») → t_urza_menu; «Как насчет карт?» <span class="tmood">Тм +1</span> (razg:13) → мини-игра, <b>без ограничения числа партий</b>; «Просто поболтать» → razg_2menu (Хаб 5); «На сегодня хватит разговоров!» → strel (razg_menu = 0).</li>
 <li>t_urza_menu (razg:26): «Он может вернуть мне память?» (1 раз, td3.d13, заметка «urza_memory»); «Расскажи о нем побольше.» (1 раз, td3.d2 — без начисления Логики); «Ты можешь отвести меня к нему?» — у перекрёстка (less_per / less_tashroad_tash / less_begin) → Хаб 6; в других местах Тм говорит «Только давай сначала доберемся до перекрестка?» (razg:53-54) и возвращает в меню об Урзе.</li>
 </ul></div>
-<div class="hub"><h3>Мёртвый код (nazad:2–17, 909–946, 1666–1906)</h3>
+<div class="hub"><h3>Вне основного пути: входов не найдено или нужно условие (nazad:2–17, 909–946, 1666–1906)</h3>
 <ul>
-<li><code>script3_nazadli</code> (nazad:2) — старая входная метка, входящих переходов нет (меню «Стоит ли идти в самую чащу?»).</li>
+<li><code>script3_nazadli</code> (nazad:2) — старая входная метка, входящих переходов прямым поиском не найдено (меню «Стоит ли идти в самую чащу?»).</li>
 <li>Внутреннее меню в «Хватит болтать!» (nazad:909–946): «Давай сыграем!» <span class="tmood">Тм +10</span> (915) / «в карты я играть не буду...» <span class="tmood">Тм −10</span> (929) / «Спросить об Урзе» (933) — доступно после партии в карты: <code>script3_tash_cards_per</code> = 1 ставится в <code>tash_game_end</code> (tash_game.rpy:204), тогда условие nazad:893 перестаёт выполняться; присваиваний <code>tash_game</code> кроме обнуления (script _define.rpy:165) прямым поиском не найдено.</li>
-<li>Осмотры и инвентарь: <code>tash_cards_osm</code> → <code>tash_tash_card</code> («Сыграем?» <span class="tmood">Тм +1</span>, 1867), <code>bonny_1_osm</code> / <code>bonny_1_tash</code> («Окей, забирай.» <span class="tmood">Тм +1</span>, 1927), <code>mant_osm</code> («Осторожно снять с сучка» <span class="tmood">Тм +1</span>, 1970) — вызовов в доступном коде не найдено (inv_list и дефолты — в файле, которого нет в репозитории).</li>
+<li>Осмотры и инвентарь: <code>tash_cards_osm</code> → <code>tash_tash_card</code> («Сыграем?» <span class="tmood">Тм +1</span>, 1867), <code>bonny_1_osm</code> / <code>bonny_1_tash</code> («Окей, забирай.» <span class="tmood">Тм +1</span>, 1927), <code>mant_osm</code> («Осторожно снять с сучка» <span class="tmood">Тм +1</span>, 1970) — вызовов прямым поиском не найдено (inv_list и дефолты — в файле, которого нет в репозитории).</li>
 <li>Закомментировано (по старому снапшоту fresh/main; в b9 этих блоков нет): «Остановиться и нормально поговорить» с <span class="tmood">Тм +1</span>; «Летающих городов?» — внутри закомментированный <code>ssanity</code> (не исполняется).</li>
 </ul></div>
 </div>
@@ -478,7 +478,7 @@ H6["<b>Хаб 6. Урза и разлом</b> <span style='color:#7048E8'>mad ±
 H7["<b>Хаб 7. Друзья и конец игры</b><br/><span style='color:#7048E8'>mad ±1</span> · <span style='color:#1C7ED6'>logic +1</span> · серьёзный?"]:::scene
 H8["<b>Хаб 8. Серьёзный разговор</b> <span style='color:#D97706'>Тм −5…+3</span><br/>выход к Губерту"]:::scene
 RT["<b>Повторные разговоры</b> (razg_menu = «tash»)<br/>карты <span style='color:#D97706'>Тм +1</span> · Урза · хватит"]:::scene
-DEAD["<b>Мёртвый код</b>: nazadli · меню 909–946 · осмотры"]:::dead
+DEAD["<b>Вне основного пути</b>: nazadli · меню 909–946 (после партии в карты) · осмотры"]:::dead
 GUB["→ Губерт (gone)"]:::less
 STR["→ strel (Таша рядом / исчез)"]:::less
 ENDC["strel · КОНЕЦ ДЕМОВЕРСИИ"]:::less
