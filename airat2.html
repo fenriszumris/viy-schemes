@@ -164,7 +164,7 @@ function build(){
     E('Q1b3 --> m1b4["<div style=\'width:290px;white-space:normal\'>'+mk('«Не важно.»',null,null)+'</div>"]:::hhl', c5); E('m1b4 --> LM', c5);
     E('Q1a --> LM', c5);
     E('Q1b1 --> EXQ', c5);
-    E('LM --> m2["<div style=\'width:290px;white-space:normal\'>'+mk('«А это я где?»'+cond('один раз (933)'),null,null)+'</div>"]:::hhl', c5); E('m2 --> Q2', c5);
+    E('LM --> m2["<div style=\'width:290px;white-space:normal\'>'+mk('«А это я где?»'+cond('до двух раз: по одному на «где я?» (ld.d2) и «почему пусто?» (ld.d5) (933)'),null,null)+'</div>"]:::hhl', c5); E('m2 --> Q2', c5);
     E('Q2 --> m2a["<div style=\'width:290px;white-space:normal\'>'+mk('«А что это за церковь такая?»',null,null)+'</div>"]:::hhl', c5); E('m2a --> Q2a', c5);
     E('Q2 --> m2b["<div style=\'width:290px;white-space:normal\'>'+mk('«Незачем уточнять»',null,null)+'</div>"]:::hhl', c5); E('m2b --> Q2b', c5);
     E('Q2a --> Q2a1', c5);
@@ -267,7 +267,7 @@ render();
 <div class="widechart"><div id="fchart" class="mermaid"></div></div>
 </div>
 </main>
-<footer>Схемы игры «Вий» · script_4_airat.rpy · номера строк перепривязаны к main a41f072d полным выравниванием файла (все 77 диапазонов совпали по содержимому); смысловая логика хабов и условий сверена выборочно по коду от 20.10.2026, полная смысловая пересверка не проведена</footer>
+<footer>Схемы игры «Вий» · script_4_airat.rpy · строки, цитаты, условия, флаги, рёбра меню и таблица итогов сверены с main a41f072d построчно; комбинаторная достижимость всех веток в одном прогоне без запуска игры не доказывалась</footer>
 <script>addEventListener('load',function(){var h=location.hash;if(h.indexOf('#n-')===0){var id=h.substring(3);var tries=0;var tm=setInterval(function(){var g=document.querySelector('[id^="flowchart-"][id*="-'+id+'-"]');if(g){clearInterval(tm);g.scrollIntoView({block:'center',inline:'center'});var r=g.querySelector('rect,ellipse,polygon,path');if(r){r.style.stroke='#e11d48';r.style.strokeWidth='3px';}}else if(++tries>20)clearInterval(tm);},150);}});</script>
 </body>
 </html>
