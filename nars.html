@@ -48,7 +48,7 @@ function build(){
   L.push('EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex');
   L.push('END["<div style=\'width:280px;white-space:normal\'>Конец демоверсии «Good End» (перезапуск игры)</div>"]:::bad');
   L.push('BAD["<div style=\'width:280px;white-space:normal\'>BAD END «Убить Нарси» (перезапуск игры, 842-845)</div>"]:::bad');
-  L.push('ADRP["<div style=\'width:280px;white-space:normal\'>Страница «Тёмная Гавань: Адриан» (если Адриан рядом, зелье у него, 910-947)<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 939)</span></div>"]:::ex');
+  L.push('ADRP["<div style=\'width:280px;white-space:normal\'>Страница «Тёмная Гавань: Адриан» (если Адриан рядом, зелье у него, 910-947)<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 953)</span></div>"]:::ex');
   E('ST --> N1', cG);
   L.push(hub('N1','Знакомство с Нарси<br/><small>bar_nar_label, 1-105</small>','hhn',[]));
   if(EXP.has('N1')){
@@ -115,7 +115,7 @@ function build(){
   } else {
     E('N3 --> EXS', c3);
   }
-  L.push(hub('N4','Игла Нарси<br/><small>bar_nar_igl_menu, 335-479</small><br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 475)</span>','hhk',[[C_BLD, '0…+1'], [C_NAR, '−3…+1']]));
+  L.push(hub('N4','Игла Нарси<br/><small>bar_nar_igl_menu, 335-479</small><br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 479)</span>','hhk',[[C_BLD, '0…+1'], [C_NAR, '−3…+1']]));
   if(EXP.has('N4')){
     L.push('IG["<div style=\'width:260px;white-space:normal\'>Нарси показывает иглу и спрашивает «нравится?» (174)</div>"]:::sc');
     E('N4 --> IG', c4);
@@ -181,7 +181,7 @@ function build(){
   if(EXP.has('N6')){
     L.push('PV["<div style=\'width:220px;white-space:normal\'>Фиал с зельем (899)</div>"]:::sc');
     E('N6 --> PV', c6);
-    L.push('PD["<div style=\'width:320px;white-space:normal\'>Зелье выпито, зрение возвращается: Нарси шутит «это яд» (1039-1077); либо у Адриана (910-947)<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 939)</span></div>"]:::sc');
+    L.push('PD["<div style=\'width:320px;white-space:normal\'>Зелье выпито, зрение возвращается: Нарси шутит «это яд» (1039-1077); либо у Адриана (910-947)<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 953)</span></div>"]:::sc');
     L.push('PB["<div style=\'width:220px;white-space:normal\'>Фиал разбит (954)</div>"]:::sc');
     E('PV --> V1["<div style=\'width:290px;white-space:normal\'>'+mk('«Взять очень осторожно.»'+cond('если рядом Адриан: он объясняет зелье и возвращает героиню на страницу «Адриан» (946)'),null,null)+'</div>"]:::hhg', c6); E('V1 --> PD', c6);
     E('PV --> V2["<div style=\'width:290px;white-space:normal\'>'+mk('«Наплевать на предупреждение.»',[[C_MAD, 1]],null)+'</div>"]:::hhg', c6); E('V2 --> PB', c6);

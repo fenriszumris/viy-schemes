@@ -50,14 +50,14 @@ function build(){
   L.push(hub('H3','Хаб 3. Таша расстроился (sad)<br/>nazad:500–562','h3',[[C_TM,'−5…+10']]));
   L.push(hub('H4','Хаб 4. Карты и мини-игра<br/>nazad:701–730, 1295–1310 · tash_game.rpy','h4',[[C_TM,'−10…+10'],[C_MAD,'−1…+1']]));
   L.push(hub('H5','Хаб 5. Большой разговор<br/>razg_2menu · nazad:739–1000, 1092–1249','h5',[[C_MAD,'0…+1'],[C_LOG,'0…+1']]));
-  L.push(hub('H6','Хаб 6. Урза и разлом<br/>nazad:1002–1047<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 1018) · время +1 (переход, 1042)</span>','h6',[[C_MAD,'−1…+1']]));
+  L.push(hub('H6','Хаб 6. Урза и разлом<br/>nazad:1002–1047<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 1022) · время +1 (переход, 1046)</span>','h6',[[C_MAD,'−1…+1']]));
   L.push(hub('H7','Хаб 7. Друзья и конец игры<br/>end · nazad:1324–1487','h7',[[C_MAD,'−1…+1'],[C_LOG,'0…+1']]));
   L.push(hub('H8','Хаб 8. Серьёзный разговор<br/>ser / ser2_men · nazad:1488–1741','h8',[[C_TM,'−5…+3'],[C_MAD,'−1…+1'],[C_LOG,'0…+2']]));
   L.push(hub('RT','Повторные разговоры<br/>razg_menu = «tash» · day_1_tash_razg.rpy','hrt',[[C_TM,'0…+1']]));
   L.push(hub('DEAD','Вне основного пути<br/>nazadli · меню 909–946 (после карт) · осмотры<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 4)</span>','hb',[]));
   L.push('VH["<a href=\'road.html?v=465\' style=\'color:rgb(11,94,215);text-decoration:underline\'>Вход: script3_nazad_begin<br/>стрелкой из сцены «Дорога»<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 21) · время +1 (переход, 24) · время +1 (переход, 61) · время +1 (переход, 84) · время +1 (переход, 114) · время +1 (переход, 175) · время +1 (переход, 179)</span></a>"]:::ext');
   L.push('VHR["Вход: razg_menu = «tash»<br/>повторный разговор"]:::ext');
-  L.push('GN["'+mk('gone: Таша уходит → 2gone<br/>→ my_location = less_slime',null,[[C_TM,3]])+'<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 688)</span>'+"]:::hb');
+  L.push('GN["'+mk('gone: Таша уходит → 2gone<br/>→ my_location = less_slime',null,[[C_TM,3]])+'<br/><span style=\'background:rgb(253,240,221);border:1.4px solid rgb(217,119,6);color:rgb(217,119,6);border-radius:8px;padding:0 6px;font-size:13px;font-weight:700;white-space:nowrap\'>⏱ время +1 (переход, 692)</span>'+"]:::hb');
   L.push('EX1["'+mk('→ strel: Таша помогает<br/>near + helpp · return (nazad:342)')+'"]:::term');
   L.push('EX2["'+mk('→ strel: Таша с тобой (near)<br/>nazad:406')+'"]:::term');
   L.push('EX3["'+mk('→ script3_nazad_gubert<br/>2gone (nazad:660, jump :689)')+'"]:::term');
