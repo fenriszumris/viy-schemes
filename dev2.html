@@ -116,6 +116,7 @@ render();
 <body>
 <header class="site"><div class="wrap">
 <h1>Луиза: повторные разговоры</h1>
+<p class="muted">30.10.2026: перепроверено машинно (14ac027): все диапазоны подтверждены без изменений. Безумие 0…+1 и Логика 0…+1 даёт один разговор «в лесу» (script3_airat.rpy:884-931, флаг devd.d2 — один раз за run; «Это абсолютно не важно» −1/+1 идёт сразу после обязательного +1, поэтому итог за выбор 0 или +1, не −1). Настроение Луизы −2…0: «взъелась» −1 (devd.d6) + «не до тебя» −1 (dev.near=0, финально). Все ветки с эффектами закрыты флагами devd.* — повторные входы в меню (кнопка Луизы на карте) эффектов не дают. Живость: входы script_newscreens.rpy:816, script_npc_items.rpy:726.</p>
 
 
 
@@ -149,7 +150,7 @@ render();
 <div class="widechart"><div id="fchart" class="mermaid"></div></div>
 </div>
 </main>
-<footer>Схемы игры «Вий» · day_1_dev_razg.rpy · выверено по коду 20.10.2026</footer>
+<footer>Схемы игры «Вий» · day_1_dev_razg.rpy (+ script3_airat.rpy:859-931) · 30.10.2026: машинно перепроверено на 14ac027 — все диапазоны подтверждены</footer>
 <script>addEventListener('load',function(){var h=location.hash;if(h.indexOf('#n-')===0){var id=h.substring(3);var tries=0;var tm=setInterval(function(){var g=document.querySelector('[id^="flowchart-"][id*="-'+id+'-"]');if(g){clearInterval(tm);g.scrollIntoView({block:'center',inline:'center'});var r=g.querySelector('rect,ellipse,polygon,path');if(r){r.style.stroke='#e11d48';r.style.strokeWidth='3px';}}else if(++tries>20)clearInterval(tm);},150);}});</script>
 </body>
 </html>
