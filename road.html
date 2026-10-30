@@ -90,6 +90,12 @@ function build(){
     E('LN --> PER', c2);
   } else {
     E('R2 --> PER', c2);
+  L.push('BUR["<div style=\'width:320px;white-space:normal\'>Следующие круги: «Я снова сделала круг. И впереди вижу... Бурундук?» (205-216)</div>"]:::sc');
+  L.push('BO["<div style=\'width:300px;white-space:normal\'>Осмотр бурундука лупой: лупа предлагается один раз (216-218, bur_osm 260-262)</div>"]:::sc');
+  E('KR --> K5["<div style=\'width:290px;white-space:normal\'>'+mk('Каждый четвёртый круг, когда встреча с Лессом уже была (krug, script.rpy:255-260, сверено с 14ac027):',null,null)+'</div>"]:::hhn', c2); E('K5 --> BUR', c2);
+  E('BUR --> BM["<div style=\'width:290px;white-space:normal\'>'+mk('«И что с этим делать?» (217): «Пройти мимо» / «Взять с собой»; «Попробовать поговорить» — один раз (236-254). После — назад на перекрёсток (255-259)',null,null)+'</div>"]:::hhn', c2); E('BM --> BO', c2); E('BM --> PER', c2);
+  E('BO --> B6["<div style=\'width:290px;white-space:normal\'>'+mk('«Быть осторожней» (264-271)',[[C_LOG, 1]],null)+'</div>"]:::hhn', c2); E('B6 --> PER', c2);
+  E('BO --> B7["<div style=\'width:290px;white-space:normal\'>'+mk('«Схватить и покрутить» (272-280)',[[C_MAD, 1]],null)+'</div>"]:::hhn', c2); E('B7 --> PER', c2);
   }
   E('SV --> R2', cG);
   L.push(hub('R3','Выходы с перекрёстка<br/><small>script _define.rpy:355-427</small>','hhn',[]));
@@ -179,9 +185,9 @@ render();
 <div class="card">
 <h2>Типичный путь (суждение, не измерение)</h2>
 <p><b>Как иду:</b> «Не вижу никаких проблем.»; вверх к барьеру; один раз удариться головой; вернуться.</p>
-<p class="muted">Все числа взяты из присваиваний в script3_road.rpy. Безумие +1 даётся за первый удар в каждый заход к барьеру; Кровь +1 за каждый удар с четвёртого. Ошибки и мёртвый код: страница «Баги и вопросы к коду».</p>
+<p class="muted">Все числа взяты из присваиваний в script3_road.rpy. Безумие +1 даётся за первый удар в каждый заход к барьеру; Кровь +1 за каждый удар с четвёртого. Осмотр бурундука (лупа, один раз): Логика +1 или Безумие +1 (script3_road.rpy:260-283). Ошибки и мёртвый код: страница «Баги и вопросы к коду».</p>
 </div>
-<div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>от <b>0</b> до <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td><td><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td></tr><tr><td>Логика</td><td>от <b>0</b> до <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td><td><b>0</b></td></tr><tr><td>Кровь</td><td>+1 за каждый удар о барьер с четвёртого за заход (счётчик elfs_krug сбрасывается при входе, :95); при общей крови 3 действует смерть</td><td><b>0</b></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше.</p></div>
+<div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>от <b>0</b> до <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span></td><td><span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td></tr><tr><td>Логика</td><td>от <b>0</b> до <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+2</span></td><td><b>0</b></td></tr><tr><td>Кровь</td><td>+1 за каждый удар о барьер с четвёртого за заход (счётчик elfs_krug сбрасывается при входе, :95); при общей крови 3 действует смерть</td><td><b>0</b></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше. Максимумы Логики и Безумия несовместимы на одном пути: осмотр бурундука даёт либо Логику +1, либо Безумие +1 (264-280).</p></div>
 
 <div class="card">
 <h2>Схема</h2>
