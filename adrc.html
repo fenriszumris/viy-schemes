@@ -48,26 +48,26 @@ function build(){
   L.push('EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex');
   L.push('END["<div style=\'width:260px;white-space:normal\'>Конец демоверсии (перезапуск игры)</div>"]:::bad');
   E('ST --> A1', cG);
-  L.push(hub('A1','Адриан у двери<br/><small>adrian_conv_door, 1257-1290</small>','hhn',[]));
+  L.push(hub('A1','Адриан у двери<br/><small>adrian_conv_door, 1261-1296</small>','hhn',[]));
   if(EXP.has('A1')){
-    L.push('Z0["<div style=\'width:260px;white-space:normal\'>Адриан: «Вам что-то нужно?» (<a href="replics.html?v=539#r-script3_tgavan_oh-1262">1257-1259</a>)</div>"]:::sc');
+    L.push('Z0["<div style=\'width:260px;white-space:normal\'>Адриан: «Вам что-то нужно?» (<a href="replics.html?v=539#r-script3_tgavan_oh-1263">1261-1263</a>)</div>"]:::sc');
     E('A1 --> Z0', c1);
-    L.push('Z1["<div style=\'width:340px;white-space:normal\'>Адриан: «Не прошло и пяти минут... Научитесь молчать о том, что думаете» — даёт возможность показать значок снова (1264-1282)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Адриан в курсе ссоры» → открывает второй показ значка Адро (oh_d false1)</span></div>"]:::sc');
+    L.push('Z1["<div style=\'width:340px;white-space:normal\'>Адриан: «Не прошло и пяти минут... Научитесь молчать о том, что думаете» — даёт возможность показать значок снова (1265-1283)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Адриан в курсе ссоры» → открывает второй показ значка Адро (oh_d false1)</span></div>"]:::sc');
     E('Z0 --> Z1c["<div style=\'width:290px;white-space:normal\'>'+mk('«Кажется, мы не поладили с эльфом.»'+cond('если героиня поссорилась с Адро и Адриан ещё не знает (1262)'),null,null)+'</div>"]:::hhn', c1); E('Z1c --> Z1', c1);
     E('Z0 --> Z2c["<div style=\'width:290px;white-space:normal\'>'+mk('«До свидания.»',null,null)+'</div>"]:::hhn', c1); E('Z2c --> EXS', c1);
     E('Z1 --> EXS', c1);
   } else {
     E('A1 --> EXS', c1);
   }
-  L.push(hub('A2','Доклад Адриану<br/><small>adrian_conv_door_white, 1291-1550</small>','stub',[[C_ADR, '−1…+2'], [C_MOR, '−2…+2']]));
+  L.push(hub('A2','Доклад Адриану<br/><small>adrian_conv_door_white — убрана из игры 29 октября, в архиве</small>','stub',[[C_ADR, '−1…+2'], [C_MOR, '−2…+2']]));
   if(EXP.has('A2')){
-    L.push('R0["<div style=\'width:320px;white-space:normal\'>Адриан: «Как продвигается расследование?» (<a href="replics.html?v=539#r-script3_tgavan_oh-1292">1291-1292</a>)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>пока в заглушке: в script3_tgavan_oh.rpy перехода на метку adrian_conv_door_white нет (метка на 1291)</span></div>"]:::stub');
+    L.push('R0["<div style=\'width:320px;white-space:normal\'>Адриан: «Как продвигается расследование?» (архив)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>29 октября блок убран из кода игры в сюжетный архив (docs/story-notes.md §120); в демо его нет</span></div>"]:::stub');
     E('A2 --> R0', c2);
-    L.push('R1["<div style=\'width:300px;white-space:normal\'>Героиня знает про суицид; стоит ли говорить Адриану? (1293-1295)</div>"]:::stub');
-    L.push('R2["<div style=\'width:300px;white-space:normal\'>Адриан: «Это меняет все дело... Что если это ошибка?» (1301-1316)</div>"]:::stub');
-    L.push('R3["<div style=\'width:260px;white-space:normal\'>Адро просил молчать: героиня промолчала (1322-1324)</div>"]:::stub');
-    L.push('R4["<div style=\'width:320px;white-space:normal\'>Адро велел вернуться без улик; Адриан: «Скорее всего начнётся война» (1327-1332)</div>"]:::stub');
-    L.push('R5["<div style=\'width:340px;white-space:normal\'>Героиня рассказывает Адриану находки (1335-1539)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 каждый рассказ записывается: яд, дневник, письмо Камилле, чай, бумаги, анализ и т.д. (adrian_dialog)</span></div>"]:::stub');
+    L.push('R1["<div style=\'width:300px;white-space:normal\'>Героиня знает про суицид; стоит ли говорить Адриану? (архив)</div>"]:::stub');
+    L.push('R2["<div style=\'width:300px;white-space:normal\'>Адриан: «Это меняет все дело... Что если это ошибка?» (архив)</div>"]:::stub');
+    L.push('R3["<div style=\'width:260px;white-space:normal\'>Адро просил молчать: героиня промолчала (архив)</div>"]:::stub');
+    L.push('R4["<div style=\'width:320px;white-space:normal\'>Адро велел вернуться без улик; Адриан: «Скорее всего начнётся война» (архив)</div>"]:::stub');
+    L.push('R5["<div style=\'width:340px;white-space:normal\'>Героиня рассказывает Адриану находки (архив)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 каждый рассказ записывается: яд, дневник, письмо Камилле, чай, бумаги, анализ и т.д. (adrian_dialog)</span></div>"]:::stub');
     E('R0 --> RR1["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адро принял версию «самоубийство» (1293):',null,null)+'</div>"]:::stub', c2); E('RR1 --> R1', c2);
     E('R0 --> RR2["<div style=\'width:290px;white-space:normal\'>'+mk('Если в кабинете не нашли улик (1325):',null,null)+'</div>"]:::stub', c2); E('RR2 --> R4', c2);
     E('R0 --> RR3["<div style=\'width:290px;white-space:normal\'>'+mk('Если Адро не принял «самоубийство» и в кабинете нашли улики:',null,null)+'</div>"]:::stub', c2); E('RR3 --> R5', c2);
@@ -76,18 +76,18 @@ function build(){
     E('R2 --> END', c2);
     E('R4 --> END', c2);
     E('R3 --> R5', c2);
-    L.push('RP["<div style=\'width:300px;white-space:normal\'>Бумаги Лиассона: контрабанда и заказные убийства (1386-1391)</div>"]:::stub');
+    L.push('RP["<div style=\'width:300px;white-space:normal\'>Бумаги Лиассона: контрабанда и заказные убийства (архив)</div>"]:::stub');
     E('R5 --> Rp["<div style=\'width:290px;white-space:normal\'>'+mk('Если бумаги осмотрены (1386):',null,null)+'</div>"]:::stub', c2); E('Rp --> RP', c2);
     E('RP --> Rp1["<div style=\'width:290px;white-space:normal\'>'+mk('«Но это же противозаконно!»',[[C_MOR, 1], [C_ADR, 1]],null)+'</div>"]:::stub', c2); E('Rp1 --> RA', c2);
     E('RP --> Rp2["<div style=\'width:290px;white-space:normal\'>'+mk('«Не вижу в этом ничего плохого.»',null,[[C_MOR, 1], [C_ADR, 1]])+'</div>"]:::stub', c2); E('Rp2 --> RA', c2);
-    L.push('RA["<div style=\'width:300px;white-space:normal\'>Адриан узнаёт, что Лиассон заказал убийство брата Адро (1413-1417)</div>"]:::stub');
+    L.push('RA["<div style=\'width:300px;white-space:normal\'>Адриан узнаёт, что Лиассон заказал убийство брата Адро (архив)</div>"]:::stub');
     E('RA --> Ra1["<div style=\'width:290px;white-space:normal\'>'+mk('«Я думаю, убийцей может быть Адро.»',null,null)+'</div>"]:::stub', c2); E('Ra1 --> RB', c2);
     L.push('RB["<div style=\'width:240px;white-space:normal\'>Адриан: «Вы уверены?» (1426)</div>"]:::stub');
     E('RB --> Rb1["<div style=\'width:290px;white-space:normal\'>'+mk('«Да.»'+cond('Адриан идёт с героиней к Адро вечером: «Конец демоверсии. Точно братоубийство?»'),null,null)+'</div>"]:::stub', c2); E('Rb1 --> END', c2);
     E('RB --> Rb2["<div style=\'width:290px;white-space:normal\'>'+mk('«Нет.»',null,null)+'</div>"]:::stub', c2); E('Rb2 --> R6', c2);
     E('RA --> Ra2["<div style=\'width:290px;white-space:normal\'>'+mk('«Адро не мог убить брата»'+cond('реплики Вия показываются, только если «adro_liass_talk» есть в adro_dialog (1448)'),null,null)+'</div>"]:::stub', c2); E('Ra2 --> R6', c2);
     L.push('R6["<div style=\'width:260px;white-space:normal\'>Что ещё рассказать Адриану? (1454, 1456)</div>"]:::stub');
-    L.push('RF["<div style=\'width:300px;white-space:normal\'>Письма отца Лиассона: «Это мог быть его отец?» (1456-1463)</div>"]:::stub');
+    L.push('RF["<div style=\'width:300px;white-space:normal\'>Письма отца Лиассона: «Это мог быть его отец?» (архив)</div>"]:::stub');
     E('R6 --> Rf0["<div style=\'width:290px;white-space:normal\'>'+mk('Если найдены письма Камилле (1456):',null,null)+'</div>"]:::stub', c2); E('Rf0 --> RF', c2);
     E('RF --> Rf1["<div style=\'width:290px;white-space:normal\'>'+mk('«Это мог быть его отец.»'+cond('если дневник осмотрен: Адриан спрашивает, плохо ли это (1469)'),null,null)+'</div>"]:::stub', c2); E('Rf1 --> RG', c2);
     L.push('RG["<div style=\'width:260px;white-space:normal\'>Адриан: «Ты считаешь, это плохо?» (1471)</div>"]:::stub');
@@ -104,7 +104,7 @@ function build(){
   L.push('classDef ex fill:#eef0f4,stroke:#aab2c0,color:#4a5160');
   L.push('classDef bad fill:#ffd6d6,stroke:#b91c1c,color:#4a1414');
   L.push('classDef stub fill:#f3f4f6,stroke:#6b7280,stroke-dasharray:5 4,color:#6b7280');
-  /*XD_PATCH*/ (function(){var XD={'EXS':'EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex','END':'END["<div style=\'width:260px;white-space:normal\'>Конец демоверсии (перезапуск игры)</div>"]:::bad','Z0':'Z0["<div style=\'width:260px;white-space:normal\'>Адриан: «Вам что-то нужно?» (1257-1259)</div>"]:::sc','Z1':'Z1["<div style=\'width:340px;white-space:normal\'>Адриан: «Не прошло и пяти минут... Научитесь молчать о том, что думаете» — даёт возможность показать значок снова (1264-1282)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Адриан в курсе ссоры» → открывает второй показ значка Адро (oh_d false1)</span></div>"]:::sc','R0':'R0["<div style=\'width:320px;white-space:normal\'>Адриан: «Как продвигается расследование?» (1291-1292)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>пока в заглушке: в script3_tgavan_oh.rpy перехода на метку adrian_conv_door_white нет (метка на 1291)</span></div>"]:::stub','R1':'R1["<div style=\'width:300px;white-space:normal\'>Героиня знает про суицид; стоит ли говорить Адриану? (1293-1295)</div>"]:::stub','R2':'R2["<div style=\'width:300px;white-space:normal\'>Адриан: «Это меняет все дело... Что если это ошибка?» (1301-1316)</div>"]:::stub','R3':'R3["<div style=\'width:260px;white-space:normal\'>Адро просил молчать: героиня промолчала (1322-1324)</div>"]:::stub','R4':'R4["<div style=\'width:320px;white-space:normal\'>Адро велел вернуться без улик; Адриан: «Скорее всего начнётся война» (1327-1332)</div>"]:::stub','R5':'R5["<div style=\'width:340px;white-space:normal\'>Героиня рассказывает Адриану находки (1335-1539)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 каждый рассказ записывается: яд, дневник, письмо Камилле, чай, бумаги, анализ и т.д. (adrian_dialog)</span></div>"]:::stub','RP':'RP["<div style=\'width:300px;white-space:normal\'>Бумаги Лиассона: контрабанда и заказные убийства (1386-1391)</div>"]:::stub','RA':'RA["<div style=\'width:300px;white-space:normal\'>Адриан узнаёт, что Лиассон заказал убийство брата Адро (1413-1417)</div>"]:::stub','RB':'RB["<div style=\'width:240px;white-space:normal\'>Адриан: «Вы уверены?» (1426)</div>"]:::stub','R6':'R6["<div style=\'width:260px;white-space:normal\'>Что ещё рассказать Адриану? (1454, 1456)</div>"]:::stub','RF':'RF["<div style=\'width:300px;white-space:normal\'>Письма отца Лиассона: «Это мог быть его отец?» (1456-1463)</div>"]:::stub','RG':'RG["<div style=\'width:260px;white-space:normal\'>Адриан: «Ты считаешь, это плохо?» (1471)</div>"]:::stub'};var tx=L.join('\n');for(var id in XD){if(!new RegExp('\\b'+id+'\\s*[\\[(]').test(tx)&&new RegExp('(-->\\s*'+id+'(\\s|$)|(^|\\n)'+id+'\\s*-->)').test(tx))L.push(XD[id]);}})();
+  /*XD_PATCH*/ (function(){var XD={'EXS':'EXS["<div style=\'width:220px;white-space:normal\'>Экран переходов (дорога)</div>"]:::ex','END':'END["<div style=\'width:260px;white-space:normal\'>Конец демоверсии (перезапуск игры)</div>"]:::bad','Z0':'Z0["<div style=\'width:260px;white-space:normal\'>Адриан: «Вам что-то нужно?» (1261-1263)</div>"]:::sc','Z1':'Z1["<div style=\'width:340px;white-space:normal\'>Адриан: «Не прошло и пяти минут... Научитесь молчать о том, что думаете» — даёт возможность показать значок снова (1265-1283)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 записывает «Адриан в курсе ссоры» → открывает второй показ значка Адро (oh_d false1)</span></div>"]:::sc','R0':'R0["<div style=\'width:320px;white-space:normal\'>Адриан: «Как продвигается расследование?» (архив)<br/><span style=\\\'font-size:12px;color:#b91c1c;font-weight:700\\\'>29 октября блок убран из кода игры в сюжетный архив (docs/story-notes.md §120); в демо его нет</span></div>"]:::stub','R1':'R1["<div style=\'width:300px;white-space:normal\'>Героиня знает про суицид; стоит ли говорить Адриану? (архив)</div>"]:::stub','R2':'R2["<div style=\'width:300px;white-space:normal\'>Адриан: «Это меняет все дело... Что если это ошибка?» (архив)</div>"]:::stub','R3':'R3["<div style=\'width:260px;white-space:normal\'>Адро просил молчать: героиня промолчала (архив)</div>"]:::stub','R4':'R4["<div style=\'width:320px;white-space:normal\'>Адро велел вернуться без улик; Адриан: «Скорее всего начнётся война» (архив)</div>"]:::stub','R5':'R5["<div style=\'width:340px;white-space:normal\'>Героиня рассказывает Адриану находки (архив)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 каждый рассказ записывается: яд, дневник, письмо Камилле, чай, бумаги, анализ и т.д. (adrian_dialog)</span></div>"]:::stub','RP':'RP["<div style=\'width:300px;white-space:normal\'>Бумаги Лиассона: контрабанда и заказные убийства (архив)</div>"]:::stub','RA':'RA["<div style=\'width:300px;white-space:normal\'>Адриан узнаёт, что Лиассон заказал убийство брата Адро (архив)</div>"]:::stub','RB':'RB["<div style=\'width:240px;white-space:normal\'>Адриан: «Вы уверены?» (1426)</div>"]:::stub','R6':'R6["<div style=\'width:260px;white-space:normal\'>Что ещё рассказать Адриану? (1454, 1456)</div>"]:::stub','RF':'RF["<div style=\'width:300px;white-space:normal\'>Письма отца Лиассона: «Это мог быть его отец?» (архив)</div>"]:::stub','RG':'RG["<div style=\'width:260px;white-space:normal\'>Адриан: «Ты считаешь, это плохо?» (1471)</div>"]:::stub'};var tx=L.join('\n');for(var id in XD){if(!new RegExp('\\b'+id+'\\s*[\\[(]').test(tx)&&new RegExp('(-->\\s*'+id+'(\\s|$)|(^|\\n)'+id+'\\s*-->)').test(tx))L.push(XD[id]);}})();
   return L.concat(ST).join('\n');
 }
 async function render(){
@@ -143,10 +143,10 @@ render();
 <nav class="crumbs"><a href="index.html?v=465">← Все схемы</a> · <a href="adro2.html?v=465">Адро: кабинет</a> · <a href="stats.html?v=465">Статы</a></nav>
 </div></header>
 <main>
-<div class="card" style="border:2px dashed #6b7280;background:#f3f4f6"><b>⚠ Серые пунктирные блоки: пока в заглушке (не достижимо в демо).</b> Весь доклад Адриану (блок «adrian_conv_door_white», строки 1291-1550) в демо не подключён.</div>
+<div class="card" style="border:2px dashed #6b7280;background:#f3f4f6"><b>⚠ Серые пунктирные блоки: сцена в архиве, в демо её нет.</b> Весь доклад Адриану (блок «adrian_conv_door_white») 29 октября убран из кода игры в сюжетный архив (docs/story-notes.md §120).</div>
 <div class="card">
 <h2>Типичный путь (суждение, не измерение)</h2>
-<p><b>Как иду:</b> к Адриану у двери героиня доходит с жалобой на Адро («Кажется, мы не поладили с эльфом.») и уходит. Ветка доклада по расследованию в коде не подключена (переход закомментирован), поэтому типичного пути по ней нет.</p>
+<p><b>Как иду:</b> к Адриану у двери героиня доходит с жалобой на Адро («Кажется, мы не поладили с эльфом.») и уходит. Ветка доклада по расследованию 29 октября убрана из кода игры в сюжетный архив, поэтому пути по ней нет.</p>
 </div>
 <div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Логика</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Кровь</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше.</p><p>В заглушке (не достижимо в демо): доклад Адриану даёт Адриан −1…+2 и Мораль −2…+2; в итог не входит.</p></div>
 
