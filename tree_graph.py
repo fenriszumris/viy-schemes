@@ -32,7 +32,7 @@ class G:
         T=txt[:7]
         h+='<br/>'.join(T)
         if len(txt)>7: h+='<br/><i>… ещё реплик: %d (полностью в тексте ниже)</i>'%(len(txt)-7)
-        for e in eff: h+='<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>🚩 %s</span>'%e
+        for e in eff: h+='<br/><span style=\'font-size:12px;color:#92400e;font-weight:700\'>⚑ %s</span>'%e
         nid=s.node(h,'sc'); s.link(pend,nid); return [(nid,'')]
     def run(s,lab):
         fn,i,_=body(lab)

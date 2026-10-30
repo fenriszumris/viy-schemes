@@ -18,16 +18,16 @@ def eff(t):
     m=re.match(r'add_logic\((-?\d+)',t)
     if m: n=int(m.group(1));return ('log','логика %s%d'%('+' if n>=0 else '−',abs(n)),'')
     m=re.match(r'([\w\.\[\]"]+)\s*=\s*(True|1|"[^"]*")\s*$',t)
-    if m: return ('flag','🚩 запоминается: '+cond_plain(m.group(1)),'')
+    if m: return ('flag','⚑ запоминается: '+cond_plain(m.group(1)),'')
     m=re.match(r'([\w\.\[\]"]+)\s*=\s*(False|0)\s*$',t)
-    if m: return ('flag','🚩 сбрасывается: '+cond_plain(m.group(1)),'')
-    return ('code','🚩 <code>%s</code>'%q(sh(t,70)),'')
+    if m: return ('flag','⚑ сбрасывается: '+cond_plain(m.group(1)),'')
+    return ('code','⚑ <code>%s</code>'%q(sh(t,70)),'')
 class R:
     def __init__(s,budget=900): s.budget=budget;s.n=0
     def chip(s,t):
         k,txt,_=eff(t)
         txt=re.sub(r'запоминается: уже произошло \(ставится (.*)\)$',r'запоминается: \1',txt)
-        txt=txt if k=='flag' and txt.startswith('🚩') and '<code>' not in txt else txt
+        txt=txt if k=='flag' and txt.startswith('⚑') and '<code>' not in txt else txt
         return '<span class="chip %s">%s</span>'%(k,txt if k=='code' else q(txt))
     def run(s,lab,path,depth):
         fn,i,lines=body(lab)
