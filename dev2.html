@@ -130,7 +130,7 @@ render();
 <h2>Статы сцены (day_1_dev_razg.rpy, 206 строк)</h2>
 <table class="stats">
 <tr><th>Стат</th><th>Мин</th><th>Макс</th><th>Комментарий</th></tr>
-<tr><td class="mad">Безумие</td><td>0</td><td>0</td><td>не меняется напрямую; через переходы в хаб вопросов dev.html</td></tr>
+<tr><td class="mad">Безумие</td><td>0</td><td>0</td><td>не меняется в этом файле. +1 даёт связанный разговор «в лесу» в <b>другом</b> файле (script3_airat.rpy:884-931, флаг devd.d2, один раз за run) — учтён в шапке и в «Итоге» ниже, не в этой таблице</td></tr>
 <tr><td class="logic">Логика</td><td>0</td><td>+1</td><td>+1 только через «Я тогда не спросила...» → 961 (единственный раз, этот пункт)</td></tr>
 <tr><td class="blood">Кровь</td><td>0</td><td>0</td><td>не меняется</td></tr>
 <tr><td style="color:#16a34a">Настроение Луизы</td><td>−2</td><td>0</td><td>«Что ты так на меня взъелась?» −1 (32; этот пункт, один раз, только после «Увязаться»); «не до тебя» −1 (82; разговор об отце)</td></tr>
@@ -141,7 +141,7 @@ render();
 <h2>Типичный путь (суждение, не измерение)</h2>
 <p><b>Как иду:</b> нормальные отношения; «А где твой дом?»; «По поводу всей этой истории с твоим отцом...» → «Этот Лени...» → «Какой-то он был нервный.» → «Конец»; «На сегодня хватит разговоров!».</p>
 </div>
-<div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>от <b>0</b> до <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td><td><b>0</b></td></tr><tr><td>Логика</td><td>от <b>0</b> до <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td><td><b>0</b></td></tr><tr><td>Кровь</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение Луизы</td><td>от <span style='background:rgb(220,252,231);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> до <b>0</b></td><td><b>0</b></td></tr></table><p class="muted">Диапазон взят из таблицы «Статы сцены» выше (по всем путям). Типичный путь: один путь из карточки выше, суждение, не среднее.</p></div>
+<div class="card"><h2>Итог по сцене (day_1_dev_razg.rpy + разговор «в лесу» из script3_airat.rpy)</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>от <b>0</b> до <span style='background:rgb(237,231,251);color:rgb(112,72,232);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td><td><b>0</b></td></tr><tr><td>Логика</td><td>от <b>0</b> до <span style='background:rgb(227,242,250);color:rgb(28,126,214);font-weight:700;border-radius:5px;padding:0 3px'>▲+1</span></td><td><b>0</b></td></tr><tr><td>Кровь</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение Луизы</td><td>от <span style='background:rgb(220,252,231);color:rgb(22,163,74);font-weight:700;border-radius:5px;padding:0 3px'>▼−2</span> до <b>0</b></td><td><b>0</b></td></tr></table><p class="muted">Диапазон по всем путям: Логика, Кровь и Настроение Луизы — из таблицы «Статы сцены» выше (day_1_dev_razg.rpy); Безумие 0…+1 включает разговор «в лесу» (script3_airat.rpy:884-931, devd.d2, один раз за run) — поэтому здесь +1, хотя в таблице файла выше 0. Типичный путь: один путь из карточки выше, суждение, не среднее.</p></div>
 
 
 <div class="card">
