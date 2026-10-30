@@ -107,7 +107,7 @@ function build(){
     E('G2 --> BAD1', c2);
     E('G2 --> BAD2', c2);
   }
-  L.push(hub('G3','Что можно делать на локации Губерта<br/><small>script_npc_items.rpy:1163-1218, script3_gubert.rpy:395-444</small>','hhn',[[C_MOO, '−2…0']]));
+  L.push(hub('G3','Что можно делать на локации Губерта<br/><small>script_npc_items.rpy:1135-1188, script3_gubert.rpy:395-444</small>','hhn',[[C_MOO, '−2…0']]));
   if(EXP.has('G3')){
     L.push('L0["<div style=\'width:300px;white-space:normal\'>Героиня на экране локации Губерта (после ухода Губерта)</div>"]:::sc');
     E('G3 --> L0', c3);
@@ -116,9 +116,9 @@ function build(){
     L.push('HT["<div style=\'width:300px;white-space:normal\'>Шляпа лежит на дороге: «Маленький черный циллиндр» (402-408)</div>"]:::sc');
     L.push('HY["<div style=\'width:260px;white-space:normal\'>Героиня берёт шляпу (411-414)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 шляпа теперь в инвентаре</span></div>"]:::sc');
     L.push('HN["<div style=\'width:260px;white-space:normal\'>Героиня оставляет шляпу лежать (415-418)<br/><span style=\\\'font-size:12px;color:#92400e;font-weight:700\\\'>🚩 шляпа остаётся на земле: её можно взять позже</span></div>"]:::sc');
-    E('L0 --> W1["<div style=\'width:290px;white-space:normal\'>'+mk('Клик по стене веток (script_npc_items.rpy:1197)',null,null)+'</div>"]:::hhn', c3); E('W1 --> WA', c3);
+    E('L0 --> W1["<div style=\'width:290px;white-space:normal\'>'+mk('Клик по стене веток (script_npc_items.rpy:1137-1169)',null,null)+'</div>"]:::hhn', c3); E('W1 --> WA', c3);
     E('L0 --> W2["<div style=\'width:290px;white-space:normal\'>'+mk('Перетащить на стену горящий факел или кремень (script_newscreens.rpy:<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">417</span>-<span class="stale-cite" title="номер строки не подтверждён после правок 20–25.10, уточняется">457</span>)'+cond('весь осмотр можно повторять без ограничения'),null,[[C_MOO, 2]])+'</div>"]:::hhn', c3); E('W2 --> WF', c3);
-    E('L0 --> W3["<div style=\'width:290px;white-space:normal\'>'+mk('Клик по шляпе на земле (script_npc_items.rpy:1198-1216)'+cond('если шляпа лежит на земле'),null,null)+'</div>"]:::hhn', c3); E('W3 --> HT', c3);
+    E('L0 --> W3["<div style=\'width:290px;white-space:normal\'>'+mk('Клик по шляпе на земле (script_npc_items.rpy:1170-1188)'+cond('если шляпа лежит на земле'),null,null)+'</div>"]:::hhn', c3); E('W3 --> HT', c3);
     E('HT --> W3a["<div style=\'width:290px;white-space:normal\'>'+mk('«Взять»',null,null)+'</div>"]:::hhn', c3); E('W3a --> HY', c3);
     E('HT --> W3b["<div style=\'width:290px;white-space:normal\'>'+mk('«Оставить»',null,null)+'</div>"]:::hhn', c3); E('W3b --> HN', c3);
     E('WA --> EXS', c3);
