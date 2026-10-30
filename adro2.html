@@ -222,6 +222,10 @@ render();
 <body>
 <header class="site"><div class="wrap">
 <h1>Адро: кабинет Лиассона</h1>
+<div class="card" style="border-left:4px solid #c0392b"><h2>30.10.2026: диалоговая часть страницы — мёртвый код</h2>
+<p>Машинная проверка вызывающих (14ac027): <b>живы только сцены осмотра вещей</b> sar_cab_paper / kamletter / letter / diary / pink / potions / tea1 / tea (:101-301) — кнопки предметов в sar_cab_screen (script_newscreens.rpy:630+). Вход: стрелка «вверх» от входа Саребросов (tgavan_lock → коридор, срабатывает и меню встречи из страницы «Адро»), затем стрелка «вправо» из коридора; чтобы остаться в кабинете, нужен активный значок Стражи (inv_list["wg_zn"]._active) — иначе label tgavan_sarebros_right возвращает в коридор с «Заперто». Сцены осмотра не меняют статов вообще (только флаги adro_dialog *_osm и дневник) — и эти флаги питают только мёртвую ветку.</p>
+<p>Недостижимы (ни одного живого вызывающего): script_4_tgavan_begin_adro (:1, вызывается только из мёртвого контракта страницы «Адро»), script_4_tgavan_to_adro (:48, входы: кнопка adro_screen требует флаг "end1", который пишется только в end_adro — круг; проход tgavan_sar_cab_bottom требует arrows_per "adro_3begin" из мёртвой цепочки script3_tgavan_oh), poison_adro, women_adro, suicide_kill, end_adro (вызываются только из to_adro). Все 7 записей adro.mood в файле (:80, :95, :358, :373, :408, :435, :530) лежат в мёртвых label — старые итоги −4…+5 недостижимы в игре на 14ac027.</p>
+<p>Нижележащие схемы расспросов (хабы K1-K7) — документация мёртвого кода.</p></div>
 
 
 
@@ -235,9 +239,9 @@ render();
 <div class="card">
 <h2>Типичный путь (суждение, не измерение)</h2>
 <p><b>Как иду:</b> осматриваю все вещи; «Яд» → «Сказать о яде на полке», «Мог ли Нарси удержать часть яда?», «Я хочу взять флакон с собой»; «Женщина» → «Кто такая К.Р?», «Показать письмо Камилле»; «Нет, это не мог быть суицид.»; «На этом все»; «Он в последние дни общался с неким Нарси.» (конец демоверсии).</p>
-<p class="muted">Числа из script_4_tgavan_adro.rpy.</p>
+<p class="muted">Числа из script_4_tgavan_adro.rpy, 30.10 перепроверены машинно по вызывающим (см. карточку выше): живой осмотр вещей статов не меняет.</p>
 </div>
-<div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Логика</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Кровь</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение Адро</td><td>от <span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▼−4</span> до <span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▲+5</span></td><td><span style='background:rgb(224,231,255);color:rgb(79,70,229);font-weight:700;border-radius:5px;padding:0 3px'>▲+5</span></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше.</p></div>
+<div class="card"><h2>Итог по сцене</h2><table class="sumt"><tr><th>Стат</th><th>Диапазон по всем путям схемы (мин. и макс.)</th><th>Типичный путь (суждение)</th></tr><tr><td>Безумие</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Логика</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Кровь</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение</td><td>не меняется (0)</td><td><b>0</b></td></tr><tr><td>Настроение Адро</td><td>не меняется (0)</td><td><b>0</b></td></tr></table><p class="muted">Диапазон: сумма минимумов и максимумов по блокам страницы на каждом пути схемы, условия «Если...» не учитываются. Типичный путь описан выше.</p></div>
 
 <div class="card">
 <h2>Схема</h2>
@@ -245,7 +249,7 @@ render();
 <div class="widechart"><div id="fchart" class="mermaid"></div></div>
 </div>
 </main>
-<footer>Схемы игры «Вий» · script_4_tgavan_adro.rpy · выверено по коду 20.10.2026</footer>
+<footer>Схемы игры «Вий» · script_4_tgavan_adro.rpy · 30.10.2026: достижимость проверена машинно по вызывающим на 14ac027; живы только сцены осмотра вещей (без эффектов на статы)</footer>
 <script>addEventListener('load',function(){var h=location.hash;if(h.indexOf('#n-')===0){var id=h.substring(3);var tries=0;var tm=setInterval(function(){var g=document.querySelector('[id^="flowchart-"][id*="-'+id+'-"]');if(g){clearInterval(tm);g.scrollIntoView({block:'center',inline:'center'});var r=g.querySelector('rect,ellipse,polygon,path');if(r){r.style.stroke='#e11d48';r.style.strokeWidth='3px';}}else if(++tries>20)clearInterval(tm);},150);}});</script>
 </body>
 </html>
