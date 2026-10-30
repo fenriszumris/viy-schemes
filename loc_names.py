@@ -1,3 +1,6 @@
+# WARNING (2026-10-30): line pins below are pinned to main 0200f51 (pre arrow-merge).
+# Main is now 14ac027: script _define.rpy +1 from :384, script.rpy +1 from :267,
+# script_newscreens.rpy +4 from :1154. See PINS-BASE.md. Do not re-apply as-is.
 # -*- coding: utf-8 -*-
 # id: (русское название, откуда название, [(страница, подпись)])
 L={
